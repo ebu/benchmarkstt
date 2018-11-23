@@ -49,6 +49,7 @@ We welcome your feedback on this and every other aspect of this project and we t
 
 We all stand on the shoulders of giants across many open source communities. We’d like to thank the communities and projects that established code of conducts and diversity statements as our inspiration:
 
+- [textAV](https://sites.google.com/view/textav/conduct-london-18)
 - [SRCCON](https://srccon.org/conduct/)
 - [Django](https://www.djangoproject.com/conduct/reporting/)
 - [Python](https://www.python.org/community/diversity/)
