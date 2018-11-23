@@ -59,3 +59,4 @@ We all stand on the shoulders of giants across many open source communities. Weâ
 - [Gulp](https://github.com/gulpjs/gulp/blob/master/CONTRIBUTING.md)
 - [Open code of Conduct](https://todogroup.org/opencodeofconduct/)
 - ["Why You Want a Code of Conduct & How We Made One"](http://incisive.nu/2014/codes-of-conduct/)
+- [Facebook Open Source Code of Conduct](https://code.fb.com/codeofconduct/)
