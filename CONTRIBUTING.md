@@ -19,4 +19,8 @@ https://reactjs.org/docs/how-to-contribute.html
 another example - with more tech details
 
 https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md
+
+https://github.com/facebookresearch/wav2letter/blob/master/CONTRIBUTING.md 
+
+https://github.com/hiddentao/fast-levenshtein/blob/master/CONTRIBUTING.md 
  -->
