@@ -1,4 +1,4 @@
-# CONTRIBUTING
+# CONTRIBUTING - Draft
 
 This project has a [Code of Conduct](./CODE_OF_CONDUCT.md) that we expect all of our contributors to abide by, please check it out before contributing.
 
