@@ -1,4 +1,4 @@
-# Code of Conduct - dRaft 
+# Code of Conduct - DRaft 
 
 We are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic.
 
@@ -9,7 +9,7 @@ We are committed to providing a welcoming and inspiring community for all and ex
 Please be kind and courteous. There's no need to be mean or rude. Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer, merely an optimal answer given a set of values and circumstances.
 
 
-## Our open community strives to:
+## Our open community strives to:
 
 **Be friendly and patient**.
 
@@ -45,7 +45,7 @@ After filing a report, a representative will contact you personally, review the 
 ## Feedback 
 We welcome your feedback on this and every other aspect of this project and we thank you for working with us to make it a safe, enjoyable, and friendly experience for everyone who participates.
 
-## Attribution & Acknowledgements
+## Attribution & Acknowledgements
 
 We all stand on the shoulders of giants across many open source communities. We’d like to thank the communities and projects that established code of conducts and diversity statements as our inspiration:
 
