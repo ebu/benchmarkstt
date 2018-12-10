@@ -11,11 +11,13 @@ Package "EBU" {
   rectangle "Test set format guidelines" as test_set_format
   rectangle "Transcript format guidelines" as transcript_format
   rectangle "UI/reports" as ebu_UI
+  rectangle "Metric guidelines" as ebu_metric
   rectangle "EBU test data" as ebu_test_data
   
   ebu_test_data -[hidden]-> test_set_format
   test_set_format -[hidden]-> transcript_format
-  transcript_format -[hidden]-> ebu_UI
+  transcript_format -[hidden]-> ebu_metric
+  ebu_metric -[hidden]-> ebu_UI
 
 
 }
@@ -49,13 +51,15 @@ Rectangle "User Test data" as user_test_data
 
 
 user_test_data --> test_normaliser
-ebu_test_data -> test_normaliser
+ebu_test_data --> test_normaliser
 vendor_connectors -> apis
 apis --> transcripts
 transcripts -> transcript_normalisers
 transcript_normalisers --> metric_analysers
 metric_analysers --> results
 test_set_format .-> test_normaliser
-transcript_format .--> transcript_normalisers
-results --> ebu_UI
+transcript_format .-> transcript_normalisers
+ebu_metric .-> metric_analysers
+
+results -> ebu_UI
 @enduml
