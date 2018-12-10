@@ -4,6 +4,8 @@ At the heart of the benchmarking framework is an open source toolkit. This libra
 
 ![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ebu/ai-benchmarking-stt/master/docs/adr/hld/plantUML.txt&cachebust=1)
 
+`This diagram is generated from the plantUML.txt file. Github caches images, so if this diagrame is not updated after merging changes to the text file, change the number at the end of the link, e.g. &cachebust=2387452673`    
+
 ## EBU/User Test data
 Users of the framework are expected to benchmark STT vendors using test data that matches their specific use cases (such as language,  handling background noises or a wide range of accents). In addition, a central reporsitory of test data sets can be maintained by the EBU and used in cases where a unique test set cannot be provided. 
 
