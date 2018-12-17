@@ -2,7 +2,7 @@ Benchmarking toolkit road map
 =============================  
 <table>
 	<tr>
-		<th>Version</th>
+		<th>V</th>
 		<th>Provider integration</th>
 		<th>Transcript processing</th>
 		<th>Reference preparation</th>
