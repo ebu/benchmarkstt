@@ -1,10 +1,5 @@
 Benchmarking toolkit road map
-=============================   
-
-ASSUMPTIONS:
-1. Only European languages are in scope. A list of supported languages may be required. 
-1. The defined schema and algorithms can be applied equally to all languages in scope. If they can't, language-specific components will be required.     
-
+=============================  
 <table>
 	<tr>
 		<th>Version</th>
@@ -15,7 +10,7 @@ ASSUMPTIONS:
 		<th>Results</th>
 	</tr>
 	<tr>
-		<td>1</td>
+		<td><a href="https://github.com/ebu/ai-benchmarking-stt/blob/master/docs/releases/1.0/README.md">1</a></td>
 		<td>Manual. Send audio for transcription and retrieve transcript using a UI. The audio file contains clean standard speech.</td>
 		<td>Define an native schema, initially for words only. Use the native schema to convert to normalised JSON. 
 			<pre>
