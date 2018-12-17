@@ -1,3 +1,7 @@
+ASSUMPTIONS:
+1. Only European languages are in scope. A list of supported languages may be required. 
+1. The defined schema and algorithms can be applied equally to all languages in scope. If they can't, language-specific components will be required.     
+
 <table>
 	<tr>
 		<th>Version</th>
