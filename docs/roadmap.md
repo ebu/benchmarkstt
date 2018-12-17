@@ -1,11 +1,11 @@
 <table>
 	<tr>
-		<td>Version</td>
-		<td>Provider integration</td>
-		<td>Transcript processing</td>
-		<td>Reference preparation</td>
-		<td>Analysis</td>
-		<td>Results</td>
+		<th>Version</th>
+		<th>Provider integration</th>
+		<th>Transcript processing</th>
+		<th>Reference preparation</th>
+		<th>Analysis</th>
+		<th>Results</th>
 	</tr>
 	<tr>
 		<td>1</td>
