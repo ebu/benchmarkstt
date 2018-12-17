@@ -17,8 +17,8 @@ The reference will be a simple string containing words only (i.e. no timings, pu
 The basis for a future comprehensive schema for the reference and the hypothesis. In this release it will include words only, for example:
 ```javascript
 [
-	{hello},
-	{world}
+	{"test": "hello"},
+	{"test": "world"}
 ]
 ``` 
 
