@@ -1,3 +1,6 @@
+Benchmarking toolkit road map
+=============================   
+
 ASSUMPTIONS:
 1. Only European languages are in scope. A list of supported languages may be required. 
 1. The defined schema and algorithms can be applied equally to all languages in scope. If they can't, language-specific components will be required.     
@@ -13,8 +16,8 @@ ASSUMPTIONS:
 	</tr>
 	<tr>
 		<td>1</td>
-		<td>Manual. Send audio for transcription and retrieve transcript using a UI.</td>
-		<td>Define native schema (words only) and use it to convert to native JSON. 
+		<td>Manual. Send audio for transcription and retrieve transcript using a UI. The audio file contains clean standard speech.</td>
+		<td>Define an native schema, initially for words only. Use the native schema to convert to normalised JSON. 
 			<pre>
 [
  {text: "hello"},
@@ -22,9 +25,9 @@ ASSUMPTIONS:
 ]
 			</pre>
 		</td>
-		<td>String, words only</td>
-		<td>WER algorithm and documentation<hr>Diff algorithm: insertions, deletions, insertions and matches</td>
-		<td>WER % per vendor<hr>Diff metrics and structured report</td>		
+		<td>String, words only. Without timings, this reference data is easier to produce.</td>
+		<td>WER algorithm and pseudo-code with discussion.<hr>Diff algorithm: substitutions, deletions, insertions, correct words.</td>
+		<td>WER % per vendor<hr>Detailed diff metrics (s/d/i/c) available in a structured format.</td>		
 	</tr>
 	<tr>
 		<td>2</td>
