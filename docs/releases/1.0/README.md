@@ -8,6 +8,10 @@ This version will focus on defining the diff and WER algorithms and return WER s
 
 For an overview of the system and component names see https://github.com/ebu/ai-benchmarking-stt/wiki
 
+ASSUMPTIONS:
+1. Only European languages are in scope. A list of supported languages may be required. 
+1. The defined schema and algorithms can be applied equally to all languages in scope. If they can't, language-specific components will be required.   
+
 This release will include:
 
 ### Test data
