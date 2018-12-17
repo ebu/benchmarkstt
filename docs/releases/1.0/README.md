@@ -10,10 +10,10 @@ For an overview of the system and component names see https://github.com/ebu/ai-
 
 This release will include:
 
-### Test data (audio and reference)
+### Test data
 The reference will be a simple string containing words only (i.e. no timings, punctuation marks or non-word sounds such as 'erm'). The audio must also contain words only (this could be as simple as a recording of someone reading out some text). 
 
-### Framework transcript schema
+### Transcript schema
 The basis for a future comprehensive schema for the reference and the hypothesis. In this release it will include words only, for example:
 ```javascript
 [
