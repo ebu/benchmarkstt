@@ -12,7 +12,7 @@ Benchmarking toolkit road map
 	<tr>
 		<td><a href="https://github.com/ebu/ai-benchmarking-stt/blob/master/docs/releases/1.0/README.md">1</a></td>
 		<td>Manual. Send audio for transcription and retrieve transcript using a UI. The audio file contains clean standard speech.</td>
-		<td>Define an native schema, initially for words only. Use the native schema to convert to normalised JSON. 
+		<td>Define a native schema, initially for words only. Use the native schema to convert to normalised JSON. 
 			<pre>
 [
  {text: "hello"},
