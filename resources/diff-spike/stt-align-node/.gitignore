@@ -1,0 +1,45 @@
+# .gitignore, files to ignore when pushing to github 
+
+#ignore all video files
+*.wmv
+*.mpg
+*.mpeg
+*.mp4
+*.mov
+*.flv
+*.avi
+*.ogv
+*.ogg
+*.webm
+
+#ignore audio file
+*.wav
+*.mp3
+
+#ingore subtitles files
+*.srt
+*.sbv
+
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+node_modules
+
+.idea
+.env
+
+# mac file system 
+.DS_Store
+
+# dotenv ENV var
+.env

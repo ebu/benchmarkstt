@@ -1,0 +1,26 @@
+{
+  "name": "stt-align-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/index.js",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "example": "node lib/example-usage.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/node": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "jest": "^23.6.0"
+  },
+  "dependencies": {
+    "difflib": "^0.2.4",
+    "everpolate": "0.0.3",
+    "number-to-words": "^1.2.4"
+  }
+}

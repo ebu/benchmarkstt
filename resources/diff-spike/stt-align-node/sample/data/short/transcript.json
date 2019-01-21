@@ -1,0 +1,10 @@
+{
+  "words": [
+    {"word": "this", "start": 0.02, "end": 0.05},
+    {"word": "ZZ", "start": 0.06, "end": 0.10},
+    {"word": "the", "start": 0.12, "end": 0.18},
+    {"word": "INSERTED", "start": 0.12, "end": 0.18},
+    {"word": "INSERTEDTWO", "start": 0.12, "end": 0.18},
+    {"word": "Gew", "start": 0.12, "end": 0.18}
+  ]
+}
