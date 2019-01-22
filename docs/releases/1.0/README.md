@@ -1,4 +1,4 @@
-DRAFT Release 1.0 (MVP) scope 
+Version 1 (MVP) scope 
 =============================
 This document describes the minimal set of components and functionality for the first release of the STT benchmarking toolkit.
 
