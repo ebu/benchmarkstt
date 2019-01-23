@@ -10,11 +10,11 @@
 
 How do we structure normalisation rules with support of multiple normalisation strategies, from general rules to possibly complex language specific normalisation rules as well as a combination of the normalisation rules?
 
-## Decision Drivers <!-- optional -->
+## Decision Drivers 
 
-* [Issue #5] (https://github.com/ebu/ai-benchmarking-stt/issues/5)
-* [Issue #7] (https://github.com/ebu/ai-benchmarking-stt/issues/7)
-* [Issue #8] (https://github.com/ebu/ai-benchmarking-stt/issues/7)
+* https://github.com/ebu/ai-benchmarking-stt/issues/5
+* https://github.com/ebu/ai-benchmarking-stt/issues/7
+* https://github.com/ebu/ai-benchmarking-stt/issues/8
 
 ## Proposal
 
