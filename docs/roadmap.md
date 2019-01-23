@@ -1,6 +1,8 @@
+Benchmarking toolkit road map
+=============================  
 <table>
 	<tr>
-		<th>Version</th>
+		<th>V</th>
 		<th>Provider integration</th>
 		<th>Transcript processing</th>
 		<th>Reference preparation</th>
@@ -8,9 +10,9 @@
 		<th>Results</th>
 	</tr>
 	<tr>
-		<td>1</td>
-		<td>Manual. Send audio for transcription and retrieve transcript using a UI.</td>
-		<td>Define native schema (words only) and use it to convert to native JSON. 
+		<td><a href="https://github.com/ebu/ai-benchmarking-stt/blob/master/docs/releases/1.0/README.md">1</a></td>
+		<td>Manual. Send audio for transcription and retrieve transcript using a UI. The audio file contains clean standard speech.</td>
+		<td>Define a native schema, initially for words only. Use the native schema to convert to normalised JSON. 
 			<pre>
 [
  {text: "hello"},
@@ -18,9 +20,9 @@
 ]
 			</pre>
 		</td>
-		<td>String, words only</td>
-		<td>WER algorithm and documentation<hr>Diff algorithm: insertions, deletions, insertions and matches</td>
-		<td>WER % per vendor<hr>Diff metrics and structured report</td>		
+		<td>String, words only. Without timings, this reference data is easier to produce.</td>
+		<td>WER algorithm and pseudo-code with discussion.<hr>Diff algorithm: substitutions, deletions, insertions, correct words.</td>
+		<td>WER % per vendor<hr>Detailed diff metrics (s/d/i/c) available in a structured format.</td>		
 	</tr>
 	<tr>
 		<td>2</td>

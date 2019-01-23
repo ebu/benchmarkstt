@@ -1,0 +1,24 @@
+NOTE: This is the BBC's Kaldi output. Yours may be different. 
+
+
+{
+    "metadata": {"version": "0.0.10"},
+    "text": "to administer",
+    "punct": "To administer.",
+    "words": [
+        {
+            "start": 0.52,
+            "confidence": 1,
+            "end": 0.66,
+            "word": "to",
+            "punct": "To"
+        },
+        {
+            "start": 0.66,
+            "confidence": 1,
+            "end": 1.27,
+            "word": "administer",
+            "punct": "administer."
+        }
+    ]
+}
