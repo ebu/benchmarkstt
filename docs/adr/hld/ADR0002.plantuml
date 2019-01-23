@@ -1,0 +1,45 @@
+@startuml
+
+abstract NormalisationLocaleBased
+{
+  - NormalisationInterface _normalizer
+  - _file
+  __init__(locale, dir_path)
+  + normalise(): self._normalizer.normalise()
+}
+
+interface NormalisationInterface 
+{
+  + normalise()
+}
+
+class NormalisationLocaleSubstitutions {
+  - NormalisationSubstitutions _normalizer
+  __init__(locale, dir_path)
+  + normalise()
+}
+
+class NormalisationLocaleStopwords {
+  - NormalisationStopwords _normalizer
+  __init__(locale, dir_path)
+  + normalise()
+}
+
+class NormalisationSubstitutions {
+  __init__(file)
+  + normalise()
+}
+
+class NormalisationStopwords {
+  __init__(file)
+  + normalise()
+}
+
+NormalisationLocaleBased <|-- NormalisationInterface
+NormalisationLocaleSubstitutions <|-- NormalisationLocaleBased
+NormalisationLocaleStopwords <|-- NormalisationLocaleBased
+NormalisationSubstitutions <|-- NormalisationInterface
+NormalisationStopwords <|-- NormalisationInterface
+NormalisationLocaleStopwords <-- NormalisationStopwords : _normalizer
+NormalisationLocaleSubstitutions <-- NormalisationSubstitutions : _normalizer
+@enduml
