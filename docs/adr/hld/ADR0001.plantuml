@@ -35,11 +35,11 @@ class NormalisationTransliterateUnicode {
   + normalise()
 }
 
-NormalisationComposite <|-- NormalisationInterface
-NormalisationLowercase <|-- NormalisationInterface
-NormalisationRegex <|-- NormalisationInterface
-NormalisationTransliterateUnicode <|-- NormalisationInterface
-NormalisationAlphaNumeric <|-- NormalisationRegex
-NormalisationAlphaNumericUnicode <|-- NormalisationRegex
-NormalisationInterface "0..*" <--o "1" NormalisationComposite
+NormalisationComposite ..|> NormalisationInterface
+NormalisationLowercase ..|> NormalisationInterface
+NormalisationRegex ..|> NormalisationInterface
+NormalisationTransliterateUnicode ..|> NormalisationInterface
+NormalisationAlphaNumeric --|> NormalisationRegex
+NormalisationAlphaNumericUnicode --|> NormalisationRegex
+NormalisationInterface "1..*" <--* NormalisationComposite
 @enduml
