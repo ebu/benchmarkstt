@@ -2,10 +2,10 @@
 
 abstract NormalisationLocaleBased
 {
-  - NormalisationInterface _normalizer
-  - _file
+  - NormalisationInterface _normaliser
+  # _file
   __init__(locale, dir_path)
-  + normalise(): self._normalizer.normalise()
+  + normalise(): self._normaliser.normalise()
 }
 
 interface NormalisationInterface 
@@ -14,13 +14,13 @@ interface NormalisationInterface
 }
 
 class NormalisationLocaleSubstitutions {
-  - NormalisationSubstitutions _normalizer
+  - NormalisationSubstitutions _normaliser
   __init__(locale, dir_path)
   + normalise()
 }
 
 class NormalisationLocaleStopwords {
-  - NormalisationStopwords _normalizer
+  - NormalisationStopwords _normaliser
   __init__(locale, dir_path)
   + normalise()
 }
@@ -35,11 +35,11 @@ class NormalisationStopwords {
   + normalise()
 }
 
-NormalisationLocaleBased <|-- NormalisationInterface
-NormalisationLocaleSubstitutions <|-- NormalisationLocaleBased
-NormalisationLocaleStopwords <|-- NormalisationLocaleBased
-NormalisationSubstitutions <|-- NormalisationInterface
-NormalisationStopwords <|-- NormalisationInterface
-NormalisationLocaleStopwords <-- NormalisationStopwords : _normalizer
-NormalisationLocaleSubstitutions <-- NormalisationSubstitutions : _normalizer
+NormalisationLocaleSubstitutions --|> NormalisationLocaleBased
+NormalisationLocaleStopwords --|> NormalisationLocaleBased
+NormalisationSubstitutions ..|>  NormalisationInterface
+NormalisationLocaleBased ..|> NormalisationInterface
+NormalisationStopwords ..|> NormalisationInterface
+NormalisationLocaleStopwords <-- NormalisationStopwords : _normaliser
+NormalisationLocaleSubstitutions <-- NormalisationSubstitutions : _normaliser
 @enduml
