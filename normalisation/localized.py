@@ -38,6 +38,8 @@ class AbstractLocale(ABC):
 
 class RegexReplace(AbstractLocale):
     """
+    Todo: check case sensitivity?
+
     >>> from os.path import dirname, realpath, join
     >>> path = dirname(dirname(realpath(__file__)))
     >>> path = join(path, 'resources', 'normalisers', 'test', 'regexreplace')
@@ -46,8 +48,8 @@ class RegexReplace(AbstractLocale):
     >>> normaliser.normalise("You're like a German par-a-keet")
     'Youre like a German parrot'
     >>> normaliser = RegexReplace('it', path)
-    >>> normaliser.normalise("grande caldo, grande problema, grande ala")
-    'gran caldo, gran problema, grande ala'
+    >>> normaliser.normalise("grande caldo, grande problema, grande ala, 'grande' is ok, as is grande .")
+    "gran caldo, gran problema, grande ala, 'grande' is ok, as is grande ."
     """
 
     @property
