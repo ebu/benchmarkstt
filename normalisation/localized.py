@@ -45,6 +45,9 @@ class RegexReplace(AbstractLocale):
     >>> normaliser = RegexReplace('en_UK', path)
     >>> normaliser.normalise("You're like a German par-a-keet")
     'Youre like a German parrot'
+    >>> normaliser = RegexReplace('it', path)
+    >>> normaliser.normalise("grande caldo, grande problema, grande ala")
+    'gran caldo, gran problema, grande ala'
     """
 
     @property
