@@ -52,7 +52,12 @@ de | _None/no match_
 
 ### Diagram
 
-The classes extending from `NormalisationLocaleBased` set `_normalizer` in their `__init__` method passing `file=self._file` (which in turn is set by `NormalisationLocaleBased.__init__()` based on `locale` and `dir_path`).
+The classes extending from `NormalisationLocaleBased` set `_normaliser` in their `__init__` method passing `file=self._file` (which in turn is set by `NormalisationLocaleBased.__init__()` based on `locale` and `dir_path`).
 
 ![Diagram](hld/ADR0002.png)
 
+### Implementation example
+
+(obviously the actual code is just placeholder)
+
+See [ADR-0002-normalisation-languagespecific.py](ADR-0002-normalisation-languagespecific.py)
