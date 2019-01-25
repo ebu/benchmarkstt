@@ -10,6 +10,11 @@ import csv
 
 
 class AbstractLocale(ABC):
+    """
+    Abstract Base Class for locale based normalisation, it will automagically determine
+    which file is to be used.
+    """
+
     def __init__(self, locale, path):
         self._file = self.choose_file(locale, path)
 

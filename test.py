@@ -1,4 +1,4 @@
-from normalisation import *
+from conferatur.normalisation import *
 
 if __name__ == '__main__':
     import doctest
