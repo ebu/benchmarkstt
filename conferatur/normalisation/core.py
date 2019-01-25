@@ -25,13 +25,32 @@ class Replace:
 class RegexReplace:
     r"""
     Simple regex replace
+
     >>> normaliser = RegexReplace('(scratch)', r"\1 (his arm's off)")
     >>> normaliser.normalise('Tis but a scratch.')
     "Tis but a scratch (his arm's off)."
+
+    By default the pattern is interpreted case-sensitive,
+    >>> RegexReplace('ha', 'he').normalise('HA! Hahaha!')
+    'HA! Hahehe!'
+
+    Case-sensitivity is supported by adding inline modifiers.
+    You might want to use capturing groups to preserve the case.
+    When replacing a character not captured, the information about
+    its case is lost...
+    >>> RegexReplace('(?i)(h)a', r'\1e').normalise('HAHA! Hahaha!')
+    'HeHe! Hehehe!'
+
+    No regex flags are set by default, you can set them yourself though in the regex,
+    and combine them at will, eg. multiline, dotall and ignorecase:
+    >>> RegexReplace('(?msi)new.line', 'newline').normalise("New\nline")
+    'newline'
+
+
     """
-    def __init__(self, pattern: str, substitution: str=''):
+    def __init__(self, pattern: str, substitution: str=None):
         self._pattern = re.compile(pattern)
-        self._substitution = substitution
+        self._substitution = substitution if substitution is not None else ''
 
     def normalise(self, text: str) -> str:
         return self._pattern.sub(self._substitution, text)

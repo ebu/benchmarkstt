@@ -16,7 +16,8 @@ class AbstractLocale(ABC):
     @staticmethod
     def choose_file(locale, path):
         if not os.path.isdir(path):
-            raise NotADirectoryError("Expected '$s' to be a directory")
+            raise NotADirectoryError("Expected '$s' to be a directory" % (path,))
+
         files = {standardize_tag(file): file
                  for file in os.listdir(path)
                  if os.path.isfile(os.path.join(path, file))}
@@ -38,15 +39,14 @@ class AbstractLocale(ABC):
 
 class RegexReplace(AbstractLocale):
     """
-    Todo: check case sensitivity?
 
     >>> from os.path import dirname, realpath, join
     >>> path = dirname(dirname(realpath(__file__)))
-    >>> path = join(path, 'resources', 'normalisers', 'test', 'regexreplace')
+    >>> path = join(path, 'test', 'resources', 'normalisers', 'regexreplace')
     >>>
     >>> normaliser = RegexReplace('en_UK', path)
-    >>> normaliser.normalise("You're like a German par-a-keet")
-    'Youre like a German parrot'
+    >>> normaliser.normalise("You're like a German Par-a-keet")
+    "You're like a German Parrot"
     >>> normaliser = RegexReplace('it', path)
     >>> normaliser.normalise("grande caldo, grande problema, grande ala, 'grande' is ok, as is grande .")
     "gran caldo, gran problema, grande ala, 'grande' is ok, as is grande ."
@@ -55,11 +55,12 @@ class RegexReplace(AbstractLocale):
     @property
     def _normaliser(self):
         normaliser = core.Composite()
-        with open(self._file, 'r') as csvfile:
+        with open(self._file) as csvfile:
             reader = csv.reader(csvfile)
-            for row in reader:
+            for idx, row in enumerate(reader):
                 if len(row) != 2:
-                    raise ValueError("Expected exactly 2 columns")
+                    raise ValueError("Expected exactly 2 columns, got %d (in file '%s' line %d)" %
+                                     (len(row), self._file, idx+1))
                 normaliser.add(core.RegexReplace(row[0], row[1]))
         return normaliser
 
