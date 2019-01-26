@@ -7,7 +7,7 @@ Submodules
 .. toctree::
 
    conferatur.normalisation.core
-   conferatur.normalisation.localized
+   conferatur.normalisation.localised
 
 Module contents
 ---------------

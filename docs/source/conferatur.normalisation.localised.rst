@@ -1,7 +1,7 @@
-conferatur.normalisation.localized module
+conferatur.normalisation.localised module
 =========================================
 
-.. automodule:: conferatur.normalisation.localized
+.. automodule:: conferatur.normalisation.localised
     :members:
     :undoc-members:
     :show-inheritance:

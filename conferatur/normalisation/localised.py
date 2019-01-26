@@ -59,7 +59,7 @@ class RegexReplace(AbstractLocale):
 
     .. doctest::
 
-        >>> from conferatur.normalisation.localized import RegexReplace
+        >>> from conferatur.normalisation.localised import RegexReplace
         >>> path = './resources/test/normalisers/regexreplace'
         >>> normaliser = RegexReplace('en_UK', path)
         >>> normaliser.normalise("You're like a German Par-a-keet")
@@ -99,7 +99,7 @@ class ConfigFile(AbstractLocale):
 
     .. doctest::
 
-        >>> from conferatur.normalisation.localized import ConfigFile
+        >>> from conferatur.normalisation.localised import ConfigFile
         >>> path = './resources/test/normalisers/configfile'
         >>> normaliser = ConfigFile('en_UK', path)
         >>> normaliser.normalise("𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰𝔬 𝔡'ℑ𝔱𝔞𝔩𝔦𝔞")
