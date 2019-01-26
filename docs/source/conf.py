@@ -14,7 +14,9 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
+
+root_dir = os.path.abspath('../..')
+sys.path.insert(0, root_dir)
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
@@ -187,3 +189,7 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+doctest_global_setup = '''
+import os
+os.chdir(%s)
+''' % (repr(root_dir),)

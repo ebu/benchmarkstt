@@ -8,6 +8,7 @@ from unidecode import unidecode
 import csv
 from importlib import import_module
 from io import StringIO
+import os
 
 
 class Replace:
@@ -249,7 +250,7 @@ class Config:
                 normaliser = self._get_class(line[0])
             except ValueError:
                 raise ValueError("Unknown normaliser %s on line %d: %s" %
-                                 (idx, repr(line[0]), repr(' '.join(line))))
+                                 (repr(line[0]), idx, repr(' '.join(line))))
             self._normaliser.add(normaliser(*line[1:]))
 
     @classmethod
@@ -263,7 +264,8 @@ class Config:
         requested_class = requested[-1]
         for lookup in cls._lookups:
             try:
-                module = import_module('.'.join(filter(len, lookup.split('.') + requested_module)))
+                module = '.'.join(filter(len, lookup.split('.') + requested_module))
+                module = import_module(module)
                 if hasattr(module, requested_class):
                     return getattr(module, requested_class)
             except ModuleNotFoundError:
@@ -284,8 +286,7 @@ class ConfigFile(Config):
     .. doctest::
 
         >>> from conferatur.normalisation.core import ConfigFile
-        >>> from os.path import realpath, join
-        >>> file = join(realpath('../'), 'resources', 'test', 'normalisers', 'configfile.conf')
+        >>> file = './resources/test/normalisers/configfile.conf'
         >>> normaliser = ConfigFile(file)
         >>> normaliser.normalise('Ee ecky thump!')
         'aa ackY Thump!'
@@ -293,5 +294,7 @@ class ConfigFile(Config):
     """
 
     def __init__(self, filename):
+        filename = os.path.realpath(filename)
         with open(filename) as csvfile:
             self._apply_file_like_object(csvfile)
+
