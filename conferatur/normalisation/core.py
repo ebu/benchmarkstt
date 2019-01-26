@@ -101,8 +101,10 @@ class AlphaNumericUnicode(RegexReplace):
 
 class Lowercase:
     """
+    Lowercase the text
 
     .. doctest::
+
         >>> from conferatur.normalisation.core import Lowercase
         >>> Lowercase().normalise('PRÁZdNÉ VLAŠToVKY')
         'prázdné vlaštovky'
@@ -114,6 +116,9 @@ class Lowercase:
 
 class Unidecode:
     """
+    Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
+
+    .. _see: https://pypi.org/project/Unidecode/
 
     .. doctest::
 
