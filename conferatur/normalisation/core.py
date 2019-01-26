@@ -177,13 +177,11 @@ class Config:
 
     Arguments MAY be wrapped in double quotes.
     If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
-    A double quote itself is represented in this quoted argument as `""`.
-
-
+    A double quote itself is represented in this quoted argument as two double quotes: `""`.
 
     The normalisation rules are applies top-to-bottom and follow this format:
 
-    ::
+    .. code-block:: none
 
         Normaliser1 argument1 "argument 2" "this is argument3 containing a double quote ("") and spaces"
         # This is a comment
