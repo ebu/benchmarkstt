@@ -1,19 +1,24 @@
 import os
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 dirname = os.path.dirname(__file__)
-__version__ = open('VERSION').read().strip()
+with open('VERSION') as f:
+    __version__ = f.read().strip()
 __author__ = 'EBU'
 # had to call it something...
 __name__ = 'conferatur'
 
 # Auto save to __meta__
 meta_location = os.path.join(dirname, 'src', __name__, '__meta__.py')
-open(meta_location, 'wb').write('''# Automagically created. DO NOT EDIT
+with open(meta_location, 'wb') as f:
+    f.write('''# Automagically created. DO NOT EDIT
 __version__ = '%s'
 __author__ = '%s'
 ''' % (__version__, __author__))
+
+with open('README.md') as f:
+    long_description = f.read()
 
 setup(
     name=__name__,
@@ -22,7 +27,7 @@ setup(
     author=__author__,
     author_email='',
     description='',
-    long_description=open('README.md').read(),
+    long_description=long_description,
     classifiers=[
         'Programming Language :: Python',
     ],
