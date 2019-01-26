@@ -61,7 +61,6 @@ class RegexReplace(AbstractLocale):
         >>> from conferatur.normalisation.localized import RegexReplace
         >>> from os.path import realpath, join
         >>> path = join(realpath('../'), 'resources', 'test', 'normalisers', 'regexreplace')
-        >>>
         >>> normaliser = RegexReplace('en_UK', path)
         >>> normaliser.normalise("You're like a German Par-a-keet")
         "You're like a German Parrot"
@@ -93,6 +92,11 @@ class RegexReplace(AbstractLocale):
 
 
 class ConfigFile(AbstractLocale):
+    """
+    .. todo::
+
+        - document and test
+    """
     @property
     def _normaliser(self):
         return core.ConfigFile(self._file)
