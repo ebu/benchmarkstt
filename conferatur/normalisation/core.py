@@ -175,6 +175,10 @@ class Config:
     Use config notation to define normalisation rules. This notation is a list of normalisers,
     one per line, with optional arguments (separated by a space).
 
+    The normalisers can be any of the core normalisers, or you can refer to your own normaliser
+    class (like you would use in a python import, eg. `my.own.package.MyNormaliserClass`). Normaliser
+    names are case-sensitive.
+
     Arguments MAY be wrapped in double quotes.
     If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
     A double quote itself is represented in this quoted argument as two double quotes: `""`.
@@ -217,6 +221,9 @@ class Config:
         'None\nshall\npass.'
         >>> Config('Replace     t      " T "').normalise("test")
         ' T es T '
+        >>> # Loading a custom normaliser that wraps the text in square brackets
+        >>> Config('resources.test.normalisers.Testnormaliser').normalise('test')
+        '[test]'
     """
 
     _lookups = (
@@ -255,9 +262,12 @@ class Config:
 
         requested_class = requested[-1]
         for lookup in cls._lookups:
-            module = import_module('.'.join(filter(len, lookup.split('.') + requested_module)))
-            if hasattr(module, requested_class):
-                return getattr(module, requested_class)
+            try:
+                module = import_module('.'.join(filter(len, lookup.split('.') + requested_module)))
+                if hasattr(module, requested_class):
+                    return getattr(module, requested_class)
+            except ModuleNotFoundError:
+                pass
 
         raise ImportError("Could not find '%s'" % (name,))
 
@@ -267,7 +277,9 @@ class Config:
 
 class ConfigFile(Config):
     """
-    Reads and applies normalistion rules from a file.
+    Reads and applies normalisation rules from a file.
+
+    See :func:`conferatur.normalisation.core.Config` for information about the config file format.
 
     .. doctest::
 

@@ -4,22 +4,10 @@ conferatur.normalisation package
 Submodules
 ----------
 
-conferatur.normalisation.core module
-------------------------------------
+.. toctree::
 
-.. automodule:: conferatur.normalisation.core
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-conferatur.normalisation.localized module
------------------------------------------
-
-.. automodule:: conferatur.normalisation.localized
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   conferatur.normalisation.core
+   conferatur.normalisation.localized
 
 Module contents
 ---------------
