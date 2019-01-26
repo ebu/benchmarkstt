@@ -5,6 +5,8 @@ Some basic/simple normalisation classes
 """
 import re
 from unidecode import unidecode
+import csv
+from importlib import import_module
 
 
 class Replace:
@@ -161,3 +163,54 @@ class Composite:
             text = normaliser.normalise(text)
         return text
 
+
+class ConfigFile:
+    """
+    Reads and applies normalistion rules from a file.
+
+    .. doctest::
+
+        >>> from conferatur.normalisation.core import ConfigFile
+        >>> from os.path import realpath, join
+        >>> file = join(realpath('../'), 'resources', 'test', 'normalisers', 'configfile.conf')
+        >>> normaliser = ConfigFile(file)
+        >>> normaliser.normalise('Ee ecky thump!')
+        'aa ackY Thump!'
+
+    """
+
+    _lookups = (
+        "conferatur.normalisation.core",
+        "conferatur.normalisation",
+        ""
+    )
+
+    def __init__(self, file):
+        self._normaliser = Composite()
+        with open(file) as csvfile:
+            reader = csv.reader(csvfile, delimiter=' ')
+            for line in reader:
+                # allow for comments
+                if line[0].startswith('#'):
+                    continue
+                normaliser = self._get_class(line[0])
+                self._normaliser.add(normaliser(*line[1:]))
+
+    @classmethod
+    def _get_class(cls, name):
+        requested = name.split('.')
+        requested_module = []
+
+        if len(requested) > 1:
+            requested_module = requested[:-1]
+
+        requested_class = requested[-1]
+        for lookup in cls._lookups:
+            module = import_module('.'.join(filter(len, lookup.split('.') + requested_module)))
+            if hasattr(module, requested_class):
+                return getattr(module, requested_class)
+
+        raise ImportError("Could not find '%s'" % (name,))
+
+    def normalise(self, text: str) -> str:
+        return self._normaliser.normalise(text)
