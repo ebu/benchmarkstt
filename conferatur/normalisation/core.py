@@ -7,6 +7,7 @@ import re
 from unidecode import unidecode
 import csv
 from importlib import import_module
+from io import StringIO
 
 
 class Replace:
@@ -169,19 +170,55 @@ class Composite:
         return text
 
 
-class ConfigFile:
-    """
-    Reads and applies normalistion rules from a file.
+class Config:
+    r"""
+    Use config notation to define normalisation rules. This notation is a list of normalisers,
+    one per line, with optional arguments (separated by a space).
+
+    Arguments MAY be wrapped in double quotes.
+    If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
+    A double quote itself is represented in this quoted argument as `""`.
+
+
+
+    The normalisation rules are applies top-to-bottom and follow this format:
+
+    ::
+
+        Normaliser1 argument1 "argument 2" "this is argument3 containing a double quote ("") and spaces"
+        # This is a comment
+        Normaliser2
+        # (Normaliser2 has no arguments)
+        Normaliser3 "This is argument 1
+        Spanning multiple lines
+        " "and this would be argument 2 still applying to Normaliser3"
+
 
     .. doctest::
 
         >>> from conferatur.normalisation.core import ConfigFile
-        >>> from os.path import realpath, join
-        >>> file = join(realpath('../'), 'resources', 'test', 'normalisers', 'configfile.conf')
-        >>> normaliser = ConfigFile(file)
-        >>> normaliser.normalise('Ee ecky thump!')
-        'aa ackY Thump!'
-
+        >>> config = '''
+        ... # using a simple config file
+        ... Lowercase
+        ... # Let's replace double quotes with single quotes (note wrapping in double quotes,
+        ... # to allow the use of double quotes in an argument.
+        ... RegexReplace "[""]" '
+        ... # A space in the argument: wrap in double quotes as well
+        ... Replace 'ni' "'ecky ecky ecky'"
+        ... '''
+        >>> normaliser = Config(config)
+        >>> normaliser.normalise('No! Not the Knights Who Say "Ni"!')
+        "no! not the knights who say 'ecky ecky ecky'!"
+        >>> # Lets replace spaces with a newline (without using regex), demonstrating multiline arguments
+        >>> config = '''
+        ... Replace " " "
+        ... "
+        ... '''
+        >>> normaliser = Config(config)
+        >>> normaliser.normalise("None shall pass.")
+        'None\nshall\npass.'
+        >>> Config('Replace     t      " T "').normalise("test")
+        ' T es T '
     """
 
     _lookups = (
@@ -190,16 +227,25 @@ class ConfigFile:
         ""
     )
 
-    def __init__(self, file):
+    def __init__(self, config):
+        self._apply_file_like_object(StringIO(config))
+
+    def _apply_file_like_object(self, file_like_object):
         self._normaliser = Composite()
-        with open(file) as csvfile:
-            reader = csv.reader(csvfile, delimiter=' ')
-            for line in reader:
-                # allow for comments
-                if line[0].startswith('#'):
-                    continue
+        reader = csv.reader(file_like_object, delimiter=' ', skipinitialspace=True)
+        for idx, line in enumerate(reader):
+            # allow empty lines
+            if len(line) == 0:
+                continue
+            # allow for comments
+            if line[0].startswith('#'):
+                continue
+            try:
                 normaliser = self._get_class(line[0])
-                self._normaliser.add(normaliser(*line[1:]))
+            except ValueError:
+                raise ValueError("Unknown normaliser %s on line %d: %s" %
+                                 (idx, repr(line[0]), repr(' '.join(line))))
+            self._normaliser.add(normaliser(*line[1:]))
 
     @classmethod
     def _get_class(cls, name):
@@ -219,3 +265,23 @@ class ConfigFile:
 
     def normalise(self, text: str) -> str:
         return self._normaliser.normalise(text)
+
+
+class ConfigFile(Config):
+    """
+    Reads and applies normalistion rules from a file.
+
+    .. doctest::
+
+        >>> from conferatur.normalisation.core import ConfigFile
+        >>> from os.path import realpath, join
+        >>> file = join(realpath('../'), 'resources', 'test', 'normalisers', 'configfile.conf')
+        >>> normaliser = ConfigFile(file)
+        >>> normaliser.normalise('Ee ecky thump!')
+        'aa ackY Thump!'
+
+    """
+
+    def __init__(self, filename):
+        with open(filename) as csvfile:
+            self._apply_file_like_object(csvfile)
