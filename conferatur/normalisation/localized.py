@@ -4,7 +4,7 @@ Normalisation based on locale
 """
 
 from abc import ABC, abstractmethod
-from . import core
+from conferatur.normalisation import core
 import os
 from langcodes import best_match, standardize_tag
 import csv
@@ -31,6 +31,7 @@ class AbstractLocale(ABC):
         :param path: Location of available locale files
         :return: Full path to file location
         """
+        path = os.path.realpath(path)
         if not os.path.isdir(path):
             raise NotADirectoryError("Expected '%s' to be a directory" % (str(path),))
 
@@ -59,8 +60,7 @@ class RegexReplace(AbstractLocale):
     .. doctest::
 
         >>> from conferatur.normalisation.localized import RegexReplace
-        >>> from os.path import realpath, join
-        >>> path = join(realpath('../'), 'resources', 'test', 'normalisers', 'regexreplace')
+        >>> path = './resources/test/normalisers/regexreplace'
         >>> normaliser = RegexReplace('en_UK', path)
         >>> normaliser.normalise("You're like a German Par-a-keet")
         "You're like a German Parrot"
@@ -93,9 +93,18 @@ class RegexReplace(AbstractLocale):
 
 class ConfigFile(AbstractLocale):
     """
-    .. todo::
+    Reads and applies normalisation rules from a file.
 
-        - document and test
+    See :func:`conferatur.normalisation.core.Config` for information about the config file format.
+
+    .. doctest::
+
+        >>> from conferatur.normalisation.localized import ConfigFile
+        >>> path = './resources/test/normalisers/configfile'
+        >>> normaliser = ConfigFile('en_UK', path)
+        >>> normaliser.normalise("𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰𝔬 𝔡'ℑ𝔱𝔞𝔩𝔦𝔞")
+        "gran sasso d'italia"
+
     """
     @property
     def _normaliser(self):

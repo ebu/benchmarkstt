@@ -1,1 +1,7 @@
-Localized.RegexReplace "resources/test/normalisers/configfile/de"
+# Load another localized file
+localized.ConfigFile de ./resources/test/normalisers/configfile
+
+Lowercase
+
+# And re-use regexreplace for en
+localized.RegexReplace it ./resources/test/normalisers/regexreplace
