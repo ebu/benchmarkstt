@@ -1,7 +1,7 @@
-# Load another localized file
-localized.ConfigFile de ./resources/test/normalisers/configfile
+# Load another localised file
+localised.ConfigFile de ./resources/test/normalisers/configfile
 
 Lowercase
 
 # And re-use regexreplace for en
-localized.RegexReplace it ./resources/test/normalisers/regexreplace
+localised.RegexReplace it ./resources/test/normalisers/regexreplace

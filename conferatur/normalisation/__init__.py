@@ -1,1 +1,1 @@
-__all__ = ['core', 'localized']
+__all__ = ['core', 'localised']
