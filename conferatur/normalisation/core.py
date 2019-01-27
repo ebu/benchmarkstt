@@ -225,7 +225,7 @@ class Config:
         >>> Config('Replace     t      " T "').normalise("test")
         ' T es T '
         >>> # Loading a custom normaliser that wraps the text in square brackets
-        >>> Config('resources.test.normalisers.Testnormaliser').normalise('test')
+        >>> Config('resources.test.normalisers.testnormaliser').normalise('test')
         '[test]'
     """
 
@@ -264,7 +264,7 @@ class Config:
             requested_module = requested[:-1]
 
         requested_class = requested[-1]
-        lname = name.lower()
+        lname = requested_class.lower()
         for lookup in cls._lookups:
             try:
                 module = '.'.join(filter(len, lookup.split('.') + requested_module))
