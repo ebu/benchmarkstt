@@ -51,14 +51,9 @@ normalisers:
         sys.stderr.write(txt + " Use `--help` for more information.\n")
         exit(code)
 
-    if len(args) == 0:
-        err("Expected at least one argument.")
-
-    logger = logging.getLogger(__name__)
-    if not args[0].startswith('--'):
-        err("Invalid argument '%s'." % (args[0]))
-
     def get_args(args, arg_names):
+        if len(args) == 0:
+            return None
         input_files_idx = [idx for idx, v in enumerate(args) if v in arg_names]
         if not len(input_files_idx):
             return None
@@ -72,15 +67,18 @@ normalisers:
     input_files = get_args(args, ('-i', '--input-file'))
     output_files = get_args(args, ('-o', '--output-file'))
 
+    if len(args) == 0:
+        err("Need at least one normaliser.")
+
+    if not args[0].startswith('--'):
+        err("Invalid argument '%s'." % (args[0]))
+
     if input_files is None and output_files is not None and len(output_files) > 1:
         err("Can only write output to one file when reading from stdin.")
     elif input_files is not None and output_files is not None:
         # straight mapping from input to output, needs equal length
         if len(input_files) != len(output_files):
             err("When using multiple input or output files, there needs to be an equal amount of each.")
-
-    if len(args) == 0:
-        err("Need at least one normaliser.")
 
     normaliser = CommandLineArguments(args)
 
