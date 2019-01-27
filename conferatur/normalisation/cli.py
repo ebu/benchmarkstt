@@ -1,38 +1,41 @@
-"""usage: conferatur normalisation
-                     [--help|-h]
-                     [--input-file|-i FILE]
-                     [--output-file|-o FILE]
-                     --normaliser-name [normaliserarg1 [normaliserarg2...]
-                     [--normaliser-name [arg1 [arg2...]] ...]
-                     [...]
+"""
+.. code-block:: none
 
-positional arguments:
-  -h, --help              show this help message and exit
+    usage: conferatur normalisation
+                         [--help|-h]
+                         [--input-file|-i FILE]
+                         [--output-file|-o FILE]
+                         --normaliser-name [normaliserarg1 [normaliserarg2...]
+                         [--normaliser-name [arg1 [arg2...]] ...]
+                         [...]
 
-optional arguments:
-  You can provide multiple input and output files, each preceded by -i and -o
-  respectively.
-  If no input file is given, only one output file can be used.
-  If using both multiple input and output files there should be an equal amount 
-  of each. Each processed input file will then be written to the corresponding 
-  output file.
+    positional arguments:
+      -h, --help              show this help message and exit
 
-  -i, --input-file FILE   read input from FILE, by default will use stdin
-  -o, --output-file FILE  write output to FILE, by default will use stdout
+    optional arguments:
+      You can provide multiple input and output files, each preceded by -i and -o
+      respectively.
+      If no input file is given, only one output file can be used.
+      If using both multiple input and output files there should be an equal amount
+      of each. Each processed input file will then be written to the corresponding
+      output file.
 
-  !!! WARNING: OUTPUT FILES ARE OVERWRITTEN IF THEY ALREADY EXIST !!!
+      -i, --input-file FILE   read input from FILE, by default will use stdin
+      -o, --output-file FILE  write output to FILE, by default will use stdout
 
-normalisers:
-  A list of normalisers to execute on the input, can be one or more normalisers 
-  which are applied sequentially.
-  The program will automatically find the normaliser in confertur.normalisers.core,
-  then conferatur.normalisers and finally in the global namespace.
-  At least one normaliser needs to be provided.
+      !!! WARNING: OUTPUT FILES ARE OVERWRITTEN IF THEY ALREADY EXIST !!!
 
-  --normaliser-name [arg1 [arg2...]]
-                           the name of the normaliser (eg. --lowercase),
-                           optionally followed by arguments passed to the 
-                           normaliser
+    normalisers:
+      A list of normalisers to execute on the input, can be one or more normalisers
+      which are applied sequentially.
+      The program will automatically find the normaliser in confertur.normalisers.core,
+      then conferatur.normalisers and finally in the global namespace.
+      At least one normaliser needs to be provided.
+
+      --normaliser-name [arg1 [arg2...]]
+                               the name of the normaliser (eg. --lowercase),
+                               optionally followed by arguments passed to the
+                               normaliser
 """
 
 import sys
@@ -42,7 +45,8 @@ from conferatur.normalisation.core import CommandLineArguments
 def main(args=None):
     # not using argparse for this one
     if '--help' in args or '-h' in args:
-        print(__doc__)
+        helptext = __doc__.split('usage: ', 1)[1].replace("\n    ", "\n")
+        print('usage: ' + helptext)
         exit()
 
     def err(txt, code=1):

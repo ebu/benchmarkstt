@@ -6,6 +6,7 @@ Submodules
 
 .. toctree::
 
+   conferatur.normalisation.cli
    conferatur.normalisation.core
    conferatur.normalisation.localised
 

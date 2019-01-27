@@ -10,6 +10,7 @@ from importlib import import_module
 from io import StringIO
 import os
 from typing import Iterable
+import inspect
 
 
 class Replace:
@@ -48,7 +49,7 @@ class RegexReplace:
         >>> RegexReplace('ha', 'he').normalise('HA! Hahaha!')
         'HA! Hahehe!'
 
-        Case-sensitivity is supported by adding inline modifiers.
+        Case-insensitivity is supported by adding inline modifiers.
         You might want to use capturing groups to preserve the case.
         When replacing a character not captured, the information about
         its case is lost...
@@ -121,8 +122,6 @@ class Unidecode:
     """
     Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
 
-    .. _see: https://pypi.org/project/Unidecode/
-
     .. doctest::
 
         >>> from conferatur.normalisation.core import Unidecode
@@ -179,17 +178,17 @@ class Config:
 
     The normalisers can be any of the core normalisers, or you can refer to your own normaliser
     class (like you would use in a python import, eg. `my.own.package.MyNormaliserClass`). Normaliser
-    names are case-sensitive.
+    names are case-insensitive.
 
     Arguments MAY be wrapped in double quotes.
     If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
     A double quote itself is represented in this quoted argument as two double quotes: `""`.
 
-    The normalisation rules are applies top-to-bottom and follow this format:
+    The normalisation rules are applied top-to-bottom and follow this format:
 
     .. code-block:: none
 
-        Normaliser1 argument1 "argument 2" "this is argument3 containing a double quote ("") and spaces"
+        Normaliser1 argument1 "argument 2" "this is argument3 containing a double quote ("")"
         # This is a comment
         Normaliser2
         # (Normaliser2 has no arguments)
@@ -275,7 +274,7 @@ class Config:
                     return getattr(module, requested_class)
                 # fallback, check case-insensitive matches
                 realname = [class_name for class_name in dir(module)
-                            if class_name.lower() == lname and type(getattr(module, class_name)) is type]
+                            if class_name.lower() == lname and inspect.isclass(getattr(module, class_name))]
                 if len(realname) > 1:
                     raise ImportError("Cannot determine which class to use for '$s': %s" %
                                       (lname, repr(realname)))
