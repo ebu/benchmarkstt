@@ -43,4 +43,9 @@ setup(
         ],
     },
     platforms='any',
+    entry_points={
+        "console_scripts": [
+            "conferatur=conferatur/cli.py:main"
+        ],
+    }
 )
