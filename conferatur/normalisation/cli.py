@@ -1,4 +1,3 @@
-import logging
 import sys
 from conferatur.normalisation.core import CommandLineArguments
 
