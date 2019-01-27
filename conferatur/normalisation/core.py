@@ -268,6 +268,8 @@ class Config:
         for lookup in cls._lookups:
             try:
                 module = '.'.join(filter(len, lookup.split('.') + requested_module))
+                if module == '':
+                    continue
                 module = import_module(module)
                 if hasattr(module, requested_class):
                     return getattr(module, requested_class)
@@ -282,7 +284,7 @@ class Config:
             except ModuleNotFoundError:
                 pass
 
-        raise ImportError("Could not find '%s'" % (name,))
+        raise ImportError("Could not find normaliser '%s'" % (name,))
 
     def normalise(self, text: str) -> str:
         return self._normaliser.normalise(text)
