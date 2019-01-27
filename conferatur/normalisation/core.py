@@ -202,7 +202,7 @@ class Config:
         >>> from conferatur.normalisation.core import ConfigFile
         >>> config = '''
         ... # using a simple config file
-        ... Lowercase
+        ... lowercase
         ... # Let's replace double quotes with single quotes (note wrapping in double quotes,
         ... # to allow the use of double quotes in an argument.
         ... RegexReplace "[""]" '
@@ -213,8 +213,9 @@ class Config:
         >>> normaliser.normalise('No! Not the Knights Who Say "Ni"!')
         "no! not the knights who say 'ecky ecky ecky'!"
         >>> # Lets replace spaces with a newline (without using regex), demonstrating multiline arguments
+        >>> # also note that the normaliser name is case-insensitive
         >>> config = '''
-        ... Replace " " "
+        ... replace " " "
         ... "
         ... '''
         >>> normaliser = Config(config)
@@ -262,12 +263,21 @@ class Config:
             requested_module = requested[:-1]
 
         requested_class = requested[-1]
+        lname = name.lower()
         for lookup in cls._lookups:
             try:
                 module = '.'.join(filter(len, lookup.split('.') + requested_module))
                 module = import_module(module)
                 if hasattr(module, requested_class):
                     return getattr(module, requested_class)
+                # fallback, check case-insensitive matches
+                realname = [class_name for class_name in dir(module)
+                            if class_name.lower() == lname and type(getattr(module, class_name)) is type]
+                if len(realname) > 1:
+                    raise ImportError("Cannot determine which class to use for '$s': %s" %
+                                      (lname, repr(realname)))
+                elif len(realname):
+                    return getattr(module, realname[0])
             except ModuleNotFoundError:
                 pass
 
