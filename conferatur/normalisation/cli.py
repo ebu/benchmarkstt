@@ -1,18 +1,11 @@
-import sys
-from conferatur.normalisation.core import CommandLineArguments
-
-
-def main(args=None):
-    # not using argparse for this one
-
-    helptext = '''usage: conferatur normalisation 
+"""usage: conferatur normalisation
                      [--help|-h]
                      [--input-file|-i FILE]
                      [--output-file|-o FILE]
                      --normaliser-name [normaliserarg1 [normaliserarg2...]
                      [--normaliser-name [arg1 [arg2...]] ...]
                      [...]
-                     
+
 positional arguments:
   -h, --help              show this help message and exit
 
@@ -26,7 +19,7 @@ optional arguments:
 
   -i, --input-file FILE   read input from FILE, by default will use stdin
   -o, --output-file FILE  write output to FILE, by default will use stdout
-  
+
   !!! WARNING: OUTPUT FILES ARE OVERWRITTEN IF THEY ALREADY EXIST !!!
 
 normalisers:
@@ -35,15 +28,21 @@ normalisers:
   The program will automatically find the normaliser in confertur.normalisers.core,
   then conferatur.normalisers and finally in the global namespace.
   At least one normaliser needs to be provided.
-  
+
   --normaliser-name [arg1 [arg2...]]
                            the name of the normaliser (eg. --lowercase),
                            optionally followed by arguments passed to the 
                            normaliser
-'''
+"""
 
+import sys
+from conferatur.normalisation.core import CommandLineArguments
+
+
+def main(args=None):
+    # not using argparse for this one
     if '--help' in args or '-h' in args:
-        print(helptext)
+        print(__doc__)
         exit()
 
     def err(txt, code=1):
