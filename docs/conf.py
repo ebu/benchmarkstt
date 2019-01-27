@@ -15,7 +15,7 @@
 import os
 import sys
 
-root_dir = os.path.abspath('../..')
+root_dir = os.path.abspath('..')
 sys.path.insert(0, root_dir)
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
