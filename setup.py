@@ -10,15 +10,21 @@ __author__ = 'EBU'
 __name__ = 'conferatur'
 
 # Auto save to __meta__
-meta_location = os.path.join(dirname, 'src', __name__, '__meta__.py')
-with open(meta_location, 'wb') as f:
+meta_location = os.path.join(dirname,  __name__, '__meta__.py')
+with open(meta_location, 'w') as f:
     f.write('''# Automagically created. DO NOT EDIT
-__version__ = '%s'
-__author__ = '%s'
-''' % (__version__, __author__))
+__version__ = %s
+__author__ = %s
+''' % (repr(__version__), repr(__author__)))
 
 with open('README.md') as f:
     long_description = f.read()
+
+with open('requirements.txt') as f:
+    install_requires = f.readlines()
+
+with open('requirements-docs.txt') as f:
+    docs_requirements = f.readlines()
 
 setup(
     name=__name__,
@@ -31,21 +37,15 @@ setup(
     classifiers=[
         'Programming Language :: Python',
     ],
-    package_dir={'': 'conferatur'},
     packages=('conferatur',),
-    install_requires=[
-        'unidecode',
-        'langcodes',
-    ],
+    install_requires=install_requires,
     extras_require={
-        'dev': [
-            'doctest',
-        ],
+        'docs': docs_requirements,
     },
     platforms='any',
     entry_points={
         "console_scripts": [
-            "conferatur=cli.py"
+            "%s=cli.py" % (__name__,)
         ],
     }
 )
