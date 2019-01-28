@@ -7,11 +7,6 @@ import sys
 root_dir = os.path.abspath('../conferatur')
 sys.path.insert(0, root_dir)
 
-html_theme = 'sphinx_rtd_theme'
-# html_theme = 'alabaster'
-# html_theme = 'guzzle_sphinx_theme'
-# html_theme = 'bootstrap'
-# html_theme = 'default'
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -21,27 +16,15 @@ extensions = [
     'sphinx.ext.githubpages',
 ]
 
-if html_theme == 'guzzle_sphinx_theme':
-    import guzzle_sphinx_theme
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-    html_theme_path = guzzle_sphinx_theme.html_theme_path()
-    html_theme = 'guzzle_sphinx_theme'
+if not on_rtd:  # only import and set the theme if we're building docs locally
+    import sphinx_rtd_theme
 
-    # Register the theme as an extension to generate a sitemap.xml
-    extensions.append("guzzle_sphinx_theme")
-elif html_theme == 'sphinx_rtd_theme':
-    on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-    if not on_rtd:  # only import and set the theme if we're building docs locally
-        import sphinx_rtd_theme
-
-        html_theme = 'sphinx_rtd_theme'
-        html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-    else:
-        html_theme = 'default'
-elif html_theme == 'bootstrap':
-    import sphinx_bootstrap_theme
-    html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+    html_theme = 'sphinx_rtd_theme'
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+else:
+    html_theme = 'default'
 
 # -- Project information -----------------------------------------------------
 
