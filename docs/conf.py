@@ -1,31 +1,47 @@
-# -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
-
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
 import os
 import sys
 
-root_dir = os.path.abspath('..')
+# Configuration file for the Sphinx documentation builder.
+# see the documentation: http://www.sphinx-doc.org/en/master/config
+
+root_dir = os.path.abspath('../conferatur')
 sys.path.insert(0, root_dir)
 
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+html_theme = 'sphinx_rtd_theme'
+# html_theme = 'alabaster'
+# html_theme = 'guzzle_sphinx_theme'
+# html_theme = 'bootstrap'
+# html_theme = 'default'
 
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-else:
-    html_theme = 'default'
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.coverage',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
+]
+
+if html_theme == 'guzzle_sphinx_theme':
+    import guzzle_sphinx_theme
+
+    html_theme_path = guzzle_sphinx_theme.html_theme_path()
+    html_theme = 'guzzle_sphinx_theme'
+
+    # Register the theme as an extension to generate a sitemap.xml
+    extensions.append("guzzle_sphinx_theme")
+elif html_theme == 'sphinx_rtd_theme':
+    on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+    if not on_rtd:  # only import and set the theme if we're building docs locally
+        import sphinx_rtd_theme
+
+        html_theme = 'sphinx_rtd_theme'
+        html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+    else:
+        html_theme = 'default'
+elif html_theme == 'bootstrap':
+    import sphinx_bootstrap_theme
+    html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # -- Project information -----------------------------------------------------
 
@@ -44,17 +60,6 @@ release = ''
 # If your documentation needs a minimal Sphinx version, state it here.
 #
 # needs_sphinx = '1.0'
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
-extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.coverage',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages',
-]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -89,7 +94,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+# html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -190,6 +195,8 @@ epub_exclude_files = ['search.html']
 
 # -- Extension configuration -------------------------------------------------
 doctest_global_setup = '''
-import os
-os.chdir(%s)
-''' % (repr(root_dir),)
+import os, sys
+root_dir = %s
+os.chdir(root_dir)
+sys.path.insert(0, root_dir)
+''' % (repr(os.path.dirname(root_dir)),)
