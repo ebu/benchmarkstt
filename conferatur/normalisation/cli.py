@@ -24,8 +24,8 @@
     normalisers:
       A list of normalisers to execute on the input, can be one or more normalisers
       which are applied sequentially.
-      The program will automatically find the normaliser in confertur.normalisers.core,
-      then conferatur.normalisers and finally in the global namespace.
+      The program will automatically find the normaliser in conferatur.normalisation.core,
+      then conferatur.normalisation and finally in the global namespace.
       At least one normaliser needs to be provided.
 
       --normaliser-name [arguments ...]

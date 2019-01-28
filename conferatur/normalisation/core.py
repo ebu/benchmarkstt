@@ -295,7 +295,7 @@ class ConfigFile(Config):
     """
     Reads and applies normalisation rules from a file.
 
-    See :func:`conferatur.normalisation.core.Config` for information about the config file format.
+    See :func:`normalisation.core.Config` for information about the config file format.
 
     .. doctest::
 

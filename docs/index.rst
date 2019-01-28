@@ -1,6 +1,8 @@
 Welcome to Conferatur's documentation!
 ======================================
 
+"Conferatur: had to call it something..."
+
 .. toctree::
 
     cli
