@@ -35,7 +35,7 @@
 """
 
 import sys
-from conferatur.normalisation.core import CommandLineArguments
+from .core import CommandLineArguments
 
 
 def main(args=None):

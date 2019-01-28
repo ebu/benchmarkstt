@@ -4,7 +4,7 @@ Normalisation based on locale
 """
 
 from abc import ABC, abstractmethod
-from conferatur.normalisation import core
+from . import core
 import os
 from langcodes import best_match, standardize_tag
 import csv

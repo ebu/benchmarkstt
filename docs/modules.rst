@@ -1,7 +1,18 @@
-conferatur
-==========
+Modules
+=========
 
-.. toctree::
-   :maxdepth: 4
+Normalisation
+-------------
 
-   conferatur
+Core
+....
+
+.. automodule:: normalisation.core
+   :members:
+
+
+Localised
+.........
+
+.. automodule:: normalisation.localised
+   :members:
