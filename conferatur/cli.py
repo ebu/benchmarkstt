@@ -21,7 +21,7 @@ def main():
     args, unknown = parser.parse_known_args()
 
     logging.basicConfig(level=args.log_level.upper())
-    module = import_module('conferatur.%s.cli' % (args.module,))
+    module = import_module('%s.cli' % (args.module,))
     module.main(unknown)
 
 
