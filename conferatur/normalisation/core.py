@@ -163,6 +163,8 @@ class Composite:
         self._normalisers = []
 
     def add(self, normaliser):
+        """Adds a normaliser to the composite "stack"
+        """
         self._normalisers.append(normaliser)
 
     def normalise(self, text: str) -> str:
