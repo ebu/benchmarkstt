@@ -1,6 +1,9 @@
 import os
+import sys
+from setuptools import setup, find_packages
 
-from setuptools import setup
+if sys.version_info < (3,4):
+    sys.exit('Sorry, Python < 3.4 is not supported')
 
 dirname = os.path.dirname(__file__)
 with open('VERSION') as f:
@@ -20,32 +23,27 @@ __author__ = %s
 with open('README.md') as f:
     long_description = f.read()
 
-with open('requirements.txt') as f:
-    install_requires = f.readlines()
-
-with open('requirements-docs.txt') as f:
-    docs_requirements = f.readlines()
-
 setup(
     name=__name__,
     url='https://github.com/ebu/ai-benchmarking-stt/',
     version=__version__,
     author=__author__,
-    author_email='',
+    author_email='temp@example.com',
     description='',
     long_description=long_description,
     classifiers=[
         'Programming Language :: Python',
     ],
-    packages=('conferatur',),
-    install_requires=install_requires,
-    extras_require={
-        'docs': docs_requirements,
-    },
+    python_requires='>=3.4',
+    packages=find_packages(),
+    install_requires=[
+       'Unidecode>=1.0.22',
+       'langcodes>=1.4.1'
+    ],
     platforms='any',
     entry_points={
-        "console_scripts": [
-            "%s=cli.py" % (__name__,)
+        'console_scripts': [
+            "%s=%s.cli:main" % (__name__, __name__)
         ],
     }
 )
