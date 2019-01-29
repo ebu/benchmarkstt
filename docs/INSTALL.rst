@@ -1,0 +1,62 @@
+Installation
+============
+
+Conferatur requires Python_ version 3.4 or above.
+
+From PyPI (preferred)
+---------------------
+
+This is the easiest and preferred way of installing conferatur.
+
+TODO
+
+
+From source
+-----------
+
+1. Install Python_ 3.3 or above (latest stable version for your OS is preferred):
+
+   Use the guides available at `The Hitchhiker’s Guide to Python <https://docs.python-guide.org>`_
+
+    - `Installing Python 3 on Mac OS X <https://docs.python-guide.org/starting/install3/osx/>`_
+    - `Installing Python 3 on Windows <https://docs.python-guide.org/starting/install3/win/>`_
+    - `Installing Python 3 on Linux <https://docs.python-guide.org/starting/install3/linux/>`_
+
+2. Get the conferatur source code from github (assumes :code:`git` is installed on the system)
+
+   .. code-block:: bash
+
+      git clone https://github.com/ebu/ai-benchmarking-stt.git
+      cd ai-benchmarking-stt
+
+3. Install the package using :code:`pip`, this will also install all requirements
+
+   .. code-block:: bash
+
+      pip install .
+
+4. Test and use
+
+   Conferatur should now be installed and usable.
+
+   .. code-block:: bash
+
+      echo "IT WORKS" | conferatur normalisation --lowercase
+
+
+   Use the :code:`--help` option to get all available options.
+
+   .. code-block:: bash
+
+      conferatur --help
+      conferatur normalisation --help
+
+
+Removing conferatur
+-------------------
+
+   .. code-block:: bash
+
+      pip uninstall conferatur
+
+.. _Python: https://www.python.org

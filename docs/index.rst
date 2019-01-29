@@ -5,6 +5,7 @@ Welcome to Conferatur's documentation!
 
 .. toctree::
 
+    INSTALL
     cli
     modules
 
