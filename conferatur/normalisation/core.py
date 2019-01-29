@@ -13,6 +13,29 @@ from typing import Iterable
 import inspect
 
 
+def csvreader_filter(arg):
+    idx, line = arg
+    # filter empty lines
+    if not line:
+        return False
+    # filter comments
+    if line[0].startswith('#'):
+        return False
+    return True
+
+
+def csvreader(file, *args, **kwargs):
+    """
+    Provides a enumerated csv reader Iterable. Empty and comment lines are filtered out.
+
+    :param file:
+    :param args:
+    :param kwargs:
+    :return: Iterable
+    """
+    return filter(csvreader_filter, enumerate(csv.reader(file, *args, **kwargs), start=1))
+
+
 class Replace:
     """
     Simple search replace
@@ -31,6 +54,65 @@ class Replace:
 
     def normalise(self, text: str) -> str:
         return text.replace(self._search, self._replace)
+
+
+class ReplaceWords:
+    """
+    Simple search replace that only replaces "words", the first letter will be
+    checked case insensitive as well with preservation of case..
+
+    .. doctest::
+
+        >>> from conferatur.normalisation.core import ReplaceWords
+        >>> normaliser = ReplaceWords("ni", "ecky ecky")
+        >>> normaliser.normalise('Ni! We are the Knights Who Say "ni"!')
+        'Ecky ecky! We are the Knights Who Say "ecky ecky"!'
+    """
+
+    def __init__(self, search: str, replace: str):
+        args = tuple(map(re.escape, [
+            search[0].upper(),
+            search[0].lower(),
+            search[1:] if len(search) > 1 else ''
+        ]))
+        regex = '(?<!\w)[%s%s]%s(?!\w)' % args
+        self._pattern = re.compile(regex)
+        self._replace = replace
+
+    def _replacement_callback(self, matches):
+        if matches.group(0)[0].isupper():
+            return ''.join([self._replace[0].upper(), self._replace[1:]])
+
+        return ''.join([self._replace[0].lower(), self._replace[1:]])
+
+    def normalise(self, text: str) -> str:
+        return self._pattern.sub(self._replacement_callback, text)
+
+
+class FromFile:
+    """
+    Read one per line and pass it to given a normaliser
+
+    TODO: add test
+    """
+    def __init__(self, normaliser, file, encoding=None):
+        try:
+            cls = Config._get_class(normaliser)
+        except ValueError:
+            raise ValueError("Unknown normaliser %s" %
+                             (repr(normaliser)))
+
+        with open(file, encoding=encoding) as f:
+            self._normaliser = Composite()
+
+            for idx, line in csvreader(f):
+                try:
+                    self._normaliser.add(cls(*line))
+                except TypeError as e:
+                    raise ValueError("Line %d: %s" % (idx, str(e)))
+
+    def normalise(self, text: str) -> str:
+        return self._normaliser.normalise(text)
 
 
 class RegexReplace:
@@ -168,6 +250,10 @@ class Composite:
         self._normalisers.append(normaliser)
 
     def normalise(self, text: str) -> str:
+        # allow for an empty file
+        if not self._normalisers:
+            return text
+
         for normaliser in self._normalisers:
             text = normaliser.normalise(text)
         return text
@@ -241,14 +327,7 @@ class Config:
 
     def _apply_file_like_object(self, file_like_object):
         self._normaliser = Composite()
-        reader = csv.reader(file_like_object, delimiter=' ', skipinitialspace=True)
-        for idx, line in enumerate(reader):
-            # allow empty lines
-            if len(line) == 0:
-                continue
-            # allow for comments
-            if line[0].startswith('#'):
-                continue
+        for idx, line in csvreader(file_like_object, delimiter=' ', skipinitialspace=True):
             try:
                 normaliser = self._get_class(line[0])
             except ValueError:
