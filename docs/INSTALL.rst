@@ -35,13 +35,20 @@ From source
 
       pip install .
 
+   Once this is done you may remove the git repository.
+
+   .. code-block:: bash
+
+      cd .. && rm -fr ai-benchmarking-stt
+
 4. Test and use
 
    Conferatur should now be installed and usable.
 
-   .. code-block:: bash
+   .. code-block:: none
 
-      echo "IT WORKS" | conferatur normalisation --lowercase
+      $ echo "IT WORKS" | conferatur normalisation --lowercase
+      it works
 
 
    Use the :code:`--help` option to get all available options.
@@ -51,6 +58,34 @@ From source
       conferatur --help
       conferatur normalisation --help
 
+Development
+-----------
+
+For development you can run :code:`python conferatur/cli.py` (when inside the repository directory) instead of :code:`conferatur` to test the command line scripts.
+
+Alternatively (on unix-based systems like Mac OS X and Linux) you can define an alias (again when inside the repository directory):
+
+   .. code-block:: bash
+
+      alias conferatur="python3 `pwd`/conferatur/cli.py"
+
+
+The :code:`conferatur` command will then use your local source environment to run conferatur (for the current shell session).
+
+To find out which conferatur script is being used in the current shell use :code:`type conferatur`.
+
+.. code-block:: none
+
+    $ type conferatur
+    conferatur is /usr/local/bin/conferatur
+    $ pwd
+    /my/dev/dir/ai-benchmarking-stt
+    $ alias conferatur="python3 `pwd`/conferatur/cli.py"
+    $ type conferatur
+    conferatur is aliased to `python3 /my/dev/dir/ai-benchmarking-stt/conferatur/cli.py'
+    $ unalias conferatur
+    $ type conferatur
+    conferatur is /usr/local/bin/conferatur
 
 Removing conferatur
 -------------------
