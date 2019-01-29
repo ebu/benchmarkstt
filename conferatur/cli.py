@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    modules = ['normalisation',]
+    modules = ['normalisation', ]
 
     parser = argparse.ArgumentParser(prog='conferatur', add_help=False,
                                      description='Conferatur main command line script')

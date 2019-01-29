@@ -80,10 +80,10 @@ class RegexReplace(AbstractLocale):
 
     @property
     def _normaliser(self):
+
         normaliser = core.Composite()
         with open(self._file) as csvfile:
-            reader = csv.reader(csvfile)
-            for idx, row in enumerate(reader):
+            for idx, row in core.csvreader(csvfile):
                 if len(row) != 2:
                     raise ValueError("Expected exactly 2 columns, got %d (in file '%s' line %d)" %
                                      (len(row), self._file, idx+1))
