@@ -88,7 +88,7 @@ def main(args=None):
             if output_files is None:
                 sys.stdout.write(text)
             else:
-                with open(output_files[idx]) as output_file:
+                with open(output_files[idx], 'w') as output_file:
                     output_file.write(text)
     else:
         text = sys.stdin.read()
