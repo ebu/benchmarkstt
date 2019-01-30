@@ -1,7 +1,10 @@
 """
 .. code-block:: none
 
-    usage: normalisation [--help|-h] [--input-file|-i FILE] [--output-file|-o FILE]
+    usage: normalisation [--help|-h]
+                         [--input-file|-i FILE]
+                         [--output-file|-o FILE]
+                         [--list-normalisers]
                          --normaliser-name [argument ...]
                          [--normaliser-name [argument ...] ...]
 
@@ -19,6 +22,8 @@
       -i, --input-file FILE   read input from FILE, by default will use stdin
       -o, --output-file FILE  write output to FILE, by default will use stdout
 
+      --list-normalisers      list available default normalisers
+
       !!! WARNING: OUTPUT FILES ARE OVERWRITTEN IF THEY ALREADY EXIST !!!
 
     normalisers:
@@ -35,7 +40,46 @@
 """
 
 import sys
-from .core import CommandLineArguments
+from . import core
+import inspect
+import re
+import textwrap
+
+
+def list_normalisers():
+    print('Availabe normalisers:')
+    ignored_normalisers = ('commandlinearguments', 'composite')
+    regex_newlines = re.compile(r"\n(?!\n)", re.MULTILINE)
+    for cls in dir(core):
+        name = cls.lower()
+        cls = getattr(core, cls)
+        if name in ignored_normalisers:
+            continue
+        if not inspect.isclass(cls):
+            continue
+        if not hasattr(cls, 'normalise'):
+            continue
+
+        docs = cls.__doc__.split('.. ', 1)[0]
+        docs = docs.split(':param', 1)[0]
+        docs = textwrap.dedent(docs)
+
+        argspec = inspect.getfullargspec(cls.__init__)
+        args = list(argspec.args)[1:]
+        defaults = []
+        if argspec.defaults:
+            defaults = list(argspec.defaults)
+
+        for i in range(len(defaults)):
+            sel = -i-1
+            args[sel] = '[%s]' % (args[sel],)
+
+        print('\n      --%s %s\n' % (name, ' '.join(args)))
+
+        docs = regex_newlines.sub('', docs)
+        docs = textwrap.wrap(docs, 80, subsequent_indent=' ' * 12, initial_indent=' ' * 12)
+        for line in docs:
+            print(line)
 
 
 def main(args=None):
@@ -65,6 +109,10 @@ def main(args=None):
     input_files = get_args(args, ('-i', '--input-file'))
     output_files = get_args(args, ('-o', '--output-file'))
 
+    if '--list-normalisers' in args:
+        list_normalisers()
+        exit()
+
     if len(args) == 0:
         err("Need at least one normaliser.")
 
@@ -78,7 +126,7 @@ def main(args=None):
         if len(input_files) != len(output_files):
             err("When using multiple input or output files, there needs to be an equal amount of each.")
 
-    normaliser = CommandLineArguments(args)
+    normaliser = core.CommandLineArguments(*args)
 
     if input_files is not None:
         for idx, file in enumerate(input_files):

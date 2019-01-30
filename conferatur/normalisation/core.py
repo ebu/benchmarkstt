@@ -182,8 +182,8 @@ class ReplaceWords:
 
 
 class File:
-    """
-    Read one per line and pass it to given a normaliser
+    r"""
+    Read one per line and pass it to the given normaliser
 
     .. doctest::
 
@@ -192,6 +192,11 @@ class File:
         >>> normaliser = File(Config, file)
         >>> normaliser.normalise('Ee ecky thump!')
         'aa ackY Thump!'
+        >>> #todo: proper handling of comments if quoted
+        >>> #file = './resources/test/normalisers/replacecommentstest'
+        >>> #normaliser = File('replace', file)
+        >>> #normaliser.normalise('# TEST\n')
+        'OKNOW'
 
     """
     def __init__(self, normaliser, file, encoding=None):
@@ -273,6 +278,7 @@ class AlphaNumeric(RegexReplace):
 
 class AlphaNumericUnicode(RegexReplace):
     """
+    Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 
     .. doctest::
 
@@ -433,15 +439,14 @@ class Config:
 
 class CommandLineArguments:
     """
-    Defining normalisation rules by command line arguments syntax, expects each argument to
-    be "pre-split" (i.e. a list, not a string).
+    Defining normalisation rules by command line arguments syntax
     """
 
-    def __init__(self, args: Iterable[str]):
+    def __init__(self, *args):
         if len(args) == 0:
             raise ValueError("Does not accept empty arguments")
 
-        args = self._split_args(args)
+        args = self._split_args(list(args))
         self._normaliser = Composite()
         for item in args:
             normaliser_name = item.pop(0)[2:].replace('-', '.')
