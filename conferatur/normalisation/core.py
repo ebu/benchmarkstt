@@ -11,6 +11,13 @@ from io import StringIO
 import os
 from typing import Iterable
 import inspect
+from langcodes import best_match, standardize_tag
+
+_normaliser_lookups = (
+    "conferatur.normalisation.core",
+    # "conferatur.normalisation",
+    ""
+)
 
 
 def csvreader_filter(arg):
@@ -34,6 +41,91 @@ def csvreader(file, *args, **kwargs):
     :return: Iterable
     """
     return filter(csvreader_filter, enumerate(csv.reader(file, *args, **kwargs), start=1))
+
+
+def name_to_normaliser(name):
+    """
+    Loads the proper normaliser based on a name
+
+    :param name: str
+    :return: class
+
+    .. doctest::
+
+        >>> name_to_normaliser('Replace')
+        <class 'conferatur.normalisation.core.Replace'>
+        >>> name_to_normaliser('replace')
+        <class 'conferatur.normalisation.core.Replace'>
+    """
+    requested = name.split('.')
+    requested_module = []
+
+    if len(requested) > 1:
+        requested_module = requested[:-1]
+
+    requested_class = requested[-1]
+    lname = requested_class.lower()
+    for lookup in _normaliser_lookups:
+        try:
+            module = '.'.join(filter(len, lookup.split('.') + requested_module))
+            if module == '':
+                continue
+            module = import_module(module)
+            if hasattr(module, requested_class):
+                return getattr(module, requested_class)
+            # fallback, check case-insensitive matches
+            realname = [class_name for class_name in dir(module)
+                        if class_name.lower() == lname and inspect.isclass(getattr(module, class_name))]
+            if len(realname) > 1:
+                raise ImportError("Cannot determine which class to use for '$s': %s" %
+                                  (lname, repr(realname)))
+            elif len(realname):
+                return getattr(module, realname[0])
+        except ModuleNotFoundError:
+            pass
+
+    raise ImportError("Could not find normaliser '%s'" % (name,))
+
+
+class LocalisedFile:
+    """
+    Reads and applies normalisation rules from a locale-based file, it will automagically
+    determine the "best fit" for a given locale, if one is available.
+
+    :param normaliser: str|class Normaliser name or class
+    :param locale: Which locale to search for
+    :param path: Location of available locale files
+    :param encoding: str The file encoding
+
+    .. doctest::
+
+        >>> path = './resources/test/normalisers/configfile'
+        >>> normaliser = LocalisedFile('Config', 'en_UK', path)
+        >>> normaliser.normalise("𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰𝔬 𝔡'ℑ𝔱𝔞𝔩𝔦𝔞")
+        "gran sasso d'italia"
+
+    """
+
+    def __init__(self, normaliser, locale: str, path: str, encoding=None):
+        path = os.path.realpath(path)
+        if not os.path.isdir(path):
+            raise NotADirectoryError("Expected '%s' to be a directory" % (str(path),))
+
+        files = {standardize_tag(file): file
+                 for file in os.listdir(path)
+                 if os.path.isfile(os.path.join(path, file))}
+
+        locale = standardize_tag(locale)
+        match = best_match(locale, files.keys())[0]
+        if match == 'und':
+            raise FileNotFoundError("Could not find a locale file for locale '%s' in '%s'" % (locale, str(path)))
+
+        file = os.path.join(path, files[match])
+
+        self._normaliser = File(normaliser, file, encoding=encoding)
+
+    def normalise(self, text: str) -> str:
+        return self._normaliser.normalise(text)
 
 
 class Replace:
@@ -89,15 +181,22 @@ class ReplaceWords:
         return self._pattern.sub(self._replacement_callback, text)
 
 
-class FromFile:
+class File:
     """
     Read one per line and pass it to given a normaliser
 
-    TODO: add test
+    .. doctest::
+
+        >>> from conferatur.normalisation.core import Config
+        >>> file = './resources/test/normalisers/configfile.conf'
+        >>> normaliser = File(Config, file)
+        >>> normaliser.normalise('Ee ecky thump!')
+        'aa ackY Thump!'
+
     """
     def __init__(self, normaliser, file, encoding=None):
         try:
-            cls = Config._get_class(normaliser)
+            cls = normaliser if inspect.isclass(normaliser) else name_to_normaliser(normaliser)
         except ValueError:
             raise ValueError("Unknown normaliser %s" %
                              (repr(normaliser)))
@@ -287,7 +386,6 @@ class Config:
 
     .. doctest::
 
-        >>> from conferatur.normalisation.core import ConfigFile
         >>> config = '''
         ... # using a simple config file
         ... lowercase
@@ -316,12 +414,6 @@ class Config:
         '[test]'
     """
 
-    _lookups = (
-        "conferatur.normalisation.core",
-        "conferatur.normalisation",
-        ""
-    )
-
     def __init__(self, config):
         self._apply_file_like_object(StringIO(config))
 
@@ -329,67 +421,14 @@ class Config:
         self._normaliser = Composite()
         for idx, line in csvreader(file_like_object, delimiter=' ', skipinitialspace=True):
             try:
-                normaliser = self._get_class(line[0])
+                normaliser = name_to_normaliser(line[0])
             except ValueError:
                 raise ValueError("Unknown normaliser %s on line %d: %s" %
                                  (repr(line[0]), idx, repr(' '.join(line))))
             self._normaliser.add(normaliser(*line[1:]))
 
-    @classmethod
-    def _get_class(cls, name):
-        requested = name.split('.')
-        requested_module = []
-
-        if len(requested) > 1:
-            requested_module = requested[:-1]
-
-        requested_class = requested[-1]
-        lname = requested_class.lower()
-        for lookup in cls._lookups:
-            try:
-                module = '.'.join(filter(len, lookup.split('.') + requested_module))
-                if module == '':
-                    continue
-                module = import_module(module)
-                if hasattr(module, requested_class):
-                    return getattr(module, requested_class)
-                # fallback, check case-insensitive matches
-                realname = [class_name for class_name in dir(module)
-                            if class_name.lower() == lname and inspect.isclass(getattr(module, class_name))]
-                if len(realname) > 1:
-                    raise ImportError("Cannot determine which class to use for '$s': %s" %
-                                      (lname, repr(realname)))
-                elif len(realname):
-                    return getattr(module, realname[0])
-            except ModuleNotFoundError:
-                pass
-
-        raise ImportError("Could not find normaliser '%s'" % (name,))
-
     def normalise(self, text: str) -> str:
         return self._normaliser.normalise(text)
-
-
-class ConfigFile(Config):
-    """
-    Reads and applies normalisation rules from a file.
-
-    See :func:`normalisation.core.Config` for information about the config file format.
-
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import ConfigFile
-        >>> file = './resources/test/normalisers/configfile.conf'
-        >>> normaliser = ConfigFile(file)
-        >>> normaliser.normalise('Ee ecky thump!')
-        'aa ackY Thump!'
-
-    """
-
-    def __init__(self, filename):
-        filename = os.path.realpath(filename)
-        with open(filename) as csvfile:
-            self._apply_file_like_object(csvfile)
 
 
 class CommandLineArguments:
@@ -406,7 +445,7 @@ class CommandLineArguments:
         self._normaliser = Composite()
         for item in args:
             normaliser_name = item.pop(0)[2:].replace('-', '.')
-            normaliser = Config._get_class(normaliser_name)
+            normaliser = name_to_normaliser(normaliser_name)
             self._normaliser.add(normaliser(*item))
 
     @staticmethod
