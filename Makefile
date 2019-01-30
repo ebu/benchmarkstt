@@ -1,7 +1,7 @@
 .PHONY: docs test clean
 
 test:
-	cd docs/ && make doctest
+	pytest --doctest-modules --verbose
 
 docs:
 	cd docs/ && make html

@@ -10,7 +10,6 @@ This is the easiest and preferred way of installing conferatur.
 
 TODO
 
-.. _install-from-source:
 
 From source
 -----------
