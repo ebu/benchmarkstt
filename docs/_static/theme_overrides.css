@@ -1,0 +1,9 @@
+#command-line-tool .wy-table-responsive table td:nth-child(2) {
+  white-space: normal !important;
+}
+
+@media screen and (min-width: 450px) {
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
+}
