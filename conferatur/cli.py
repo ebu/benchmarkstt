@@ -7,7 +7,7 @@ from . import __meta__
 modules = get_modules_dict('cli')
 
 
-def _parser() -> argparse.ArgumentParser:
+def _parser_no_sub(dont_add_submodule=False):
     parser = argparse.ArgumentParser(prog='conferatur', add_help=__name__ != '__main__',
                                      description='Conferatur main command line script')
 
@@ -18,6 +18,15 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument('--version', action='store_true',
                         help='output conferatur version number')
 
+    # this is for argpars autodoc purposes
+    if not dont_add_submodule:
+        parser.add_argument('subcommand', choices=modules.keys())
+
+    return parser
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = _parser_no_sub(True)
     subparsers = parser.add_subparsers(dest='subcommand')
 
     for module, cli in modules.items():

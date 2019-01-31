@@ -70,7 +70,7 @@ def argparser(parser=None):
       then conferatur.normalisation and finally in the global namespace.
       At least one normaliser needs to be provided."""
 
-    normalisers = parser.add_argument_group('Available normalisers', description=normalisers_desc)
+    normalisers = parser.add_argument_group('available normalisers', description=normalisers_desc)
 
     for name, cls, docs, args, optional_args in get_normalisers():
         arguments = dict()
