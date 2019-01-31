@@ -1,4 +1,8 @@
-Command line tools
-==================
+Command line tool
+*****************
 
-.. automodule:: normalisation.cli
+.. argparse::
+   :module: conferatur.cli
+   :func: _parser
+   :prog: conferatur
+

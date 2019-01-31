@@ -14,6 +14,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinxarg.ext',
 ]
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'

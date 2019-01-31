@@ -71,11 +71,18 @@ def name_to_normaliser(name):
             if module == '':
                 continue
             module = import_module(module)
+
             if hasattr(module, requested_class):
-                return getattr(module, requested_class)
+                cls = getattr(module, requested_class)
+                if inspect.isclass(cls) and hasattr(cls, 'normalise'):
+                    return cls
+
             # fallback, check case-insensitive matches
             realname = [class_name for class_name in dir(module)
-                        if class_name.lower() == lname and inspect.isclass(getattr(module, class_name))]
+                        if class_name.lower() == lname and
+                        inspect.isclass(getattr(module, class_name)) and
+                        hasattr(getattr(module, class_name), 'normalise')]
+
             if len(realname) > 1:
                 raise ImportError("Cannot determine which class to use for '$s': %s" %
                                   (lname, repr(realname)))
@@ -315,6 +322,7 @@ class Unidecode:
         >>> Unidecode().normalise('Eine große europäische Schwalbe')
         'Eine grosse europaische Schwalbe'
     """
+
     def normalise(self, text: str) -> str:
         return unidecode(text)
 
@@ -436,52 +444,3 @@ class Config:
     def normalise(self, text: str) -> str:
         return self._normaliser.normalise(text)
 
-
-class CommandLineArguments:
-    """
-    Defining normalisation rules by command line arguments syntax
-    """
-
-    def __init__(self, *args):
-        if len(args) == 0:
-            raise ValueError("Does not accept empty arguments")
-
-        args = self._split_args(list(args))
-        self._normaliser = Composite()
-        for item in args:
-            normaliser_name = item.pop(0)[2:].replace('-', '.')
-            normaliser = name_to_normaliser(normaliser_name)
-            self._normaliser.add(normaliser(*item))
-
-    @staticmethod
-    def _split_args(args: Iterable[str]):
-        """
-        Splits the arguments into per-normaliser chunks
-
-        :param args: Arguments list
-        :return: list args split by normaliser
-
-        .. doctest::
-
-            >>> CommandLineArguments._split_args(['--test'])
-            [['--test']]
-            >>> CommandLineArguments._split_args(['--test', 'arg1', 'arg2'])
-            [['--test', 'arg1', 'arg2']]
-            >>> CommandLineArguments._split_args(['--test1', '--test2', ' ', 'test', '--test3'])
-            [['--test1'], ['--test2', ' ', 'test'], ['--test3']]
-
-        """
-        split_idx = [idx for idx, val in enumerate(args) if val.startswith('--')]
-        if split_idx[0] != 0:
-            raise ValueError("First argument should be a normaliser")
-
-        new_args = []
-        prev_idx = split_idx.pop(0)
-        for idx in split_idx:
-            new_args.append(args[prev_idx:idx])
-            prev_idx = idx
-        new_args.append(args[prev_idx:])
-        return new_args
-
-    def normalise(self, text: str) -> str:
-        return self._normaliser.normalise(text)
