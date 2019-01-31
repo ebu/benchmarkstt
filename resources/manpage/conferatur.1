@@ -41,7 +41,7 @@ Conferatur main command line script
 usage: conferatur [\-h]
                   [\-\-log\-level {critical,fatal,error,warn,warning,info,debug,notset}]
                   [\-\-version]
-                  {normalisation,api} ...
+                  {normalisation,api}
 .ft P
 .fi
 .UNINDENT
@@ -67,22 +67,24 @@ output conferatur version number
 .sp
 Default: False
 .UNINDENT
-.SH SUB-COMMANDS:
-.SS normalisation
+.SH SUBCOMMANDS
+.SS Subcommand normalisation
 .sp
 Apply normalisation to given input
+
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-conferatur normalisation [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
-                         [\-\-alphanumericunicode] [\-\-config config]
-                         [\-\-file normaliser file [encoding]]
-                         [\-\-localisedfile normaliser locale path [encoding]]
-                         [\-\-lowercase] [\-\-regexreplace pattern [substitution]]
-                         [\-\-replace search [replace]]
-                         [\-\-replacewords search replace] [\-\-unidecode]
+usage: conferatur normalisation [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
+                                [\-\-alphanumericunicode] [\-\-config config]
+                                [\-\-file normaliser file [encoding]]
+                                [\-\-localisedfile normaliser locale path [encoding]]
+                                [\-\-lowercase]
+                                [\-\-regexreplace pattern [substitution]]
+                                [\-\-replace search [replace]]
+                                [\-\-replacewords search replace] [\-\-unidecode]
 .ft P
 .fi
 .UNINDENT
@@ -106,7 +108,7 @@ read input from this file, defaults to STDIN
 .B\-o, \-\-outputfile
 write output to this file, defaults to STDOUT
 .UNINDENT
-.SS Available normalisers
+.SS available normalisers
 .INDENT 0.0
 .INDENT 3.5
 A list of normalisers to execute on the input, can be one or more normalisers
@@ -161,15 +163,16 @@ checked case insensitive as well with preservation of case..
 .B\-\-unidecode
 Unidecode characters to ASCII form, see \fI\%Python’s Unidecode package\fP for more info.
 .UNINDENT
-.SS api
+.SS Subcommand api
 .sp
 Make conferatur available through a jsonapi interface
+
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-conferatur api [\-h] [\-\-debug]
+usage: conferatur api [\-h] [\-\-debug]
 .ft P
 .fi
 .UNINDENT
