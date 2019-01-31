@@ -13,6 +13,6 @@ Bash completion
 
 Bash completion is supported through ``argcomplete``.
 
-.. toctree::
+    .. toctree::
 
-   bash-completion
+       bash-completion

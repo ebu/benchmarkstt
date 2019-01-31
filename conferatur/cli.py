@@ -18,8 +18,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument('--version', action='store_true',
                         help='output conferatur version number')
 
-    subparsers = parser.add_subparsers(dest='subcommand',
-                                       description='The sub-command to execute')
+    subparsers = parser.add_subparsers(dest='subcommand')
 
     for module, cli in modules.items():
         if not hasattr(cli, 'argparser'):

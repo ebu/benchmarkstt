@@ -5,25 +5,31 @@ If you use ``bash`` as your shell, ``conferatur`` can use `argcomplete <https://
 
 For this ``argcomplete`` needs to be installed **and** enabled.
 
-First install argcomplete using:
+Installing argcomplete
+----------------------
+
+1. Install argcomplete using:
 
    .. code-block:: bash
 
       pip install argcomplete
 
-For global activation of all argcomplete enabled python applications, run:
+2. For global activation of all argcomplete enabled python applications, run:
 
    .. code-block:: bash
 
-      sudo activate-global-python-argcomplete
+      activate-global-python-argcomplete
 
-For permanent (but not global) ``conferatur`` activation, use:
+Alternative argcomplete configuration
+-------------------------------------
+
+1. For permanent (but not global) ``conferatur`` activation, use:
 
    .. code-block:: bash
 
       register-python-argcomplete conferatur >> ~/.bashrc
 
-For one-time activation of argcomplete for ``conferatur`` only, use:
+2. For one-time activation of argcomplete for ``conferatur`` only, use:
 
    .. code-block:: bash
 

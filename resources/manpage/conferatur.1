@@ -46,6 +46,12 @@ usage: conferatur [\-h]
 .fi
 .UNINDENT
 .UNINDENT
+.SH POSITIONAL ARGUMENTS
+.INDENT 0.0
+.TP
+.Bsubcommand
+Possible choices: normalisation, api
+.UNINDENT
 .SH NAMED ARGUMENTS
 .INDENT 0.0
 .TP
@@ -60,14 +66,6 @@ Default: warning
 output conferatur version number
 .sp
 Default: False
-.UNINDENT
-.SH SUBCOMMANDS
-.sp
-The sub\-command to execute
-.INDENT 0.0
-.TP
-.Bsubcommand
-Possible choices: normalisation, api
 .UNINDENT
 .SH SUB-COMMANDS:
 .SS normalisation
@@ -89,7 +87,17 @@ conferatur normalisation [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
 .fi
 .UNINDENT
 .UNINDENT
-.SS Named Arguments
+.SS input and output files
+.INDENT 0.0
+.INDENT 3.5
+You can provide multiple input and output files, each preceded by \-i and \-o
+respectively.
+If no input file is given, only one output file can be used.
+If using both multiple input and output files there should be an equal amount
+of each. Each processed input file will then be written to the corresponding
+output file.
+.UNINDENT
+.UNINDENT
 .INDENT 0.0
 .TP
 .B\-i, \-\-inputfile
@@ -99,6 +107,15 @@ read input from this file, defaults to STDIN
 write output to this file, defaults to STDOUT
 .UNINDENT
 .SS Available normalisers
+.INDENT 0.0
+.INDENT 3.5
+A list of normalisers to execute on the input, can be one or more normalisers
+which are applied sequentially.
+The program will automatically find the normaliser in conferatur.normalisation.core,
+then conferatur.normalisation and finally in the global namespace.
+At least one normaliser needs to be provided.
+.UNINDENT
+.UNINDENT
 .INDENT 0.0
 .TP
 .B\-\-alphanumeric
@@ -117,7 +134,7 @@ names are case\-insensitive.
 .sp
 Arguments MAY be wrapped in double quotes.
 If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
-A double quote itself is represented in this quoted argument as two double quotes: \fI""\fP\&.
+A double quote itself is represented in this quoted argument as two double quotes: \fI“”\fP\&.
 .sp
 The normalisation rules are applied top\-to\-bottom and follow this format:
 .TP
@@ -126,7 +143,7 @@ Read one per line and pass it to the given normaliser
 .TP
 .B\-\-localisedfile
 Reads and applies normalisation rules from a locale\-based file, it will automagically
-determine the "best fit" for a given locale, if one is available.
+determine the “best fit” for a given locale, if one is available.
 .TP
 .B\-\-lowercase
 Lowercase the text
@@ -138,11 +155,11 @@ Simple regex replace
 Simple search replace
 .TP
 .B\-\-replacewords
-Simple search replace that only replaces "words", the first letter will be
+Simple search replace that only replaces “words”, the first letter will be
 checked case insensitive as well with preservation of case..
 .TP
 .B\-\-unidecode
-Unidecode characters to ASCII form, see \fI\%Python\(aqs Unidecode package\fP for more info.
+Unidecode characters to ASCII form, see \fI\%Python’s Unidecode package\fP for more info.
 .UNINDENT
 .SS api
 .sp
@@ -168,16 +185,18 @@ Default: False
 .SH BASH COMPLETION
 .sp
 Bash completion is supported through \fBargcomplete\fP\&.
+.INDENT 0.0
+.INDENT 3.5
 .SS Setting up bash completion
 .sp
 If you use \fBbash\fP as your shell, \fBconferatur\fP can use \fI\%argcomplete\fP for auto\-completion.
 .sp
 For this \fBargcomplete\fP needs to be installed \fBand\fP enabled.
-.sp
-First install argcomplete using:
+.SS Installing argcomplete
 .INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
+.IP 1. 3
+Install argcomplete using:
+.INDENT 3.0
 .INDENT 3.5
 .sp
 .nf
@@ -187,29 +206,24 @@ pip install argcomplete
 .fi
 .UNINDENT
 .UNINDENT
-.UNINDENT
-.UNINDENT
-.sp
+.IP 2. 3
 For global activation of all argcomplete enabled python applications, run:
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
+.INDENT 3.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-sudo activate\-global\-python\-argcomplete
+activate\-global\-python\-argcomplete
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .UNINDENT
-.UNINDENT
-.sp
+.SS Alternative argcomplete configuration
+.INDENT 0.0
+.IP 1. 3
 For permanent (but not global) \fBconferatur\fP activation, use:
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
+.INDENT 3.0
 .INDENT 3.5
 .sp
 .nf
@@ -219,13 +233,9 @@ register\-python\-argcomplete conferatur >> ~/.bashrc
 .fi
 .UNINDENT
 .UNINDENT
-.UNINDENT
-.UNINDENT
-.sp
+.IP 2. 3
 For one\-time activation of argcomplete for \fBconferatur\fP only, use:
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
+.INDENT 3.0
 .INDENT 3.5
 .sp
 .nf
@@ -233,6 +243,7 @@ For one\-time activation of argcomplete for \fBconferatur\fP only, use:
 eval "$(register\-python\-argcomplete conferatur)"
 .ft P
 .fi
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .UNINDENT
