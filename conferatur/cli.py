@@ -1,8 +1,7 @@
 import argparse
 import logging
 from importlib import import_module
-import sys
-from .normalisation import cli as normalisation_cli
+from . import modules
 
 
 def _parser():
@@ -13,11 +12,14 @@ def _parser():
                         choices=list(map(str.lower, logging._nameToLevel.keys())),
                         help='set the logging output level')
 
-    subparsers = parser.add_subparsers(dest='module')
-    normalisation_parser = subparsers.add_parser('normalisation',
-                                                 help='Do normalisation',
-                                                 formatter_class=normalisation_cli.NormaliserFormatter)
-    normalisation_cli.get_parser(normalisation_parser)
+    subparsers = parser.add_subparsers(dest='sub-command')
+    for module in modules:
+        cli = import_module('conferatur.%s.cli' % (module,))
+        kwargs = dict()
+        if hasattr(cli, 'Formatter'):
+            kwargs['formatter_class'] = cli.Formatter
+        subparser = subparsers.add_parser(module, **kwargs)
+        cli.get_parser(subparser)
 
     return parser
 
@@ -27,7 +29,7 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(level=args.log_level.upper())
-    module = args.module
+    module = getattr(args, 'sub-command')
     module = import_module('conferatur.%s.cli' % (module,))
     module.main(parser, args)
 
