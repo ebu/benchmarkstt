@@ -66,7 +66,7 @@ Default: False
 The sub\-command to execute
 .INDENT 0.0
 .TP
-.Bsub\-command
+.Bsubcommand
 Possible choices: normalisation, api
 .UNINDENT
 .SH SUB-COMMANDS:
@@ -117,7 +117,7 @@ names are case\-insensitive.
 .sp
 Arguments MAY be wrapped in double quotes.
 If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
-A double quote itself is represented in this quoted argument as two double quotes: \fI“”\fP\&.
+A double quote itself is represented in this quoted argument as two double quotes: \fI""\fP\&.
 .sp
 The normalisation rules are applied top\-to\-bottom and follow this format:
 .TP
@@ -126,7 +126,7 @@ Read one per line and pass it to the given normaliser
 .TP
 .B\-\-localisedfile
 Reads and applies normalisation rules from a locale\-based file, it will automagically
-determine the “best fit” for a given locale, if one is available.
+determine the "best fit" for a given locale, if one is available.
 .TP
 .B\-\-lowercase
 Lowercase the text
@@ -138,11 +138,11 @@ Simple regex replace
 Simple search replace
 .TP
 .B\-\-replacewords
-Simple search replace that only replaces “words”, the first letter will be
+Simple search replace that only replaces "words", the first letter will be
 checked case insensitive as well with preservation of case..
 .TP
 .B\-\-unidecode
-Unidecode characters to ASCII form, see \fI\%Python’s Unidecode package\fP for more info.
+Unidecode characters to ASCII form, see \fI\%Python\(aqs Unidecode package\fP for more info.
 .UNINDENT
 .SS api
 .sp

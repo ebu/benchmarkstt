@@ -18,7 +18,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument('--version', action='store_true',
                         help='output conferatur version number')
 
-    subparsers = parser.add_subparsers(dest='sub-command',
+    subparsers = parser.add_subparsers(dest='subcommand',
                                        description='The sub-command to execute')
 
     for module, cli in modules.items():
@@ -51,10 +51,9 @@ def main():
 
     logging.basicConfig(level=args.log_level.upper())
 
-    subcmd = getattr(args, 'sub-command')
-    if not subcmd:
+    if not args.subcommand:
         parser.error("expects at least 1 argument")
-    modules[subcmd].main(parser, args)
+    modules[args.subcommand].main(parser, args)
 
 
 if __name__ == '__main__':
