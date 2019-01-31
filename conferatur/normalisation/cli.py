@@ -1,4 +1,9 @@
 """
+Apply normalisation to given input
+
+"""
+
+"""
 .. code-block:: none
 
     usage: normalisation [--help|-h]
@@ -40,7 +45,6 @@
 import sys
 from . import core
 import inspect
-import re
 import textwrap
 import argparse
 
@@ -76,10 +80,11 @@ class Formatter(argparse.HelpFormatter):
         return super()._format_args(action, default_metavar)
 
 
-def get_parser(parser=None):
+def argparser(parser=None):
     if parser is None:
         parser = argparse.ArgumentParser(prog='normalisation',
-                                         formatter_class=NormaliserFormatter)
+                                         formatter_class=Formatter,
+                                         description='Apply one or more normalisers to the input')
 
     parser.add_argument('-i', '--inputfile', action='append', nargs=1,
                         help='read input from this file, defaults to STDIN',
@@ -93,25 +98,22 @@ def get_parser(parser=None):
     for name, cls, docs, args, optional_args in get_normalisers():
         arguments = dict()
         arguments['help'] = docs
+        arguments['nargs'] = 0
 
-        if not len(args) and not len(optional_args):
-            arguments['action'] = 'store_true'
-            arguments['nargs'] = 0
-            arguments['action'] = normaliser_action(args, optional_args)
-        else:
+        if len(args) or len(optional_args):
             arguments['nargs'] = '+'
             optionals = list(map(lambda x: '[%s]' % x, optional_args))
             arguments['metavar'] = tuple(args + optionals)
-            arguments['action'] = normaliser_action(args, optional_args)
 
-        # print(arguments)
+        arguments['action'] = normaliser_action(args, optional_args)
+
         normalisers.add_argument('--%s' % (name,), **arguments)
 
     return parser
 
 
 def get_normalisers():
-    ignored_normalisers = ('commandlinearguments', 'composite')
+    ignored_normalisers = ('composite',)
     for cls in dir(core):
         name = cls.lower()
         cls = getattr(core, cls)
@@ -132,11 +134,9 @@ def get_normalisers():
         if argspec.defaults:
             defaults = list(argspec.defaults)
 
-        have_defaults = len(args) - len(defaults)
-
-        required_args = args[0:have_defaults]
-
-        optional_args = args[have_defaults:]
+        defaults_idx = len(args) - len(defaults)
+        required_args = args[0:defaults_idx]
+        optional_args = args[defaults_idx:]
 
         yield name, cls, docs, required_args, optional_args
 
@@ -182,4 +182,5 @@ def main(parser, args=None):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    _parser = argparser()
+    main(_parser, _parser.parse_args())

@@ -40,16 +40,11 @@ Conferatur main command line script
 .ft C
 usage: conferatur [\-h]
                   [\-\-log\-level {critical,fatal,error,warn,warning,info,debug,notset}]
-                  {normalisation} ...
+                  [\-\-version]
+                  {normalisation,api} ...
 .ft P
 .fi
 .UNINDENT
-.UNINDENT
-.SH POSITIONAL ARGUMENTS
-.INDENT 0.0
-.TP
-.Bsub\-command
-Possible choices: normalisation
 .UNINDENT
 .SH NAMED ARGUMENTS
 .INDENT 0.0
@@ -60,11 +55,24 @@ Possible choices: critical, fatal, error, warn, warning, info, debug, notset
 set the logging output level
 .sp
 Default: warning
+.TP
+.B\-\-version
+output conferatur version number
+.sp
+Default: False
+.UNINDENT
+.SH SUBCOMMANDS
+.sp
+The sub\-command to execute
+.INDENT 0.0
+.TP
+.Bsub\-command
+Possible choices: normalisation, api
 .UNINDENT
 .SH SUB-COMMANDS:
 .SS normalisation
 .sp
-Do normalisation
+Apply normalisation to given input
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -135,6 +143,99 @@ checked case insensitive as well with preservation of case..
 .TP
 .B\-\-unidecode
 Unidecode characters to ASCII form, see \fI\%Python’s Unidecode package\fP for more info.
+.UNINDENT
+.SS api
+.sp
+Make conferatur available through a jsonapi interface
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+conferatur api [\-h] [\-\-debug]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Named Arguments
+.INDENT 0.0
+.TP
+.B\-\-debug
+enable flask debug mode
+.sp
+Default: False
+.UNINDENT
+.SH BASH COMPLETION
+.sp
+Bash completion is supported through \fBargcomplete\fP\&.
+.SS Setting up bash completion
+.sp
+If you use \fBbash\fP as your shell, \fBconferatur\fP can use \fI\%argcomplete\fP for auto\-completion.
+.sp
+For this \fBargcomplete\fP needs to be installed \fBand\fP enabled.
+.sp
+First install argcomplete using:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+pip install argcomplete
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+For global activation of all argcomplete enabled python applications, run:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+sudo activate\-global\-python\-argcomplete
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+For permanent (but not global) \fBconferatur\fP activation, use:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+register\-python\-argcomplete conferatur >> ~/.bashrc
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+For one\-time activation of argcomplete for \fBconferatur\fP only, use:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+eval "$(register\-python\-argcomplete conferatur)"
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SH AUTHOR
 EBU
