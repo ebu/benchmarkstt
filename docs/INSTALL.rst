@@ -24,22 +24,23 @@ From source
 
 2. Get the conferatur source code from github (assumes :code:`git` is installed on the system)
 
+   .. git clone https://github.com/ebu/ai-benchmarking-stt.git
+
    .. code-block:: bash
 
-      git clone https://github.com/ebu/ai-benchmarking-stt.git
-      cd ai-benchmarking-stt
+      git clone https://github.com/WickedyMike/ai-benchmarking-stt.git
 
 3. Install the package using :code:`pip`, this will also install all requirements
 
    .. code-block:: bash
 
-      pip install .
+      pip install ai-benchmarking-stt
 
-   Once this is done you may remove the git repository.
+   Once this is done you may remove the git repository (optional).
 
    .. code-block:: bash
 
-      cd .. && rm -fr ai-benchmarking-stt
+      rm -fr ai-benchmarking-stt
 
 4. Test and use
 
