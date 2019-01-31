@@ -1,0 +1,14 @@
+# to test for rows that start with # are comments, except when quoted
+# TEST,commented
+          # TEST , shouldntreplace
+"# TEST
+#",OKNOW
+
+
+
+	    # OK, NOTOK
+
+
+
+
+
