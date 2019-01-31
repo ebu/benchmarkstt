@@ -17,18 +17,14 @@ def _parser():
     normalisation_parser = subparsers.add_parser('normalisation',
                                                  help='Do normalisation',
                                                  formatter_class=normalisation_cli.NormaliserFormatter)
-    normalisation_parser = normalisation_cli.get_parser(normalisation_parser)
-
-    if len(sys.argv) < 2 or sys.argv[1] in ('-h', '--help'):
-        parser.print_help()
-        parser.exit(1)
+    normalisation_cli.get_parser(normalisation_parser)
 
     return parser
 
 
 def main():
     parser = _parser()
-    args, unknown = parser.parse_known_args()
+    args = parser.parse_args()
 
     logging.basicConfig(level=args.log_level.upper())
     module = args.module

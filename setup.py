@@ -23,6 +23,7 @@ __author__ = %s
 with open('README.md') as f:
     long_description = f.read()
 
+
 setup(
     name=__name__,
     url='https://github.com/ebu/ai-benchmarking-stt/',
@@ -33,6 +34,7 @@ setup(
     long_description=long_description,
     classifiers=[
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
     ],
     python_requires='>=3.4',
     packages=find_packages(),

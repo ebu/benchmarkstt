@@ -3,8 +3,17 @@
 test:
 	pytest --doctest-modules --verbose
 
-docs:
+docs: html man
+
+html:
 	cd docs/ && make html
+
+man: build-man
+	cp resources/manpage/*.1 /usr/local/share/man/man1
+
+build-man:
+	cd docs/ && make man
+	cp docs/build/man/* resources/manpage/
 
 clean:
 	cd docs/ && make clean

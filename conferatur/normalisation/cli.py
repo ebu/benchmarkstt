@@ -81,10 +81,12 @@ def get_parser(parser=None):
         parser = argparse.ArgumentParser(prog='normalisation',
                                          formatter_class=NormaliserFormatter)
 
-    parser.add_argument('-i', '--inputfile', action='append', nargs="?",
-                        help='read input from this file, defaults to STDIN')
-    parser.add_argument('-o', '--outputfile', action='append', nargs="?",
-                        help='write output to this file, defaults to STDOUT')
+    parser.add_argument('-i', '--inputfile', action='append', nargs=1,
+                        help='read input from this file, defaults to STDIN',
+                        metavar='file')
+    parser.add_argument('-o', '--outputfile', action='append', nargs=1,
+                        help='write output to this file, defaults to STDOUT',
+                        metavar='file')
 
     normalisers = parser.add_argument_group('Available normalisers')
 
@@ -140,8 +142,9 @@ def get_normalisers():
 
 
 def main(parser, args=None):
-    input_files = args.inputfile
-    output_files = args.outputfile
+    input_files = [f[0] for f in args.inputfile] if args.inputfile else None
+    output_files = [f[0] for f in args.outputfile] if args.outputfile else None
+
     if 'normalisers' not in args or not len(args.normalisers):
         parser.error("need at least one normaliser")
 
