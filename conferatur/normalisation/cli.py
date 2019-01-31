@@ -1,45 +1,5 @@
 """
 Apply normalisation to given input
-
-"""
-
-"""
-.. code-block:: none
-
-    usage: normalisation [--help|-h]
-                         [--input-file|-i FILE]
-                         [--output-file|-o FILE]
-                         [--list-normalisers]
-                         --normaliser-name [argument ...]
-                         [--normaliser-name [argument ...] ...]
-
-    positional arguments:
-      -h, --help              show this help message and exit
-
-    optional arguments:
-      You can provide multiple input and output files, each preceded by -i and -o
-      respectively.
-      If no input file is given, only one output file can be used.
-      If using both multiple input and output files there should be an equal amount
-      of each. Each processed input file will then be written to the corresponding
-      output file.
-
-
-      --list-normalisers      list available default normalisers
-
-      !!! WARNING: OUTPUT FILES ARE OVERWRITTEN IF THEY ALREADY EXIST !!!
-
-    normalisers:
-      A list of normalisers to execute on the input, can be one or more normalisers
-      which are applied sequentially.
-      The program will automatically find the normaliser in conferatur.normalisation.core,
-      then conferatur.normalisation and finally in the global namespace.
-      At least one normaliser needs to be provided.
-
-      --normaliser-name [arguments ...]
-                               the name of the normaliser (eg. --lowercase),
-                               optionally followed by arguments passed to the
-                               normaliser
 """
 
 import sys
@@ -86,14 +46,31 @@ def argparser(parser=None):
                                          formatter_class=Formatter,
                                          description='Apply one or more normalisers to the input')
 
-    parser.add_argument('-i', '--inputfile', action='append', nargs=1,
-                        help='read input from this file, defaults to STDIN',
-                        metavar='file')
-    parser.add_argument('-o', '--outputfile', action='append', nargs=1,
-                        help='write output to this file, defaults to STDOUT',
-                        metavar='file')
+    files_desc = """
+      You can provide multiple input and output files, each preceded by -i and -o
+      respectively.
+      If no input file is given, only one output file can be used.
+      If using both multiple input and output files there should be an equal amount
+      of each. Each processed input file will then be written to the corresponding
+      output file."""
 
-    normalisers = parser.add_argument_group('Available normalisers')
+    files = parser.add_argument_group('input and output files', description=files_desc)
+
+    files.add_argument('-i', '--inputfile', action='append', nargs=1,
+                       help='read input from this file, defaults to STDIN',
+                       metavar='file')
+    files.add_argument('-o', '--outputfile', action='append', nargs=1,
+                       help='write output to this file, defaults to STDOUT',
+                       metavar='file')
+
+    normalisers_desc = """
+      A list of normalisers to execute on the input, can be one or more normalisers
+      which are applied sequentially.
+      The program will automatically find the normaliser in conferatur.normalisation.core,
+      then conferatur.normalisation and finally in the global namespace.
+      At least one normaliser needs to be provided."""
+
+    normalisers = parser.add_argument_group('Available normalisers', description=normalisers_desc)
 
     for name, cls, docs, args, optional_args in get_normalisers():
         arguments = dict()
@@ -161,6 +138,10 @@ def main(parser, args=None):
         cls = core.name_to_normaliser(normaliser_name)
         composite.add(cls(*item))
 
+    if output_files is not None:
+        # pre-open the output files before doing the grunt work
+        output_files = [open(output_file, 'xt') for output_file in output_files]
+
     if input_files is not None:
         for idx, file in enumerate(input_files):
             with open(file) as input_file:
@@ -169,16 +150,18 @@ def main(parser, args=None):
             if output_files is None:
                 sys.stdout.write(text)
             else:
-                with open(output_files[idx], 'w') as output_file:
-                    output_file.write(text)
+                output_file = output_files[idx]
+                output_file.write(text)
+                output_file.close()
     else:
         text = sys.stdin.read()
         text = composite.normalise(text)
         if output_files is None:
             sys.stdout.write(text)
         else:
-            with open(output_files[0], 'w') as output_file:
-                output_file.write(text)
+            output_file = output_files[0]
+            output_file.write(text)
+            output_file.close()
 
 
 if __name__ == '__main__':
