@@ -19,8 +19,6 @@
       of each. Each processed input file will then be written to the corresponding
       output file.
 
-      -i, --input-file FILE   read input from FILE, by default will use stdin
-      -o, --output-file FILE  write output to FILE, by default will use stdout
 
       --list-normalisers      list available default normalisers
 
@@ -44,12 +42,74 @@ from . import core
 import inspect
 import re
 import textwrap
+import argparse
 
 
-def list_normalisers():
-    print('Availabe normalisers:')
+class _NormaliserAction:
+    # placeholder to recognize it is a NormaliserAction
+    pass
+
+
+def normaliser_action(required_args, optional_args):
+    minlen = len(required_args)
+    maxlen = minlen + len(optional_args)
+
+    class NormaliserAction(argparse.Action, _NormaliserAction):
+        def __call__(self, parser, args, values, option_string=None):
+            if len(values) < minlen or len(values) > maxlen:
+                raise argparse.ArgumentTypeError('argument "%s" requires between %d and %d arguments (got %d)' %
+                                                 (self.dest, minlen, maxlen, len(values)))
+
+            if 'normalisers' not in args:
+                args.normalisers = []
+
+            args.normalisers.append([self.dest] + values)
+
+    return NormaliserAction
+
+
+class NormaliserFormatter(argparse.HelpFormatter):
+    def _format_args(self, action, default_metavar):
+        if isinstance(action, _NormaliserAction):
+            return ' '.join(action.metavar)
+
+        return super()._format_args(action, default_metavar)
+
+
+def get_parser(parser=None):
+    if parser is None:
+        parser = argparse.ArgumentParser(prog='normalisation',
+                                         formatter_class=NormaliserFormatter)
+
+    parser.add_argument('-i', '--inputfile', action='append', nargs="?",
+                        help='read input from this file, defaults to STDIN')
+    parser.add_argument('-o', '--outputfile', action='append', nargs="?",
+                        help='write output to this file, defaults to STDOUT')
+
+    normalisers = parser.add_argument_group('Available normalisers')
+
+    for name, cls, docs, args, optional_args in get_normalisers():
+        arguments = dict()
+        arguments['help'] = docs
+
+        if not len(args) and not len(optional_args):
+            arguments['action'] = 'store_true'
+            arguments['nargs'] = 0
+            arguments['action'] = normaliser_action(args, optional_args)
+        else:
+            arguments['nargs'] = '+'
+            optionals = list(map(lambda x: '[%s]' % x, optional_args))
+            arguments['metavar'] = tuple(args + optionals)
+            arguments['action'] = normaliser_action(args, optional_args)
+
+        # print(arguments)
+        normalisers.add_argument('--%s' % (name,), **arguments)
+
+    return parser
+
+
+def get_normalisers():
     ignored_normalisers = ('commandlinearguments', 'composite')
-    regex_newlines = re.compile(r"\n(?!\n)", re.MULTILINE)
     for cls in dir(core):
         name = cls.lower()
         cls = getattr(core, cls)
@@ -70,69 +130,39 @@ def list_normalisers():
         if argspec.defaults:
             defaults = list(argspec.defaults)
 
-        for i in range(len(defaults)):
-            sel = -i-1
-            args[sel] = '[%s]' % (args[sel],)
+        have_defaults = len(args) - len(defaults)
 
-        print('\n      --%s %s\n' % (name, ' '.join(args)))
+        required_args = args[0:have_defaults]
 
-        docs = regex_newlines.sub('', docs)
-        docs = textwrap.wrap(docs, 80, subsequent_indent=' ' * 12, initial_indent=' ' * 12)
-        for line in docs:
-            print(line)
+        optional_args = args[have_defaults:]
+
+        yield name, cls, docs, required_args, optional_args
 
 
-def main(args=None):
-    # not using argparse for this one
-    if '--help' in args or '-h' in args:
-        helptext = __doc__.split('usage: ', 1)[1].replace("\n    ", "\n")
-        print('usage: ' + helptext)
-        exit()
-
-    def err(txt, code=1):
-        sys.stderr.write(txt + " Use `--help` for more information.\n")
-        exit(code)
-
-    def get_args(args, arg_names):
-        if len(args) == 0:
-            return None
-        input_files_idx = [idx for idx, v in enumerate(args) if v in arg_names]
-        if not len(input_files_idx):
-            return None
-        result = [args[idx + 1] for idx in input_files_idx]
-        # delete from args list
-        for idx in reversed(input_files_idx):
-            del args[idx + 1]
-            del args[idx]
-        return result
-
-    input_files = get_args(args, ('-i', '--input-file'))
-    output_files = get_args(args, ('-o', '--output-file'))
-
-    if '--list-normalisers' in args:
-        list_normalisers()
-        exit()
-
-    if len(args) == 0:
-        err("Need at least one normaliser.")
-
-    if not args[0].startswith('--'):
-        err("Invalid argument '%s'." % (args[0]))
+def main(parser, args=None):
+    input_files = args.inputfile
+    output_files = args.outputfile
+    if 'normalisers' not in args or not len(args.normalisers):
+        parser.error("need at least one normaliser")
 
     if input_files is None and output_files is not None and len(output_files) > 1:
-        err("Can only write output to one file when reading from stdin.")
+        parser.error("can only write output to one file when reading from stdin")
     elif input_files is not None and output_files is not None:
         # straight mapping from input to output, needs equal length
         if len(input_files) != len(output_files):
-            err("When using multiple input or output files, there needs to be an equal amount of each.")
+            parser.error("when using multiple input or output files, there needs to be an equal amount of each")
 
-    normaliser = core.CommandLineArguments(*args)
+    composite = core.Composite()
+    for item in args.normalisers:
+        normaliser_name = item.pop(0).replace('-', '.')
+        cls = core.name_to_normaliser(normaliser_name)
+        composite.add(cls(*item))
 
     if input_files is not None:
         for idx, file in enumerate(input_files):
             with open(file) as input_file:
                 text = input_file.read()
-            text = normaliser.normalise(text)
+            text = composite.normalise(text)
             if output_files is None:
                 sys.stdout.write(text)
             else:
@@ -140,7 +170,7 @@ def main(args=None):
                     output_file.write(text)
     else:
         text = sys.stdin.read()
-        text = normaliser.normalise(text)
+        text = composite.normalise(text)
         if output_files is None:
             sys.stdout.write(text)
         else:
