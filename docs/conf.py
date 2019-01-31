@@ -148,7 +148,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'conferatur', 'Conferatur Documentation',
+    ('cli', 'conferatur', 'Conferatur Documentation',
      [author], 1)
 ]
 
@@ -190,3 +190,8 @@ root_dir = %s
 os.chdir(root_dir)
 sys.path.insert(0, root_dir)
 ''' % (repr(os.path.dirname(root_dir)),)
+
+# smartquotes = False
+# smartquotes_action = 'q'
+#
+# smartquotes_excludes = {'builders': ['man', 'text']}
