@@ -68,7 +68,7 @@ def normaliser_action(required_args, optional_args):
     return NormaliserAction
 
 
-class NormaliserFormatter(argparse.HelpFormatter):
+class Formatter(argparse.HelpFormatter):
     def _format_args(self, action, default_metavar):
         if isinstance(action, _NormaliserAction):
             return ' '.join(action.metavar)

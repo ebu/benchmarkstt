@@ -42,6 +42,11 @@ setup(
        'Unidecode>=1.0.22',
        'langcodes>=1.4.1'
     ],
+    extras_require={
+        'api': [
+            'Flask>=1.0.2'
+        ],
+    },
     platforms='any',
     entry_points={
         'console_scripts': [
