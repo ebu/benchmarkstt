@@ -41,11 +41,6 @@ class Formatter(argparse.HelpFormatter):
 
 
 def argparser(parser=None):
-    if parser is None:
-        parser = argparse.ArgumentParser(prog='normalisation',
-                                         formatter_class=Formatter,
-                                         description='Apply one or more normalisers to the input')
-
     files_desc = """
       You can provide multiple input and output files, each preceded by -i and -o
       respectively.
@@ -72,35 +67,7 @@ def argparser(parser=None):
 
     normalisers = parser.add_argument_group('available normalisers', description=normalisers_desc)
 
-    for name, cls, docs, args, optional_args in get_normalisers():
-        arguments = dict()
-        arguments['help'] = docs
-        arguments['nargs'] = 0
-
-        if len(args) or len(optional_args):
-            arguments['nargs'] = '+'
-            optionals = list(map(lambda x: '[%s]' % x, optional_args))
-            arguments['metavar'] = tuple(args + optionals)
-
-        arguments['action'] = normaliser_action(args, optional_args)
-
-        normalisers.add_argument('--%s' % (name,), **arguments)
-
-    return parser
-
-
-def get_normalisers():
-    ignored_normalisers = ('composite',)
-    for cls in dir(core):
-        name = cls.lower()
-        cls = getattr(core, cls)
-        if name in ignored_normalisers:
-            continue
-        if not inspect.isclass(cls):
-            continue
-        if not hasattr(cls, 'normalise'):
-            continue
-
+    for name, cls in available_normalisers():
         docs = cls.__doc__.split('.. ', 1)[0]
         docs = docs.split(':param', 1)[0]
         docs = textwrap.dedent(docs)
@@ -115,10 +82,38 @@ def get_normalisers():
         required_args = args[0:defaults_idx]
         optional_args = args[defaults_idx:]
 
-        yield name, cls, docs, required_args, optional_args
+        arguments = dict()
+        arguments['help'] = docs
+        arguments['nargs'] = 0
+
+        if len(required_args) or len(optional_args):
+            arguments['nargs'] = '+'
+            optionals = list(map(lambda x: '[%s]' % x, optional_args))
+            arguments['metavar'] = tuple(required_args + optionals)
+
+        arguments['action'] = normaliser_action(required_args, optional_args)
+
+        normalisers.add_argument('--%s' % (name,), **arguments)
+
+    return parser
 
 
-def main(parser, args=None):
+def available_normalisers():
+    ignored_normalisers = ('composite',)
+    for cls in dir(core):
+        name = cls.lower()
+        cls = getattr(core, cls)
+        if name in ignored_normalisers:
+            continue
+        if not inspect.isclass(cls):
+            continue
+        if not hasattr(cls, 'normalise'):
+            continue
+
+        yield name, cls
+
+
+def main(parser, args):
     input_files = [f[0] for f in args.inputfile] if args.inputfile else None
     output_files = [f[0] for f in args.outputfile] if args.outputfile else None
 
@@ -163,7 +158,3 @@ def main(parser, args=None):
             output_file.write(text)
             output_file.close()
 
-
-if __name__ == '__main__':
-    _parser = argparser()
-    main(_parser, _parser.parse_args())

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CONFERATUR" "1" "Jan 31, 2019" "" "Conferatur"
+.TH "CONFERATUR" "1" "Feb 01, 2019" "" "Conferatur"
 .SH NAME
 conferatur \- Conferatur Documentation
 .
@@ -141,7 +141,7 @@ names are case\-insensitive.
 .sp
 Arguments MAY be wrapped in double quotes.
 If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
-A double quote itself is represented in this quoted argument as two double quotes: \fI“”\fP\&.
+A double quote itself is represented in this quoted argument as two double quotes: \fI""\fP\&.
 .sp
 The normalisation rules are applied top\-to\-bottom and follow this format:
 .TP
@@ -150,7 +150,7 @@ Read one per line and pass it to the given normaliser
 .TP
 .B\-\-localisedfile
 Reads and applies normalisation rules from a locale\-based file, it will automagically
-determine the “best fit” for a given locale, if one is available.
+determine the "best fit" for a given locale, if one is available.
 .TP
 .B\-\-lowercase
 Lowercase the text
@@ -162,22 +162,22 @@ Simple regex replace
 Simple search replace
 .TP
 .B\-\-replacewords
-Simple search replace that only replaces “words”, the first letter will be
+Simple search replace that only replaces "words", the first letter will be
 checked case insensitive as well with preservation of case..
 .TP
 .B\-\-unidecode
-Unidecode characters to ASCII form, see \fI\%Python’s Unidecode package\fP for more info.
+Unidecode characters to ASCII form, see \fI\%Python\(aqs Unidecode package\fP for more info.
 .UNINDENT
 .SS Subcommand api
 .sp
-Make conferatur available through a jsonapi interface
+Make conferatur available through a rudimentary jsonapi interface
 
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-usage: conferatur api [\-h] [\-\-debug]
+usage: conferatur api [\-h] [\-\-host HOST] [\-\-port PORT]
 .ft P
 .fi
 .UNINDENT
@@ -185,10 +185,61 @@ usage: conferatur api [\-h] [\-\-debug]
 .SS Named Arguments
 .INDENT 0.0
 .TP
-.B\-\-debug
-enable flask debug mode
+.B\-\-host
+hostname or ip to serve api
+.TP
+.B\-\-port
+port used by the server
 .sp
-Default: False
+Default: 5000
+.UNINDENT
+.sp
+An example POST request:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+{
+    "jsonrpc": "2.0",
+    "method": "normalisation",
+    "params": {
+        "text": "te TEST 𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰",
+        "normalisers": [
+            ["replace", "te","test2"],
+            ["lowercase"],
+            ["unidecode"]
+        ]
+    },
+    "id": null
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+will return:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+{
+    "jsonrpc": "2.0",
+    "result": "test2 test Grande Sass",
+    "id": null
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .UNINDENT

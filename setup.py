@@ -44,8 +44,8 @@ setup(
     ],
     extras_require={
         'api': [
-            'Flask>=1.0.2',
-            'Flask-JSONRPC>=0.3.1',
+            # 'Flask>=1.0.2',
+            'jsonrpcserver>=4.0.1'
         ],
     },
     platforms='any',
