@@ -4,8 +4,6 @@ Apply normalisation to given input
 
 import sys
 from . import core
-import inspect
-import textwrap
 import argparse
 from . import available_normalisers, name_to_normaliser
 
