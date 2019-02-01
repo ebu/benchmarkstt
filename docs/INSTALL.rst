@@ -28,7 +28,7 @@ From source
 
    .. code-block:: bash
 
-      git clone https://github.com/WickedyMike/ai-benchmarking-stt.git
+      git clone https://github.com/MikeSmithEU/ai-benchmarking-stt.git
 
 3. Install the package using :code:`pip`, this will also install all requirements
 
