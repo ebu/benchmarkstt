@@ -15,6 +15,11 @@ from . import name_to_normaliser
 
 default_encoding = 'utf-8'
 
+# todo: use custom own csv reader to fix bugs
+# known bugs:
+# "#test" is incorrectly seen as a comment
+# for config: if ending with a space, it will add a '' as last argument, need to pre-trim line
+
 
 def _csvreader(file, *args, **kwargs):
     """
