@@ -1,0 +1,48 @@
+@startuml
+skinparam defaultTextAlignment center
+skinparam shadowing false
+skinparam linetype ortho
+
+Together {
+Rectangle Audio
+Rectangle Reference
+}
+
+Package "Vendors (manual)" {
+  Rectangle UI
+  Rectangle Vendor_transcript
+  Audio --> UI
+  UI --> Vendor_transcript
+}
+
+
+Package "toolkit" {
+  
+  Rectangle Framework_schema
+  
+  Package Converters {
+    Rectangle Vendor_to_framework 
+    Rectangle Framework_to_string
+    Vendor_transcript --> Vendor_to_framework
+    Vendor_to_framework --> Framework_to_string
+    Framework_schema --> Vendor_to_framework
+  }
+  
+  Package Analysis {     
+    Rectangle Diff
+    Rectangle Metric_analyser
+    Framework_to_string --> Diff
+    Diff --> Metric_analyser
+    Reference --> Diff
+  }
+
+  Package Results {
+    Rectangle WER
+    Rectangle "Diff report"
+    Rectangle "Report JSON"
+    Metric_analyser --> Results
+    }
+
+
+}
+@enduml

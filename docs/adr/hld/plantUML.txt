@@ -1,0 +1,65 @@
+@startuml
+skinparam defaultTextAlignment center
+skinparam shadowing false
+skinparam linetype ortho
+
+
+
+
+Package "EBU" {
+  
+  rectangle "Test set format guidelines" as test_set_format
+  rectangle "Transcript format guidelines" as transcript_format
+  rectangle "UI/reports" as ebu_UI
+  rectangle "Metric guidelines" as ebu_metric
+  rectangle "EBU test data" as ebu_test_data
+  
+  ebu_test_data -[hidden]-> test_set_format
+  test_set_format -[hidden]-> transcript_format
+  transcript_format -[hidden]-> ebu_metric
+  ebu_metric -[hidden]-> ebu_UI
+
+
+}
+
+Package "Toolkit" {
+  rectangle "Test data normaliser" as test_normaliser
+  rectangle "Vendor connectors" as vendor_connectors
+  rectangle "Transcript normalisers" as transcript_normalisers
+  rectangle "Metric analyser" as metric_analysers
+  rectangle "Results matrix" as results
+
+  test_normaliser --> vendor_connectors
+  vendor_connectors -[hidden]-> transcript_normalisers
+  transcript_normalisers -[hidden]-> metric_analysers
+  metric_analysers -[hidden]-> results
+}
+
+
+
+Package "Vendors" {
+  
+  rectangle "APIs" as apis
+  rectangle "Transcripts" as transcripts
+
+  apis -[hidden]-> transcripts
+
+}
+
+Rectangle "User Test data" as user_test_data
+
+
+
+user_test_data --> test_normaliser
+ebu_test_data --> test_normaliser
+vendor_connectors -> apis
+apis --> transcripts
+transcripts -> transcript_normalisers
+transcript_normalisers --> metric_analysers
+metric_analysers --> results
+test_set_format .-> test_normaliser
+transcript_format .-> transcript_normalisers
+ebu_metric .-> metric_analysers
+
+results -> ebu_UI
+@enduml
