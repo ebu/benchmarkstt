@@ -13,6 +13,9 @@ from langcodes import best_match, standardize_tag
 from . import name_to_normaliser
 
 
+default_encoding = 'utf-8'
+
+
 def _csvreader(file, *args, **kwargs):
     """
     Provides a enumerated csv reader Iterable. Empty and comment lines are filtered out.
@@ -30,6 +33,9 @@ def _csvreader(file, *args, **kwargs):
             return False
         # filter comments
         if line[0].startswith('#'):
+            return False
+        # detect empty line if it only contains tabs
+        if len(line) == 1 and line[0].strip() == '':
             return False
         return True
 
@@ -70,6 +76,9 @@ class LocalisedFile:
             raise FileNotFoundError("Could not find a locale file for locale '%s' in '%s'" % (locale, str(path)))
 
         file = os.path.join(path, files[match])
+
+        if encoding is None:
+            encoding = default_encoding
 
         self._normaliser = File(normaliser, file, encoding=encoding)
 
@@ -155,10 +164,13 @@ class File:
             raise ValueError("Unknown normaliser %s" %
                              (repr(normaliser)))
 
+        if encoding is None:
+            encoding = default_encoding
+
         with open(file, encoding=encoding) as f:
             self._normaliser = Composite()
 
-            for idx, line in _csvreader(f):
+            for idx, line in _csvreader(f, delimiter=',', skipinitialspace=True):
                 try:
                     self._normaliser.add(cls(*line))
                 except TypeError as e:
