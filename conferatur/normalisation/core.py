@@ -125,6 +125,9 @@ class ReplaceWords:
     """
 
     def __init__(self, search: str, replace: str):
+        search = search.strip()
+        replace = replace.strip()
+        
         args = tuple(map(re.escape, [
             search[0].upper(),
             search[0].lower(),
