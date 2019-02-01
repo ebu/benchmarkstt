@@ -7,6 +7,7 @@ from . import core
 import inspect
 import textwrap
 import argparse
+from . import available_normalisers, name_to_normaliser
 
 
 class _NormaliserAction:
@@ -67,50 +68,23 @@ def argparser(parser=None):
 
     normalisers = parser.add_argument_group('available normalisers', description=normalisers_desc)
 
-    for name, cls in available_normalisers():
-        docs = cls.__doc__.split('.. ', 1)[0]
-        docs = docs.split(':param', 1)[0]
-        docs = textwrap.dedent(docs)
-
-        argspec = inspect.getfullargspec(cls.__init__)
-        args = list(argspec.args)[1:]
-        defaults = []
-        if argspec.defaults:
-            defaults = list(argspec.defaults)
-
-        defaults_idx = len(args) - len(defaults)
-        required_args = args[0:defaults_idx]
-        optional_args = args[defaults_idx:]
+    for name, conf in available_normalisers().items():
+        docs = conf.docs
 
         arguments = dict()
         arguments['help'] = docs
         arguments['nargs'] = 0
 
-        if len(required_args) or len(optional_args):
+        if len(conf.required_args) or len(conf.optional_args):
             arguments['nargs'] = '+'
-            optionals = list(map(lambda x: '[%s]' % x, optional_args))
-            arguments['metavar'] = tuple(required_args + optionals)
+            optionals = list(map(lambda x: '[%s]' % x, conf.optional_args))
+            arguments['metavar'] = tuple(conf.required_args + optionals)
 
-        arguments['action'] = normaliser_action(required_args, optional_args)
+        arguments['action'] = normaliser_action(conf.required_args, conf.optional_args)
 
         normalisers.add_argument('--%s' % (name,), **arguments)
 
     return parser
-
-
-def available_normalisers():
-    ignored_normalisers = ('composite',)
-    for cls in dir(core):
-        name = cls.lower()
-        cls = getattr(core, cls)
-        if name in ignored_normalisers:
-            continue
-        if not inspect.isclass(cls):
-            continue
-        if not hasattr(cls, 'normalise'):
-            continue
-
-        yield name, cls
 
 
 def main(parser, args):
@@ -130,7 +104,7 @@ def main(parser, args):
     composite = core.Composite()
     for item in args.normalisers:
         normaliser_name = item.pop(0).replace('-', '.')
-        cls = core.name_to_normaliser(normaliser_name)
+        cls = name_to_normaliser(normaliser_name)
         composite.add(cls(*item))
 
     if output_files is not None:

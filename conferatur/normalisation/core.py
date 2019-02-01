@@ -6,32 +6,14 @@ Some basic/simple normalisation classes
 import re
 from unidecode import unidecode
 import csv
-from importlib import import_module
 from io import StringIO
 import os
-from typing import Iterable
 import inspect
 from langcodes import best_match, standardize_tag
-
-_normaliser_lookups = (
-    "conferatur.normalisation.core",
-    # "conferatur.normalisation",
-    ""
-)
+from . import name_to_normaliser
 
 
-def csvreader_filter(arg):
-    idx, line = arg
-    # filter empty lines
-    if not line:
-        return False
-    # filter comments
-    if line[0].startswith('#'):
-        return False
-    return True
-
-
-def csvreader(file, *args, **kwargs):
+def _csvreader(file, *args, **kwargs):
     """
     Provides a enumerated csv reader Iterable. Empty and comment lines are filtered out.
 
@@ -40,58 +22,18 @@ def csvreader(file, *args, **kwargs):
     :param kwargs:
     :return: Iterable
     """
-    return filter(csvreader_filter, enumerate(csv.reader(file, *args, **kwargs), start=1))
 
+    def _csvreader_filter(arg):
+        idx, line = arg
+        # filter empty lines
+        if not line:
+            return False
+        # filter comments
+        if line[0].startswith('#'):
+            return False
+        return True
 
-def name_to_normaliser(name):
-    """
-    Loads the proper normaliser based on a name
-
-    :param name: str
-    :return: class
-
-    .. doctest::
-
-        >>> name_to_normaliser('Replace')
-        <class 'conferatur.normalisation.core.Replace'>
-        >>> name_to_normaliser('replace')
-        <class 'conferatur.normalisation.core.Replace'>
-    """
-    requested = name.split('.')
-    requested_module = []
-
-    if len(requested) > 1:
-        requested_module = requested[:-1]
-
-    requested_class = requested[-1]
-    lname = requested_class.lower()
-    for lookup in _normaliser_lookups:
-        try:
-            module = '.'.join(filter(len, lookup.split('.') + requested_module))
-            if module == '':
-                continue
-            module = import_module(module)
-
-            if hasattr(module, requested_class):
-                cls = getattr(module, requested_class)
-                if inspect.isclass(cls) and hasattr(cls, 'normalise'):
-                    return cls
-
-            # fallback, check case-insensitive matches
-            realname = [class_name for class_name in dir(module)
-                        if class_name.lower() == lname and
-                        inspect.isclass(getattr(module, class_name)) and
-                        hasattr(getattr(module, class_name), 'normalise')]
-
-            if len(realname) > 1:
-                raise ImportError("Cannot determine which class to use for '$s': %s" %
-                                  (lname, repr(realname)))
-            elif len(realname):
-                return getattr(module, realname[0])
-        except ModuleNotFoundError:
-            pass
-
-    raise ImportError("Could not find normaliser '%s'" % (name,))
+    return filter(_csvreader_filter, enumerate(csv.reader(file, *args, **kwargs), start=1))
 
 
 class LocalisedFile:
@@ -216,7 +158,7 @@ class File:
         with open(file, encoding=encoding) as f:
             self._normaliser = Composite()
 
-            for idx, line in csvreader(f):
+            for idx, line in _csvreader(f):
                 try:
                     self._normaliser.add(cls(*line))
                 except TypeError as e:
@@ -429,11 +371,8 @@ class Config:
     """
 
     def __init__(self, config):
-        self._apply_file_like_object(StringIO(config))
-
-    def _apply_file_like_object(self, file_like_object):
         self._normaliser = Composite()
-        for idx, line in csvreader(file_like_object, delimiter=' ', skipinitialspace=True):
+        for idx, line in _csvreader(StringIO(config), delimiter=' ', skipinitialspace=True):
             try:
                 normaliser = name_to_normaliser(line[0])
             except ValueError:
