@@ -56,14 +56,6 @@ class LocalisedFile:
     :param locale: Which locale to search for
     :param path: Location of available locale files
     :param encoding: str The file encoding
-
-    .. doctest::
-
-        >>> path = './resources/test/normalisers/configfile'
-        >>> normaliser = LocalisedFile('Config', 'en_UK', path)
-        >>> normaliser.normalise("𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰𝔬 𝔡'ℑ𝔱𝔞𝔩𝔦𝔞")
-        "gran sasso d'italia"
-
     """
 
     def __init__(self, normaliser, locale: str, path: str, encoding=None):
@@ -94,13 +86,6 @@ class LocalisedFile:
 class Replace:
     """
     Simple search replace
-
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import Replace
-        >>> normaliser = Replace('scratch', 'flesh wound')
-        >>> normaliser.normalise('Tis but a scratch.')
-        'Tis but a flesh wound.'
     """
 
     def __init__(self, search: str, replace: str=''):
@@ -115,13 +100,6 @@ class ReplaceWords:
     """
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
-
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import ReplaceWords
-        >>> normaliser = ReplaceWords("ni", "ecky ecky")
-        >>> normaliser.normalise('Ni! We are the Knights Who Say "ni"!')
-        'Ecky ecky! We are the Knights Who Say "ecky ecky"!'
     """
 
     def __init__(self, search: str, replace: str):
@@ -150,21 +128,8 @@ class ReplaceWords:
 class File:
     r"""
     Read one per line and pass it to the given normaliser
-
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import Config
-        >>> file = './resources/test/normalisers/configfile.conf'
-        >>> normaliser = File(Config, file)
-        >>> normaliser.normalise('Ee ecky thump!')
-        'aa ackY Thump!'
-        >>> #todo: proper handling of comments if quoted
-        >>> #file = './resources/test/normalisers/replacecommentstest'
-        >>> #normaliser = File('replace', file)
-        >>> #normaliser.normalise('# TEST\n')
-        'OKNOW'
-
     """
+
     def __init__(self, normaliser, file, encoding=None):
         try:
             cls = normaliser if inspect.isclass(normaliser) else name_to_normaliser(normaliser)
@@ -190,39 +155,31 @@ class File:
 
 class RegexReplace:
     r"""
-    Simple regex replace
+    Simple regex replace. By default the pattern is interpreted
+    case-sensitive.
 
-    .. doctest::
+    Case-insensitivity is supported by adding inline modifiers.
+    You might want to use capturing groups to preserve the case.
+    When replacing a character not captured, the information about
+    its case is lost...
 
-        >>> from conferatur.normalisation.core import RegexReplace
-        >>> normaliser = RegexReplace('(scratch)', r"\1 (his arm's off)")
-        >>> normaliser.normalise('Tis but a scratch.')
-        "Tis but a scratch (his arm's off)."
+    Eg.
+        search: ``(?i)(h)a``
+        replace: ``\1e``
+        would replace "HAHA! Hahaha!" to "HeHe! Hehehe!"
 
-        By default the pattern is interpreted case-sensitive,
+    No regex flags are set by default, you can set them yourself though in the regex,
+    and combine them at will, eg. multiline, dotall and ignorecase.
 
-        >>> RegexReplace('ha', 'he').normalise('HA! Hahaha!')
-        'HA! Hahehe!'
-
-        Case-insensitivity is supported by adding inline modifiers.
-        You might want to use capturing groups to preserve the case.
-        When replacing a character not captured, the information about
-        its case is lost...
-
-        >>> RegexReplace('(?i)(h)a', r'\1e').normalise('HAHA! Hahaha!')
-        'HeHe! Hehehe!'
-
-        No regex flags are set by default, you can set them yourself though in the regex,
-        and combine them at will, eg. multiline, dotall and ignorecase:
-
-        >>> RegexReplace('(?msi)new.line', 'newline').normalise("New\nline")
-        'newline'
-
-
+    Eg.
+        search: ``(?msi)new.line``
+        replace: ``newline``
+        would replace "New\nline" to "newline"
     """
-    def __init__(self, pattern: str, substitution: str=None):
-        self._pattern = re.compile(pattern)
-        self._substitution = substitution if substitution is not None else ''
+
+    def __init__(self, search: str, replace: str=None):
+        self._pattern = re.compile(search)
+        self._substitution = replace if replace is not None else ''
 
     def normalise(self, text: str) -> str:
         return self._pattern.sub(self._substitution, text)
@@ -232,13 +189,6 @@ class AlphaNumeric(RegexReplace):
     """
     Simple alphanumeric filter
 
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import AlphaNumeric
-        >>> AlphaNumeric().normalise("She turned me into a newt.")
-        'Sheturnedmeintoanewt'
-        >>> AlphaNumeric().normalise("Das, öder die Flipper-Wåld Gespütt!")
-        'DasderdieFlipperWldGesptt'
     """
 
     def __init__(self):
@@ -249,11 +199,6 @@ class AlphaNumericUnicode(RegexReplace):
     """
     Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import AlphaNumericUnicode
-        >>> AlphaNumericUnicode().normalise("Das, öder die Flipper-Wåld Gespütt!")
-        'DasöderdieFlipperWåldGespütt'
     """
     def __init__(self):
         super().__init__('[^\w]+')
@@ -263,11 +208,6 @@ class Lowercase:
     """
     Lowercase the text
 
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import Lowercase
-        >>> Lowercase().normalise('PRÁZdNÉ VLAŠToVKY')
-        'prázdné vlaštovky'
     """
 
     def normalise(self, text: str) -> str:
@@ -278,11 +218,6 @@ class Unidecode:
     """
     Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
 
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import Unidecode
-        >>> Unidecode().normalise('Eine große europäische Schwalbe')
-        'Eine grosse europaische Schwalbe'
     """
 
     def normalise(self, text: str) -> str:
@@ -293,28 +228,6 @@ class Composite:
     """
     Combining normalisers
 
-    .. doctest::
-
-        >>> from conferatur.normalisation.core import *
-        >>> text = 'Knights who say: NI!'
-        >>> normaliser = Composite()
-        >>> normaliser.add(Lowercase())
-        >>> normaliser.add(Unidecode())
-        >>> normaliser.normalise(text)
-        'knights who say: ni!'
-        >>> comp = Composite()
-        >>> comp.add(normaliser)
-        >>> comp.add(Replace(' ni', ' Ekke Ekke Ekke Ekke Ptang Zoo Boing'))
-        >>> comp.normalise(text)
-        'knights who say: Ekke Ekke Ekke Ekke Ptang Zoo Boing!'
-        >>> comp.add(Lowercase())
-        >>> comp.normalise(text)
-        'knights who say: ekke ekke ekke ekke ptang zoo boing!'
-        >>> normaliser.add(Replace(' ni', ' nope'))
-        >>> comp.normalise(text)
-        'knights who say: nope!'
-        >>> comp.normalise('Ich fälle Bäume und hüpf und spring.')
-        'ich falle baume und hupf und spring.'
     """
     def __init__(self):
         self._normalisers = []
@@ -359,35 +272,6 @@ class Config:
         Spanning multiple lines
         " "and this would be argument 2 still applying to Normaliser3"
 
-
-    .. doctest::
-
-        >>> config = '''
-        ... # using a simple config file
-        ... lowercase
-        ... # Let's replace double quotes with single quotes (note wrapping in double quotes,
-        ... # to allow the use of double quotes in an argument.
-        ... RegexReplace "[""]" '
-        ... # A space in the argument: wrap in double quotes as well
-        ... Replace 'ni' "'ecky ecky ecky'"
-        ... '''
-        >>> normaliser = Config(config)
-        >>> normaliser.normalise('No! Not the Knights Who Say "Ni"!')
-        "no! not the knights who say 'ecky ecky ecky'!"
-        >>> # Lets replace spaces with a newline (without using regex), demonstrating multiline arguments
-        >>> # also note that the normaliser name is case-insensitive
-        >>> config = '''
-        ... replace " " "
-        ... "
-        ... '''
-        >>> normaliser = Config(config)
-        >>> normaliser.normalise("None shall pass.")
-        'None\nshall\npass.'
-        >>> Config('Replace     t      " T "').normalise("test")
-        ' T es T '
-        >>> # Loading a custom normaliser that wraps the text in square brackets
-        >>> Config('resources.test.normalisers.testnormaliser').normalise('test')
-        '[test]'
     """
 
     def __init__(self, config):

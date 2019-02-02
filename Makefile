@@ -1,7 +1,7 @@
 .PHONY: docs test clean
 
 test:
-	pytest --doctest-modules --verbose
+	pytest --verbose
 
 docs: html man
 
