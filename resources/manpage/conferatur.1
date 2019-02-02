@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CONFERATUR" "1" "Feb 01, 2019" "" "Conferatur"
+.TH "CONFERATUR" "1" "Feb 02, 2019" "" "Conferatur"
 .SH NAME
 conferatur \- Conferatur Documentation
 .
@@ -87,7 +87,7 @@ usage: conferatur normalisation [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
                                 [\-\-file normaliser file [encoding]]
                                 [\-\-localisedfile normaliser locale path [encoding]]
                                 [\-\-lowercase]
-                                [\-\-regexreplace pattern [substitution]]
+                                [\-\-regexreplace search [replace]]
                                 [\-\-replace search [replace]]
                                 [\-\-replacewords search replace] [\-\-unidecode]
 .ft P
@@ -132,31 +132,117 @@ Simple alphanumeric filter
 Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 .TP
 .B\-\-config
-Use config notation to define normalisation rules. This notation is a list of normalisers,
-one per line, with optional arguments (separated by a space).
+Use config notation to define normalisation rules. This notation is a list of normalisers, one per line, with optional arguments (separated by a space).
 .sp
-The normalisers can be any of the core normalisers, or you can refer to your own normaliser
-class (like you would use in a python import, eg. \fImy.own.package.MyNormaliserClass\fP). Normaliser
-names are case\-insensitive.
-.sp
+The normalisers can be any of the core normalisers, or you can refer to your own normaliser class (like you would use in a python import, eg. \fImy.own.package.MyNormaliserClass\fP).
+.INDENT 7.0
+.TP
+.B Additional rules:
+.INDENT 7.0
+.IP \(bu 2
+Normaliser names are case\-insensitive.
+.IP \(bu 2
 Arguments MAY be wrapped in double quotes.
+.IP \(bu 2
 If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
+.IP \(bu 2
 A double quote itself is represented in this quoted argument as two double quotes: \fI""\fP\&.
+.UNINDENT
+.UNINDENT
 .sp
 The normalisation rules are applied top\-to\-bottom and follow this format:
+.INDENT 7.0
+.INDENT 3.5
+Normaliser1 arg1 "arg 2"
+# This is a comment
+.sp
+Normaliser2
+# (Normaliser2 has no arguments)
+Normaliser3 "This is argument 1
+Spanning multiple lines
+" "argument 2"
+Normaliser4 "argument with double quote ("")"
+.UNINDENT
+.UNINDENT
 .TP
 .B\-\-file
 Read one per line and pass it to the given normaliser
 .TP
 .B\-\-localisedfile
-Reads and applies normalisation rules from a locale\-based file, it will automagically
-determine the "best fit" for a given locale, if one is available.
+Reads and applies normalisation rules from a locale\-based file, it will automagically determine the "best fit" for a given locale, if one is available.
+.INDENT 7.0
+.TP
+.B param normaliser
+str|class Normaliser name or class
+.TP
+.B param locale
+Which locale to search for
+.TP
+.B param path
+Location of available locale files
+.TP
+.B param encoding
+str The file encoding
+.UNINDENT
 .TP
 .B\-\-lowercase
 Lowercase the text
 .TP
 .B\-\-regexreplace
-Simple regex replace
+Simple regex replace. By default the pattern is interpreted
+case\-sensitive.
+.sp
+Case\-insensitivity is supported by adding inline modifiers.
+.sp
+You might want to use capturing groups to preserve the case. When replacing a character not captured, the information about its case is lost...
+.sp
+Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
+.INDENT 7.0
+.INDENT 3.5
+.TS
+center;
+|l|l|.
+_
+T{
+search
+T}	T{
+replace
+T}
+_
+T{
+(?i)(h)a
+T}	T{
+1e
+T}
+_
+.TE
+.UNINDENT
+.UNINDENT
+.sp
+No regex flags are set by default, you can set them yourself though in the regex, and combine them at will, eg. multiline, dotall and ignorecase.
+.sp
+Eg. would replace "New<CRLF>line" to "newline":
+.INDENT 7.0
+.INDENT 3.5
+.TS
+center;
+|l|l|.
+_
+T{
+search
+T}	T{
+replace
+T}
+_
+T{
+(?msi)new.line
+T}	T{
+newline
+T}
+_
+.TE
+.UNINDENT
+.UNINDENT
 .TP
 .B\-\-replace
 Simple search replace
@@ -177,13 +263,19 @@ Make conferatur available through a rudimentary jsonapi interface
 .sp
 .nf
 .ft C
-usage: conferatur api [\-h] [\-\-host HOST] [\-\-port PORT]
+usage: conferatur api [\-h] [\-\-debug] [\-\-host HOST] [\-\-port PORT]
+                      [\-\-entrypoint ENTRYPOINT]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .SS Named Arguments
 .INDENT 0.0
+.TP
+.B\-\-debug
+run in debug mode
+.sp
+Default: False
 .TP
 .B\-\-host
 hostname or ip to serve api
@@ -192,6 +284,11 @@ hostname or ip to serve api
 port used by the server
 .sp
 Default: 5000
+.TP
+.B\-\-entrypoint
+the jsonrpc api address
+.sp
+Default: "/"
 .UNINDENT
 .sp
 An example POST request:

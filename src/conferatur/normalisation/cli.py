@@ -6,6 +6,9 @@ import sys
 from . import core
 import argparse
 from . import available_normalisers, name_to_normaliser
+import textwrap
+import functools
+import itertools
 
 
 class _NormaliserAction:
@@ -37,6 +40,16 @@ class Formatter(argparse.HelpFormatter):
             return ' '.join(action.metavar)
 
         return super()._format_args(action, default_metavar)
+
+    def _split_lines(self, text, width):
+        def wrap(txt):
+            if txt == '':
+                return ['']
+            return textwrap.wrap(txt, width=width)
+
+        text = text.splitlines()
+        text = list(itertools.chain.from_iterable(map(wrap, text)))
+        return text
 
 
 def argparser(parser=None):

@@ -9,7 +9,7 @@ Each normalisation class has a method called `normalise`:
         """Returns normalised text with rules supplied by the called class.
         """
 
-.. automodule:: normalisation.core
+.. automodule:: conferatur.normalisation.core
    :members:
    :undoc-members: normalise
    :inherited-members: normalise

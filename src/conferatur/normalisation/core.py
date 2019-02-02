@@ -49,8 +49,7 @@ def _csvreader(file, *args, **kwargs):
 
 class LocalisedFile:
     """
-    Reads and applies normalisation rules from a locale-based file, it will automagically
-    determine the "best fit" for a given locale, if one is available.
+    Reads and applies normalisation rules from a locale-based file, it will automagically determine the "best fit" for a given locale, if one is available.
 
     :param normaliser: str|class Normaliser name or class
     :param locale: Which locale to search for
@@ -159,22 +158,29 @@ class RegexReplace:
     case-sensitive.
 
     Case-insensitivity is supported by adding inline modifiers.
-    You might want to use capturing groups to preserve the case.
-    When replacing a character not captured, the information about
-    its case is lost...
 
-    Eg.
-        search: ``(?i)(h)a``
-        replace: ``\1e``
-        would replace "HAHA! Hahaha!" to "HeHe! Hehehe!"
+    You might want to use capturing groups to preserve the case. When replacing a character not captured, the information about its case is lost...
 
-    No regex flags are set by default, you can set them yourself though in the regex,
-    and combine them at will, eg. multiline, dotall and ignorecase.
+    Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
 
-    Eg.
-        search: ``(?msi)new.line``
-        replace: ``newline``
-        would replace "New\nline" to "newline"
+     +------------+----------+
+     | search     | replace  |
+     +============+==========+
+     | (?i)(h)a   | \1e      |
+     +------------+----------+
+
+
+    No regex flags are set by default, you can set them yourself though in the regex, and combine them at will, eg. multiline, dotall and ignorecase.
+
+    Eg. would replace "New<CRLF>line" to "newline":
+
+     +----------------+----------+
+     | search         | replace  |
+     +================+==========+
+     | (?msi)new.line | newline  |
+     +----------------+----------+
+
+
     """
 
     def __init__(self, search: str, replace: str=None):
@@ -249,28 +255,29 @@ class Composite:
 
 class Config:
     r"""
-    Use config notation to define normalisation rules. This notation is a list of normalisers,
-    one per line, with optional arguments (separated by a space).
+    Use config notation to define normalisation rules. This notation is a list of normalisers, one per line, with optional arguments (separated by a space).
 
-    The normalisers can be any of the core normalisers, or you can refer to your own normaliser
-    class (like you would use in a python import, eg. `my.own.package.MyNormaliserClass`). Normaliser
-    names are case-insensitive.
+    The normalisers can be any of the core normalisers, or you can refer to your own normaliser class (like you would use in a python import, eg. `my.own.package.MyNormaliserClass`).
 
-    Arguments MAY be wrapped in double quotes.
-    If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
-    A double quote itself is represented in this quoted argument as two double quotes: `""`.
+    Additional rules:
+      - Normaliser names are case-insensitive.
+      - Arguments MAY be wrapped in double quotes.
+      - If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
+      - A double quote itself is represented in this quoted argument as two double quotes: `""`.
 
     The normalisation rules are applied top-to-bottom and follow this format:
 
     .. code-block:: none
 
-        Normaliser1 argument1 "argument 2" "this is argument3 containing a double quote ("")"
+        Normaliser1 arg1 "arg 2"
         # This is a comment
+        
         Normaliser2
         # (Normaliser2 has no arguments)
         Normaliser3 "This is argument 1
         Spanning multiple lines
-        " "and this would be argument 2 still applying to Normaliser3"
+        " "argument 2"
+        Normaliser4 "argument with double quote ("")"
 
     """
 
