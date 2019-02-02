@@ -2,3 +2,6 @@ __pycache__
 .idea
 .DS_Store
 docs/build
+*.egg-info/
+.pytest_cache/
+

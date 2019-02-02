@@ -13,7 +13,7 @@ __author__ = 'EBU'
 __name__ = 'conferatur'
 
 # Auto save to __meta__
-meta_location = os.path.join(dirname,  __name__, '__meta__.py')
+meta_location = os.path.join(dirname, 'src', __name__, '__meta__.py')
 with open(meta_location, 'w') as f:
     f.write('''# Automagically created. DO NOT EDIT
 __version__ = %s
@@ -37,7 +37,8 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     python_requires='>=3.4',
-    packages=find_packages(),
+    packages=find_packages("src"),
+    package_dir={"": "src"},
     install_requires=[
        'Unidecode>=1.0.22',
        'langcodes>=1.4.1'
