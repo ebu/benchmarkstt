@@ -1,0 +1,414 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CONFERATUR" "1" "Feb 02, 2019" "" "Conferatur"
+.SH NAME
+conferatur \- Conferatur Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+Conferatur main command line script
+
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+usage: conferatur [\-h]
+                  [\-\-log\-level {critical,fatal,error,warn,warning,info,debug,notset}]
+                  [\-\-version]
+                  {normalisation,api}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH POSITIONAL ARGUMENTS
+.INDENT 0.0
+.TP
+.Bsubcommand
+Possible choices: normalisation, api
+.UNINDENT
+.SH NAMED ARGUMENTS
+.INDENT 0.0
+.TP
+.B\-\-log\-level
+Possible choices: critical, fatal, error, warn, warning, info, debug, notset
+.sp
+set the logging output level
+.sp
+Default: warning
+.TP
+.B\-\-version
+output conferatur version number
+.sp
+Default: False
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH SUBCOMMANDS
+.INDENT 0.0
+.INDENT 3.5
+.SS Subcommand normalisation
+.sp
+Apply normalisation to given input
+
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+usage: conferatur normalisation [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
+                                [\-\-alphanumericunicode] [\-\-config config]
+                                [\-\-file normaliser file [encoding]]
+                                [\-\-localisedfile normaliser locale path [encoding]]
+                                [\-\-lowercase]
+                                [\-\-regexreplace search [replace]]
+                                [\-\-replace search [replace]]
+                                [\-\-replacewords search replace] [\-\-unidecode]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS input and output files
+.INDENT 0.0
+.INDENT 3.5
+You can provide multiple input and output files, each preceded by \-i and \-o
+respectively.
+If no input file is given, only one output file can be used.
+If using both multiple input and output files there should be an equal amount
+of each. Each processed input file will then be written to the corresponding
+output file.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B\-i, \-\-inputfile
+read input from this file, defaults to STDIN
+.TP
+.B\-o, \-\-outputfile
+write output to this file, defaults to STDOUT
+.UNINDENT
+.SS available normalisers
+.INDENT 0.0
+.INDENT 3.5
+A list of normalisers to execute on the input, can be one or more normalisers
+which are applied sequentially.
+The program will automatically find the normaliser in conferatur.normalisation.core,
+then conferatur.normalisation and finally in the global namespace.
+At least one normaliser needs to be provided.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B\-\-alphanumeric
+Simple alphanumeric filter
+.TP
+.B\-\-alphanumericunicode
+Simple alphanumeric filter, takes into account all unicode alphanumeric characters
+.TP
+.B\-\-config
+Use config notation to define normalisation rules. This notation is a list of normalisers, one per line, with optional arguments (separated by a space).
+.sp
+The normalisers can be any of the core normalisers, or you can refer to your own normaliser class (like you would use in a python import, eg. \fImy.own.package.MyNormaliserClass\fP).
+.INDENT 7.0
+.TP
+.B Additional rules:
+.INDENT 7.0
+.IP \(bu 2
+Normaliser names are case\-insensitive.
+.IP \(bu 2
+Arguments MAY be wrapped in double quotes.
+.IP \(bu 2
+If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
+.IP \(bu 2
+A double quote itself is represented in this quoted argument as two double quotes: \fI""\fP\&.
+.UNINDENT
+.UNINDENT
+.sp
+The normalisation rules are applied top\-to\-bottom and follow this format:
+.INDENT 7.0
+.INDENT 3.5
+Normaliser1 arg1 "arg 2"
+# This is a comment
+.sp
+Normaliser2
+# (Normaliser2 has no arguments)
+Normaliser3 "This is argument 1
+Spanning multiple lines
+" "argument 2"
+Normaliser4 "argument with double quote ("")"
+.UNINDENT
+.UNINDENT
+.TP
+.B\-\-file
+Read one per line and pass it to the given normaliser
+.TP
+.B\-\-localisedfile
+Reads and applies normalisation rules from a locale\-based file, it will automagically determine the "best fit" for a given locale, if one is available.
+.INDENT 7.0
+.TP
+.B param normaliser
+str|class Normaliser name or class
+.TP
+.B param locale
+Which locale to search for
+.TP
+.B param path
+Location of available locale files
+.TP
+.B param encoding
+str The file encoding
+.UNINDENT
+.TP
+.B\-\-lowercase
+Lowercase the text
+.TP
+.B\-\-regexreplace
+Simple regex replace. By default the pattern is interpreted
+case\-sensitive.
+.sp
+Case\-insensitivity is supported by adding inline modifiers.
+.sp
+You might want to use capturing groups to preserve the case. When replacing a character not captured, the information about its case is lost...
+.sp
+Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
+.INDENT 7.0
+.INDENT 3.5
+.TS
+center;
+|l|l|.
+_
+T{
+search
+T}	T{
+replace
+T}
+_
+T{
+(?i)(h)a
+T}	T{
+1e
+T}
+_
+.TE
+.UNINDENT
+.UNINDENT
+.sp
+No regex flags are set by default, you can set them yourself though in the regex, and combine them at will, eg. multiline, dotall and ignorecase.
+.sp
+Eg. would replace "New<CRLF>line" to "newline":
+.INDENT 7.0
+.INDENT 3.5
+.TS
+center;
+|l|l|.
+_
+T{
+search
+T}	T{
+replace
+T}
+_
+T{
+(?msi)new.line
+T}	T{
+newline
+T}
+_
+.TE
+.UNINDENT
+.UNINDENT
+.TP
+.B\-\-replace
+Simple search replace
+.TP
+.B\-\-replacewords
+Simple search replace that only replaces "words", the first letter will be
+checked case insensitive as well with preservation of case..
+.TP
+.B\-\-unidecode
+Unidecode characters to ASCII form, see \fI\%Python\(aqs Unidecode package\fP for more info.
+.UNINDENT
+.SS Subcommand api
+.sp
+Make conferatur available through a rudimentary jsonapi interface
+
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+usage: conferatur api [\-h] [\-\-debug] [\-\-host HOST] [\-\-port PORT]
+                      [\-\-entrypoint ENTRYPOINT]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Named Arguments
+.INDENT 0.0
+.TP
+.B\-\-debug
+run in debug mode
+.sp
+Default: False
+.TP
+.B\-\-host
+hostname or ip to serve api
+.TP
+.B\-\-port
+port used by the server
+.sp
+Default: 5000
+.TP
+.B\-\-entrypoint
+the jsonrpc api address
+.sp
+Default: "/"
+.UNINDENT
+.sp
+An example POST request:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+{
+    "jsonrpc": "2.0",
+    "method": "normalisation",
+    "params": {
+        "text": "te TEST 𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰",
+        "normalisers": [
+            ["replace", "te","test2"],
+            ["lowercase"],
+            ["unidecode"]
+        ]
+    },
+    "id": null
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+will return:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+{
+    "jsonrpc": "2.0",
+    "result": "test2 test Grande Sass",
+    "id": null
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH BASH COMPLETION
+.sp
+Bash completion is supported through \fBargcomplete\fP\&.
+.INDENT 0.0
+.INDENT 3.5
+.SS Setting up bash completion
+.sp
+If you use \fBbash\fP as your shell, \fBconferatur\fP can use \fI\%argcomplete\fP for auto\-completion.
+.sp
+For this \fBargcomplete\fP needs to be installed \fBand\fP enabled.
+.SS Installing argcomplete
+.INDENT 0.0
+.IP 1. 3
+Install argcomplete using:
+.INDENT 3.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+pip install argcomplete
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.IP 2. 3
+For global activation of all argcomplete enabled python applications, run:
+.INDENT 3.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+activate\-global\-python\-argcomplete
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS Alternative argcomplete configuration
+.INDENT 0.0
+.IP 1. 3
+For permanent (but not global) \fBconferatur\fP activation, use:
+.INDENT 3.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+register\-python\-argcomplete conferatur >> ~/.bashrc
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.IP 2. 3
+For one\-time activation of argcomplete for \fBconferatur\fP only, use:
+.INDENT 3.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+eval "$(register\-python\-argcomplete conferatur)"
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+EBU
+.SH COPYRIGHT
+2019, EBU
+.\" Generated by docutils manpage writer.
+.
