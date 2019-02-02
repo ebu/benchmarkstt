@@ -55,10 +55,6 @@ def name_to_normaliser(name):
 
     .. doctest::
 
-        >>> name_to_normaliser('Replace')
-        <class 'conferatur.normalisation.core.Replace'>
-        >>> name_to_normaliser('replace')
-        <class 'conferatur.normalisation.core.Replace'>
     """
     requested = name.split('.')
     requested_module = []

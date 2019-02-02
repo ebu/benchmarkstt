@@ -1,7 +1,25 @@
+# sphinx documentation
+docs/build/
+
+# python caches and build
 __pycache__
-.idea
 .DS_Store
-docs/build
 *.egg-info/
+
+# editor settings
+.idea
+
+
+# unit test & coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
 .pytest_cache/
 
