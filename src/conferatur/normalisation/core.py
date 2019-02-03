@@ -163,22 +163,22 @@ class RegexReplace:
 
     Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
 
-     +------------+----------+
-     | search     | replace  |
-     +============+==========+
-     | (?i)(h)a   | \1e      |
-     +------------+----------+
+     +------------------+-------------+
+     | search           | replace     |
+     +==================+=============+
+     | :code:`(?i)(h)a` | :code:`\1e` |
+     +------------------+-------------+
 
 
     No regex flags are set by default, you can set them yourself though in the regex, and combine them at will, eg. multiline, dotall and ignorecase.
 
     Eg. would replace "New<CRLF>line" to "newline":
 
-     +----------------+----------+
-     | search         | replace  |
-     +================+==========+
-     | (?msi)new.line | newline  |
-     +----------------+----------+
+     +------------------------+------------------+
+     | search                 | replace          |
+     +========================+==================+
+     | :code:`(?msi)new.line` | :code:`newline`  |
+     +------------------------+------------------+
 
 
     """

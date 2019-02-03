@@ -1,5 +1,5 @@
-Using conferatur
-================
+Usage
+=====
 
 See:
 

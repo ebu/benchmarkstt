@@ -28,7 +28,7 @@ more information about which commands are available):
    .. code-block:: bash
 
       docker exec -it conferatur conferatur --version
-      conferatur --help
+      docker exec -it conferatur conferatur --help
 
 
 Stopping the image

@@ -9,7 +9,6 @@ Welcome to Conferatur's documentation!
    INSTALL
    usage
    development
-   cli
    modules
 
 

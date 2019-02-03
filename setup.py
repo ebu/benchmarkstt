@@ -6,7 +6,6 @@ if sys.version_info < (3,4):
     sys.exit('Sorry, Python < 3.4 is not supported')
 
 dirname = os.path.dirname(__file__)
-print(dirname)
 with open('VERSION') as f:
     __version__ = f.read().strip()
 __author__ = 'EBU'

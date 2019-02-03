@@ -1,9 +1,8 @@
 from collections import namedtuple
 import inspect
 from importlib import import_module
-import textwrap
 from typing import Dict
-import re
+from conferatur import format_docs
 
 _normaliser_namespaces = (
     "conferatur.normalisation.core",
@@ -27,11 +26,10 @@ def available_normalisers() -> Dict[str, NormaliserConfig]:
         if name in ignored_normalisers or not is_normaliser(cls):
             continue
 
-        docs = cls.__doc__
+        docs = format_docs(cls.__doc__)
         # docs = docs.split(':param', 1)[0]
         # remove rst blocks
         # docs = re.sub(r'^\s*\.\. [a-z-]+::\s+[a-z]+\s*$', '', docs, flags=re.MULTILINE)
-        docs = textwrap.dedent(docs).strip()
 
         argspec = inspect.getfullargspec(cls.__init__)
         args = list(argspec.args)[1:]
