@@ -1,7 +1,7 @@
 Development
 ===========
 
-This assumes :code:`git` and :code:`Python` 3.3 or above are already installed on your system.
+This assumes :code:`git` and :code:`Python` 3.4 or above are already installed on your system (see :doc:`INSTALL`).
 
 1. Fork the `repository source code <https://github.com/EBU/ai-benchmarking-stt.git>`_ from github to your own account.
 

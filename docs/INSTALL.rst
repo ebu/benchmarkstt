@@ -3,6 +3,7 @@ Installation
 
 Conferatur requires Python_ version 3.4 or above.
 
+
 From PyPI (preferred)
 ---------------------
 
@@ -14,7 +15,7 @@ TODO
 From source
 -----------
 
-1. Install Python_ 3.3 or above (latest stable version for your OS is preferred):
+1. Install Python_ 3.4 or above (latest stable version for your OS is preferred):
 
    Use the guides available at `The Hitchhiker’s Guide to Python <https://docs.python-guide.org>`_
 
@@ -34,7 +35,7 @@ From source
 
    .. code-block:: bash
 
-      pip install ai-benchmarking-stt
+      pip install 'ai-benchmarking-stt[api]'
 
    Once this is done you may remove the git repository (optional).
 
@@ -59,11 +60,26 @@ From source
       conferatur --help
       conferatur normalisation --help
 
+   See :doc:`usage` for more information on how to use.
+
+
 Removing conferatur
 -------------------
 
    .. code-block:: bash
 
       pip uninstall conferatur
+
+
+Docker
+------
+
+See instructions at:
+
+    .. toctree::
+       :maxdepth: 1
+
+       docker
+
 
 .. _Python: https://www.python.org

@@ -7,6 +7,7 @@ Welcome to Conferatur's documentation!
    :maxdepth: 3
 
    INSTALL
+   usage
    development
    cli
    modules

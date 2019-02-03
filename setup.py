@@ -6,6 +6,7 @@ if sys.version_info < (3,4):
     sys.exit('Sorry, Python < 3.4 is not supported')
 
 dirname = os.path.dirname(__file__)
+print(dirname)
 with open('VERSION') as f:
     __version__ = f.read().strip()
 __author__ = 'EBU'
@@ -46,7 +47,8 @@ setup(
     extras_require={
         'api': [
             'Flask>=1.0.2',
-            'jsonrpcserver>=4.0.1'
+            'jsonrpcserver>=4.0.1',
+            'gunicorn>=19.9.0',
         ],
         'docs': [
             "sphinx==1.8.3",
