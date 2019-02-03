@@ -8,7 +8,7 @@ _Screenshot of UI - optional_
 
 This is a collaborative project to create a library for benchmarking AI/ML applications. It evolved out of conversations among broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's [Media Information Management & AI group](https://tech.ebu.ch/groups/mim). Currently the group is focussing on Speech-to-Text, but it will consider creating benchmarking tools for other AI/ML services.    
 
-For general information about this project, including the [motivations](https://github.com/ebu/ai-benchmarking-stt/wiki) and [guiding principles](https://github.com/ebu/ai-benchmarking-stt/wiki/Principles), please see the project [wiki](https://github.com/ebu/ai-benchmarking-stt/wiki).
+For general information about this project, including the [motivations](https://github.com/ebu/ai-benchmarking-stt/wiki) and [guiding principles](https://github.com/ebu/ai-benchmarking-stt/wiki/Principles), please see the project [wiki](https://github.com/ebu/ai-benchmarking-stt/wiki) and [documentation](https://conferatur.mikesmith.eu).
 
 
 

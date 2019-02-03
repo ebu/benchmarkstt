@@ -10,7 +10,7 @@ You can launch a server to make the api available via:
 
     - :doc:`cli/api` (for debugging and local use only)
     - :doc:`docker`
-    - gunicorn, by running :code:`start_gunicorn.sh` in the root repository folder
+    - gunicorn, by running :code:`gunicorn -b :5000 conferatur.api.gunicorn`
 
 
 Usage

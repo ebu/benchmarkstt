@@ -14,4 +14,4 @@ RUN chown -R conferatur:conferatur ./
 USER conferatur
 
 EXPOSE 5000
-ENTRYPOINT ["./start_gunicorn.sh"]
+ENTRYPOINT ["gunicorn", "-b", ":5000", "--access-logfile", "-", "--error-logfile", "-", "conferatur.api.gunicorn"]

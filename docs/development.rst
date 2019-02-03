@@ -1,6 +1,9 @@
 Development
 ===========
 
+Setting up environment
+----------------------
+
 This assumes :code:`git` and :code:`Python` 3.4 or above are already installed on your system (see :doc:`INSTALL`).
 
 1. Fork the `repository source code <https://github.com/EBU/ai-benchmarking-stt.git>`_ from github to your own account.
@@ -21,3 +24,14 @@ This assumes :code:`git` and :code:`Python` 3.4 or above are already installed o
       pip install -e .
 
 4. You now have a local development environment where you can commit and push to your own forked repository.
+
+
+Contributing
+------------
+
+.. toctree::
+   :maxdepth: 1
+
+   CONTRIBUTING
+   CODE_OF_CONDUCT
+
