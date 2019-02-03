@@ -215,9 +215,9 @@ replace
 T}
 _
 T{
-(?i)(h)a
+\fB(?i)(h)a\fP
 T}	T{
-1e
+\fB\e1e\fP
 T}
 _
 .TE
@@ -240,9 +240,9 @@ replace
 T}
 _
 T{
-(?msi)new.line
+\fB(?msi)new.line\fP
 T}	T{
-newline
+\fBnewline\fP
 T}
 _
 .TE
@@ -261,6 +261,8 @@ Unidecode characters to ASCII form, see \fI\%Python\(aqs Unidecode package\fP fo
 .UNINDENT
 .SS Subcommand api
 .sp
+See api for more information on usage and available jsonrpc methods.
+.sp
 Make conferatur available through a rudimentary \fI\%JSON\-RPC\fP interface
 
 .INDENT 0.0
@@ -269,7 +271,7 @@ Make conferatur available through a rudimentary \fI\%JSON\-RPC\fP interface
 .nf
 .ft C
 usage: conferatur api [\-h] [\-\-debug] [\-\-host HOST] [\-\-port PORT]
-                      [\-\-entrypoint ENTRYPOINT]
+                      [\-\-entrypoint ENTRYPOINT] [\-\-list\-methods]
 .ft P
 .fi
 .UNINDENT
@@ -294,54 +296,11 @@ Default: 5000
 the jsonrpc api address
 .sp
 Default: "/"
-.UNINDENT
+.TP
+.B\-\-list\-methods
+list the available jsonrpc methods
 .sp
-An example POST request:
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-{
-    "jsonrpc": "2.0",
-    "method": "normalisation",
-    "params": {
-        "text": "te TEST 𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰",
-        "normalisers": [
-            ["replace", "te","test2"],
-            ["lowercase"],
-            ["unidecode"]
-        ]
-    },
-    "id": null
-}
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.UNINDENT
-.UNINDENT
-.sp
-will return:
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
-.INDENT 3.5
-.sp
-.nf
-.ft C
-{
-    "jsonrpc": "2.0",
-    "result": "test2 test Grande Sass",
-    "id": null
-}
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
-.UNINDENT
+Default: False
 .UNINDENT
 .UNINDENT
 .UNINDENT
