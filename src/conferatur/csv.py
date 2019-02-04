@@ -209,7 +209,6 @@ class Reader:
         if mode in (MODE_INSIDE_QUOTED_QUOTE, MODE_OUTSIDE, MODE_INSIDE):
             yield yield_line()
 
-        raise StopIteration
 
 
 def reader(file: typing.io.TextIO, dialect: typing.Union[None, str, Dialect]=None) -> Reader:
