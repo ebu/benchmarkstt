@@ -1,4 +1,8 @@
 language: python
+os:
+  - windows
+  - linux
+  - osx
 python:
   - "3.5"
   - "3.6"
@@ -11,3 +15,6 @@ script: pytest
 branches:
   only:
     - master
+matrix:
+  allow_failures:
+    - os: windows
