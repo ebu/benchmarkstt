@@ -206,7 +206,7 @@ class Reader:
         if mode == MODE_INSIDE_QUOTED:
             raise UnclosedQuoteError("Unexpected end")
 
-        if mode in (MODE_INSIDE_QUOTED_QUOTE, MODE_OUTSIDE, MODE_INSIDE):  # mode in (MODE_INSIDE, MODE_FIRST):
+        if mode in (MODE_INSIDE_QUOTED_QUOTE, MODE_OUTSIDE, MODE_INSIDE):
             yield yield_line()
 
         raise StopIteration

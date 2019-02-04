@@ -1,11 +1,10 @@
 """
 Some basic/simple normalisation classes
 
-
 """
+
 import re
 from unidecode import unidecode
-# import csv
 from io import StringIO
 import os
 import inspect
@@ -15,11 +14,6 @@ from conferatur import csv
 
 
 default_encoding = 'utf-8'
-
-# todo: use custom own csv reader to fix bugs
-# known bugs:
-# "#test" is incorrectly seen as a comment
-# for config: if ending with a space, it will add a '' as last argument, need to pre-trim line
 
 
 def _csvreader(file, *args, **kwargs):
@@ -32,32 +26,20 @@ def _csvreader(file, *args, **kwargs):
     :return: Iterable
     """
 
-    def _csvreader_filter(arg):
-        idx, line = arg
-        # filter empty lines
-        if not line:
-            return False
-        # filter comments
-        if line[0].startswith('#'):
-            return False
-        # detect empty line if it only contains tabs
-        if len(line) == 1 and line[0].strip() == '':
-            return False
-        return True
-
     return enumerate(csv.reader(file, *args, **kwargs), start=1)
 
 
 class LocalisedFile:
     """
     Reads and applies normalisation rules from a locale-based file, it will automagically determine the "best fit" for a given locale, if one is available.
-
-    :param normaliser: str|class Normaliser name or class
-    :param locale: Which locale to search for
-    :param path: Location of available locale files
-    :param encoding: str The file encoding
     """
 
+    """
+    :param str|class normaliser: Normaliser name (or class)
+    :param str locale: Which locale to search for
+    :param PathLike path: Location of available locale files
+    :param str encoding: The file encoding
+    """
     def __init__(self, normaliser, locale: str, path: str, encoding=None):
         path = os.path.realpath(path)
         if not os.path.isdir(path):
@@ -126,10 +108,15 @@ class ReplaceWords:
 
 
 class File:
-    r"""
+    """
     Read one per line and pass it to the given normaliser
     """
 
+    """
+    :param str|class normaliser: Normaliser name (or class)
+    :param str file: The file to read rules from
+    :param str encoding: The file encoding
+    """
     def __init__(self, normaliser, file, encoding=None):
         try:
             cls = normaliser if inspect.isclass(normaliser) else name_to_normaliser(normaliser)
@@ -207,6 +194,7 @@ class AlphaNumericUnicode(RegexReplace):
     Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 
     """
+
     def __init__(self):
         super().__init__('[^\w]+')
 
@@ -236,6 +224,7 @@ class Composite:
     Combining normalisers
 
     """
+
     def __init__(self):
         self._normalisers = []
 
@@ -308,7 +297,8 @@ class ConfigFile(Config):
     """
 
     """
-    :param typing.io.TextIO file:
+    :param typing.io.TextIO file: The file
+    :param str encoding: The file encoding
     """
     def __init__(self, file, encoding=None):
         if encoding is None:
