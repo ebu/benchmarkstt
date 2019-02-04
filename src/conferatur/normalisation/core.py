@@ -93,7 +93,7 @@ class ReplaceWords:
             search[0].lower(),
             search[1:] if len(search) > 1 else ''
         ]))
-        regex = '(?<!\w)[%s%s]%s(?!\w)' % args
+        regex = r'(?<!\w)[%s%s]%s(?!\w)' % args
         self._pattern = re.compile(regex)
         self._replace = replace
 
@@ -197,7 +197,7 @@ class AlphaNumericUnicode(RegexReplace):
     """
 
     def __init__(self):
-        super().__init__('[^\w]+')
+        super().__init__(r'[^\w]+')
 
 
 class Lowercase:
