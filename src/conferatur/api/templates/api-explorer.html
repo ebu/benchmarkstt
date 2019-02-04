@@ -1,0 +1,62 @@
+<html>
+<head>
+  <title>Conferatur JSON-API explorer</title>
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="docs-container off-canvas off-canvas-sidebar-show">
+  <a class="off-canvas-toggle btn btn-primary btn-action" href="#sidebar-id">
+    <i class="icon icon-menu"></i>
+  </a>
+  <div id="sidebar-id" class="docs-sidebar off-canvas-sidebar">
+    <div class="docs-brand">
+      <h2>JSON-RPC</h2>
+      <small class="label label-secondary text-bold">methods</small>
+    </div>
+    <div class="docs-nav">
+      <div class="accordion-container">
+        {% for cat, items in grouped_methods.items() %}
+
+        {% if cat %}
+        <div class="accordion">
+          <input id="accordion-{{ cat }}" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+          <label class="accordion-header c-hand" for="accordion-{{ cat }}">{{ cat }}</label>
+
+          <div class="accordion-body">
+        {% endif %}
+            <ul class="menu menu-nav">
+              {% for item in items %}
+              <li class="menu-item"><a href="#{{ item.id }}">{{ item.name }}</a></li>
+              {% endfor %}
+            </ul>
+
+        {% if cat %}
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <a class="off-canvas-overlay" href="#close"></a>
+
+  <div class="off-canvas-content">
+    <div class="docs-content" id="content">
+      {% for item in methods %}
+      <div class="container" id="{{ item.id }}">
+        <h5>{{ item.name }}</h5>
+        <pre>
+          {{ item.docs }}
+        </pre>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</body>
+</html>
