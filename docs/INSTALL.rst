@@ -1,7 +1,7 @@
 Installation
 ============
 
-Conferatur requires Python_ version 3.4 or above.
+Conferatur requires Python_ version 3.5 or above.
 
 
 From PyPI (preferred)
@@ -15,7 +15,7 @@ TODO
 From source
 -----------
 
-1. Install Python_ 3.4 or above (latest stable version for your OS is preferred):
+1. Install Python_ 3.5 or above (latest stable version for your OS is preferred):
 
    Use the guides available at `The Hitchhiker’s Guide to Python <https://docs.python-guide.org>`_
 

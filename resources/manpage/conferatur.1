@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CONFERATUR" "1" "Feb 03, 2019" "" "Conferatur"
+.TH "CONFERATUR" "1" "Feb 04, 2019" "" "Conferatur"
 .SH NAME
 conferatur \- Conferatur Documentation
 .
@@ -84,6 +84,7 @@ Apply normalisation to given input
 .ft C
 usage: conferatur normalisation [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
                                 [\-\-alphanumericunicode] [\-\-config config]
+                                [\-\-configfile file [encoding]]
                                 [\-\-file normaliser file [encoding]]
                                 [\-\-localisedfile normaliser locale path [encoding]]
                                 [\-\-lowercase]
@@ -169,6 +170,9 @@ Normaliser4 "argument with double quote ("")"
 .fi
 .UNINDENT
 .UNINDENT
+.TP
+.B\-\-configfile
+Load config from a file, see \fBConfig\fP for information about config notation
 .TP
 .B\-\-file
 Read one per line and pass it to the given normaliser

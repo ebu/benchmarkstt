@@ -64,6 +64,11 @@ The normalisation rules are applied top-to-bottom and follow this format:
     " "argument 2"
     Normaliser4 "argument with double quote ("")"
 
+normalisation.configfile
+------------------------
+
+Load config from a file, see :py:class:`Config` for information about config notation
+
 normalisation.file
 ------------------
 

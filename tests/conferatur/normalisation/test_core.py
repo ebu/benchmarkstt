@@ -77,15 +77,15 @@ def test_regexreplace():
 
 
 def test_file():
-    file = './resources/test/normalisers/configfile.conf'
-    normaliser = File(Config, file)
-    assert normaliser.normalise('Ee ecky thump!') == 'aa ackY Thump!'
+    file = './resources/test/normalisers/replacecommentstest'
+    normaliser = File('replace', file)
+    assert normaliser.normalise('# TEST\n#') == 'OKNOW'
 
-    # todo: proper handling of comments if quoted
-    # file = './resources/test/normalisers/replacecommentstest'
-    # normaliser = File('replace', file)
-    # normaliser.normalise('# TEST\n')
-    # 'OKNOW'
+
+def test_configfile():
+    file = './resources/test/normalisers/configfile.conf'
+    normaliser = ConfigFile(file)
+    assert normaliser.normalise('Ee ecky thump!') == 'aa ackY Thump!'
 
 
 def test_replacewords():

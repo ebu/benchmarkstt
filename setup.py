@@ -2,8 +2,8 @@ import os
 import sys
 from setuptools import setup, find_packages
 
-if sys.version_info < (3,4):
-    sys.exit('Sorry, Python < 3.4 is not supported')
+if sys.version_info < (3, 5):
+    sys.exit('Sorry, Python < 3.5 is not supported')
 
 dirname = os.path.dirname(__file__)
 with open('VERSION') as f:
@@ -36,7 +36,7 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
     ],
-    python_requires='>=3.4',
+    python_requires='>=3.5',
     packages=find_packages("src"),
     package_dir={"": "src"},
     install_requires=[

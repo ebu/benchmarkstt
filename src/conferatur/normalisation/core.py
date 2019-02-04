@@ -5,12 +5,13 @@ Some basic/simple normalisation classes
 """
 import re
 from unidecode import unidecode
-import csv
+# import csv
 from io import StringIO
 import os
 import inspect
 from langcodes import best_match, standardize_tag
 from . import name_to_normaliser
+from conferatur import csv
 
 
 default_encoding = 'utf-8'
@@ -44,7 +45,7 @@ def _csvreader(file, *args, **kwargs):
             return False
         return True
 
-    return filter(_csvreader_filter, enumerate(csv.reader(file, *args, **kwargs), start=1))
+    return enumerate(csv.reader(file, *args, **kwargs), start=1)
 
 
 class LocalisedFile:
@@ -142,7 +143,7 @@ class File:
         with open(file, encoding=encoding) as f:
             self._normaliser = Composite()
 
-            for idx, line in _csvreader(f, delimiter=',', skipinitialspace=True):
+            for idx, line in _csvreader(f):
                 try:
                     self._normaliser.add(cls(*line))
                 except TypeError as e:
@@ -281,9 +282,15 @@ class Config:
 
     """
 
+    """
+    :param str config:
+    """
     def __init__(self, config):
+        self._parse_config(StringIO(config))
+
+    def _parse_config(self, file):
         self._normaliser = Composite()
-        for idx, line in _csvreader(StringIO(config), delimiter=' ', skipinitialspace=True):
+        for idx, line in _csvreader(file, dialect='whitespace'):
             try:
                 normaliser = name_to_normaliser(line[0])
             except ValueError:
@@ -293,4 +300,20 @@ class Config:
 
     def normalise(self, text: str) -> str:
         return self._normaliser.normalise(text)
+
+
+class ConfigFile(Config):
+    """
+    Load config from a file, see :py:class:`Config` for information about config notation
+    """
+
+    """
+    :param typing.io.TextIO file:
+    """
+    def __init__(self, file, encoding=None):
+        if encoding is None:
+            encoding = default_encoding
+
+        with open(file, encoding=encoding) as f:
+            self._parse_config(f)
 
