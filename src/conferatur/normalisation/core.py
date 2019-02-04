@@ -34,13 +34,13 @@ class LocalisedFile:
     Reads and applies normalisation rules from a locale-based file, it will automagically determine the "best fit" for a given locale, if one is available.
     """
 
-    """
-    :param str|class normaliser: Normaliser name (or class)
-    :param str locale: Which locale to search for
-    :param PathLike path: Location of available locale files
-    :param str encoding: The file encoding
-    """
     def __init__(self, normaliser, locale: str, path: str, encoding=None):
+        """
+        :param str|class normaliser: Normaliser name (or class)
+        :param str locale: Which locale to search for
+        :param PathLike path: Location of available locale files
+        :param str encoding: The file encoding
+        """
         path = os.path.realpath(path)
         if not os.path.isdir(path):
             raise NotADirectoryError("Expected '%s' to be a directory" % (str(path),))
@@ -112,12 +112,13 @@ class File:
     Read one per line and pass it to the given normaliser
     """
 
-    """
-    :param str|class normaliser: Normaliser name (or class)
-    :param str file: The file to read rules from
-    :param str encoding: The file encoding
-    """
     def __init__(self, normaliser, file, encoding=None):
+        """
+        :param str|class normaliser: Normaliser name (or class)
+        :param str file: The file to read rules from
+        :param str encoding: The file encoding
+        """
+
         try:
             cls = normaliser if inspect.isclass(normaliser) else name_to_normaliser(normaliser)
         except ValueError:
@@ -271,10 +272,10 @@ class Config:
 
     """
 
-    """
-    :param str config:
-    """
     def __init__(self, config):
+        """
+        :param str config: configuration text
+        """
         self._parse_config(StringIO(config))
 
     def _parse_config(self, file):
@@ -296,11 +297,11 @@ class ConfigFile(Config):
     Load config from a file, see :py:class:`Config` for information about config notation
     """
 
-    """
-    :param typing.io.TextIO file: The file
-    :param str encoding: The file encoding
-    """
     def __init__(self, file, encoding=None):
+        """
+        :param typing.io.TextIO file: The file
+        :param str encoding: The file encoding
+        """
         if encoding is None:
             encoding = default_encoding
 

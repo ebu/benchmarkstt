@@ -94,6 +94,9 @@ def get_methods():
     for name, conf in normalisers.items():
         normaliser = conf.cls
         f = wraps(normaliser)(lambda *args, **kwargs: normaliser(*args, **kwargs).normalise())
+        f.__doc__ = format_docs(f.__doc__)
+        if normaliser.__init__.__doc__:
+            f.__doc__ += '\n\n' + format_docs(normaliser.__init__.__doc__)
         method(f, name='normalisation.%s' % (name.lower(),))
 
     @method

@@ -64,30 +64,41 @@ The normalisation rules are applied top-to-bottom and follow this format:
     " "argument 2"
     Normaliser4 "argument with double quote ("")"
 
+:param str config: configuration text
+
 normalisation.configfile
 ------------------------
 
 Load config from a file, see :py:class:`Config` for information about config notation
+
+:param typing.io.TextIO file: The file
+:param str encoding: The file encoding
 
 normalisation.file
 ------------------
 
 Read one per line and pass it to the given normaliser
 
+:param str|class normaliser: Normaliser name (or class)
+:param str file: The file to read rules from
+:param str encoding: The file encoding
+
 normalisation.localisedfile
 ---------------------------
 
 Reads and applies normalisation rules from a locale-based file, it will automagically determine the "best fit" for a given locale, if one is available.
 
-:param normaliser: str|class Normaliser name or class
-:param locale: Which locale to search for
-:param path: Location of available locale files
-:param encoding: str The file encoding
+:param str|class normaliser: Normaliser name (or class)
+:param str locale: Which locale to search for
+:param PathLike path: Location of available locale files
+:param str encoding: The file encoding
 
 normalisation.lowercase
 -----------------------
 
 Lowercase the text
+
+Initialize self.  See help(type(self)) for accurate signature.
 
 normalisation.regexreplace
 --------------------------
@@ -133,6 +144,8 @@ normalisation.unidecode
 -----------------------
 
 Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
+
+Initialize self.  See help(type(self)) for accurate signature.
 
 help
 ----
