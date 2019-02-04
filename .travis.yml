@@ -6,9 +6,6 @@ os:
 python:
   - "3.5"
   - "3.6"
-  - "3.5-dev"
-  - "3.6-dev"
-  - "3.7-dev"
 install:
   - pip install '.[api,test]'
 script: pytest
@@ -16,5 +13,8 @@ branches:
   only:
     - master
 matrix:
+  include:
+    - { python: "3.7", dist: "xenial", os: "linux" }
   allow_failures:
     - os: windows
+    - os: osx
