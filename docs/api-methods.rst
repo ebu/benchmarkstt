@@ -32,10 +32,16 @@ normalisation.alphanumeric
 
 Simple alphanumeric filter
 
+
+:param str text: The text to normalise
+
 normalisation.alphanumericunicode
 ---------------------------------
 
 Simple alphanumeric filter, takes into account all unicode alphanumeric characters
+
+
+:param str text: The text to normalise
 
 normalisation.config
 --------------------
@@ -66,6 +72,8 @@ The normalisation rules are applied top-to-bottom and follow this format:
 
 :param str config: configuration text
 
+:param str text: The text to normalise
+
 normalisation.configfile
 ------------------------
 
@@ -73,6 +81,8 @@ Load config from a file, see :py:class:`Config` for information about config not
 
 :param typing.io.TextIO file: The file
 :param str encoding: The file encoding
+
+:param str text: The text to normalise
 
 normalisation.file
 ------------------
@@ -82,6 +92,8 @@ Read one per line and pass it to the given normaliser
 :param str|class normaliser: Normaliser name (or class)
 :param str file: The file to read rules from
 :param str encoding: The file encoding
+
+:param str text: The text to normalise
 
 normalisation.localisedfile
 ---------------------------
@@ -93,12 +105,15 @@ Reads and applies normalisation rules from a locale-based file, it will automagi
 :param PathLike path: Location of available locale files
 :param str encoding: The file encoding
 
+:param str text: The text to normalise
+
 normalisation.lowercase
 -----------------------
 
 Lowercase the text
 
-Initialize self.  See help(type(self)) for accurate signature.
+
+:param str text: The text to normalise
 
 normalisation.regexreplace
 --------------------------
@@ -129,10 +144,16 @@ Eg. would replace "New<CRLF>line" to "newline":
  | :code:`(?msi)new.line` | :code:`newline`  |
  +------------------------+------------------+
 
+
+
+:param str text: The text to normalise
+
 normalisation.replace
 ---------------------
 
 Simple search replace
+
+:param str text: The text to normalise
 
 normalisation.replacewords
 --------------------------
@@ -140,12 +161,15 @@ normalisation.replacewords
 Simple search replace that only replaces "words", the first letter will be
 checked case insensitive as well with preservation of case..
 
+:param str text: The text to normalise
+
 normalisation.unidecode
 -----------------------
 
 Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
 
-Initialize self.  See help(type(self)) for accurate signature.
+
+:param str text: The text to normalise
 
 help
 ----
