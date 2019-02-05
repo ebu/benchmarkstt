@@ -64,23 +64,26 @@ def get_methods():
         return {name: conf.docs
                 for name, conf in normalisers.items()}
 
-    # add each normaliser as its own api call
-    for name, conf in normalisers.items():
-        normaliser = conf.cls
+    def serve_normaliser(config):
+        name = config.name
+        cls = config.cls
 
-        @wraps(normaliser)
-        def f(text, *args, **kwargs):
-            return normaliser(*args, **kwargs).normalise(text)
+        @wraps(cls)
+        def _(text, *args, **kwargs):
+            return cls(*args, **kwargs).normalise(text)
 
         # copy signature from original normaliser
-        sig = inspect.signature(normaliser)
+        sig = inspect.signature(cls)
         params = [inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)]
         params.extend(sig.parameters.values())
         sig = sig.replace(parameters=params)
-        f.__signature__ = sig
+        _.__signature__ = sig
+        _.__doc__ += '\n    :param str text: The text to normalise'
+        return _
 
-        f.__doc__ += '\n    :param str text: The text to normalise'
-        method(f, name='normalisation.%s' % (name.lower(),))
+    # add each normaliser as its own api call
+    for conf in normalisers.values():
+        method(serve_normaliser(conf), name='normalisation.%s' % (conf.name,))
 
     @method
     def _help():

@@ -38,7 +38,7 @@ def create_app(entrypoint=None, debug=None, with_explorer=None):
     @app.route(entrypoint, methods=["POST"])
     def jsonrpc():
         req = request.get_data().decode()
-        response = jsonrpcserver.dispatch(req, methods=methods, debug=debug, convert_camel_case=True)
+        response = jsonrpcserver.dispatch(req, methods=methods, debug=debug, convert_camel_case=False)
         return Response(str(response), response.http_status, mimetype="application/json")
 
     if with_explorer:

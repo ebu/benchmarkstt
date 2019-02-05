@@ -210,7 +210,6 @@ class Reader:
             yield yield_line()
 
 
-
 def reader(file: typing.io.TextIO, dialect: typing.Union[None, str, Dialect]=None) -> Reader:
     if dialect is None:
         dialect = DefaultDialect

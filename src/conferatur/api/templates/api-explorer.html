@@ -29,6 +29,13 @@
       margin-left: .5rem;
       margin-right: .3rem;
     }
+
+    #content .page, #content .page:target ~ #home {
+      display: none;
+    }
+    #content .page#home, #content .page:target {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -46,13 +53,18 @@
         {% for cat, items in grouped_methods.items() %}
 
         <div class="accordion">
-          <input id="accordion-{{ cat }}" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
-          <label class="accordion-header c-hand" for="accordion-{{ cat }}">{{ cat }}</label>
+          <input id="accordion_{{ cat }}" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+          <label class="accordion-header c-hand" for="accordion_{{ cat }}">{{ cat }}</label>
 
           <div class="accordion-body">
             <ul class="menu menu-nav">
               {% for item in items %}
-              <li class="menu-item"><a href="#{{ item.id }}">{{ item.name }}</a></li>
+              <li class="menu-item">
+                <!--<input id="toggler_{{ item.id }}" type="radio" name="page-shown" hidden="" />-->
+                <!--<label class="c-hand" for="toggler_{{ item.id }}">-->
+                  <a href="#{{ item.id }}">{{ item.name }}</a>
+                <!--</label>-->
+              </li>
               {% endfor %}
             </ul>
 
@@ -68,12 +80,19 @@
 
   <div class="off-canvas-content">
     <div class="docs-content" id="content">
+      <div class="page container" id="home">
+        <h1>Conferatur api calls</h1>
+        <p>
+          Select an api method from the menu...
+        </p>
+      </div>
       {% for item in methods %}
-      <div class="container" id="{{ item.id }}">
+      <div class="page container" id="{{ item.id }}">
         <div class="columns">
           <div class="column col-9 col-sm-12">
             <h5>{{ item.name }}</h5>
-            <form class="form-horizontal">
+            <form class="jsonrpcform">
+              <input type="hidden" name="method" value="{{ item.name }}">
               <pre style="white-space: pre-line">{{ item.details.docs }}</pre>
 
               {% for param in item.details.params %}
@@ -93,9 +112,9 @@
                   <!--</div>-->
                   <!--<div class="col-9 col-sm-12">-->
                     {% if param.name == 'text' %}
-                    <textarea class="form-input" {% if param.is_required %}required {% endif %}name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}"></textarea>
+                    <textarea class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}"></textarea>
                     {% else %}
-                    <input class="form-input" {% if param.is_required %}required {% endif %}type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}">
+                    <input class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}">
                     {% endif %}
                   <!--</div>-->
                 </div>
@@ -109,5 +128,55 @@
     </div>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+<script>
+$(function() {
+
+  function sendJSONRPC(data) {
+    var options = {
+      contentType: 'application/json-rpc',
+      type: 'POST',
+      dataType: 'json',
+      url: document.location.href.replace(/#.*$/, ''),
+      data: JSON.stringify(data),
+    }
+
+    return $.ajax(options)
+  }
+
+  $('form.jsonrpcform').submit(function (ev) {
+    ev.preventDefault();
+    var data = {
+      jsonrpc: "2.0",
+      id: null,
+      params: {}
+    };
+    var form = this;
+    var elems = form.getElementsByClassName('form-input');
+
+    $(this).serializeArray().forEach(function (d) {
+      if (d.name == 'method') {
+        data.method = d.value;
+        return;
+      }
+      var input_elems = Array.prototype.filter.call(elems, function(elem) {
+        return elem.name == d.name;
+      });
+      //var required = $form.find('.' + d.name).attr('required');
+      var required = true;
+
+      if (input_elems.length == 1) {
+        required = input_elems[0].required;
+      }
+      if (required || d.value != '') {
+        data.params[d.name] = d.value
+      }
+    });
+
+    sendJSONRPC(data)
+    return false;
+  });
+});
+</script>
 </body>
 </html>
