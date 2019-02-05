@@ -76,9 +76,10 @@ def get_methods():
         sig = inspect.signature(normaliser)
         params = [inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)]
         params.extend(sig.parameters.values())
-
         sig = sig.replace(parameters=params)
         f.__signature__ = sig
+
+        f.__doc__ += '\n:param str text: The text to normalise'
         method(f, name='normalisation.%s' % (name.lower(),))
 
     @method
