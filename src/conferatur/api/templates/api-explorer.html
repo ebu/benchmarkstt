@@ -1,0 +1,113 @@
+<html>
+<head>
+  <title>Conferatur JSON-API explorer</title>
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    .docs-sidebar .accordion input:checked~.accordion-header {
+      color: #505c6e;
+    }
+
+    .docs-sidebar .accordion input~.accordion-header {
+      color: #455060;
+      font-size: .65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .docs-sidebar .accordion .menu .menu-item {
+      font-size: .7rem;
+      padding-left: 1rem;
+    }
+    .docs-brand h2 {
+      display: inline-block;
+      font-size: .8rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      margin-bottom: 0;
+      margin-left: .5rem;
+      margin-right: .3rem;
+    }
+  </style>
+</head>
+<body>
+<div class="docs-container off-canvas off-canvas-sidebar-show">
+  <a class="off-canvas-toggle btn btn-primary btn-action" href="#sidebar-id">
+    <i class="icon icon-menu"></i>
+  </a>
+  <div id="sidebar-id" class="docs-sidebar off-canvas-sidebar">
+    <div class="docs-brand">
+      <h2>JSON-RPC</h2>
+      <!--<small class="label label-secondary text-bold">methods</small>-->
+    </div>
+    <div class="docs-nav">
+      <div class="accordion-container">
+        {% for cat, items in grouped_methods.items() %}
+
+        <div class="accordion">
+          <input id="accordion-{{ cat }}" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+          <label class="accordion-header c-hand" for="accordion-{{ cat }}">{{ cat }}</label>
+
+          <div class="accordion-body">
+            <ul class="menu menu-nav">
+              {% for item in items %}
+              <li class="menu-item"><a href="#{{ item.id }}">{{ item.name }}</a></li>
+              {% endfor %}
+            </ul>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <a class="off-canvas-overlay" href="#close"></a>
+
+  <div class="off-canvas-content">
+    <div class="docs-content" id="content">
+      {% for item in methods %}
+      <div class="container" id="{{ item.id }}">
+        <div class="columns">
+          <div class="column col-9 col-sm-12">
+            <h5>{{ item.name }}</h5>
+            <form class="form-horizontal">
+              <pre style="white-space: pre-line">{{ item.details.docs }}</pre>
+
+              {% for param in item.details.params %}
+                <div class="form-group">
+                  <!--<div class="col-3 col-sm-12">-->
+                    <label class="form-label" for="{{ item.id }}_{{ param.name }}">
+                      <strong>{{ param.name.title() }}</strong>
+                      {% if param.description %}
+                      <p>{{ param.description }}</p>
+                      {% endif %}
+                    </label>
+
+
+                    {% if param.result or param.result_type %}
+                    <p>Returns: <strong>{{ param.result_type }}</strong> {{ param.result }}</p>
+                    {% endif %}
+                  <!--</div>-->
+                  <!--<div class="col-9 col-sm-12">-->
+                    {% if param.name == 'text' %}
+                    <textarea class="form-input" {% if param.is_required %}required {% endif %}name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}"></textarea>
+                    {% else %}
+                    <input class="form-input" {% if param.is_required %}required {% endif %}type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}">
+                    {% endif %}
+                  <!--</div>-->
+                </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-lg btn-primary">Execute</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</body>
+</html>

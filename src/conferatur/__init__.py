@@ -19,6 +19,3 @@ def get_modules_dict(sub_module=None):
     return {module: cli for module, cli in get_modules(sub_module)}
 
 
-def format_docs(docs):
-    return textwrap.dedent(docs).strip()
-

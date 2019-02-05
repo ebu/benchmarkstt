@@ -2,7 +2,7 @@ from collections import namedtuple
 import inspect
 from importlib import import_module
 from typing import Dict
-from conferatur import format_docs
+from conferatur.docblock import format_docs
 
 _normaliser_namespaces = (
     "conferatur.normalisation.core",
@@ -91,4 +91,3 @@ def name_to_normaliser(name):
             pass
 
     raise ImportError("Could not find normaliser '%s'" % (name,))
-
