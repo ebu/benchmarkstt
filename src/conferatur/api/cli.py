@@ -7,7 +7,7 @@ Make conferatur available through a rudimentary JSON-RPC_ interface
 
 import jsonrpcserver
 from flask import Flask, request, Response, render_template
-from conferatur import format_docs
+from conferatur.docblock import format_docs, parse
 from .jsonrpc import get_methods
 
 
@@ -48,16 +48,17 @@ def create_app(entrypoint=None, debug=None, with_explorer=None):
             individual_methods = []
             for name, func in methods.items.items():
                 id_ = name.replace('.', '-')
-                cat = False
+                cat = 'METHODS'
                 splitted = name.split('.', 1)
                 if len(splitted) == 2:
                     cat = splitted[0]
-                individual_methods.append(dict(id=id_, name=name, docs=func.__doc__))
+                item = dict(id=id_, name=name, details=parse(func))
+                individual_methods.append(item)
 
                 if cat not in split_methods:
                     split_methods[cat] = []
 
-                split_methods[cat].append(dict(id=id_, name=name, docs=func.__doc__))
+                split_methods[cat].append(item)
             return render_template('api-explorer.html', grouped_methods=split_methods, methods=individual_methods)
 
     return app

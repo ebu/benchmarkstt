@@ -9,7 +9,8 @@ import jsonrpcserver
 from conferatur import __meta__
 from conferatur.normalisation import core, name_to_normaliser, available_normalisers
 from functools import wraps
-from conferatur import format_docs
+from conferatur.docblock import format_docs
+import inspect
 
 
 def get_methods():
@@ -66,10 +67,18 @@ def get_methods():
     # add each normaliser as its own api call
     for name, conf in normalisers.items():
         normaliser = conf.cls
-        f = wraps(normaliser)(lambda *args, **kwargs: normaliser(*args, **kwargs).normalise())
-        f.__doc__ = format_docs(f.__doc__)
-        if normaliser.__init__.__doc__:
-            f.__doc__ += '\n\n' + format_docs(normaliser.__init__.__doc__)
+
+        @wraps(normaliser)
+        def f(text, *args, **kwargs):
+            return normaliser(*args, **kwargs).normalise(text)
+
+        # copy signature from original normaliser
+        sig = inspect.signature(normaliser)
+        params = [inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)]
+        params.extend(sig.parameters.values())
+
+        sig = sig.replace(parameters=params)
+        f.__signature__ = sig
         method(f, name='normalisation.%s' % (name.lower(),))
 
     @method
