@@ -36,6 +36,17 @@
     #content .page#home, #content .page:target {
       display: block;
     }
+
+    #result, #request, #response {
+      display: none;
+    }
+    #result.active, #request.active, #response.active {
+      display: block;
+    }
+    .prettyprint {
+      overflow-y: scroll;
+      max-width: 75vw;
+    }
   </style>
 </head>
 <body>
@@ -125,23 +136,76 @@
         </div>
       </div>
       {% endfor %}
+
+    </div>
+    <div id="result">
+      <ul class="tab tab-block">
+        <li class="tab-item" >
+          <a href="#" id="tab_request">Request</a>
+        </li>
+        <li class="tab-item">
+          <a href="#" id="tab_response" class="active">Response</a>
+        </li>
+      </ul>
+
+      <div class="toast toast-error" id="error" style="display: none;">An error occured!</div>
+      <pre class="prettyprint lang-js" id="request"></pre>
+      <pre class="prettyprint lang-js" id="response"></pre>
+      <br>
+      <br>
     </div>
   </div>
 </div>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.14.2/build/styles/default.min.css">-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/languages/json.min.js"></script>-->
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
 <script>
 $(function() {
 
+  var clicktab = function (ev) {
+    ev.preventDefault();
+    var active = this.id.substr(4);
+
+    $('#request, #tab_request, #response, #tab_response').removeClass('active');
+    $('#' + active +', #tab_' + active).addClass('active');
+    return false;
+  };
+
+  $('#result').on('click', '#tab_request, #tab_response', clicktab);
+
+
   function sendJSONRPC(data) {
+    var data = JSON.stringify(data, null, 2);
     var options = {
       contentType: 'application/json-rpc',
       type: 'POST',
       dataType: 'json',
       url: document.location.href.replace(/#.*$/, ''),
-      data: JSON.stringify(data),
-    }
+      data: data
+    };
 
-    return $.ajax(options)
+    $('#request').text(data);
+
+    options.success = function (data) {
+        $('#error').hide();
+        $('#response').text(JSON.stringify(data, null, 2));
+      };
+
+    options.error = function (xhr, errorType, error) {
+        $('#error').show();
+        $('#response').text(xhr.responseText)
+      };
+
+    options.complete = function() {
+        $('#tab_response').click();
+        $('#result').addClass('active');
+        PR.prettyPrint();
+      };
+
+    $.ajax(options);
   }
 
   $('form.jsonrpcform').submit(function (ev) {

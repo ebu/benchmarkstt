@@ -65,7 +65,6 @@ def get_methods():
                 for name, conf in normalisers.items()}
 
     def serve_normaliser(config):
-        name = config.name
         cls = config.cls
 
         @wraps(cls)
