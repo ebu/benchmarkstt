@@ -11,6 +11,7 @@ from conferatur.normalisation import core, name_to_normaliser, available_normali
 from functools import wraps
 from conferatur.docblock import format_docs
 import inspect
+import os
 
 
 def get_methods():
@@ -64,11 +65,26 @@ def get_methods():
         return {name: conf.docs
                 for name, conf in normalisers.items()}
 
+    def is_safe_path(path):
+        return os.path.abspath(path).startswith(os.path.abspath(os.getcwd()))
+
+    class SecurityError(ValueError):
+        pass
+
     def serve_normaliser(config):
         cls = config.cls
 
         @wraps(cls)
         def _(text, *args, **kwargs):
+            # only allow files from cwd to be used...
+            if 'file' in kwargs:
+                if not is_safe_path(kwargs['file']):
+                    raise SecurityError("Access to unallowed file attempted")
+
+            if 'path' in kwargs:
+                if not is_safe_path(kwargs['path']):
+                    raise SecurityError("Access to unallowed directory attempted")
+
             return cls(*args, **kwargs).normalise(text)
 
         # copy signature from original normaliser
