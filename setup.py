@@ -39,6 +39,8 @@ setup(
     python_requires='>=3.5',
     packages=find_packages("src"),
     package_dir={"": "src"},
+    package_data={'conferatur': ['api/templates/*.html']},
+    include_package_data=True,
     install_requires=[
        'Unidecode>=1.0.22',
        'langcodes>=1.4.1'
