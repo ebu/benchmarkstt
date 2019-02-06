@@ -37,6 +37,13 @@ class LocalisedFile:
     :param str locale: Which locale to search for
     :param PathLike path: Location of available locale files
     :param str encoding: The file encoding
+
+    :example text: "This is an Ex-Parrot"
+    :example normaliser: "replace"
+    :example path: "./resources/test/normalisers/regexreplace":
+    :example locale: "en"
+    :example encoding: "UTF-8"
+    :example return: "This is an ex parakeet"
     """
 
     def __init__(self, normaliser, locale: str, path: str, encoding=None):

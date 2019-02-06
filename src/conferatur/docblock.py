@@ -4,11 +4,33 @@ import re
 from collections import namedtuple
 
 Docblock = namedtuple('Docblock', ['docs', 'params', 'result', 'result_type'])
-DocblockParam = namedtuple('DocblockParam', ['name', 'type', 'type_doc', 'is_required', 'description'])
+Param = namedtuple('Param', ['name', 'type', 'type_doc', 'is_required', 'description', 'example'])
+DocblockParam = namedtuple('DockblockParam', ['name', 'type', 'value'])
 
 
 def format_docs(docs):
     return textwrap.dedent(docs).strip()
+
+
+def doc_param_parser(docstring, key, no_name=None):
+    results = None if no_name else {}
+
+    def _(match):
+        nonlocal results, key, no_name
+        if no_name:
+            results = DocblockParam(key, match[1], match[2])
+        else:
+            results[match[1]] = DocblockParam(match[1], match[2], match[3])
+        return ''
+
+    if no_name:
+        regex = r'^\s*:%s\s*([a-z_]+)?:(?:\s+(.*))?$'
+    else:
+        regex = r'^\s*:%s\s+(?:([^:]+)\s+)?([a-z_]+):(?:\s+(.*))?$'
+
+    docs = re.sub(regex % (re.escape(key),), _, docstring, flags=re.MULTILINE).strip()
+
+    return docs, results
 
 
 def parse(func):
@@ -22,39 +44,29 @@ def parse(func):
 
     defaults_idx = len(args) - (len(argspec.defaults) if argspec.defaults else 0)
 
-    doc_params = {}
-    doc_result = None
-    doc_result_type = None
-
-    def doc_param_parser(match):
-        nonlocal doc_params
-        type_, name, description = match[1], match[2], match[3]
-        doc_params[name] = [type_, description]
-        return ''
-
-    def doc_result_parser(match):
-        nonlocal doc_result_type, doc_result
-        doc_result_type, doc_result = match[1], match[2]
-        return ''
-
-    docs = re.sub(r'^\s*:param\s+(?:([^:]+)\s+)?([a-z_]+): (.*)$', doc_param_parser, docs, flags=re.MULTILINE).strip()
-    docs = re.sub(r'^\s*:return\s([a-z_]+): (.*)?', doc_result_parser, docs, flags=re.MULTILINE).strip()
+    docs, doc_params = doc_param_parser(docs, 'param')
+    docs, doc_result = doc_param_parser(docs, 'return', True)
+    docs, examples = doc_param_parser(docs, 'example')
 
     params = []
     for idx, name in enumerate(args):
         type_ = None
         description = ''
         if name in doc_params:
-            type_, description = doc_params[name]
-        param = DocblockParam(name,
-                              argspec.annotations[name] if name in argspec.annotations else None,
-                              type_,
-                              idx < defaults_idx,
-                              description
-                              )
+            type_ = doc_params[name].type
+            description = doc_params[name].value
+
+        param = Param(name,
+                      argspec.annotations[name] if name in argspec.annotations else None,
+                      type_,
+                      idx < defaults_idx,
+                      description,
+                      examples[name] if name in examples else None)
         params.append(param)
 
-    result = Docblock(docs=docs, params=params, result=doc_result, result_type=doc_result_type)
+    result = Docblock(docs=docs, params=params,
+                      result=doc_result.value if doc_result else None,
+                      result_type=doc_result.type if doc_result else None)
     return result
 
 

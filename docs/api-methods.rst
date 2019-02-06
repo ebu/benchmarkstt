@@ -105,6 +105,13 @@ Reads and applies normalisation rules from a locale-based file, it will automagi
 :param PathLike path: Location of available locale files
 :param str encoding: The file encoding
 
+:example text: "This is an Ex-Parrot"
+:example normaliser: "replace"
+:example path: "./resources/test/normalisers/regexreplace":
+:example locale: "en"
+:example encoding: "UTF-8"
+:example return: "This is an ex parakeet"
+
 :param str text: The text to normalise
 
 normalisation.lowercase
