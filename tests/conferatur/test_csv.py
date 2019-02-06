@@ -8,7 +8,6 @@ def test_csv():
         return list(reader(StringIO(text)))
 
     assert _reader('replace," ","\n"') == [['replace', ' ', '\n']]
-
     assert type(reader(StringIO(''))) is Reader
     assert type(Reader(StringIO(''), DefaultDialect)) is Reader
 
@@ -67,7 +66,7 @@ def test_conf():
     assert _reader('replace " " "\n"') == [['replace', ' ', '\n']]
 
     expected = [['Lowercase'], ['regexreplace', 'y t', 'Y T'], ['Replace', 'e', 'a']]
-    assert _reader('''# using a simple config file
+    gotten = _reader('''# using a simple config file
 Lowercase
 
 # it even supports comments
@@ -75,7 +74,9 @@ Lowercase
 regexreplace "y t" "Y T"
 
       # extraneous whitespaces are ignored
-   Replace   e     a''') == expected
+   Replace   e     a''')
+    assert gotten == expected
+    # assert gotten[0][0].quoted is False
 
     file = './resources/test/normalisers/configfile.conf'
     with open(file) as f:
@@ -100,3 +101,8 @@ Spanning multiple lines
 Normaliser4 "argument with double quote ("")"
 """) == expected
 
+    assert _reader("lower case ") == [['lower', 'case']]
+    assert _reader("lower case \n") == [['lower', 'case']]
+    assert _reader('test "stuff "\t') == [['test', 'stuff ']]
+    assert _reader('test "stuff "\n') == [['test', 'stuff ']]
+    assert _reader('test "stuff\n\t"\n\t  \t  YEs    \t   \n') == [['test', 'stuff\n\t'], ['YEs']]
