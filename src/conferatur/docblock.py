@@ -20,7 +20,7 @@ def doc_param_parser(docstring, key, no_name=None):
         if no_name:
             results = DocblockParam(key, match[1], match[2])
         else:
-            results[match[1]] = DocblockParam(match[1], match[2], match[3])
+            results[match[2]] = DocblockParam(match[2], match[1], match[3])
         return ''
 
     if no_name:

@@ -30,12 +30,13 @@
       margin-right: .3rem;
     }
 
-    #content .page, #content .page:target ~ #home {
+    #content .page {
       display: none;
     }
-    #content .page#home, #content .page:target {
+    #content .page:target {
       display: block;
     }
+
 
     #result, #request, #response {
       display: none;
@@ -43,9 +44,29 @@
     #result.active, #request.active, #response.active {
       display: block;
     }
-    .prettyprint {
-      overflow-y: scroll;
-      max-width: 75vw;
+    #result pre.prettyprint {
+      white-space: pre-wrap;
+      font-size: .8em;
+      border: 0 none;
+      background-color: #f7f8f9;
+    }
+    #tab_response .label, #tab_response .loading {
+      display: none;
+      font-size: .5em;
+    }
+    #tab_response.success .label.success {
+      display: inline-block;
+    }
+    #tab_response.isloading .loading {
+      display: inline-block;
+    }
+    #tab_response.error .label.error {
+      display: inline-block;
+    }
+
+    div.description {
+      white-space: pre-wrap;
+      margin-bottom: 1em;
     }
   </style>
 </head>
@@ -91,28 +112,22 @@
 
   <div class="off-canvas-content">
     <div class="docs-content" id="content">
-      <div class="page container" id="home">
-        <h1>Conferatur api calls</h1>
-        <p>
-          Select an api method from the menu...
-        </p>
-      </div>
+      <h3>Conferatur JSON-RPC api explorer</h3>
       {% for item in methods %}
       <div class="page container" id="{{ item.id }}">
         <div class="columns">
           <div class="column col-9 col-sm-12">
-            <h5>{{ item.name }}</h5>
+            <h4>{{ item.name }}</h4>
             <form class="jsonrpcform">
               <input type="hidden" name="method" value="{{ item.name }}">
-              <pre style="white-space: pre-line">{{ item.details.docs }}</pre>
+              <div class="description">{{ item.details.docs | replace("\n", "<br/>") | safe }}</div>
 
               {% for param in item.details.params %}
                 <div class="form-group">
-                  <!--<div class="col-3 col-sm-12">-->
                     <label class="form-label" for="{{ item.id }}_{{ param.name }}">
                       <strong>{{ param.name.title() }}</strong>
                       {% if param.description %}
-                      <p>{{ param.description }}</p>
+                      <span>{{ param.description }}</span>
                       {% endif %}
                     </label>
 
@@ -120,23 +135,27 @@
                     {% if param.result or param.result_type %}
                     <p>Returns: <strong>{{ param.result_type }}</strong> {{ param.result }}</p>
                     {% endif %}
-                  <!--</div>-->
-                  <!--<div class="col-9 col-sm-12">-->
-                    {% if param.name == 'text' %}
-                    <textarea class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}"></textarea>
+                    {% if param.name == 'text' or (param.example and '\n' in param.example.value) %}
+                    <textarea class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{% if param.example %}{{ param.example.value.strip("'\"") }}{% endif %}</textarea>
                     {% else %}
-                    <input class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}">
+                    <input class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{% if param.example %}{{ param.example.value.strip("'\"") }}{% endif %}">
                     {% endif %}
-                  <!--</div>-->
                 </div>
               {% endfor %}
-              <button type="submit" class="btn btn-lg btn-primary">Execute</button>
+              <div class="form-group">
+                <button type="submit" class="btn btn-lg btn-primary">Execute</button>
+              </div>
             </form>
           </div>
         </div>
       </div>
       {% endfor %}
 
+      <div class="page container" id="home">
+        <p>
+          Select an api method from the menu...
+        </p>
+      </div>
     </div>
     <div id="result">
       <ul class="tab tab-block">
@@ -144,16 +163,22 @@
           <a href="#" id="tab_request">Request</a>
         </li>
         <li class="tab-item">
-          <a href="#" id="tab_response" class="active">Response</a>
+          <a href="#" id="tab_response" class="active">
+            <span class="label label-error error">error</span>
+            <span class="loading">loading</span>
+            <span class="label label-success success">success</span>
+            Response
+          </a>
         </li>
       </ul>
 
       <div class="toast toast-error" id="error" style="display: none;">An error occured!</div>
-      <pre class="prettyprint lang-js" id="request"></pre>
-      <pre class="prettyprint lang-js" id="response"></pre>
+      <pre class="prettyprint code lang-js" data-lang="JSON" id="request"></pre>
+      <pre class="prettyprint code lang-js" data-lang="JSON" id="response"></pre>
       <br>
       <br>
     </div>
+
   </div>
 </div>
 <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.14.2/build/styles/default.min.css">-->
@@ -175,6 +200,9 @@ $(function() {
   };
 
   $('#result').on('click', '#tab_request, #tab_response', clicktab);
+  $('.accordion-body').on('click', 'li.menu-item', function () {
+    $('#result').removeClass('active');
+  });
 
 
   function sendJSONRPC(data) {
@@ -192,19 +220,34 @@ $(function() {
     options.success = function (data) {
         $('#error').hide();
         $('#response').text(JSON.stringify(data, null, 2));
+        $('#tab_response').addClass('success').removeClass('error');
       };
 
     options.error = function (xhr, errorType, error) {
-        $('#error').show();
-        $('#response').text(xhr.responseText)
+        // $('#error').show();
+        var response = xhr.responseText;
+        try {
+          if (typeof response == 'string') {
+            response = JSON.parse(response);
+          }
+          if (typeof response == 'object') {
+            response = JSON.stringify(response, null, 2);
+          }
+        } catch (e) {
+          response = xhr.responseText;
+        }
+        $('#response').text(response)
+        $('#tab_response').addClass('error').removeClass('success');
       };
 
     options.complete = function() {
-        $('#tab_response').click();
+        $('#tab_response').removeClass('isloading').click();
         $('#result').addClass('active');
+        $(document.body).scrollTop($('#result').offset().top)
         PR.prettyPrint();
       };
 
+    $('#tab_response').addClass('isloading');
     $.ajax(options);
   }
 

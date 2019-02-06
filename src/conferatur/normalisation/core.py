@@ -40,7 +40,7 @@ class LocalisedFile:
 
     :example text: "This is an Ex-Parrot"
     :example normaliser: "replace"
-    :example path: "./resources/test/normalisers/regexreplace":
+    :example path: "./resources/test/normalisers/regexreplace"
     :example locale: "en"
     :example encoding: "UTF-8"
     :example return: "This is an ex parakeet"
