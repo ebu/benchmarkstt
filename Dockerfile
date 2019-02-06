@@ -6,7 +6,6 @@ RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-
 
 WORKDIR /home/conferatur
 COPY . /home/conferatur/
-RUN chmod +x start_gunicorn.sh
 
 RUN pip install '.[api]'
 
