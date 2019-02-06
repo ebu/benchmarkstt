@@ -12,5 +12,5 @@ RUN pip install '.[api]'
 RUN chown -R conferatur:conferatur ./
 USER conferatur
 
-EXPOSE 5000
-ENTRYPOINT ["gunicorn", "-b", ":5000", "--access-logfile", "-", "--error-logfile", "-", "conferatur.api.gunicorn"]
+EXPOSE 8080
+ENTRYPOINT ["gunicorn", "-b", ":8080", "--access-logfile", "-", "--error-logfile", "-", "conferatur.api.gunicorn"]
