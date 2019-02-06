@@ -67,7 +67,7 @@ def test_conf():
 
     expected = [['Lowercase'], ['regexreplace', 'y t', 'Y T'], ['Replace', 'e', 'a']]
     gotten = _reader('''# using a simple config file
-Lowercase
+Lowercase 
 
 # it even supports comments
 # If there is a space in the argument, make sure you quote it though!
@@ -76,7 +76,6 @@ regexreplace "y t" "Y T"
       # extraneous whitespaces are ignored
    Replace   e     a''')
     assert gotten == expected
-    # assert gotten[0][0].quoted is False
 
     file = './resources/test/normalisers/configfile.conf'
     with open(file) as f:
