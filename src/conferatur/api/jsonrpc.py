@@ -92,6 +92,7 @@ def get_methods():
         params = [inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)]
         params.extend(sig.parameters.values())
         sig = sig.replace(parameters=params)
+        # todo (?) add available files and folders as select options 
         _.__signature__ = sig
         _.__doc__ += '\n    :param str text: The text to normalise'
         return _
