@@ -32,6 +32,8 @@ normalisation.alphanumeric
 
 Simple alphanumeric filter
 
+:example text: "He's a lumberjack, and he's okay!"
+:example return: "Hesalumberjackandhesokay"
 
 :param str text: The text to normalise
 
@@ -40,6 +42,8 @@ normalisation.alphanumericunicode
 
 Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 
+:example text: "Das, öder die Flipper-Wåld Gespütt!"
+:example result: "DasöderdieFlipperWåldGespütt"
 
 :param str text: The text to normalise
 
@@ -72,6 +76,10 @@ The normalisation rules are applied top-to-bottom and follow this format:
 
 :param str config: configuration text
 
+:example text: "He bravely turned his tail and fled"
+:example config: '# using a simple config file\nLowercase \n\n    # it even supports comments\n# If there is a space in the argument, make sure you quote it though!\n  regexreplace "y t" "Y T"\n \n      # extraneous whitespaces are ignored \n     replace   e     a\n'
+:example return: "ha bravalY Turnad his tail and flad"
+
 :param str text: The text to normalise
 
 normalisation.configfile
@@ -81,6 +89,11 @@ Load config from a file, see :py:class:`Config` for information about config not
 
 :param typing.io.TextIO file: The file
 :param str encoding: The file encoding
+
+:example text: "He bravely turned his tail and fled"
+:example file: "./resources/test/normalisers/configfile.conf"
+:example encoding: "UTF-8"
+:example return: "ha bravalY Turnad his tail and flad"
 
 :param str text: The text to normalise
 
@@ -105,12 +118,12 @@ Reads and applies normalisation rules from a locale-based file, it will automagi
 :param PathLike path: Location of available locale files
 :param str encoding: The file encoding
 
-:example text: "This is an Ex-Parrot"
-:example normaliser: "replace"
-:example path: "./resources/test/normalisers/regexreplace":
+:example text: "This is an Ex-Parakeet"
+:example normaliser: "regexreplace"
+:example path: "./resources/test/normalisers/regexreplace"
 :example locale: "en"
 :example encoding: "UTF-8"
-:example return: "This is an ex parakeet"
+:example return: "This is an Ex Parrot"
 
 :param str text: The text to normalise
 
@@ -160,6 +173,14 @@ normalisation.replace
 
 Simple search replace
 
+:param str search: Text to search for
+:param str replace: Text to replace with
+
+:example text: "Nudge nudge!"
+:example search: "nudge"
+:example replace: "wink"
+:example return: "Nudge wink!"
+
 :param str text: The text to normalise
 
 normalisation.replacewords
@@ -168,6 +189,14 @@ normalisation.replacewords
 Simple search replace that only replaces "words", the first letter will be
 checked case insensitive as well with preservation of case..
 
+:param str search: Word to search for
+:param str replace: Replace with
+
+:example text:
+:example search: ""
+:example replace: ""
+:example result: ""
+
 :param str text: The text to normalise
 
 normalisation.unidecode
@@ -175,6 +204,8 @@ normalisation.unidecode
 
 Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
 
+:example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
+:example return: "Wenn ist das Nunstuck git und Slotermeyer?"
 
 :param str text: The text to normalise
 
