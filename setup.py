@@ -51,7 +51,7 @@ setup(
             'jsonrpcserver>=4.0.1',
             'gunicorn>=19.9.0',
             'docutils>=0.14',
-            'Pygments>=2.2.0',
+            # 'Pygments>=2.2.0',
         ],
         'docs': [
             "sphinx==1.8.3",
