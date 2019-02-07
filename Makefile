@@ -27,7 +27,7 @@ gh-pages: # docs
 	echo $$TMPDIR; \
 	GITORIGIN=$(shell git remote get-url origin); \
 	git clone "$$GITORIGIN" -b gh-pages --single-branch "$$TMPDIR"; \
-	rm "$$TMPDIR/*"; \
+	rm -r "$$TMPDIR/"*; \
 	echo "conferatur.mikesmith.eu" > "$$TMPDIR/CNAME"; \
 	cp -r docs/build/html/* "$$TMPDIR"; \
 	cd "$$TMPDIR" ;\
