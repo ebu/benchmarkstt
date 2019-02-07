@@ -5,6 +5,7 @@ import ast
 from collections import namedtuple
 import logging
 from docutils.core import publish_string
+from docutils.writers import html5_polyglot
 
 
 logger = logging.getLogger(__name__)
@@ -113,12 +114,23 @@ def parse(func):
 
         params.append(param)
 
+    # quick hack to remove this
+    docs = docs.replace(':py:class:', '')
+
     result = Docblock(docs=docs, params=params,
                       result=doc_result[0].value if doc_result else None,
                       result_type=doc_result[0].type if doc_result else None)
     return result
 
 
+class HTML5Writer(html5_polyglot.Writer):
+    def apply_template(self):
+        subs = self.interpolation_dict()
+        return subs['body']
+
+
 def rst_to_html(text):
-    return publish_string(text, writer_name='html', settings_overrides={'output_encoding': 'unicode'})
+    writer = HTML5Writer()
+    settings = {'output_encoding': 'unicode', 'table_style': 'table'}
+    return publish_string(text, writer=writer, writer_name='html5', settings_overrides=settings)
 

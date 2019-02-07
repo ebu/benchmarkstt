@@ -73,6 +73,14 @@
       font-weight: normal;
       font-size: .7rem;
     }
+
+    ul.simple li > p:first-child {
+      display: inline;
+    }
+
+    .docblock blockquote {
+      border-left: 0 none;
+    }
   </style>
 </head>
 <body>
@@ -125,7 +133,7 @@
             <h4>{{ item.name }}</h4>
             <form class="jsonrpcform">
               <input type="hidden" name="method" value="{{ item.name }}">
-              <div class="description">{{ item.details.docs | parse_rst | safe }}</div>
+              <div class="description docblock">{{ item.details.docs | parse_rst | safe }}</div>
 
               {% for param in item.details.params %}
                 <div class="form-group">
