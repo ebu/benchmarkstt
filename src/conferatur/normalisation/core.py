@@ -11,22 +11,12 @@ import inspect
 from langcodes import best_match, standardize_tag
 from conferatur.normalisation import name_to_normaliser
 from conferatur import csv
+import logging
+# from conferatur.decorators import log_call
 
 
-default_encoding = 'utf-8'
-
-
-def _csvreader(file, *args, **kwargs):
-    """
-    Provides a enumerated csv reader Iterable. Empty and comment lines are filtered out.
-
-    :param file:
-    :param args:
-    :param kwargs:
-    :return: Iterable
-    """
-
-    return enumerate(csv.reader(file, *args, **kwargs), start=1)
+default_encoding = 'UTF-8'
+logger = logging.getLogger(__name__)
 
 
 class LocalisedFile:
@@ -38,12 +28,12 @@ class LocalisedFile:
     :param PathLike path: Location of available locale files
     :param str encoding: The file encoding
 
-    :example text: "This is an Ex-Parrot"
-    :example normaliser: "replace"
+    :example text: "This is an Ex-Parakeet"
+    :example normaliser: "regexreplace"
     :example path: "./resources/test/normalisers/regexreplace"
     :example locale: "en"
     :example encoding: "UTF-8"
-    :example return: "This is an ex parakeet"
+    :example return: "This is an Ex Parrot"
     """
 
     def __init__(self, normaliser, locale: str, path: str, encoding=None):
@@ -67,6 +57,7 @@ class LocalisedFile:
 
         self._normaliser = File(normaliser, file, encoding=encoding)
 
+    # @log_call(logger, result=True)
     def normalise(self, text: str) -> str:
         return self._normaliser.normalise(text)
 
@@ -74,6 +65,14 @@ class LocalisedFile:
 class Replace:
     """
     Simple search replace
+
+    :param str search: Text to search for
+    :param str replace: Text to replace with
+
+    :example text: "Nudge nudge!"
+    :example search: "nudge"
+    :example replace: "wink"
+    :example return: "Nudge wink!"
     """
 
     def __init__(self, search: str, replace: str=''):
@@ -88,6 +87,14 @@ class ReplaceWords:
     """
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
+
+    :param str search: Word to search for
+    :param str replace: Replace with
+
+    :example text:
+    :example search: ""
+    :example replace: ""
+    :example result: ""
     """
 
     def __init__(self, search: str, replace: str):
@@ -135,11 +142,11 @@ class File:
         with open(file, encoding=encoding) as f:
             self._normaliser = Composite()
 
-            for idx, line in _csvreader(f):
+            for line in csv.reader(f):
                 try:
                     self._normaliser.add(cls(*line))
                 except TypeError as e:
-                    raise ValueError("Line %d: %s" % (idx, str(e)))
+                    raise ValueError("Line %d: %s" % (line.lineno, str(e)))
 
     def normalise(self, text: str) -> str:
         return self._normaliser.normalise(text)
@@ -188,6 +195,8 @@ class AlphaNumeric(RegexReplace):
     """
     Simple alphanumeric filter
 
+    :example text: "He's a lumberjack, and he's okay!"
+    :example return: "Hesalumberjackandhesokay"
     """
 
     def __init__(self):
@@ -198,6 +207,8 @@ class AlphaNumericUnicode(RegexReplace):
     """
     Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 
+    :example text: "Das, öder die Flipper-Wåld Gespütt!"
+    :example result: "DasöderdieFlipperWåldGespütt"
     """
 
     def __init__(self):
@@ -218,6 +229,8 @@ class Unidecode:
     """
     Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
 
+    :example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
+    :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
     """
 
     def normalise(self, text: str) -> str:
@@ -275,6 +288,10 @@ class Config:
         Normaliser4 "argument with double quote ("")"
 
     :param str config: configuration text
+
+    :example text: "He bravely turned his tail and fled"
+    :example config: '# using a simple config file\nLowercase \n\n    # it even supports comments\n# If there is a space in the argument, make sure you quote it though!\n  regexreplace "y t" "Y T"\n \n      # extraneous whitespaces are ignored \n     replace   e     a\n'
+    :example return: "ha bravalY Turnad his tail and flad"
     """
 
     def __init__(self, config):
@@ -282,12 +299,12 @@ class Config:
 
     def _parse_config(self, file):
         self._normaliser = Composite()
-        for idx, line in _csvreader(file, dialect='whitespace'):
+        for line in csv.reader(file, dialect='whitespace'):
             try:
                 normaliser = name_to_normaliser(line[0])
             except ValueError:
                 raise ValueError("Unknown normaliser %s on line %d: %s" %
-                                 (repr(line[0]), idx, repr(' '.join(line))))
+                                 (repr(line[0]), line.lineno, repr(' '.join(line))))
             self._normaliser.add(normaliser(*line[1:]))
 
     def normalise(self, text: str) -> str:
@@ -300,6 +317,11 @@ class ConfigFile(Config):
 
     :param typing.io.TextIO file: The file
     :param str encoding: The file encoding
+
+    :example text: "He bravely turned his tail and fled"
+    :example file: "./resources/test/normalisers/configfile.conf"
+    :example encoding: "UTF-8"
+    :example return: "ha bravalY Turnad his tail and flad"
     """
 
     def __init__(self, file, encoding=None):

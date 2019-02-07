@@ -29,9 +29,9 @@ def doc_param_parser(docstring, key, no_name=None):
         return ''
 
     if no_name:
-        regex = r'^\s*:%s\s*([a-z_]+)?:(?:\s+(.*))?$'
+        regex = r'^[ \t]*:%s[ \t]*([a-z_]+)?:[ \t]+(.*)$'
     else:
-        regex = r'^\s*:%s\s+(?:([^:]+)\s+)?([a-z_]+):(?:\s+(.*))?$'
+        regex = r'^[ \t]*:%s[ \t]+(?:([^:]+)[ \t]+)?([a-z_]+):(?:[ \t]+(.*))?$'
 
     docs = re.sub(regex % (re.escape(key),), _, docstring, flags=re.MULTILINE).strip()
 
@@ -39,10 +39,13 @@ def doc_param_parser(docstring, key, no_name=None):
 
 
 def decode_literal(txt: str):
+    if txt is None:
+        return ''
+
     try:
         return ast.literal_eval(txt)
-    except ValueError as e:
-        logger.warning(e)
+    except (ValueError, SyntaxError) as e:
+        logger.warning('%s "%s" for: %s', type(e), e, txt)
         return txt
 
 

@@ -68,6 +68,12 @@
       white-space: pre-wrap;
       margin-bottom: 1em;
     }
+    label.required :first-child::after {
+      content: " (required)";
+      color: #bcc3ce;
+      font-weight: normal;
+      font-size: .7rem;
+    }
   </style>
 </head>
 <body>
@@ -124,7 +130,7 @@
 
               {% for param in item.details.params %}
                 <div class="form-group">
-                    <label class="form-label" for="{{ item.id }}_{{ param.name }}">
+                    <label class="form-label {% if param.is_required %}required{% endif %}" for="{{ item.id }}_{{ param.name }}">
                       <strong>{{ param.name.title() }}</strong>
                       {% if param.description %}
                       <span>{{ param.description }}</span>
@@ -135,10 +141,10 @@
                     {% if param.result or param.result_type %}
                     <p>Returns: <strong>{{ param.result_type }}</strong> {{ param.result }}</p>
                     {% endif %}
-                    {% if param.name == 'text' or (param.example and '\n' in param.example.value) %}
-                    <textarea class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{% if param.example %}{{ param.example.value.strip("'\"") }}{% endif %}</textarea>
+                    {% if param.name == 'text' or (param.example and '\n' in param.example) %}
+                    <textarea class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} rows="6" name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{% if param.example %}{{ param.example }}{% endif %}</textarea>
                     {% else %}
-                    <input class="form-input {{ param.name }}" {% if param.is_required %}required {% endif %}type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{% if param.example %}{{ param.example.value.strip("'\"") }}{% endif %}">
+                    <input class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{% if param.example %}{{ param.example }}{% endif %}">
                     {% endif %}
                 </div>
               {% endfor %}
