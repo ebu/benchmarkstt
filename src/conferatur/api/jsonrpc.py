@@ -33,26 +33,6 @@ def get_methods():
 
         return __meta__.__version__
 
-    @method
-    def normalisation(text, normalisers):
-        """
-        Apply normalisation
-
-        :param str text: The text to normalise
-        :param list normalisers: A list of lists of normalisers to be applied
-        :return str: Normalised text
-        """
-        assert type(text) is str
-        assert type(normalisers) is list
-        assert len(normalisers)
-
-        composite = core.Composite()
-        for args in normalisers:
-            assert len(args)
-            normaliser = name_to_normaliser(args.pop(0))
-            composite.add(normaliser(*args))
-        return composite.normalise(text)
-
     normalisers = available_normalisers()
 
     @method

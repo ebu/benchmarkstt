@@ -50,11 +50,12 @@ setup(
             'Flask>=1.0.2',
             'jsonrpcserver>=4.0.1',
             'gunicorn>=19.9.0',
+            'docutils>=0.14',
         ],
         'docs': [
             "sphinx==1.8.3",
             "sphinx_rtd_theme==0.4.2",
-            "sphinx-argparse==0.2.5"
+            "sphinx-argparse==0.2.5",
         ],
         'test': [
             "pytest>=4.2.0"

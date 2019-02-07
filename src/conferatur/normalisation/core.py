@@ -275,7 +275,7 @@ class Config:
 
     The normalisation rules are applied top-to-bottom and follow this format:
 
-    .. code-block:: none
+    .. code-block::
 
         Normaliser1 arg1 "arg 2"
         # This is a comment

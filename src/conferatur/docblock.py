@@ -4,12 +4,13 @@ import re
 import ast
 from collections import namedtuple
 import logging
+from docutils.core import publish_string
 
 
 logger = logging.getLogger(__name__)
 
 Docblock = namedtuple('Docblock', ['docs', 'params', 'result', 'result_type'])
-Param = namedtuple('Param', ['name', 'type', 'type_doc', 'is_required', 'description', 'example'])
+Param = namedtuple('Param', ['name', 'type', 'type_doc', 'is_required', 'description', 'examples'])
 DocblockParam = namedtuple('DockblockParam', ['name', 'type', 'value'])
 
 
@@ -17,16 +18,42 @@ def format_docs(docs):
     return textwrap.dedent(docs).strip()
 
 
-def doc_param_parser(docstring, key, no_name=None):
-    results = None if no_name else {}
+def doc_param_parser(docstring, key, no_name=None, allow_multiple=None, replace_strat=None):
+    results = [] if no_name or allow_multiple else {}
+
+    if replace_strat is None:
+        def replace_strat(match, param):
+            return match[0]
+    elif type(replace_strat) is str:
+        _replace_strat = replace_strat
+
+        def replace_strat(match, param):
+            nonlocal _replace_strat
+            return _replace_strat
 
     def _(match):
-        nonlocal results, key, no_name
+        nonlocal results, key, no_name, replace_strat
         if no_name:
-            results = DocblockParam(key, match[1], match[2])
+            param = dict(name=key, type=match[1], value=match[2])
+            return_val = replace_strat(match, param)
+            results.append(DocblockParam(**param))
         else:
-            results[match[2]] = DocblockParam(match[2], match[1], match[3])
-        return ''
+            param = dict(name=match[2], type=match[1], value=match[3])
+            return_val = replace_strat(match, param)
+            param = DocblockParam(**param)
+            if allow_multiple:
+                # check if it already exists, if not create a new object
+                idx = [idx for idx, val in enumerate(results) if match[2] not in val]
+                if not len(idx):
+                    idx = len(results)
+                    results.append({})
+                else:
+                    idx = idx[0]
+                results[idx][match[2]] = param
+            else:
+                results[match[2]] = param
+
+        return return_val
 
     if no_name:
         regex = r'^[ \t]*:%s[ \t]*([a-z_]+)?:[ \t]+(.*)$'
@@ -60,9 +87,14 @@ def parse(func):
 
     defaults_idx = len(args) - (len(argspec.defaults) if argspec.defaults else 0)
 
-    docs, doc_params = doc_param_parser(docs, 'param')
-    docs, doc_result = doc_param_parser(docs, 'return', True)
-    docs, examples = doc_param_parser(docs, 'example')
+    docs, doc_params = doc_param_parser(docs, 'param', replace_strat='')
+    docs, doc_result = doc_param_parser(docs, 'return', no_name=True)
+
+    def decode_examples(match, param):
+        param['value'] = decode_literal(param['value'])
+        return ''
+
+    docs, examples = doc_param_parser(docs, 'example', allow_multiple=True, replace_strat=decode_examples)
 
     params = []
     for idx, name in enumerate(args):
@@ -77,13 +109,16 @@ def parse(func):
                       type_,
                       idx < defaults_idx,
                       description,
-                      decode_literal(examples[name].value) if name in examples else None)
+                      examples)
 
         params.append(param)
 
     result = Docblock(docs=docs, params=params,
-                      result=doc_result.value if doc_result else None,
-                      result_type=doc_result.type if doc_result else None)
+                      result=doc_result[0].value if doc_result else None,
+                      result_type=doc_result[0].type if doc_result else None)
     return result
 
+
+def rst_to_html(text):
+    return publish_string(text, writer_name='html', settings_overrides={'output_encoding': 'unicode'})
 
