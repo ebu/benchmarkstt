@@ -182,14 +182,9 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
+#
+# # -- Extension configuration -------------------------------------------------
 
-# -- Extension configuration -------------------------------------------------
-doctest_global_setup = '''
-import os, sys
-root_dir = %s
-os.chdir(root_dir)
-sys.path.insert(0, root_dir)
-''' % (repr(os.path.dirname(root_dir)),)
 
 # smartquotes = False
 # smartquotes_action = 'q'
