@@ -287,7 +287,7 @@ class Config:
 
     The normalisation rules are applied top-to-bottom and follow this format:
 
-    .. code-block:: bash
+    .. code-block:: text
 
         Normaliser1 arg1 "arg 2"
         # This is a comment
