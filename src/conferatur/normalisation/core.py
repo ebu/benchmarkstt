@@ -229,8 +229,8 @@ class Lowercase:
     Lowercase the text
 
 
-    :example text: Easy, Mungo, easy... Mungo...
-    :example result: easy, mungo, easy... mungo...
+    :example text: "Easy, Mungo, easy... Mungo..."
+    :example result: "easy, mungo, easy... mungo..."
     """
 
     def normalise(self, text: str) -> str:
