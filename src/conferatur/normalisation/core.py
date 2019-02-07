@@ -91,10 +91,10 @@ class ReplaceWords:
     :param str search: Word to search for
     :param str replace: Replace with
 
-    :example text:
-    :example search: ""
-    :example replace: ""
-    :example result: ""
+    :example text: "She has a heart of formica"
+    :example search: "a"
+    :example replace: "the"
+    :example result: "She has the heart of formica"
     """
 
     def __init__(self, search: str, replace: str):
@@ -127,6 +127,12 @@ class File:
     :param str|class normaliser: Normaliser name (or class)
     :param str file: The file to read rules from
     :param str encoding: The file encoding
+
+    :example text: "This is an Ex-Parakeet"
+    :example normaliser: "regexreplace"
+    :example file: "./resources/test/normalisers/regexreplace/en_US"
+    :example encoding: "UTF-8"
+    :example return: "This is an Ex Parrot"
     """
 
     def __init__(self, normaliser, file, encoding=None):
@@ -180,7 +186,10 @@ class RegexReplace:
      | :code:`(?msi)new.line` | :code:`newline`  |
      +------------------------+------------------+
 
-
+    :example text: "HAHA! Hahaha!"
+    :example search: '(?i)(h)a'
+    :example replace: r'\1e'
+    :example result: "HeHe! Hehehe!"
     """
 
     def __init__(self, search: str, replace: str=None):
@@ -219,6 +228,9 @@ class Lowercase:
     """
     Lowercase the text
 
+
+    :example text: Easy, Mungo, easy... Mungo...
+    :example result: easy, mungo, easy... mungo...
     """
 
     def normalise(self, text: str) -> str:
