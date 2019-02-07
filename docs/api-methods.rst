@@ -11,15 +11,6 @@ Get the version of conferatur
 
 :return str: Conferatur version
 
-normalisation
--------------
-
-Apply normalisation
-
-:param str text: The text to normalise
-:param list normalisers: A list of lists of normalisers to be applied
-:return str: Normalised text
-
 normalisation.list
 ------------------
 
@@ -62,7 +53,7 @@ Additional rules:
 
 The normalisation rules are applied top-to-bottom and follow this format:
 
-.. code-block:: none
+.. code-block:: bash
 
     Normaliser1 arg1 "arg 2"
     # This is a comment
