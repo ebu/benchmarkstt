@@ -97,6 +97,12 @@ Read one per line and pass it to the given normaliser
 :param str file: The file to read rules from
 :param str encoding: The file encoding
 
+:example text: "This is an Ex-Parakeet"
+:example normaliser: "regexreplace"
+:example file: "./resources/test/normalisers/regexreplace/en_US"
+:example encoding: "UTF-8"
+:example return: "This is an Ex Parrot"
+
 :param str text: The text to normalise
 
 normalisation.localisedfile
@@ -123,6 +129,9 @@ normalisation.lowercase
 
 Lowercase the text
 
+
+:example text: Easy, Mungo, easy... Mungo...
+:example result: easy, mungo, easy... mungo...
 
 :param str text: The text to normalise
 
@@ -155,7 +164,10 @@ Eg. would replace "New<CRLF>line" to "newline":
  | :code:`(?msi)new.line` | :code:`newline`  |
  +------------------------+------------------+
 
-
+:example text: "HAHA! Hahaha!"
+:example search: '(?i)(h)a'
+:example replace: r'\1e'
+:example result: "HeHe! Hehehe!"
 
 :param str text: The text to normalise
 
@@ -183,10 +195,10 @@ checked case insensitive as well with preservation of case..
 :param str search: Word to search for
 :param str replace: Replace with
 
-:example text:
-:example search: ""
-:example replace: ""
-:example result: ""
+:example text: "She has a heart of formica"
+:example search: "a"
+:example replace: "the"
+:example result: "She has the heart of formica"
 
 :param str text: The text to normalise
 

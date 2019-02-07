@@ -16,7 +16,7 @@ def argparser(parser):
                         help='run in debug mode')
     parser.add_argument('--host',
                         help='hostname or ip to serve api')
-    parser.add_argument('--port', type=int, default=5000,
+    parser.add_argument('--port', type=int, default=8080,
                         help='port used by the server')
     parser.add_argument('--entrypoint', default='/api',
                         help='the jsonrpc api address')

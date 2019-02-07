@@ -18,7 +18,7 @@ You can change port for the api, just change the :code:`8000` to the port you wa
 
    .. code-block:: bash
 
-      docker run --name conferatur -p 8000:5000 --rm conferatur:latest
+      docker run --name conferatur -p 8000:8080 --rm conferatur:latest
 
 The jsonrpc api is then automatically available at: :code:`http://localhost:8000/api`
 

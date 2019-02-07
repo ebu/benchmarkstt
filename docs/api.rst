@@ -10,7 +10,7 @@ You can launch a server to make the api available via:
 
     - :doc:`cli/api` (for debugging and local use only)
     - :doc:`docker`
-    - gunicorn, by running :code:`gunicorn -b :5000 conferatur.api.gunicorn`
+    - gunicorn, by running :code:`gunicorn -b :8080 conferatur.api.gunicorn`
 
 
 Usage
@@ -23,7 +23,7 @@ Using curl, for example:
 .. code-block:: none
 
     curl -X POST \
-      http://localhost:5000/ \
+      http://localhost:8080/api \
       -H 'Content-Type: application/json-rpc' \
       -d '{
         "jsonrpc": "2.0",
@@ -31,6 +31,8 @@ Using curl, for example:
         "id": null
     }'
 
+If you started the service with parameter `--with-explorer` (see :doc:`cli/api`), you can easily test the available JSON-RPC_
+api calls by visiting the api url (eg. `http://localhost:8080/api` in the above example).
 
 .. toctree::
    :maxdepth: 2
