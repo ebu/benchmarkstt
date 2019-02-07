@@ -55,6 +55,25 @@ MODE_INSIDE_QUOTED = 3
 MODE_INSIDE_QUOTED_QUOTE = 4
 MODE_COMMENT = 5
 
+Line = list
+Field = str
+
+
+class Line(list):
+    @property
+    def lineno(self):
+        return self.__dict__['lineno']
+
+# don't really know if it's quoted atm
+# class Field(str, object):
+#     @property
+#     def quoted(self):
+#         return self.__dict__['quoted']
+#
+#     @quoted.setter
+#     def quoted(self, value):
+#         self.__dict__['quoted'] = bool(value)
+
 
 class Reader:
     """
@@ -101,36 +120,43 @@ class Reader:
 
     def __iter__(self):
         readchar = iter(partial(self._file.read, 1), '')
-        cur_line = 0
+        cur_line = 1
 
         newlinechars = '\n\r'
 
         mode = MODE_FIRST
         field = []
-        line = []
+        line = Line()
+
+        delimiter_is_whitespace = self._dialect.delimiter in self._dialect.trimright
 
         def yield_line():
-            nonlocal line, field, mode
-            next_field()
+            nonlocal line, field, mode, delimiter_is_whitespace, is_newline, cur_line
+            if not(mode == MODE_OUTSIDE and delimiter_is_whitespace):
+                next_field()
+            field = []
             _line = line
-            line = []
+            _line.__dict__['lineno'] = cur_line
+            line = Line()
             mode = MODE_FIRST
             return _line
 
         def next_field():
             nonlocal field, line, mode
-            if mode == MODE_INSIDE_QUOTED_QUOTE:
-                line.append(''.join(field))
-            else:
-                line.append(self._trimright(''.join(field)))
+            field = ''.join(field)
+            if mode != MODE_INSIDE_QUOTED_QUOTE:
+                field = self._trimright(field)
+
+            field = Field(field)
+            line.append(field)
+
             field = []
             mode = MODE_OUTSIDE
 
-        # todo: keep proper line count
         # i = 0
         for char in readchar:
             # print('%d.%s' % (mode, char), end='\n' if (i%25)==0 else ' ')
-            # i+=1
+            # i += 1
             is_newline = char in newlinechars
             if is_newline:
                 cur_line += 1
@@ -141,6 +167,11 @@ class Reader:
                 continue
 
             if mode in (MODE_OUTSIDE, MODE_FIRST):
+                if is_newline:
+                    if mode != MODE_FIRST:
+                        yield yield_line()
+                    continue
+
                 if self._is_ignore_left(char):
                     continue
 
@@ -156,10 +187,6 @@ class Reader:
                     next_field()
                     continue
 
-                if is_newline:
-                    yield yield_line()
-                    continue
-
                 mode = MODE_INSIDE
                 field.append(char)
                 continue
@@ -168,12 +195,12 @@ class Reader:
                 if self._is_quote(char):
                     raise UnallowedQuoteError("Quote not allowed here")
 
-                if self._is_delimiter(char):
-                    next_field()
+                if is_newline:
+                    yield yield_line()
                     continue
 
-                if char in newlinechars:
-                    yield yield_line()
+                if self._is_delimiter(char):
+                    next_field()
                     continue
 
                 field.append(char)
@@ -185,12 +212,12 @@ class Reader:
                     mode = MODE_INSIDE_QUOTED
                     continue
 
-                if char in newlinechars:
-                    yield yield_line()
-                    continue
-
                 if self._is_delimiter(char):
                     next_field()
+                    continue
+
+                if is_newline:
+                    yield yield_line()
                     continue
 
                 raise UnallowedQuoteError("Single quote inside quoted field")

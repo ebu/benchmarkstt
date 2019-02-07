@@ -1,7 +1,12 @@
 import textwrap
 import inspect
 import re
+import ast
 from collections import namedtuple
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 Docblock = namedtuple('Docblock', ['docs', 'params', 'result', 'result_type'])
 Param = namedtuple('Param', ['name', 'type', 'type_doc', 'is_required', 'description', 'example'])
@@ -24,13 +29,24 @@ def doc_param_parser(docstring, key, no_name=None):
         return ''
 
     if no_name:
-        regex = r'^\s*:%s\s*([a-z_]+)?:(?:\s+(.*))?$'
+        regex = r'^[ \t]*:%s[ \t]*([a-z_]+)?:[ \t]+(.*)$'
     else:
-        regex = r'^\s*:%s\s+(?:([^:]+)\s+)?([a-z_]+):(?:\s+(.*))?$'
+        regex = r'^[ \t]*:%s[ \t]+(?:([^:]+)[ \t]+)?([a-z_]+):(?:[ \t]+(.*))?$'
 
     docs = re.sub(regex % (re.escape(key),), _, docstring, flags=re.MULTILINE).strip()
 
     return docs, results
+
+
+def decode_literal(txt: str):
+    if txt is None:
+        return ''
+
+    try:
+        return ast.literal_eval(txt)
+    except (ValueError, SyntaxError) as e:
+        logger.warning('%s "%s" for: %s', type(e), e, txt)
+        return txt
 
 
 def parse(func):
@@ -61,7 +77,8 @@ def parse(func):
                       type_,
                       idx < defaults_idx,
                       description,
-                      examples[name] if name in examples else None)
+                      decode_literal(examples[name].value) if name in examples else None)
+
         params.append(param)
 
     result = Docblock(docs=docs, params=params,
