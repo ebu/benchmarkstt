@@ -1,4 +1,5 @@
 from conferatur.normalization.core import *
+from conferatur.normalization import NormalizationComposite
 
 
 def test_config():
