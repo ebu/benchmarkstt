@@ -77,27 +77,27 @@ regexreplace "y t" "Y T"
    Replace   e     a''')
     assert gotten == expected
 
-    file = './resources/test/normalisers/configfile.conf'
+    file = './resources/test/normalizers/configfile.conf'
     with open(file) as f:
         assert list(reader(f, 'whitespace')) == expected
 
     expected = [
-        ['Normaliser1', 'arg1', 'arg 2'],
-        ['Normaliser2'],
-        ['Normaliser3', 'This is argument 1\nSpanning multiple lines\n', 'argument 2'],
-        ['Normaliser4', 'argument with double quote (")']
+        ['Normalizer1', 'arg1', 'arg 2'],
+        ['Normalizer2'],
+        ['Normalizer3', 'This is argument 1\nSpanning multiple lines\n', 'argument 2'],
+        ['Normalizer4', 'argument with double quote (")']
     ]
 
     assert _reader("""
-Normaliser1 arg1 "arg 2"
+Normalizer1 arg1 "arg 2"
 # This is a comment
 
-Normaliser2
-# (Normaliser2 has no arguments)
-Normaliser3 "This is argument 1
+Normalizer2
+# (Normalizer2 has no arguments)
+Normalizer3 "This is argument 1
 Spanning multiple lines
 " "argument 2"
-Normaliser4 "argument with double quote ("")"
+Normalizer4 "argument with double quote ("")"
 """) == expected
 
     assert _reader("lower case ") == [['lower', 'case']]

@@ -3,4 +3,4 @@ Modules
 
 .. toctree::
 
-   modules/normalisation
+   modules/normalization

@@ -6,7 +6,7 @@ from .__meta__ import __author__, __version__
 from importlib import import_module
 import textwrap
 
-modules = ('normalisation', 'api')
+modules = ('normalization', 'api')
 
 
 def get_modules(sub_module=None):

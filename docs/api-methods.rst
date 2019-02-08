@@ -11,14 +11,14 @@ Get the version of conferatur
 
 :return str: Conferatur version
 
-normalisation.list
+normalization.list
 ------------------
 
-Get a list of available core normalisers
+Get a list of available core normalizers
 
-:return object: With key being the normaliser name, and value its description
+:return object: With key being the normalizer name, and value its description
 
-normalisation.alphanumeric
+normalization.alphanumeric
 --------------------------
 
 Simple alphanumeric filter
@@ -26,9 +26,9 @@ Simple alphanumeric filter
 :example text: "He's a lumberjack, and he's okay!"
 :example return: "Hesalumberjackandhesokay"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.alphanumericunicode
+normalization.alphanumericunicode
 ---------------------------------
 
 Simple alphanumeric filter, takes into account all unicode alphanumeric characters
@@ -36,34 +36,34 @@ Simple alphanumeric filter, takes into account all unicode alphanumeric characte
 :example text: "Das, öder die Flipper-Wåld Gespütt!"
 :example result: "DasöderdieFlipperWåldGespütt"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.config
+normalization.config
 --------------------
 
-Use config notation to define normalisation rules. This notation is a list of normalisers, one per line, with optional arguments (separated by a space).
+Use config notation to define normalization rules. This notation is a list of normalizers, one per line, with optional arguments (separated by a space).
 
-The normalisers can be any of the core normalisers, or you can refer to your own normaliser class (like you would use in a python import, eg. `my.own.package.MyNormaliserClass`).
+The normalizers can be any of the core normalizers, or you can refer to your own normalizer class (like you would use in a python import, eg. `my.own.package.MyNormalizerClass`).
 
 Additional rules:
-  - Normaliser names are case-insensitive.
+  - Normalizer names are case-insensitive.
   - Arguments MAY be wrapped in double quotes.
   - If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
   - A double quote itself is represented in this quoted argument as two double quotes: `""`.
 
-The normalisation rules are applied top-to-bottom and follow this format:
+The normalization rules are applied top-to-bottom and follow this format:
 
-.. code-block:: bash
+.. code-block:: text
 
-    Normaliser1 arg1 "arg 2"
+    Normalizer1 arg1 "arg 2"
     # This is a comment
 
-    Normaliser2
-    # (Normaliser2 has no arguments)
-    Normaliser3 "This is argument 1
+    Normalizer2
+    # (Normalizer2 has no arguments)
+    Normalizer3 "This is argument 1
     Spanning multiple lines
     " "argument 2"
-    Normaliser4 "argument with double quote ("")"
+    Normalizer4 "argument with double quote ("")"
 
 :param str config: configuration text
 
@@ -71,9 +71,9 @@ The normalisation rules are applied top-to-bottom and follow this format:
 :example config: '# using a simple config file\nLowercase \n\n    # it even supports comments\n# If there is a space in the argument, make sure you quote it though!\n  regexreplace "y t" "Y T"\n \n      # extraneous whitespaces are ignored \n     replace   e     a\n'
 :example return: "ha bravalY Turnad his tail and flad"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.configfile
+normalization.configfile
 ------------------------
 
 Load config from a file, see :py:class:`Config` for information about config notation
@@ -82,60 +82,60 @@ Load config from a file, see :py:class:`Config` for information about config not
 :param str encoding: The file encoding
 
 :example text: "He bravely turned his tail and fled"
-:example file: "./resources/test/normalisers/configfile.conf"
+:example file: "./resources/test/normalizers/configfile.conf"
 :example encoding: "UTF-8"
 :example return: "ha bravalY Turnad his tail and flad"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.file
+normalization.file
 ------------------
 
-Read one per line and pass it to the given normaliser
+Read one per line and pass it to the given normalizer
 
-:param str|class normaliser: Normaliser name (or class)
+:param str|class normalizer: Normalizer name (or class)
 :param str file: The file to read rules from
 :param str encoding: The file encoding
 
 :example text: "This is an Ex-Parakeet"
-:example normaliser: "regexreplace"
-:example file: "./resources/test/normalisers/regexreplace/en_US"
+:example normalizer: "regexreplace"
+:example file: "./resources/test/normalizers/regexreplace/en_US"
 :example encoding: "UTF-8"
 :example return: "This is an Ex Parrot"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.localisedfile
+normalization.localizedfile
 ---------------------------
 
-Reads and applies normalisation rules from a locale-based file, it will automagically determine the "best fit" for a given locale, if one is available.
+Reads and applies normalization rules from a locale-based file, it will automagically determine the "best fit" for a given locale, if one is available.
 
-:param str|class normaliser: Normaliser name (or class)
+:param str|class normalizer: Normalizer name (or class)
 :param str locale: Which locale to search for
 :param PathLike path: Location of available locale files
 :param str encoding: The file encoding
 
 :example text: "This is an Ex-Parakeet"
-:example normaliser: "regexreplace"
-:example path: "./resources/test/normalisers/regexreplace"
+:example normalizer: "regexreplace"
+:example path: "./resources/test/normalizers/regexreplace"
 :example locale: "en"
 :example encoding: "UTF-8"
 :example return: "This is an Ex Parrot"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.lowercase
+normalization.lowercase
 -----------------------
 
 Lowercase the text
 
 
-:example text: Easy, Mungo, easy... Mungo...
-:example result: easy, mungo, easy... mungo...
+:example text: "Easy, Mungo, easy... Mungo..."
+:example result: "easy, mungo, easy... mungo..."
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.regexreplace
+normalization.regexreplace
 --------------------------
 
 Simple regex replace. By default the pattern is interpreted
@@ -169,9 +169,9 @@ Eg. would replace "New<CRLF>line" to "newline":
 :example replace: r'\1e'
 :example result: "HeHe! Hehehe!"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.replace
+normalization.replace
 ---------------------
 
 Simple search replace
@@ -184,9 +184,9 @@ Simple search replace
 :example replace: "wink"
 :example return: "Nudge wink!"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.replacewords
+normalization.replacewords
 --------------------------
 
 Simple search replace that only replaces "words", the first letter will be
@@ -200,9 +200,9 @@ checked case insensitive as well with preservation of case..
 :example replace: "the"
 :example result: "She has the heart of formica"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
-normalisation.unidecode
+normalization.unidecode
 -----------------------
 
 Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
@@ -210,7 +210,7 @@ Unidecode characters to ASCII form, see `Python's Unidecode package <https://pyp
 :example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
 :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
 
-:param str text: The text to normalise
+:param str text: The text to normalize
 
 help
 ----

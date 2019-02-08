@@ -4,26 +4,26 @@ from importlib import import_module
 from typing import Dict
 from conferatur.docblock import format_docs
 
-_normaliser_namespaces = (
-    "conferatur.normalisation.core",
+_normalizer_namespaces = (
+    "conferatur.normalization.core",
     ""
 )
 
-NormaliserConfig = namedtuple('NormaliserConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])
+NormalizerConfig = namedtuple('NormalizerConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])
 
 
-def is_normaliser(cls):
-    return inspect.isclass(cls) and hasattr(cls, 'normalise')
+def is_normalizer(cls):
+    return inspect.isclass(cls) and hasattr(cls, 'normalize')
 
 
-def available_normalisers() -> Dict[str, NormaliserConfig]:
-    ignored_normalisers = ('composite',)
-    normalisers = {}
-    core = import_module('conferatur.normalisation.core')
+def available_normalizers() -> Dict[str, NormalizerConfig]:
+    ignored_normalizers = ('composite',)
+    normalizers = {}
+    core = import_module('conferatur.normalization.core')
     for cls in dir(core):
         name = cls.lower()
         cls = getattr(core, cls)
-        if name in ignored_normalisers or not is_normaliser(cls):
+        if name in ignored_normalizers or not is_normalizer(cls):
             continue
 
         docs = format_docs(cls.__doc__)
@@ -41,15 +41,15 @@ def available_normalisers() -> Dict[str, NormaliserConfig]:
         required_args = args[0:defaults_idx]
         optional_args = args[defaults_idx:]
 
-        normalisers[name] = NormaliserConfig(name=name, cls=cls, docs=docs,
+        normalizers[name] = NormalizerConfig(name=name, cls=cls, docs=docs,
                                              optional_args=optional_args, required_args=required_args)
 
-    return normalisers
+    return normalizers
 
 
-def name_to_normaliser(name):
+def name_to_normalizer(name):
     """
-    Loads the proper normaliser based on a name
+    Loads the proper normalizer based on a name
 
     :param name: str
     :return: class
@@ -65,7 +65,7 @@ def name_to_normaliser(name):
 
     requested_class = requested[-1]
     lname = requested_class.lower()
-    for lookup in _normaliser_namespaces:
+    for lookup in _normalizer_namespaces:
         try:
             module = '.'.join(filter(len, lookup.split('.') + requested_module))
             if module == '':
@@ -74,13 +74,13 @@ def name_to_normaliser(name):
 
             if hasattr(module, requested_class):
                 cls = getattr(module, requested_class)
-                if inspect.isclass(cls) and hasattr(cls, 'normalise'):
+                if inspect.isclass(cls) and hasattr(cls, 'normalize'):
                     return cls
 
             # fallback, check case-insensitive matches
             realname = [class_name for class_name in dir(module)
                         if class_name.lower() == lname and
-                        is_normaliser(getattr(module, class_name))]
+                        is_normalizer(getattr(module, class_name))]
 
             if len(realname) > 1:
                 raise ImportError("Cannot determine which class to use for '$s': %s" %
@@ -90,4 +90,4 @@ def name_to_normaliser(name):
         except ModuleNotFoundError:
             pass
 
-    raise ImportError("Could not find normaliser '%s'" % (name,))
+    raise ImportError("Could not find normalizer '%s'" % (name,))

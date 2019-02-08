@@ -13,7 +13,7 @@ Subcommands
     .. toctree::
        :maxdepth: 1
 
-       cli/normalisation
+       cli/normalization
        cli/api
 
 Bash completion

@@ -7,7 +7,7 @@ Make conferatur available through a rudimentary JSON-RPC_ interface
 
 import jsonrpcserver
 from conferatur import __meta__
-from conferatur.normalisation import core, name_to_normaliser, available_normalisers
+from conferatur.normalization import core, name_to_normalizer, available_normalizers
 from functools import wraps
 from conferatur.docblock import format_docs
 import inspect
@@ -33,17 +33,17 @@ def get_methods():
 
         return __meta__.__version__
 
-    normalisers = available_normalisers()
+    normalizers = available_normalizers()
 
     @method
-    def normalisation_list():
+    def normalization_list():
         """
-        Get a list of available core normalisers
+        Get a list of available core normalizers
 
-        :return object: With key being the normaliser name, and value its description
+        :return object: With key being the normalizer name, and value its description
         """
         return {name: conf.docs
-                for name, conf in normalisers.items()}
+                for name, conf in normalizers.items()}
 
     def is_safe_path(path):
         return os.path.abspath(path).startswith(os.path.abspath(os.getcwd()))
@@ -51,7 +51,7 @@ def get_methods():
     class SecurityError(ValueError):
         pass
 
-    def serve_normaliser(config):
+    def serve_normalizer(config):
         cls = config.cls
 
         @wraps(cls)
@@ -65,21 +65,21 @@ def get_methods():
                 if not is_safe_path(kwargs['path']):
                     raise SecurityError("Access to unallowed directory attempted")
 
-            return cls(*args, **kwargs).normalise(text)
+            return cls(*args, **kwargs).normalize(text)
 
-        # copy signature from original normaliser
+        # copy signature from original normalizer
         sig = inspect.signature(cls)
         params = [inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)]
         params.extend(sig.parameters.values())
         sig = sig.replace(parameters=params)
         # todo (?) add available files and folders as select options 
         _.__signature__ = sig
-        _.__doc__ += '\n    :param str text: The text to normalise'
+        _.__doc__ += '\n    :param str text: The text to normalize'
         return _
 
-    # add each normaliser as its own api call
-    for conf in normalisers.values():
-        method(serve_normaliser(conf), name='normalisation.%s' % (conf.name,))
+    # add each normalizer as its own api call
+    for conf in normalizers.values():
+        method(serve_normalizer(conf), name='normalization.%s' % (conf.name,))
 
     @method
     def _help():

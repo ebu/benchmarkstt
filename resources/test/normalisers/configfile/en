@@ -1,7 +1,0 @@
-# Load another localised file
-LocalisedFile config de ./resources/test/normalisers/configfile
-
-Lowercase
-
-# And re-use regexreplace for en
-localisedfile RegexReplace it ./resources/test/normalisers/regexreplace

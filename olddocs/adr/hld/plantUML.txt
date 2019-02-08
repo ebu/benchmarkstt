@@ -23,15 +23,15 @@ Package "EBU" {
 }
 
 Package "Toolkit" {
-  rectangle "Test data normaliser" as test_normaliser
+  rectangle "Test data normalizer" as test_normalizer
   rectangle "Vendor connectors" as vendor_connectors
-  rectangle "Transcript normalisers" as transcript_normalisers
+  rectangle "Transcript normalizers" as transcript_normalizers
   rectangle "Metric analyser" as metric_analysers
   rectangle "Results matrix" as results
 
-  test_normaliser --> vendor_connectors
-  vendor_connectors -[hidden]-> transcript_normalisers
-  transcript_normalisers -[hidden]-> metric_analysers
+  test_normalizer --> vendor_connectors
+  vendor_connectors -[hidden]-> transcript_normalizers
+  transcript_normalizers -[hidden]-> metric_analysers
   metric_analysers -[hidden]-> results
 }
 
@@ -50,15 +50,15 @@ Rectangle "User Test data" as user_test_data
 
 
 
-user_test_data --> test_normaliser
-ebu_test_data --> test_normaliser
+user_test_data --> test_normalizer
+ebu_test_data --> test_normalizer
 vendor_connectors -> apis
 apis --> transcripts
-transcripts -> transcript_normalisers
-transcript_normalisers --> metric_analysers
+transcripts -> transcript_normalizers
+transcript_normalizers --> metric_analysers
 metric_analysers --> results
-test_set_format .-> test_normaliser
-transcript_format .-> transcript_normalisers
+test_set_format .-> test_normalizer
+transcript_format .-> transcript_normalizers
 ebu_metric .-> metric_analysers
 
 results -> ebu_UI

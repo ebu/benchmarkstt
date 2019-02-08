@@ -49,7 +49,7 @@ From source
 
    .. code-block:: none
 
-      $ echo "IT WORKS" | conferatur normalisation --lowercase
+      $ echo "IT WORKS" | conferatur normalization --lowercase
       it works
 
 
@@ -58,7 +58,7 @@ From source
    .. code-block:: bash
 
       conferatur --help
-      conferatur normalisation --help
+      conferatur normalization --help
 
    See :doc:`usage` for more information on how to use.
 

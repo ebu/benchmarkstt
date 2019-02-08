@@ -1,42 +1,42 @@
 """
-Apply normalisation to given input
+Apply normalization to given input
 """
 
 import sys
 from . import core
 import argparse
-from . import available_normalisers, name_to_normaliser
+from . import available_normalizers, name_to_normalizer
 import textwrap
 import functools
 import itertools
 
 
-class _NormaliserAction:
-    # placeholder to recognize it is a NormaliserAction
+class _NormalizerAction:
+    # placeholder to recognize it is a NormalizerAction
     pass
 
 
-def normaliser_action(required_args, optional_args):
+def normalizer_action(required_args, optional_args):
     minlen = len(required_args)
     maxlen = minlen + len(optional_args)
 
-    class NormaliserAction(argparse.Action, _NormaliserAction):
+    class NormalizerAction(argparse.Action, _NormalizerAction):
         def __call__(self, parser, args, values, option_string=None):
             if len(values) < minlen or len(values) > maxlen:
                 raise argparse.ArgumentTypeError('argument "%s" requires between %d and %d arguments (got %d)' %
                                                  (self.dest, minlen, maxlen, len(values)))
 
-            if 'normalisers' not in args:
-                args.normalisers = []
+            if 'normalizers' not in args:
+                args.normalizers = []
 
-            args.normalisers.append([self.dest] + values)
+            args.normalizers.append([self.dest] + values)
 
-    return NormaliserAction
+    return NormalizerAction
 
 
 class Formatter(argparse.HelpFormatter):
     def _format_args(self, action, default_metavar):
-        if isinstance(action, _NormaliserAction):
+        if isinstance(action, _NormalizerAction):
             return ' '.join(action.metavar)
 
         return super()._format_args(action, default_metavar)
@@ -70,16 +70,16 @@ def argparser(parser=None):
                        help='write output to this file, defaults to STDOUT',
                        metavar='file')
 
-    normalisers_desc = """
-      A list of normalisers to execute on the input, can be one or more normalisers
+    normalizers_desc = """
+      A list of normalizers to execute on the input, can be one or more normalizers
       which are applied sequentially.
-      The program will automatically find the normaliser in conferatur.normalisation.core,
-      then conferatur.normalisation and finally in the global namespace.
-      At least one normaliser needs to be provided."""
+      The program will automatically find the normalizer in conferatur.normalization.core,
+      then conferatur.normalization and finally in the global namespace.
+      At least one normalizer needs to be provided."""
 
-    normalisers = parser.add_argument_group('available normalisers', description=normalisers_desc)
+    normalizers = parser.add_argument_group('available normalizers', description=normalizers_desc)
 
-    for name, conf in available_normalisers().items():
+    for name, conf in available_normalizers().items():
         docs = conf.docs
 
         arguments = dict()
@@ -91,9 +91,9 @@ def argparser(parser=None):
             optionals = list(map(lambda x: '[%s]' % x, conf.optional_args))
             arguments['metavar'] = tuple(conf.required_args + optionals)
 
-        arguments['action'] = normaliser_action(conf.required_args, conf.optional_args)
+        arguments['action'] = normalizer_action(conf.required_args, conf.optional_args)
 
-        normalisers.add_argument('--%s' % (name,), **arguments)
+        normalizers.add_argument('--%s' % (name,), **arguments)
 
     return parser
 
@@ -102,8 +102,8 @@ def main(parser, args):
     input_files = [f[0] for f in args.inputfile] if args.inputfile else None
     output_files = [f[0] for f in args.outputfile] if args.outputfile else None
 
-    if 'normalisers' not in args or not len(args.normalisers):
-        parser.error("need at least one normaliser")
+    if 'normalizers' not in args or not len(args.normalizers):
+        parser.error("need at least one normalizer")
 
     if input_files is None and output_files is not None and len(output_files) > 1:
         parser.error("can only write output to one file when reading from stdin")
@@ -113,9 +113,9 @@ def main(parser, args):
             parser.error("when using multiple input or output files, there needs to be an equal amount of each")
 
     composite = core.Composite()
-    for item in args.normalisers:
-        normaliser_name = item.pop(0).replace('-', '.')
-        cls = name_to_normaliser(normaliser_name)
+    for item in args.normalizers:
+        normalizer_name = item.pop(0).replace('-', '.')
+        cls = name_to_normalizer(normalizer_name)
         composite.add(cls(*item))
 
     if output_files is not None:
@@ -126,7 +126,7 @@ def main(parser, args):
         for idx, file in enumerate(input_files):
             with open(file) as input_file:
                 text = input_file.read()
-            text = composite.normalise(text)
+            text = composite.normalize(text)
             if output_files is None:
                 sys.stdout.write(text)
             else:
@@ -135,7 +135,7 @@ def main(parser, args):
                 output_file.close()
     else:
         text = sys.stdin.read()
-        text = composite.normalise(text)
+        text = composite.normalize(text)
         if output_files is None:
             sys.stdout.write(text)
         else:

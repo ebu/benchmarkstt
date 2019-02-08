@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CONFERATUR" "1" "Feb 04, 2019" "" "Conferatur"
+.TH "CONFERATUR" "1" "Feb 08, 2019" "" "Conferatur"
 .SH NAME
 conferatur \- Conferatur Documentation
 .
@@ -42,7 +42,7 @@ Conferatur main command line script
 usage: conferatur [\-h]
                   [\-\-log\-level {critical,fatal,error,warn,warning,info,debug,notset}]
                   [\-\-version]
-                  {normalisation,api}
+                  {normalization,api}
 .ft P
 .fi
 .UNINDENT
@@ -51,7 +51,7 @@ usage: conferatur [\-h]
 .INDENT 0.0
 .TP
 .Bsubcommand
-Possible choices: normalisation, api
+Possible choices: normalization, api
 .UNINDENT
 .SH NAMED ARGUMENTS
 .INDENT 0.0
@@ -73,20 +73,20 @@ Default: False
 .SH SUBCOMMANDS
 .INDENT 0.0
 .INDENT 3.5
-.SS Subcommand normalisation
+.SS Subcommand normalization
 .sp
-Apply normalisation to given input
+Apply normalization to given input
 
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-usage: conferatur normalisation [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
+usage: conferatur normalization [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
                                 [\-\-alphanumericunicode] [\-\-config config]
                                 [\-\-configfile file [encoding]]
-                                [\-\-file normaliser file [encoding]]
-                                [\-\-localisedfile normaliser locale path [encoding]]
+                                [\-\-file normalizer file [encoding]]
+                                [\-\-localizedfile normalizer locale path [encoding]]
                                 [\-\-lowercase]
                                 [\-\-regexreplace search [replace]]
                                 [\-\-replace search [replace]]
@@ -114,34 +114,50 @@ read input from this file, defaults to STDIN
 .B\-o, \-\-outputfile
 write output to this file, defaults to STDOUT
 .UNINDENT
-.SS available normalisers
+.SS available normalizers
 .INDENT 0.0
 .INDENT 3.5
-A list of normalisers to execute on the input, can be one or more normalisers
+A list of normalizers to execute on the input, can be one or more normalizers
 which are applied sequentially.
-The program will automatically find the normaliser in conferatur.normalisation.core,
-then conferatur.normalisation and finally in the global namespace.
-At least one normaliser needs to be provided.
+The program will automatically find the normalizer in conferatur.normalization.core,
+then conferatur.normalization and finally in the global namespace.
+At least one normalizer needs to be provided.
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B\-\-alphanumeric
 Simple alphanumeric filter
+.INDENT 7.0
+.TP
+.B example text
+"He\(aqs a lumberjack, and he\(aqs okay!"
+.TP
+.B example return
+"Hesalumberjackandhesokay"
+.UNINDENT
 .TP
 .B\-\-alphanumericunicode
 Simple alphanumeric filter, takes into account all unicode alphanumeric characters
+.INDENT 7.0
+.TP
+.B example text
+"Das, öder die Flipper\-Wåld Gespütt!"
+.TP
+.B example result
+"DasöderdieFlipperWåldGespütt"
+.UNINDENT
 .TP
 .B\-\-config
-Use config notation to define normalisation rules. This notation is a list of normalisers, one per line, with optional arguments (separated by a space).
+Use config notation to define normalization rules. This notation is a list of normalizers, one per line, with optional arguments (separated by a space).
 .sp
-The normalisers can be any of the core normalisers, or you can refer to your own normaliser class (like you would use in a python import, eg. \fImy.own.package.MyNormaliserClass\fP).
+The normalizers can be any of the core normalizers, or you can refer to your own normalizer class (like you would use in a python import, eg. \fImy.own.package.MyNormalizerClass\fP).
 .INDENT 7.0
 .TP
 .B Additional rules:
 .INDENT 7.0
 .IP \(bu 2
-Normaliser names are case\-insensitive.
+Normalizer names are case\-insensitive.
 .IP \(bu 2
 Arguments MAY be wrapped in double quotes.
 .IP \(bu 2
@@ -151,51 +167,137 @@ A double quote itself is represented in this quoted argument as two double quote
 .UNINDENT
 .UNINDENT
 .sp
-The normalisation rules are applied top\-to\-bottom and follow this format:
+The normalization rules are applied top\-to\-bottom and follow this format:
 .INDENT 7.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-Normaliser1 arg1 "arg 2"
+Normalizer1 arg1 "arg 2"
 # This is a comment
 
-Normaliser2
-# (Normaliser2 has no arguments)
-Normaliser3 "This is argument 1
+Normalizer2
+# (Normalizer2 has no arguments)
+Normalizer3 "This is argument 1
 Spanning multiple lines
 " "argument 2"
-Normaliser4 "argument with double quote ("")"
+Normalizer4 "argument with double quote ("")"
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
+.INDENT 7.0
+.TP
+.B param str config
+configuration text
+.TP
+.B example text
+"He bravely turned his tail and fled"
+.TP
+.B example config
+\(aq# using a simple config filenLowercase nn    # it even supports commentsn# If there is a space in the argument, make sure you quote it though!n  regexreplace "y t" "Y T"n n      # extraneous whitespaces are ignored n     replace   e     an\(aq
+.TP
+.B example return
+"ha bravalY Turnad his tail and flad"
+.UNINDENT
 .TP
 .B\-\-configfile
 Load config from a file, see \fBConfig\fP for information about config notation
-.TP
-.B\-\-file
-Read one per line and pass it to the given normaliser
-.TP
-.B\-\-localisedfile
-Reads and applies normalisation rules from a locale\-based file, it will automagically determine the "best fit" for a given locale, if one is available.
 .INDENT 7.0
 .TP
-.B param normaliser
-str|class Normaliser name or class
+.B param typing.io.TextIO file
+The file
 .TP
-.B param locale
+.B param str encoding
+The file encoding
+.TP
+.B example text
+"He bravely turned his tail and fled"
+.TP
+.B example file
+"./resources/test/normalizers/configfile.conf"
+.TP
+.B example encoding
+"UTF\-8"
+.TP
+.B example return
+"ha bravalY Turnad his tail and flad"
+.UNINDENT
+.TP
+.B\-\-file
+Read one per line and pass it to the given normalizer
+.INDENT 7.0
+.TP
+.B param str|class normalizer
+Normalizer name (or class)
+.TP
+.B param str file
+The file to read rules from
+.TP
+.B param str encoding
+The file encoding
+.TP
+.B example text
+"This is an Ex\-Parakeet"
+.TP
+.B example normalizer
+"regexreplace"
+.TP
+.B example file
+"./resources/test/normalizers/regexreplace/en_US"
+.TP
+.B example encoding
+"UTF\-8"
+.TP
+.B example return
+"This is an Ex Parrot"
+.UNINDENT
+.TP
+.B\-\-localizedfile
+Reads and applies normalization rules from a locale\-based file, it will automagically determine the "best fit" for a given locale, if one is available.
+.INDENT 7.0
+.TP
+.B param str|class normalizer
+Normalizer name (or class)
+.TP
+.B param str locale
 Which locale to search for
 .TP
-.B param path
+.B param PathLike path
 Location of available locale files
 .TP
-.B param encoding
-str The file encoding
+.B param str encoding
+The file encoding
+.TP
+.B example text
+"This is an Ex\-Parakeet"
+.TP
+.B example normalizer
+"regexreplace"
+.TP
+.B example path
+"./resources/test/normalizers/regexreplace"
+.TP
+.B example locale
+"en"
+.TP
+.B example encoding
+"UTF\-8"
+.TP
+.B example return
+"This is an Ex Parrot"
 .UNINDENT
 .TP
 .B\-\-lowercase
 Lowercase the text
+.INDENT 7.0
+.TP
+.B example text
+"Easy, Mungo, easy... Mungo..."
+.TP
+.B example result
+"easy, mungo, easy... mungo..."
+.UNINDENT
 .TP
 .B\-\-regexreplace
 Simple regex replace. By default the pattern is interpreted
@@ -252,16 +354,78 @@ _
 .TE
 .UNINDENT
 .UNINDENT
+.INDENT 7.0
+.TP
+.B example text
+"HAHA! Hahaha!"
+.TP
+.B example search
+\(aq(?i)(h)a\(aq
+.TP
+.B example replace
+r\(aq1e\(aq
+.TP
+.B example result
+"HeHe! Hehehe!"
+.UNINDENT
 .TP
 .B\-\-replace
 Simple search replace
+.INDENT 7.0
+.TP
+.B param str search
+Text to search for
+.TP
+.B param str replace
+Text to replace with
+.TP
+.B example text
+"Nudge nudge!"
+.TP
+.B example search
+"nudge"
+.TP
+.B example replace
+"wink"
+.TP
+.B example return
+"Nudge wink!"
+.UNINDENT
 .TP
 .B\-\-replacewords
 Simple search replace that only replaces "words", the first letter will be
 checked case insensitive as well with preservation of case..
+.INDENT 7.0
+.TP
+.B param str search
+Word to search for
+.TP
+.B param str replace
+Replace with
+.TP
+.B example text
+"She has a heart of formica"
+.TP
+.B example search
+"a"
+.TP
+.B example replace
+"the"
+.TP
+.B example result
+"She has the heart of formica"
+.UNINDENT
 .TP
 .B\-\-unidecode
 Unidecode characters to ASCII form, see \fI\%Python\(aqs Unidecode package\fP for more info.
+.INDENT 7.0
+.TP
+.B example text
+"𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
+.TP
+.B example return
+"Wenn ist das Nunstuck git und Slotermeyer?"
+.UNINDENT
 .UNINDENT
 .SS Subcommand api
 .sp
@@ -275,7 +439,8 @@ Make conferatur available through a rudimentary \fI\%JSON\-RPC\fP interface
 .nf
 .ft C
 usage: conferatur api [\-h] [\-\-debug] [\-\-host HOST] [\-\-port PORT]
-                      [\-\-entrypoint ENTRYPOINT] [\-\-list\-methods]
+                      [\-\-entrypoint ENTRYPOINT] [\-\-with\-explorer]
+                      [\-\-list\-methods]
 .ft P
 .fi
 .UNINDENT
@@ -294,12 +459,17 @@ hostname or ip to serve api
 .B\-\-port
 port used by the server
 .sp
-Default: 5000
+Default: 8080
 .TP
 .B\-\-entrypoint
 the jsonrpc api address
 .sp
-Default: "/"
+Default: "/api"
+.TP
+.B\-\-with\-explorer
+also create the explorer to test api calls with
+.sp
+Default: False
 .TP
 .B\-\-list\-methods
 list the available jsonrpc methods
