@@ -12,7 +12,7 @@ Welcome to Conferatur's documentation!
    INSTALL
    usage
    development
-   modules
+   modules/conferatur
 
 
 Indices and tables

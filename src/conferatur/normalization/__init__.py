@@ -50,11 +50,9 @@ def name_to_normalizer(name):
     """
     Loads the proper normalizer based on a name
 
-    :param name: str
-    :return: class
-
-    .. doctest::
-
+    :param str name: Case-insensitive name of the normalizer
+    :return: The normalization class
+    :rtype: class
     """
     requested = name.split('.')
     requested_module = []

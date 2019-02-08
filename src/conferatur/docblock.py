@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 Docblock = namedtuple('Docblock', ['docs', 'params', 'result', 'result_type'])
 Param = namedtuple('Param', ['name', 'type', 'type_doc', 'is_required', 'description', 'examples'])
-DocblockParam = namedtuple('DockblockParam', ['name', 'type', 'value'])
+DocblockParam = namedtuple('DocblockParam', ['name', 'type', 'value'])
 
 
 def format_docs(docs):

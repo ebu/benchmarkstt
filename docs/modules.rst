@@ -1,6 +1,0 @@
-Modules
-=========
-
-.. toctree::
-
-   modules/normalization

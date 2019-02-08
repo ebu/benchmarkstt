@@ -1,3 +1,7 @@
+"""
+Module providing our own CSV file parser with support for whitespace trimming, empty lines filtering and comment lines
+"""
+
 import typing
 from functools import partial
 
