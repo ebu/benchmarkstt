@@ -9,11 +9,9 @@ from io import StringIO
 import os
 import inspect
 from langcodes import best_match, standardize_tag
-from conferatur.normalization import name_to_normalizer
-from conferatur import csv
+from conferatur import csv, normalization
 import logging
 # from conferatur.decorators import log_call
-from conferatur.normalization import NormalizationComposite
 
 
 default_encoding = 'UTF-8'
@@ -138,7 +136,7 @@ class File:
 
     def __init__(self, normalizer, file, encoding=None):
         try:
-            cls = normalizer if inspect.isclass(normalizer) else name_to_normalizer(normalizer)
+            cls = normalizer if inspect.isclass(normalizer) else normalization.name_to_normalizer(normalizer)
         except ValueError:
             raise ValueError("Unknown normalizer %s" %
                              (repr(normalizer)))
@@ -147,7 +145,7 @@ class File:
             encoding = default_encoding
 
         with open(file, encoding=encoding) as f:
-            self._normalizer = NormalizationComposite()
+            self._normalizer = normalization.NormalizationComposite()
 
             for line in csv.reader(f):
                 try:
@@ -250,7 +248,6 @@ class Unidecode:
         return unidecode(text)
 
 
-
 class Config:
     r"""
     Use config notation to define normalization rules. This notation is a list of normalizers, one per line, with optional arguments (separated by a space).
@@ -288,10 +285,10 @@ class Config:
         self._parse_config(StringIO(config))
 
     def _parse_config(self, file):
-        self._normalizer = NormalizationComposite()
+        self._normalizer = normalization.NormalizationComposite()
         for line in csv.reader(file, dialect='whitespace'):
             try:
-                normalizer = name_to_normalizer(line[0])
+                normalizer = normalization.name_to_normalizer(line[0])
             except ValueError:
                 raise ValueError("Unknown normalizer %s on line %d: %s" %
                                  (repr(line[0]), line.lineno, repr(' '.join(line))))
