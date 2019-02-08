@@ -3,6 +3,7 @@ Module providing our own CSV file parser with support for whitespace trimming, e
 """
 
 import typing
+import sys
 from functools import partial
 
 
@@ -63,6 +64,21 @@ Line = list
 Field = str
 
 
+def _debug_repr(char):
+    """
+    Return printable representation of ascii/utf-8 control characters
+
+    :param str char:
+    :return str:
+    """
+
+    codepoint = ord(char)
+    if 0x00 <= codepoint <= 0x1f or 0x7f <= codepoint <= 0x9f:
+        return chr(0x2400 | codepoint)
+
+    return char
+
+
 class Line(list):
     @property
     def lineno(self):
@@ -86,12 +102,13 @@ class Reader:
 
     """
 
-    def __init__(self, file: typing.io.TextIO, dialect: Dialect):
+    def __init__(self, file: typing.io.TextIO, dialect: Dialect, debug=None):
         if not issubclass(dialect, Dialect):
             raise InvalidDialectError("Invalid dialect")
         self.line_num = 0
         self._dialect = dialect
         self._file = file
+        self._debug = bool(debug)
 
     def _trimright(self, data: str):
         chars = self._dialect.trimright
@@ -157,10 +174,21 @@ class Reader:
             field = []
             mode = MODE_OUTSIDE
 
-        # i = 0
+        debug = self._debug
+        if debug:
+            # print the color key the different modes
+            current_module = sys.modules[__name__]
+            print('MODES: ', end='')
+            print(' '.join(['\033[1;%d;40m%s\033[0;0m' % (32 + getattr(current_module, name), name[5:])
+                            for name in dir(current_module)
+                            if name.startswith('MODE_')
+                            ]))
+
         for char in readchar:
-            # print('%d.%s' % (mode, char), end='\n' if (i%25)==0 else ' ')
-            # i += 1
+            if debug:
+                # print char to stdout in color defining mode
+                print('\033[1;%d;40m%s\033[0;0m' % (32+mode, _debug_repr(char)), end='')
+
             is_newline = char in newlinechars
             if is_newline:
                 cur_line += 1
@@ -233,6 +261,9 @@ class Reader:
 
                 field.append(char)
                 continue
+
+        if debug:
+            print()
 
         if mode == MODE_INSIDE_QUOTED:
             raise UnclosedQuoteError("Unexpected end")
