@@ -13,6 +13,7 @@ from conferatur.normalization import name_to_normalizer
 from conferatur import csv
 import logging
 # from conferatur.decorators import log_call
+from conferatur.normalization import NormalizationComposite
 
 
 default_encoding = 'UTF-8'
@@ -146,7 +147,7 @@ class File:
             encoding = default_encoding
 
         with open(file, encoding=encoding) as f:
-            self._normalizer = Composite()
+            self._normalizer = NormalizationComposite()
 
             for line in csv.reader(f):
                 try:
@@ -249,29 +250,6 @@ class Unidecode:
         return unidecode(text)
 
 
-class Composite:
-    """
-    Combining normalizers
-
-    """
-
-    def __init__(self):
-        self._normalizers = []
-
-    def add(self, normalizer):
-        """Adds a normalizer to the composite "stack"
-        """
-        self._normalizers.append(normalizer)
-
-    def normalize(self, text: str) -> str:
-        # allow for an empty file
-        if not self._normalizers:
-            return text
-
-        for normalizer in self._normalizers:
-            text = normalizer.normalize(text)
-        return text
-
 
 class Config:
     r"""
@@ -310,7 +288,7 @@ class Config:
         self._parse_config(StringIO(config))
 
     def _parse_config(self, file):
-        self._normalizer = Composite()
+        self._normalizer = NormalizationComposite()
         for line in csv.reader(file, dialect='whitespace'):
             try:
                 normalizer = name_to_normalizer(line[0])

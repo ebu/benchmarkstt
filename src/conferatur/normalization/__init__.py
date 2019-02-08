@@ -17,13 +17,12 @@ def is_normalizer(cls):
 
 
 def available_normalizers() -> Dict[str, NormalizerConfig]:
-    ignored_normalizers = ('composite',)
     normalizers = {}
     core = import_module('conferatur.normalization.core')
     for cls in dir(core):
         name = cls.lower()
         cls = getattr(core, cls)
-        if name in ignored_normalizers or not is_normalizer(cls):
+        if not is_normalizer(cls):
             continue
 
         docs = format_docs(cls.__doc__)
@@ -91,3 +90,27 @@ def name_to_normalizer(name):
             pass
 
     raise ImportError("Could not find normalizer '%s'" % (name,))
+
+
+class NormalizationComposite:
+    """
+    Combining normalizers
+
+    """
+
+    def __init__(self):
+        self._normalizers = []
+
+    def add(self, normalizer):
+        """Adds a normalizer to the composite "stack"
+        """
+        self._normalizers.append(normalizer)
+
+    def normalize(self, text: str) -> str:
+        # allow for an empty file
+        if not self._normalizers:
+            return text
+
+        for normalizer in self._normalizers:
+            text = normalizer.normalize(text)
+        return text

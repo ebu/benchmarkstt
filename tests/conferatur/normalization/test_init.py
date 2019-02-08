@@ -1,4 +1,6 @@
-from conferatur.normalization import *
+from conferatur.normalization import core
+from conferatur.normalization import NormalizationComposite, name_to_normalizer, is_normalizer
+from conferatur.normalization import NormalizerConfig, available_normalizers
 
 
 def test_name_to_normalizer():
@@ -30,4 +32,4 @@ def test_is_normalizer():
     for not_normalizer in nope:
         assert is_normalizer(not_normalizer) is False
 
-    assert is_normalizer(core.Composite) is True
+    assert is_normalizer(NormalizationComposite) is True

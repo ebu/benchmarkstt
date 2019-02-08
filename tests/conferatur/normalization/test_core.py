@@ -33,12 +33,12 @@ def test_config():
 
 def test_composite():
     text = 'Knights who say: NI!'
-    normalizer = Composite()
+    normalizer = NormalizationComposite()
     normalizer.add(Lowercase())
     normalizer.add(Unidecode())
     assert normalizer.normalize(text) == 'knights who say: ni!'
 
-    comp = Composite()
+    comp = NormalizationComposite()
     comp.add(normalizer)
     comp.add(Replace(' ni', ' Ekke Ekke Ekke Ekke Ptang Zoo Boing'))
     assert comp.normalize(text) == 'knights who say: Ekke Ekke Ekke Ekke Ptang Zoo Boing!'

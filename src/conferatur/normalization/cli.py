@@ -112,7 +112,7 @@ def main(parser, args):
         if len(input_files) != len(output_files):
             parser.error("when using multiple input or output files, there needs to be an equal amount of each")
 
-    composite = core.Composite()
+    composite = core.NormalizationComposite()
     for item in args.normalizers:
         normalizer_name = item.pop(0).replace('-', '.')
         cls = name_to_normalizer(normalizer_name)
