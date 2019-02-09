@@ -1,7 +1,7 @@
 
 # AI Benchmarking STT
 
-[![Build Status](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=master)](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt)
+[![Build Status](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=conferatur)](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt)
 
 <!-- 
 _One liner + link to confluence page_
