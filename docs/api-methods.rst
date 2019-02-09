@@ -34,7 +34,7 @@ normalization.alphanumericunicode
 Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 
 :example text: "Das, öder die Flipper-Wåld Gespütt!"
-:example result: "DasöderdieFlipperWåldGespütt"
+:example return: "DasöderdieFlipperWåldGespütt"
 
 :param str text: The text to normalize
 
@@ -131,7 +131,7 @@ Lowercase the text
 
 
 :example text: "Easy, Mungo, easy... Mungo..."
-:example result: "easy, mungo, easy... mungo..."
+:example return: "easy, mungo, easy... mungo..."
 
 :param str text: The text to normalize
 
@@ -167,7 +167,7 @@ Eg. would replace "New<CRLF>line" to "newline":
 :example text: "HAHA! Hahaha!"
 :example search: '(?i)(h)a'
 :example replace: r'\1e'
-:example result: "HeHe! Hehehe!"
+:example return: "HeHe! Hehehe!"
 
 :param str text: The text to normalize
 
@@ -198,7 +198,7 @@ checked case insensitive as well with preservation of case..
 :example text: "She has a heart of formica"
 :example search: "a"
 :example replace: "the"
-:example result: "She has the heart of formica"
+:example return: "She has the heart of formica"
 
 :param str text: The text to normalize
 

@@ -102,7 +102,7 @@ class ReplaceWords:
     :example text: "She has a heart of formica"
     :example search: "a"
     :example replace: "the"
-    :example result: "She has the heart of formica"
+    :example return: "She has the heart of formica"
     """
 
     def __init__(self, search: str, replace: str):
@@ -197,7 +197,7 @@ class RegexReplace:
     :example text: "HAHA! Hahaha!"
     :example search: '(?i)(h)a'
     :example replace: r'\1e'
-    :example result: "HeHe! Hehehe!"
+    :example return: "HeHe! Hehehe!"
     """
 
     def __init__(self, search: str, replace: str=None):
@@ -225,7 +225,7 @@ class AlphaNumericUnicode(RegexReplace):
     Simple alphanumeric filter, takes into account all unicode alphanumeric characters
 
     :example text: "Das, öder die Flipper-Wåld Gespütt!"
-    :example result: "DasöderdieFlipperWåldGespütt"
+    :example return: "DasöderdieFlipperWåldGespütt"
     """
 
     def __init__(self):
@@ -238,7 +238,7 @@ class Lowercase:
 
 
     :example text: "Easy, Mungo, easy... Mungo..."
-    :example result: "easy, mungo, easy... mungo..."
+    :example return: "easy, mungo, easy... mungo..."
     """
 
     def normalize(self, text: str) -> str:
