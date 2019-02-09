@@ -3,20 +3,27 @@ Apply normalization to given input
 """
 
 import sys
-from . import core
+from . import core, NormalizationComposite
 import argparse
 from . import available_normalizers, name_to_normalizer
 import textwrap
-import functools
 import itertools
 
 
 class _NormalizerAction:
-    # placeholder to recognize it is a NormalizerAction
-    pass
+    """
+    Placeholder class to recognize an argument is a NormalizerAction in argparse
+    """
 
 
 def normalizer_action(required_args, optional_args):
+    """
+    Custom argparse action to support a variable amount of arguments
+    :param list required_args: required arguments
+    :param list optional_args: optional arguments
+    :rtype: NormalizerAction
+    """
+
     minlen = len(required_args)
     maxlen = minlen + len(optional_args)
 
@@ -35,6 +42,10 @@ def normalizer_action(required_args, optional_args):
 
 
 class Formatter(argparse.HelpFormatter):
+    """
+    Custom formatter for argparse that allows us to properly display _NormalizerActions and docblock documentation
+    """
+
     def _format_args(self, action, default_metavar):
         if isinstance(action, _NormalizerAction):
             return ' '.join(action.metavar)
@@ -52,7 +63,11 @@ class Formatter(argparse.HelpFormatter):
         return text
 
 
-def argparser(parser=None):
+def argparser(parser: argparse.ArgumentParser):
+    """
+    Adds the help and arguments specific to this module
+    """
+
     files_desc = """
       You can provide multiple input and output files, each preceded by -i and -o
       respectively.
@@ -112,7 +127,7 @@ def main(parser, args):
         if len(input_files) != len(output_files):
             parser.error("when using multiple input or output files, there needs to be an equal amount of each")
 
-    composite = core.NormalizationComposite()
+    composite = NormalizationComposite()
     for item in args.normalizers:
         normalizer_name = item.pop(0).replace('-', '.')
         cls = name_to_normalizer(normalizer_name)

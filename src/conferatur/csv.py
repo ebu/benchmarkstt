@@ -8,23 +8,29 @@ from functools import partial
 
 
 class InvalidDialectError(ValueError):
-    pass
+    """An invalid dialect was supplied"""
 
 
-class UnknownDialectError(InvalidDialectError):
-    pass
+class UnknownDialectError(ValueError):
+    """An unknown dialect was requested"""
 
 
 class CSVParserError(ValueError):
-    pass
+    """Some error occured while attempting to parse the file"""
+
+    def __init__(self, message, line, char, index):
+        self.message = message
+        self.line = line
+        self.char = char
+        self.index = index
 
 
 class UnclosedQuoteError(CSVParserError):
-    pass
+    """A quote wasn't properly closed"""
 
 
 class UnallowedQuoteError(CSVParserError):
-    pass
+    """A quote is not allowed there"""
 
 
 class Dialect:
@@ -104,7 +110,7 @@ class Reader:
 
     def __init__(self, file: typing.io.TextIO, dialect: Dialect, debug=None):
         if not issubclass(dialect, Dialect):
-            raise InvalidDialectError("Invalid dialect")
+            raise InvalidDialectError("Invalid dialect", dialect)
         self.line_num = 0
         self._dialect = dialect
         self._file = file
@@ -184,14 +190,23 @@ class Reader:
                             if name.startswith('MODE_')
                             ]))
 
+        cur_char = 0
+        last_quote_line = None
+        last_quote_char = None
+        last_quote_idx = None
+        idx = 0
         for char in readchar:
+            cur_char += 1
+            idx += 1
+
             if debug:
-                # print char to stdout in color defining mode
+                # print char to stdout with color defining mode
                 print('\033[1;%d;40m%s\033[0;0m' % (32+mode, _debug_repr(char)), end='')
 
             is_newline = char in newlinechars
             if is_newline:
                 cur_line += 1
+                cur_char = 0
 
             if mode == MODE_COMMENT:
                 if is_newline:
@@ -213,6 +228,9 @@ class Reader:
 
                 if self._is_quote(char):
                     mode = MODE_INSIDE_QUOTED
+                    last_quote_line = cur_line
+                    last_quote_char = cur_char
+                    last_quote_idx = idx
                     continue
 
                 if self._is_delimiter(char):
@@ -225,7 +243,7 @@ class Reader:
 
             if mode == MODE_INSIDE:
                 if self._is_quote(char):
-                    raise UnallowedQuoteError("Quote not allowed here")
+                    raise UnallowedQuoteError("Quote not allowed here", cur_line, cur_char, idx)
 
                 if is_newline:
                     yield yield_line()
@@ -252,7 +270,7 @@ class Reader:
                     yield yield_line()
                     continue
 
-                raise UnallowedQuoteError("Single quote inside quoted field")
+                raise UnallowedQuoteError("Single quote inside quoted field", cur_line, cur_char, idx)
 
             if mode == MODE_INSIDE_QUOTED:
                 if self._is_quote(char):
@@ -266,7 +284,7 @@ class Reader:
             print()
 
         if mode == MODE_INSIDE_QUOTED:
-            raise UnclosedQuoteError("Unexpected end")
+            raise UnclosedQuoteError("Unexpected end", last_quote_line, last_quote_char, last_quote_idx)
 
         if mode in (MODE_INSIDE_QUOTED_QUOTE, MODE_OUTSIDE, MODE_INSIDE):
             yield yield_line()
@@ -277,7 +295,7 @@ def reader(file: typing.io.TextIO, dialect: typing.Union[None, str, Dialect]=Non
         dialect = DefaultDialect
     elif type(dialect) is str:
         if dialect not in known_dialects:
-            raise UnknownDialectError("Dialect %s not known" % (repr(dialect),))
+            raise UnknownDialectError("Dialect not known", dialect)
         dialect = known_dialects[dialect]
 
     return Reader(file, dialect)

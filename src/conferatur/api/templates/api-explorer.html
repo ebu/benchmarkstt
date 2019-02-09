@@ -81,6 +81,9 @@
     .docblock blockquote {
       border-left: 0 none;
     }
+    .has-error .form-input-hint {
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
@@ -161,10 +164,14 @@
                     <input class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{{ example }}">
                     {% endif %}
                   {% endwith %}
+                    <p class="form-input-hint"></p>
                 </div>
               {% endfor %}
               <div class="form-group">
                 <button type="submit" class="btn btn-lg btn-primary">Execute</button>
+                {% if item.details.params %}
+                <button type="reset" class="btn btn-link">Reset to example</button>
+                {% endif %}
               </div>
             </form>
           </div>
@@ -226,7 +233,7 @@ $(function() {
   });
 
 
-  function sendJSONRPC(data) {
+  function sendJSONRPC(data, form) {
     var data = JSON.stringify(data, null, 2);
     var options = {
       contentType: 'application/json-rpc',
@@ -237,38 +244,53 @@ $(function() {
     };
 
     $('#request').text(data);
+    $(form).find('.has-error').removeClass('has-error');
+    $(form).find('.form-input-hint').text('');
+    $('#tab_response').removeClass('error success').addClass('isloading');
+
 
     options.success = function (data) {
+        $('#tab_response').addClass('success');
         $('#error').hide();
         $('#response').text(JSON.stringify(data, null, 2));
-        $('#tab_response').addClass('success').removeClass('error');
       };
 
     options.error = function (xhr, errorType, error) {
         // $('#error').show();
+        $('#tab_response').addClass('error');
         var response = xhr.responseText;
         try {
           if (typeof response == 'string') {
             response = JSON.parse(response);
           }
           if (typeof response == 'object') {
+            if (typeof response.error == 'object' && typeof(response.error.data) == 'string') {
+              try {
+                var data = JSON.parse(response.error.data);
+                var element = $(form).find('[name="' + data.field + '"]');
+                element.parent().addClass('has-error');
+                element.parent().find('.form-input-hint').text(data.message);
+                if (typeof data.index != 'undefined') {
+                  element.focus();
+                  element[0].setSelectionRange(data.index - 1, data.index);
+                }
+              } catch (e) {}
+            }
             response = JSON.stringify(response, null, 2);
           }
         } catch (e) {
           response = xhr.responseText;
         }
-        $('#response').text(response)
-        $('#tab_response').addClass('error').removeClass('success');
+        $('#response').text(response);
       };
 
     options.complete = function() {
         $('#tab_response').removeClass('isloading').click();
         $('#result').addClass('active');
-        $(document.body).scrollTop($('#result').offset().top)
+        $(document.body).scrollTop($('#result').offset().top);
         PR.prettyPrint();
       };
 
-    $('#tab_response').addClass('isloading');
     $.ajax(options);
   }
 
@@ -276,7 +298,7 @@ $(function() {
     ev.preventDefault();
     var data = {
       jsonrpc: "2.0",
-      id: null,
+      id: Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1),
       params: {}
     };
     var form = this;
@@ -301,7 +323,7 @@ $(function() {
       }
     });
 
-    sendJSONRPC(data)
+    sendJSONRPC(data, this)
     return false;
   });
 });

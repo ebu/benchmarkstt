@@ -12,6 +12,10 @@ from .jsonrpc import get_methods
 
 
 def argparser(parser):
+    """
+    Adds the help and arguments specific to this module
+    """
+
     parser.add_argument('--debug', action='store_true',
                         help='run in debug mode')
     parser.add_argument('--host',
@@ -27,18 +31,26 @@ def argparser(parser):
     return parser
 
 
-def create_app(entrypoint=None, debug=None, with_explorer=None):
+def create_app(entrypoint: str=None, with_explorer: bool=None):
+    """
+    Create the Flask app
+
+    :param str entrypoint: The HTTP path on which the api will be served
+    :param bool with_explorer: Whether to also serve the JSON-RPC API explorer
+    :return:
+    """
+
     app = Flask(__name__)
 
     if entrypoint is None:
-        entrypoint = '/'
+        entrypoint = '/api'
 
     methods = get_methods()
 
     @app.route(entrypoint, methods=["POST"])
     def jsonrpc():
         req = request.get_data().decode()
-        response = jsonrpcserver.dispatch(req, methods=methods, debug=debug, convert_camel_case=False)
+        response = jsonrpcserver.dispatch(req, methods=methods, debug=True, convert_camel_case=False)
         return Response(str(response), response.http_status, mimetype="application/json")
 
     if with_explorer:
@@ -75,6 +87,6 @@ def main(parser, args):
             print(format_docs(func.__doc__))
             print('')
     else:
-        app = create_app(args.entrypoint, args.debug, args.with_explorer)
+        app = create_app(args.entrypoint, args.with_explorer)
         app.run(host=args.host, port=args.port, debug=args.debug)
 
