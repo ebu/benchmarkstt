@@ -42,6 +42,7 @@ setup(
     package_data={'conferatur': ['api/templates/*.html']},
     include_package_data=True,
     install_requires=[
+       'MarkupSafe>=1.0',
        'Unidecode>=1.0.22',
        'langcodes>=1.4.1'
     ],

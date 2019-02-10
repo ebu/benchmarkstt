@@ -4,6 +4,8 @@ import logging
 
 normalize_logger = logging.getLogger('conferatur.normalize')
 normalize_logger._settings = {"printable": True}
+normalize_logger.setLevel(logging.INFO)
+normalize_logger.propagate = False
 normalize_stack = []
 
 

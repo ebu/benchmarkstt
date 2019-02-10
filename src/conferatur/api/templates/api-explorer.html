@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style type="text/css">
+    body {
+      overflow-x: scroll;
+    }
+
     .docs-sidebar .accordion input:checked~.accordion-header {
       color: #505c6e;
     }
@@ -40,9 +44,40 @@
 
     #result, #request, #response, #logs {
       display: none;
+      min-height: 450px;
+      margin-top: 0;
+
     }
+    #request, #response, #logs {
+      border-bottom: #dadee4 solid 1px;
+      border-left: #dadee4 solid 1px;
+      border-right: #dadee4 solid 1px;
+      padding: 1rem;
+    }
+
+    .tab {
+      margin-bottom: 0;
+    }
+
+    .tab .tab-item a {
+      padding-left: .6rem;
+      padding-right: .6rem;
+
+      border-top: #dadee4 solid 1px;
+      border-left: #dadee4 solid 1px;
+      border-right: #dadee4 solid 1px;
+      border-radius: .6rem .6rem 0 0;
+      background-color: #f7f8f9;
+    }
+
     #result.active, #request.active, #response.active, #logs.active {
       display: block;
+    }
+    .tab .tab-item {
+      outline:none;
+    }
+    .tab .tab-item a.active, .tab .tab-item a:hover {
+      background-color: #ececec;
     }
     #result pre.prettyprint {
       white-space: pre-wrap;
@@ -98,6 +133,7 @@
       background: #e85600;
       color: white;
     }
+
   </style>
 </head>
 <body>
@@ -206,7 +242,7 @@
       </div>
     </div>
     <div id="result">
-      <ul class="tab tab-block">
+      <ul class="tab">
         <li class="tab-item" >
           <a href="#" id="tab_request">Request</a>
         </li>
@@ -233,11 +269,7 @@
 
   </div>
 </div>
-<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.14.2/build/styles/default.min.css">-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/languages/json.min.js"></script>-->
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 
 <script>
 $(function() {
@@ -339,7 +371,6 @@ $(function() {
         $('#tab_response').removeClass('isloading').click();
         $('#result').addClass('active');
         $(document.body).scrollTop($('#result').offset().top);
-        PR.prettyPrint();
       };
 
     $.ajax(options);

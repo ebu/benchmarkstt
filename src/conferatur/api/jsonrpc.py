@@ -48,7 +48,7 @@ def get_methods() -> jsonrpcserver.methods.Methods:
     normalizers = available_normalizers()
 
     @method
-    def normalization_list():
+    def list_normalizers():
         """
         Get a list of available core normalizers
 
