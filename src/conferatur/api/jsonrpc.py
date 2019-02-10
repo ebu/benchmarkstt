@@ -8,12 +8,16 @@ Make conferatur available through a rudimentary JSON-RPC_ interface
 import jsonrpcserver
 import json
 from conferatur import __meta__
-from conferatur.normalization import core, name_to_normalizer, available_normalizers
+from conferatur.normalization import available_normalizers
+from conferatur.normalization.logger import normalize_logger
 from functools import wraps
 from conferatur.docblock import format_docs
 import inspect
 import os
 import conferatur.csv as csv
+import queue
+from logging.handlers import QueueHandler
+from markupsafe import escape
 
 
 def get_methods() -> jsonrpcserver.methods.Methods:
@@ -68,7 +72,7 @@ def get_methods() -> jsonrpcserver.methods.Methods:
         cls = config.cls
 
         @wraps(cls)
-        def _(text, *args, **kwargs):
+        def _(text, return_logs=None, *args, **kwargs):
             # only allow files from cwd to be used...
             try:
                 if 'file' in kwargs:
@@ -79,7 +83,32 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                     if not is_safe_path(kwargs['path']):
                         raise SecurityError("Access to unallowed directory attempted", 'path')
 
-                return cls(*args, **kwargs).normalize(text)
+            except SecurityError as e:
+                data = {
+                    "message": e.args[0],
+                    "field": e.args[1]
+                }
+                raise AssertionError(json.dumps(data))
+
+            if return_logs:
+                log_queue = queue.Queue()
+                handler = QueueHandler(log_queue)
+                normalize_logger.addHandler(handler)
+                prev_settings = dict(**normalize_logger._settings)
+                normalize_logger._settings = {
+                    "printable": escape,
+                    "delete_format": '<span class="delete">%s</span>',
+                    "insert_format": '<span class="insert">%s</span>'
+                }
+
+            try:
+                result = {
+                    "text": cls(*args, **kwargs).normalize(text)
+                }
+                if return_logs:
+                    logs = list(log_queue.queue)
+                    result['logs'] = [{"name": log.name, "message": log.message} for log in logs]
+                return result
             except csv.CSVParserError as e:
                 message = 'on line %d, character %d' % (e.line, e.char)
                 message = '\n'.join([e.__doc__, e.message, message])
@@ -91,20 +120,22 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                     "field": "config"
                 }
                 raise AssertionError(json.dumps(data))
-            except SecurityError as e:
-                data = {
-                    "message": e.args[0],
-                    "field": e.args[1]
-                }
-                raise AssertionError(json.dumps(data))
+            finally:
+                if return_logs:
+                    normalize_logger._settings = prev_settings
+                    normalize_logger.removeHandler(handler)
 
         # copy signature from original normalizer, and add text param
         sig = inspect.signature(cls)
-        params = [inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)]
+        params = list()
+        params.append(inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD, annotation=str))
         params.extend(sig.parameters.values())
+        params.append(inspect.Parameter('return_logs', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD, annotation=bool,
+                                        default=None))
         sig = sig.replace(parameters=params)
         _.__signature__ = sig
         _.__doc__ += '\n    :param str text: The text to normalize'
+        _.__doc__ += '\n    :param bool return_logs: Return normalizer logs'
 
         # todo (?) add available files and folders as select options
         return _

@@ -38,10 +38,10 @@
     }
 
 
-    #result, #request, #response {
+    #result, #request, #response, #logs {
       display: none;
     }
-    #result.active, #request.active, #response.active {
+    #result.active, #request.active, #response.active, #logs.active {
       display: block;
     }
     #result pre.prettyprint {
@@ -81,8 +81,22 @@
     .docblock blockquote {
       border-left: 0 none;
     }
+
     .has-error .form-input-hint {
       white-space: pre-line;
+    }
+
+    #logs dl dd span {
+    }
+
+    #logs dl dd span.insert {
+      background: #32b643;
+      color: white;
+    }
+
+    #logs dl dd span.delete {
+      background: #e85600;
+      color: white;
     }
   </style>
 </head>
@@ -137,34 +151,40 @@
             <form class="jsonrpcform">
               <input type="hidden" name="method" value="{{ item.name }}">
               <div class="description docblock">{{ item.details.docs | parse_rst | safe }}</div>
-
               {% for param in item.details.params %}
                 <div class="form-group">
-                  <label class="form-label {% if param.is_required %}required{% endif %}" for="{{ item.id }}_{{ param.name }}">
-                    <strong>{{ param.name.title() }}</strong>
-                    {% if param.description %}
-                    <span>{{ param.description }}</span>
+                  {% if param.type_doc == 'bool' %}
+                    <label class="form-switch">
+                      <input type="checkbox" name="{{ param.name }}">
+                      <i class="form-icon"></i>
+                      {{ param.description }}
+                    </label>
+                  {% else %}
+                    <label class="form-label {% if param.is_required %}required{% endif %}" for="{{ item.id }}_{{ param.name }}">
+                      <strong>{{ param.name.title().replace('_', ' ') }}</strong>
+                      {% if param.description %}
+                      <span>{{ param.description }}</span>
+                      {% endif %}
+                    </label>
+
+                    {% if param.result or param.result_type %}
+                    <p>Returns: <strong>{{ param.result_type }}</strong> {{ param.result }}</p>
                     {% endif %}
-                  </label>
 
-
-                  {% if param.result or param.result_type %}
-                  <p>Returns: <strong>{{ param.result_type }}</strong> {{ param.result }}</p>
+                    {% with %}
+                      {% if param.examples and param.name in param.examples[0]  %}
+                        {% set example = param.examples[0][param.name].value %}
+                      {% else %}
+                        {% set example = '' %}
+                      {% endif %}
+                      {% if param.name == 'text' or '\n' in example %}
+                      <textarea class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} rows="6" name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{{ example }}</textarea>
+                      {% else %}
+                      <input class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{{ example }}">
+                      {% endif %}
+                    {% endwith %}
                   {% endif %}
-
-                  {% with %}
-                    {% if param.examples and param.name in param.examples[0]  %}
-                      {% set example = param.examples[0][param.name].value %}
-                    {% else %}
-                      {% set example = '' %}
-                    {% endif %}
-                    {% if param.name == 'text' or '\n' in example %}
-                    <textarea class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} rows="6" name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{{ example }}</textarea>
-                    {% else %}
-                    <input class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{{ example }}">
-                    {% endif %}
-                  {% endwith %}
-                    <p class="form-input-hint"></p>
+                  <p class="form-input-hint"></p>
                 </div>
               {% endfor %}
               <div class="form-group">
@@ -198,11 +218,15 @@
             Response
           </a>
         </li>
+        <li class="tab-item">
+          <a href="#" id="tab_logs">Logs</a>
+        </li>
       </ul>
 
       <div class="toast toast-error" id="error" style="display: none;">An error occured!</div>
       <pre class="prettyprint code lang-js" data-lang="JSON" id="request"></pre>
       <pre class="prettyprint code lang-js" data-lang="JSON" id="response"></pre>
+      <div class="logs" id="logs"></div>
       <br>
       <br>
     </div>
@@ -218,20 +242,26 @@
 <script>
 $(function() {
 
+  var tabs = ['request', 'response', 'logs'];
+  var tabssel = tabs.map(function (tab) { return '#tab_' + tab; }).join(',');
+  var tabscontentsel = tabs.map(function (tab) { return '#' + tab; }).join(',');
+  var tabsallsel = tabssel + ', ' + tabscontentsel;
+
   var clicktab = function (ev) {
     ev.preventDefault();
     var active = this.id.substr(4);
 
-    $('#request, #tab_request, #response, #tab_response').removeClass('active');
+    $(tabsallsel).removeClass('active');
     $('#' + active +', #tab_' + active).addClass('active');
     return false;
   };
 
-  $('#result').on('click', '#tab_request, #tab_response', clicktab);
-  $('.accordion-body').on('click', 'li.menu-item', function () {
-    $('#result').removeClass('active');
-  });
 
+  $('#result').on('click', tabssel, clicktab);
+
+  $('.accordion-body').on('click', 'li.menu-item', function () {
+    $('#result, #logs').removeClass('active');
+  });
 
   function sendJSONRPC(data, form) {
     var data = JSON.stringify(data, null, 2);
@@ -251,6 +281,26 @@ $(function() {
 
     options.success = function (data) {
         $('#tab_response').addClass('success');
+
+        if (typeof data['result']['logs'] !== 'undefined') {
+          var html = '<dl>',
+              logs = data['result']['logs'];
+
+
+          for (var i = 0, I = logs.length; i < I; i++) {
+            html += '<dt>';
+            html += logs[i].name;
+            html += '</dt><dd>';
+            html += logs[i].message;
+            html += '</dd>';
+          }
+          html += '</dl>'
+
+          $('#logs').html(html);
+          $('#tab_logs').show();
+        } else {
+          $('#tab_logs').hide();
+        }
         $('#error').hide();
         $('#response').text(JSON.stringify(data, null, 2));
       };
@@ -258,6 +308,7 @@ $(function() {
     options.error = function (xhr, errorType, error) {
         // $('#error').show();
         $('#tab_response').addClass('error');
+        $('#tab_logs').hide();
         var response = xhr.responseText;
         try {
           if (typeof response == 'string') {
