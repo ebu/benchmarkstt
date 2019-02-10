@@ -2,11 +2,19 @@ import difflib
 from conferatur import make_printable
 import logging
 
-normalize_logger = logging.getLogger('conferatur.normalize')
-normalize_logger._settings = {"printable": True}
-normalize_logger.setLevel(logging.INFO)
-normalize_logger.propagate = False
+normalize_logger = None
 normalize_stack = []
+
+
+def init_logger():
+    """Postpones initialization of logger so root logger has time to setup"""
+    global normalize_logger
+    if normalize_logger is not None:
+        return
+    normalize_logger = logging.getLogger('conferatur.normalize')
+    normalize_logger._settings = {"printable": True}
+    normalize_logger.setLevel(logging.INFO)
+    normalize_logger.propagate = logging.getLogger().getEffectiveLevel() <= logging.INFO
 
 
 def get_diff(a, b, printable=None, delete_format=None, insert_format=None, formats=None):
@@ -52,6 +60,7 @@ def log(func):
     """
 
     def _(cls, text):
+        init_logger()
         normalize_stack.append(type(cls).__name__)
 
         result = func(cls, text)

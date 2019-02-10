@@ -8,8 +8,7 @@ Make conferatur available through a rudimentary JSON-RPC_ interface
 import jsonrpcserver
 import json
 from conferatur import __meta__
-from conferatur.normalization import available_normalizers
-from conferatur.normalization.logger import normalize_logger
+from conferatur.normalization import available_normalizers, logger
 from functools import wraps
 from conferatur.docblock import format_docs
 import inspect
@@ -27,6 +26,7 @@ def get_methods() -> jsonrpcserver.methods.Methods:
     :return: jsonrpcserver.methods.Methods
     """
 
+    logger.init_logger()
     methods = jsonrpcserver.methods.Methods()
 
     def method(f, name=None):
@@ -93,9 +93,9 @@ def get_methods() -> jsonrpcserver.methods.Methods:
             if return_logs:
                 log_queue = queue.Queue()
                 handler = QueueHandler(log_queue)
-                normalize_logger.addHandler(handler)
-                prev_settings = dict(**normalize_logger._settings)
-                normalize_logger._settings = {
+                logger.normalize_logger.addHandler(handler)
+                prev_settings = dict(**logger.normalize_logger._settings)
+                logger.normalize_logger._settings = {
                     "printable": escape,
                     "delete_format": '<span class="delete">%s</span>',
                     "insert_format": '<span class="insert">%s</span>'
@@ -122,8 +122,8 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 raise AssertionError(json.dumps(data))
             finally:
                 if return_logs:
-                    normalize_logger._settings = prev_settings
-                    normalize_logger.removeHandler(handler)
+                    logger.normalize_logger._settings = prev_settings
+                    logger.normalize_logger.removeHandler(handler)
 
         # copy signature from original normalizer, and add text param
         sig = inspect.signature(cls)
