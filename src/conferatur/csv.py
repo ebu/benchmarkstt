@@ -5,6 +5,7 @@ Module providing our own CSV file parser with support for whitespace trimming, e
 import typing
 import sys
 from functools import partial
+from conferatur import make_printable
 
 
 class InvalidDialectError(ValueError):
@@ -68,21 +69,6 @@ MODE_COMMENT = 5
 
 Line = list
 Field = str
-
-
-def _debug_repr(char):
-    """
-    Return printable representation of ascii/utf-8 control characters
-
-    :param str char:
-    :return str:
-    """
-
-    codepoint = ord(char)
-    if 0x00 <= codepoint <= 0x1f or 0x7f <= codepoint <= 0x9f:
-        return chr(0x2400 | codepoint)
-
-    return char
 
 
 class Line(list):
@@ -201,7 +187,7 @@ class Reader:
 
             if debug:
                 # print char to stdout with color defining mode
-                print('\033[1;%d;40m%s\033[0;0m' % (32+mode, _debug_repr(char)), end='')
+                print('\033[1;%d;40m%s\033[0;0m' % (32+mode, make_printable(char)), end='')
 
             is_newline = char in newlinechars
             if is_newline:

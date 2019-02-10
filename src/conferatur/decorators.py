@@ -1,14 +1,5 @@
 import logging
-
-
-class DeferredStr:
-    """Simple helper class to defer the execution of formatting functions until it is needed"""
-
-    def __init__(self, func):
-        self._func = func
-
-    def __str__(self):
-        return self._func()
+from conferatur import DeferredStr
 
 
 def log_call(logger: logging.Logger, log_level=None, result=None):

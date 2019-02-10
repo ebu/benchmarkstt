@@ -19,12 +19,9 @@ import os
 import inspect
 from langcodes import best_match, standardize_tag
 from conferatur import csv, normalization
-import logging
-# from conferatur.decorators import log_call
-
+from conferatur.normalization.logger import log
 
 default_encoding = 'UTF-8'
-logger = logging.getLogger(__name__)
 
 
 class LocalizedFile:
@@ -65,7 +62,7 @@ class LocalizedFile:
 
         self._normalizer = File(normalizer, file, encoding=encoding)
 
-    # @log_call(logger, result=True)
+    @log
     def normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
 
@@ -87,6 +84,7 @@ class Replace:
         self._search = search
         self._replace = replace
 
+    @log
     def normalize(self, text: str) -> str:
         return text.replace(self._search, self._replace)
 
@@ -124,6 +122,7 @@ class ReplaceWords:
 
         return ''.join([self._replace[0].lower(), self._replace[1:]])
 
+    @log
     def normalize(self, text: str) -> str:
         return self._pattern.sub(self._replacement_callback, text)
 
@@ -162,6 +161,7 @@ class File:
                 except TypeError as e:
                     raise ValueError("Line %d: %s" % (line.lineno, str(e)))
 
+    @log
     def normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
 
@@ -204,6 +204,7 @@ class RegexReplace:
         self._pattern = re.compile(search)
         self._substitution = replace if replace is not None else ''
 
+    @log
     def normalize(self, text: str) -> str:
         return self._pattern.sub(self._substitution, text)
 
@@ -241,6 +242,7 @@ class Lowercase:
     :example return: "easy, mungo, easy... mungo..."
     """
 
+    @log
     def normalize(self, text: str) -> str:
         return text.lower()
 
@@ -253,6 +255,7 @@ class Unidecode:
     :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
     """
 
+    @log
     def normalize(self, text: str) -> str:
         return unidecode(text)
 
@@ -303,6 +306,7 @@ class Config:
                                  (repr(line[0]), line.lineno, repr(' '.join(line))))
             self._normalizer.add(normalizer(*line[1:]))
 
+    @log
     def normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
 

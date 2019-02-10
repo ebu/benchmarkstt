@@ -1,10 +1,17 @@
 from conferatur.normalization.core import *
 from conferatur.normalization import NormalizationComposite
 
+from textwrap import dedent
+import logging, sys
 
-def test_config():
+# logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
+
+
+def test_logs(caplog):
+    caplog.set_level(logging.DEBUG)
     config = '''
      # using a simple config file
+     lowercase
      lowercase
      # Let's replace double quotes with single quotes (note wrapping in double quotes,
      # to allow the use of double quotes in an argument.
@@ -16,6 +23,19 @@ def test_config():
     normalized = normalizer.normalize('No! Not the Knights Who Say "Ni"!')
     assert normalized == "no! not the knights who say 'ecky ecky ecky'!"
 
+    assert len(caplog.records) == 5
+    expected_logs = dedent("""
+        \x1b[31mN\x1b[0m\x1b[32mn\x1b[0mo!·\x1b[31mN\x1b[0m\x1b[32mn\x1b[0mot·the·\x1b[31mK\x1b[0m\x1b[32mk\x1b[0mnights·\x1b[31mW\x1b[0m\x1b[32mw\x1b[0mho·\x1b[31mS\x1b[0m\x1b[32ms\x1b[0may·"\x1b[31mN\x1b[0m\x1b[32mn\x1b[0mi"!
+        NORMALIZED [NOCHANGE]
+        no!·not·the·knights·who·say·\x1b[31m"\x1b[0m\x1b[32m\'\x1b[0mni\x1b[31m"\x1b[0m\x1b[32m\'\x1b[0m!
+        no!·not·the·knights·who·say·'\x1b[31mni\x1b[0m\x1b[32mecky·ecky·ecky\x1b[0m'!
+        \x1b[31mN\x1b[0m\x1b[32mn\x1b[0mo!·\x1b[31mN\x1b[0m\x1b[32mn\x1b[0mot·the·\x1b[31mK\x1b[0m\x1b[32mk\x1b[0mnights·\x1b[31mW\x1b[0m\x1b[32mw\x1b[0mho·\x1b[31mS\x1b[0m\x1b[32ms\x1b[0may·\x1b[31m"Ni"\x1b[0m\x1b[32m\'ecky·ecky·ecky\'\x1b[0m!
+        """).strip().split('\n')
+
+    assert expected_logs == [rec.message for rec in caplog.records]
+
+
+def test_config():
     # Lets replace spaces with a newline (without using regex), demonstrating multiline arguments
     # also note that the normalizer name is case-insensitive
 
