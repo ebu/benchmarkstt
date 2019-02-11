@@ -14,9 +14,6 @@ from conferatur.docblock import format_docs
 import inspect
 import os
 import conferatur.csv as csv
-import queue
-from logging.handlers import QueueHandler
-from markupsafe import escape
 
 
 def get_methods() -> jsonrpcserver.methods.Methods:
@@ -26,7 +23,6 @@ def get_methods() -> jsonrpcserver.methods.Methods:
     :return: jsonrpcserver.methods.Methods
     """
 
-    logger.init_logger()
     methods = jsonrpcserver.methods.Methods()
 
     def method(f, name=None):
@@ -91,23 +87,20 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 raise AssertionError(json.dumps(data))
 
             if return_logs:
-                log_queue = queue.Queue()
-                handler = QueueHandler(log_queue)
+                handler = logger.ListHandler()
+                handler.setFormatter(logger.DiffLoggingFormatter(dialect='html'))
                 logger.normalize_logger.addHandler(handler)
-                prev_settings = dict(**logger.normalize_logger._settings)
-                logger.normalize_logger._settings = {
-                    "printable": escape,
-                    "delete_format": '<span class="delete">%s</span>',
-                    "insert_format": '<span class="insert">%s</span>'
-                }
 
             try:
                 result = {
                     "text": cls(*args, **kwargs).normalize(text)
                 }
                 if return_logs:
-                    logs = list(log_queue.queue)
-                    result['logs'] = [{"name": log.name, "message": log.message} for log in logs]
+                    logs = handler.flush()
+                    result['logs'] = []
+                    for log in logs:  # log: str
+                        log = log.split(' ', 1)
+                        result['logs'].append(dict(name=log[0], message=log[1]))
                 return result
             except csv.CSVParserError as e:
                 message = 'on line %d, character %d' % (e.line, e.char)
@@ -122,7 +115,6 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 raise AssertionError(json.dumps(data))
             finally:
                 if return_logs:
-                    logger.normalize_logger._settings = prev_settings
                     logger.normalize_logger.removeHandler(handler)
 
         # copy signature from original normalizer, and add text param

@@ -8,6 +8,8 @@ import argparse
 from . import available_normalizers, name_to_normalizer
 import textwrap
 import itertools
+from . import logger
+import logging
 
 
 class _NormalizerAction:
@@ -84,6 +86,8 @@ def argparser(parser: argparse.ArgumentParser):
     files.add_argument('-o', '--outputfile', action='append', nargs=1,
                        help='write output to this file, defaults to STDOUT',
                        metavar='file')
+    files.add_argument('--log', action='store_true',
+                       help='show normalizer logs')
 
     normalizers_desc = """
       A list of normalizers to execute on the input, can be one or more normalizers
@@ -126,6 +130,12 @@ def main(parser, args):
         # straight mapping from input to output, needs equal length
         if len(input_files) != len(output_files):
             parser.error("when using multiple input or output files, there needs to be an equal amount of each")
+
+    if args.log:
+        handler = logging.StreamHandler()
+        handler.setFormatter(logger.DiffLoggingFormatter('cli'))
+        handler.setLevel(logging.INFO)
+        logger.normalize_logger.addHandler(handler)
 
     composite = NormalizationComposite()
     for item in args.normalizers:

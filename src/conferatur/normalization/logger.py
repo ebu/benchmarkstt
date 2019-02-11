@@ -1,57 +1,90 @@
 import difflib
 from conferatur import make_printable
 import logging
+from markupsafe import escape
+import os
 
-normalize_logger = None
+normalize_logger = logging.getLogger('conferatur.normalize')
+normalize_logger.setLevel(logging.INFO)
+normalize_logger.propagate = False
 normalize_stack = []
 
 
-def init_logger():
-    """Postpones initialization of logger so root logger has time to setup"""
-    global normalize_logger
-    if normalize_logger is not None:
-        return
-    normalize_logger = logging.getLogger('conferatur.normalize')
-    normalize_logger._settings = {"printable": True}
-    normalize_logger.setLevel(logging.INFO)
-    normalize_logger.propagate = logging.getLogger().getEffectiveLevel() <= logging.INFO
+class CLIDiffDialect:
+    preprocessor = make_printable
+    delete_format = '\033[31m%s\033[0m'
+    insert_format = '\033[32m%s\033[0m'
+    formats = None
 
 
-def get_diff(a, b, printable=None, delete_format=None, insert_format=None, formats=None):
-    cruncher = difflib.SequenceMatcher(None, a, b)
+class HTMLDiffDialect:
+    preprocessor = escape
+    delete_format = '<span class="delete">%s</span>'
+    insert_format = '<span class="insert">%s</span>'
+    formats = None
 
-    if delete_format is None:
-        delete_format = '\033[31m%s\033[0m'
-    if insert_format is None:
-        insert_format = '\033[32m%s\033[0m'
 
-    if formats is None:
-        formats = {
-            'replace': delete_format + insert_format,
-            'delete': delete_format + '%s',
-            'insert': '%s' + insert_format,
-            'equal': '%s',
-        }
+class ListHandler(logging.StreamHandler):
+    def __init__(self):
+        self._logs = []
+        super().__init__(os.devnull)
 
-    if printable is True:
-        p = make_printable
-    elif printable in (None, False):
-        def p(txt):
-            return txt
-    else:
-        p = printable
+    def emit(self, record):
+        msg = self.format(record)
+        self._logs.append(msg)
 
-    res = []
-    for tag, alo, ahi, blo, bhi in cruncher.get_opcodes():
-        a_ = p(a[alo:ahi])
+    def flush(self):
+        result = self._logs
+        self._logs = []
+        return result
 
-        if tag == 'equal':
-            res.append(formats['equal'] % (p(a[alo:ahi]),))
-            continue
 
-        b_ = p(b[blo:bhi])
-        res.append(formats[tag] % (a_, b_))
-    return ''.join(res)
+class DiffLoggingFormatter(logging.Formatter):
+    def __init__(self, dialect=None):
+        self._differ = Differ(dialect)
+        super().__init__()
+
+    def format(self, record):
+        return '%s %s' % ('->'.join(record.args[0]), self._differ.diff(record.args[1], record.args[2]))
+
+
+class Differ:
+    diff_dialects = {
+        "cli": CLIDiffDialect,
+        "html": HTMLDiffDialect
+    }
+
+    def __init__(self, dialect=None):
+        if dialect is None:
+            dialect = 'cli'
+        if dialect not in self.diff_dialects:
+            raise ValueError("Unknown diff dialect", dialect)
+        self._dialect = self.diff_dialects[dialect]
+
+    def diff(self, a, b):
+        dialect = self._dialect
+        preprocessor = dialect.preprocessor
+        cruncher = difflib.SequenceMatcher(None, a, b)
+
+        if dialect.formats is None:
+            formats = {
+                'replace': dialect.delete_format + dialect.insert_format,
+                'delete': dialect.delete_format + '%s',
+                'insert': '%s' + dialect.insert_format,
+                'equal': '%s',
+            }
+
+        res = []
+        for tag, alo, ahi, blo, bhi in cruncher.get_opcodes():
+            a_ = preprocessor(a[alo:ahi])
+
+            if tag == 'equal':
+                res.append(formats['equal'] % (preprocessor(a[alo:ahi]),))
+                continue
+
+            b_ = preprocessor(b[blo:bhi])
+            res.append(formats[tag] % (a_, b_))
+        return ''.join(res)
 
 
 def log(func):
@@ -60,16 +93,13 @@ def log(func):
     """
 
     def _(cls, text):
-        init_logger()
         normalize_stack.append(type(cls).__name__)
 
         result = func(cls, text)
-        logger_ = normalize_logger.getChild('.'.join(normalize_stack))
-
-        diffs = get_diff(text, result, **normalize_logger._settings)
+        logger_ = normalize_logger
 
         if text != result:
-            logger_.info('%s', diffs)
+            logger_.info('%s: %s -> %s', normalize_stack, text, result)
         else:
             logger_.debug('NORMALIZED [NOCHANGE]')
 
