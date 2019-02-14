@@ -98,9 +98,8 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 if return_logs:
                     logs = handler.flush()
                     result['logs'] = []
-                    for log in logs:  # log: str
-                        log = log.split(' ', 1)
-                        result['logs'].append(dict(name=log[0], message=log[1]))
+                    for log in logs:
+                        result['logs'].append(dict(names=log[0], message=log[1]))
                 return result
             except csv.CSVParserError as e:
                 message = 'on line %d, character %d' % (e.line, e.char)

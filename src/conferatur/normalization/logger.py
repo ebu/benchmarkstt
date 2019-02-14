@@ -3,6 +3,7 @@ from conferatur import make_printable
 import logging
 from markupsafe import escape
 import os
+from conferatur import DeferredRepr
 
 normalize_logger = logging.getLogger('conferatur.normalize')
 normalize_logger.setLevel(logging.INFO)
@@ -16,12 +17,20 @@ class CLIDiffDialect:
     insert_format = '\033[32m%s\033[0m'
     formats = None
 
+    @staticmethod
+    def format(names, diff):
+        return '|'.join(names) + ': ' + diff
+
 
 class HTMLDiffDialect:
     preprocessor = escape
     delete_format = '<span class="delete">%s</span>'
     insert_format = '<span class="insert">%s</span>'
     formats = None
+
+    @staticmethod
+    def format(names, diff):
+        return names, diff
 
 
 class ListHandler(logging.StreamHandler):
@@ -45,7 +54,7 @@ class DiffLoggingFormatter(logging.Formatter):
         super().__init__()
 
     def format(self, record):
-        return '%s %s' % ('->'.join(record.args[0]), self._differ.diff(record.args[1], record.args[2]))
+        return self._differ.format(record)
 
 
 class Differ:
@@ -60,6 +69,9 @@ class Differ:
         if dialect not in self.diff_dialects:
             raise ValueError("Unknown diff dialect", dialect)
         self._dialect = self.diff_dialects[dialect]
+
+    def format(self, record):
+        return self._dialect.format(record.args[0], self.diff(record.args[1], record.args[2]))
 
     def diff(self, a, b):
         dialect = self._dialect
@@ -99,7 +111,7 @@ def log(func):
         logger_ = normalize_logger
 
         if text != result:
-            logger_.info('%s: %s -> %s', normalize_stack, text, result)
+            logger_.info('%s: %s -> %s', list(normalize_stack), text, result)
         else:
             logger_.debug('NORMALIZED [NOCHANGE]')
 

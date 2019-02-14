@@ -73,6 +73,66 @@
     #result.active, #request.active, #response.active, #logs.active {
       display: block;
     }
+
+    #logs .row {
+      margin-top: 1px;
+      display: table;
+      width: 100%;
+    }
+
+    #logs .row div {
+      padding: 0px 10px 0px 10px;
+    }
+
+    #logs .normalizer {
+      background-color: hsla(216, 16%, 18%, 1);
+      color: white;
+      position: relative;
+      white-space: nowrap;
+      display: table-cell;
+      width: auto;
+    }
+
+    #logs .normalizer::after {
+      content: " ";
+      display: block;
+      width: 0;
+      height: 0;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-left: 5px solid hsla(216, 16%, 18%, 1);
+      position: absolute;
+      top: 0;
+      margin-top: 0px;
+      left: 100%;
+      z-index: 2;
+      margin-left: 0px;
+      overflow: hidden;
+    }
+
+    #logs .row div.diffs {
+      display: table-cell;
+      width: 100%;
+      white-space: pre-line;
+    }
+
+    #logs .normalizer + .normalizer {
+      background-color: hsla(216, 16%, 28%, 1);
+    }
+
+    #logs .normalizer + .normalizer::after {
+      border-left-color: hsla(216, 16%, 28%, 1);
+    }
+
+
+    #logs .normalizer + .normalizer + .normalizer {
+      background-color: hsla(216, 16%, 38%, 1);
+    }
+
+    #logs .normalizer + .normalizer + .normalizer::after {
+      border-left-color: hsla(216, 16%, 38%, 1);
+    }
+
     .tab .tab-item {
       outline:none;
     }
@@ -121,16 +181,16 @@
       white-space: pre-line;
     }
 
-    #logs dl dd span {
+    #logs span {
       padding: 3px;
     }
 
-    #logs dl dd span.insert {
+    #logs span.insert {
       background: #32b643;
       color: white;
     }
 
-    #logs dl dd span.delete {
+    #logs span.delete {
       background: #e85600;
       color: white;
     }
@@ -316,18 +376,27 @@ $(function() {
         $('#tab_response').addClass('success');
 
         if (typeof data['result']['logs'] !== 'undefined') {
-          var html = '<dl>',
+          var html = '',
               logs = data['result']['logs'];
+          html += '<div>';
 
 
           for (var i = 0, I = logs.length; i < I; i++) {
-            html += '<dt>';
-            html += logs[i].name;
-            html += '</dt><dd>';
+            html += '<div class="row">';
+            for (var j = 0, J = logs[i].names.length; j < J; j++) {
+              html += '<div class="normalizer">';
+              html += logs[i].names[j];
+              html += '</div>';
+            }
+
+            html += '<div class="diffs bg-secondary text-primary">';
             html += logs[i].message;
-            html += '</dd>';
+            html += '</div>';
+
+            html += '</div>';
           }
-          html += '</dl>'
+
+          html += '</div>';
 
           $('#logs').html(html);
           $('#tab_logs').show();

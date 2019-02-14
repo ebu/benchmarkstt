@@ -58,6 +58,7 @@ def main():
         parser.exit(0)
 
     logging.basicConfig(level=args.log_level.upper())
+    logger = logging.getLogger().setLevel(args.log_level.upper())
 
     if not args.subcommand:
         parser.error("expects at least 1 argument")
