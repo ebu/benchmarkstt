@@ -25,7 +25,8 @@ def argparser(parser):
     parser.add_argument('--entrypoint', default='/api',
                         help='the jsonrpc api address')
     parser.add_argument('--with-explorer', action='store_true',
-                        help='also create the explorer to test api calls with')
+                        help='also create the explorer to test api calls with, this is a rudimentary feature currently '
+                             'only meant for testing and debugging')
     parser.add_argument('--list-methods', action='store_true',
                         help='list the available jsonrpc methods')
     return parser
