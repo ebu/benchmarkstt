@@ -9,6 +9,7 @@ Welcome to Conferatur's documentation!
 .. toctree::
    :maxdepth: 3
 
+   LICENSE
    INSTALL
    usage
    development
