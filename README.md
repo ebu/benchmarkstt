@@ -1,7 +1,9 @@
 
 # AI Benchmarking STT
 
-[![Build Status](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=conferatur)](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt)
+[![Build Status](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=conferatur)](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 
 <!-- 
 _One liner + link to confluence page_

@@ -11,8 +11,8 @@ Get the version of conferatur
 
 :return str: Conferatur version
 
-normalization.list
-------------------
+list.normalizers
+----------------
 
 Get a list of available core normalizers
 
@@ -27,6 +27,7 @@ Simple alphanumeric filter
 :example return: "Hesalumberjackandhesokay"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.alphanumericunicode
 ---------------------------------
@@ -37,6 +38,7 @@ Simple alphanumeric filter, takes into account all unicode alphanumeric characte
 :example return: "DasöderdieFlipperWåldGespütt"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.config
 --------------------
@@ -72,6 +74,7 @@ The normalization rules are applied top-to-bottom and follow this format:
 :example return: "ha bravalY Turnad his tail and flad"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.configfile
 ------------------------
@@ -87,6 +90,7 @@ Load config from a file, see :py:class:`Config` for information about config not
 :example return: "ha bravalY Turnad his tail and flad"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.file
 ------------------
@@ -104,6 +108,7 @@ Read one per line and pass it to the given normalizer
 :example return: "This is an Ex Parrot"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.localizedfile
 ---------------------------
@@ -123,6 +128,7 @@ Reads and applies normalization rules from a locale-based file, it will automagi
 :example return: "This is an Ex Parrot"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.lowercase
 -----------------------
@@ -134,6 +140,7 @@ Lowercase the text
 :example return: "easy, mungo, easy... mungo..."
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.regexreplace
 --------------------------
@@ -170,6 +177,7 @@ Eg. would replace "New<CRLF>line" to "newline":
 :example return: "HeHe! Hehehe!"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.replace
 ---------------------
@@ -185,6 +193,7 @@ Simple search replace
 :example return: "Nudge wink!"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.replacewords
 --------------------------
@@ -201,6 +210,7 @@ checked case insensitive as well with preservation of case..
 :example return: "She has the heart of formica"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 normalization.unidecode
 -----------------------
@@ -211,6 +221,7 @@ Unidecode characters to ASCII form, see `Python's Unidecode package <https://pyp
 :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
 
 :param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
 
 help
 ----
