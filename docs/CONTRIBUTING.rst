@@ -9,7 +9,7 @@ Pull requests and branching
 ---------------------------
 
 - Before working on a feature *always* create a new branch first. (or fork the project).
-- Branches should be short lived
+- Branches should be short lived, except branches specifically labelled 'experiment'.
 - Once work is complete push the branch up on to GitHub for review. Make sure your branch is up to date with :code:`master` before making a pull request.
   Eg. use :code:`git merge origin/master`
 - Once a branch has been merged into :code:`master`, delete it.
