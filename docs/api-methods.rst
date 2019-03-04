@@ -113,7 +113,7 @@ Read one per line and pass it to the given normalizer
 normalization.localizedfile
 ---------------------------
 
-Reads and applies normalization rules from a locale-based file, it will automagically determine the "best fit" for a given locale, if one is available.
+Reads and applies normalization rules from a locale-based file, it will automatically determine the "best fit" for a given locale, if one is available.
 
 :param str|class normalizer: Normalizer name (or class)
 :param str locale: Which locale to search for

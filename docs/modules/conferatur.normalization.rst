@@ -8,6 +8,7 @@ Submodules
 
    conferatur.normalization.cli
    conferatur.normalization.core
+   conferatur.normalization.logger
 
 Module contents
 ---------------

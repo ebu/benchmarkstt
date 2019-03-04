@@ -15,7 +15,7 @@ __name__ = 'conferatur'
 # Auto save to __meta__
 meta_location = os.path.join(dirname, 'src', __name__, '__meta__.py')
 with open(meta_location, 'w') as f:
-    f.write('''# Automagically created. DO NOT EDIT
+    f.write('''# Automatically created. DO NOT EDIT
 __version__ = %s
 __author__ = %s
 ''' % (repr(__version__), repr(__author__)))

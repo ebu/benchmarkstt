@@ -7,6 +7,8 @@ Subpackages
 .. toctree::
 
     conferatur.api
+    conferatur.comparison
+    conferatur.metrics
     conferatur.normalization
 
 Submodules

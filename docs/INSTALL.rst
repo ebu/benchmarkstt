@@ -35,12 +35,14 @@ From source
 
    .. code-block:: bash
 
-      pip install 'ai-benchmarking-stt[api]'
+      cd ai-benchmarking-stt
+      pip install '.[api]'
 
    Once this is done you may remove the git repository (optional).
 
    .. code-block:: bash
 
+      cd ..
       rm -fr ai-benchmarking-stt
 
 4. Test and use
