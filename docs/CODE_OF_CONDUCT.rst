@@ -39,7 +39,9 @@ We encourage everyone to participate and are committed to building a community f
 Reporting Issues
 ----------------
 
-.. TODO: we need to add an email for contact  eg at textAV we had - textav@bbcnewslabs.co.uk.
+NOTE: no contact has yet been decided
+
+.. TODO: we need to add an email for contact
 
 If you experience or witness unacceptable behaviour—or have any other concerns—please report it by contacting us via [TODO] All reports will be handled with discretion. In your report please include:
 
