@@ -1,0 +1,7 @@
+table.docutils.option-list td:nth-child(2) {
+  white-space: normal;
+}
+
+.rst-content table.docutils td {
+    vertical-align: top;
+}

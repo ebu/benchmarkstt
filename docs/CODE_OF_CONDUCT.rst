@@ -1,4 +1,7 @@
-# Code of Conduct - Draft 
+Code of Conduct
+===============
+
+:code:`Status: Draft`
 
 We are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic.
 
@@ -9,7 +12,7 @@ We are committed to providing a welcoming and inspiring community for all and ex
 Please be kind and courteous. There's no need to be mean or rude. Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer, merely an optimal answer given a set of values and circumstances.
 
 
-## Our open community strives to:
+Our open community strives to:
 
 **Be friendly and patient**.
 
@@ -28,13 +31,19 @@ Please be kind and courteous. There's no need to be mean or rude. Respect that p
 If any participants engages in harassing behaviour, the project team may take any lawful action we deem appropriate, including but not limited to warning the offender or asking the offender to leave the project.
 
 
- ## Diversity Statement
+Diversity Statement
+--------------------
 
- We encourage everyone to participate and are committed to building a community for all. Although we will fail at times, we seek to treat everyone both as fairly and equally as possible. Whenever a participant has made a mistake, we expect them to take responsibility for it. If someone has been harmed or offended, it is our responsibility to listen carefully and respectfully, and do our best to right the wrong.
+We encourage everyone to participate and are committed to building a community for all. Although we will fail at times, we seek to treat everyone both as fairly and equally as possible. Whenever a participant has made a mistake, we expect them to take responsibility for it. If someone has been harmed or offended, it is our responsibility to listen carefully and respectfully, and do our best to right the wrong.
 
-## Reporting Issues
+Reporting Issues
+----------------
 
-If you experience or witness unacceptable behaviour—or have any other concerns—please report it by contacting us via <!-- TODO: we need to add an email for contact  eg at textAV we had - textav@bbcnewslabs.co.uk. --> All reports will be handled with discretion. In your report please include:
+NOTE: no contact has yet been decided
+
+.. TODO: we need to add an email for contact
+
+If you experience or witness unacceptable behaviour—or have any other concerns—please report it by contacting us via [TODO] All reports will be handled with discretion. In your report please include:
 
 - Your contact information.
 - Names (real, nicknames, or pseudonyms) of any individuals involved. If there are additional witnesses, please include them as well. Your account of what occurred, and if you believe the incident is ongoing. If there is a publicly available record (e.g. a mailing list archive or a public slack channel), please include a link.
@@ -42,22 +51,25 @@ If you experience or witness unacceptable behaviour—or have any other concerns
 
 After filing a report, a representative will contact you personally, review the incident, follow up with any additional questions, and make a decision as to how to respond. If the person who is harassing you is part of the response team, they will recuse themselves from handling your incident. If the complaint originates from a member of the response team, it will be handled by a different member of the response team. We will respect confidentiality requests for the purpose of protecting victims of abuse.
 
-## Feedback 
+Feedback
+--------
+
 We welcome your feedback on this and every other aspect of this project and we thank you for working with us to make it a safe, enjoyable, and friendly experience for everyone who participates.
 
-## Attribution & Acknowledgements
+Attribution & Acknowledgements
+------------------------------
 
 We all stand on the shoulders of giants across many open source communities. We’d like to thank the communities and projects that established code of conducts and diversity statements as our inspiration:
 
-- [textAV](https://sites.google.com/view/textav/conduct-london-18)
-- [SRCCON](https://srccon.org/conduct/)
-- [Django](https://www.djangoproject.com/conduct/reporting/)
-- [Python](https://www.python.org/community/diversity/)
-- [Ubuntu](https://www.ubuntu.com/community/code-of-conduct)
-- [Contributor Covenant](https://www.contributor-covenant.org/)
-- [Geek Feminism](https://geekfeminism.org/about/code-of-conduct/)
-- [Citizen Code of Conduct](http://citizencodeofconduct.org/)
-- [Gulp](https://github.com/gulpjs/gulp/blob/master/CONTRIBUTING.md)
-- [Open code of Conduct](https://todogroup.org/opencodeofconduct/)
-- ["Why You Want a Code of Conduct & How We Made One"](http://incisive.nu/2014/codes-of-conduct/)
-- [Facebook Open Source Code of Conduct](https://code.fb.com/codeofconduct/)
+- `textAV <https://sites.google.com/view/textav/conduct-london-18>`_
+- `SRCCON <https://srccon.org/conduct/>`_
+- `Django <https://www.djangoproject.com/conduct/reporting/>`_
+- `Python <https://www.python.org/community/diversity/>`_
+- `Ubuntu <https://www.ubuntu.com/community/code-of-conduct>`_
+- `Contributor Covenant <https://www.contributor-covenant.org/>`_
+- `Geek Feminism <https://geekfeminism.org/about/code-of-conduct/>`_
+- `Citizen Code of Conduct <http://citizencodeofconduct.org/>`_
+- `Gulp <https://github.com/gulpjs/gulp/blob/master/CONTRIBUTING.md>`_
+- `Open code of Conduct <https://todogroup.org/opencodeofconduct/>`_
+- `"Why You Want a Code of Conduct & How We Made One" <http://incisive.nu/2014/codes-of-conduct/>`_
+- `Facebook Open Source Code of Conduct <https://code.fb.com/codeofconduct/>`_

@@ -22,7 +22,7 @@ The basis for a future comprehensive schema for the reference and the hypothesis
 ]
 ``` 
 
-### Hypothesis normalisers
+### Hypothesis normalizers
 This component will convert from the different formats of the hypotheses to a single JSON format using the transcript schema. A documentation guide helps provide guidance to create new converters to add more providers to the system.
 
 ### Analysis 
@@ -32,7 +32,7 @@ This component will convert from the different formats of the hypotheses to a si
 ### Results
 - WER score for each provider, in percent. 
 - Number of deletions, insertions, substitutions and matches for each provider
-- Detailed results in a structured format (e.g. JSON) that can be used for further visualisation or processing (out of scope).
+- Detailed results in a structured format (e.g. JSON) that can be used for further visualization or processing (out of scope).
 
 
 

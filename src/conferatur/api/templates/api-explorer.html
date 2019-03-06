@@ -1,0 +1,484 @@
+<html>
+<head>
+  <title>Conferatur JSON-API explorer</title>
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    body {
+      overflow-x: scroll;
+    }
+
+    .docs-sidebar .accordion input:checked~.accordion-header {
+      color: #505c6e;
+    }
+
+    .docs-sidebar .accordion input~.accordion-header {
+      color: #455060;
+      font-size: .65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .docs-sidebar .accordion .menu .menu-item {
+      font-size: .7rem;
+      padding-left: 1rem;
+    }
+    .docs-brand h2 {
+      display: inline-block;
+      font-size: .8rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      margin-bottom: 0;
+      margin-left: .5rem;
+      margin-right: .3rem;
+    }
+
+    #content .page {
+      display: none;
+    }
+    #content .page:target {
+      display: block;
+    }
+
+
+    #result, #request, #response, #logs {
+      display: none;
+      min-height: 450px;
+      margin-top: 0;
+
+    }
+    #request, #response, #logs {
+      border-bottom: #dadee4 solid 1px;
+      border-left: #dadee4 solid 1px;
+      border-right: #dadee4 solid 1px;
+      padding: 1rem;
+    }
+
+    .tab {
+      margin-bottom: 0;
+    }
+
+    .tab .tab-item a {
+      padding-left: .6rem;
+      padding-right: .6rem;
+
+      border-top: #dadee4 solid 1px;
+      border-left: #dadee4 solid 1px;
+      border-right: #dadee4 solid 1px;
+      border-radius: .6rem .6rem 0 0;
+      background-color: #f7f8f9;
+    }
+
+    #result.active, #request.active, #response.active, #logs.active {
+      display: block;
+    }
+
+    #logs .row {
+      margin-top: 1px;
+      display: table;
+      width: 100%;
+    }
+
+    #logs .row div {
+      padding: 0px 10px 0px 10px;
+    }
+
+    #logs .normalizer {
+      background-color: hsla(216, 16%, 18%, 1);
+      color: white;
+      position: relative;
+      white-space: nowrap;
+      display: table-cell;
+      width: auto;
+    }
+
+    #logs .normalizer::after {
+      content: " ";
+      display: block;
+      width: 0;
+      height: 0;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-left: 5px solid hsla(216, 16%, 18%, 1);
+      position: absolute;
+      top: 0;
+      margin-top: 0px;
+      left: 100%;
+      z-index: 2;
+      margin-left: 0px;
+      overflow: hidden;
+    }
+
+    #logs .row div.diffs {
+      display: table-cell;
+      width: 100%;
+      white-space: pre-line;
+    }
+
+    #logs .normalizer + .normalizer {
+      background-color: hsla(216, 16%, 28%, 1);
+    }
+
+    #logs .normalizer + .normalizer::after {
+      border-left-color: hsla(216, 16%, 28%, 1);
+    }
+
+
+    #logs .normalizer + .normalizer + .normalizer {
+      background-color: hsla(216, 16%, 38%, 1);
+    }
+
+    #logs .normalizer + .normalizer + .normalizer::after {
+      border-left-color: hsla(216, 16%, 38%, 1);
+    }
+
+    .tab .tab-item {
+      outline:none;
+    }
+    .tab .tab-item a.active, .tab .tab-item a:hover {
+      background-color: #ececec;
+    }
+    #result pre.prettyprint {
+      white-space: pre-wrap;
+      font-size: .8em;
+      border: 0 none;
+      background-color: #f7f8f9;
+    }
+    #tab_response .label, #tab_response .loading {
+      display: none;
+      font-size: .5em;
+    }
+    #tab_response.success .label.success {
+      display: inline-block;
+    }
+    #tab_response.isloading .loading {
+      display: inline-block;
+    }
+    #tab_response.error .label.error {
+      display: inline-block;
+    }
+
+    div.description {
+      margin-bottom: 1em;
+    }
+    label.required :first-child::after {
+      content: " (required)";
+      color: #bcc3ce;
+      font-weight: normal;
+      font-size: .7rem;
+    }
+
+    ul.simple li > p:first-child {
+      display: inline;
+    }
+
+    .docblock blockquote {
+      border-left: 0 none;
+    }
+
+    .has-error .form-input-hint {
+      white-space: pre-line;
+    }
+
+    #logs span {
+      padding: 3px;
+    }
+
+    #logs span.insert {
+      background: #32b643;
+      color: white;
+    }
+
+    #logs span.delete {
+      background: #e85600;
+      color: white;
+    }
+
+  </style>
+</head>
+<body>
+<div class="docs-container off-canvas off-canvas-sidebar-show">
+  <a class="off-canvas-toggle btn btn-primary btn-action" href="#sidebar-id">
+    <i class="icon icon-menu"></i>
+  </a>
+  <div id="sidebar-id" class="docs-sidebar off-canvas-sidebar">
+    <div class="docs-brand">
+      <h2>JSON-RPC</h2>
+      <!--<small class="label label-secondary text-bold">methods</small>-->
+    </div>
+    <div class="docs-nav">
+      <div class="accordion-container">
+        {% for cat, items in grouped_methods.items() %}
+
+        <div class="accordion">
+          <input id="accordion_{{ cat }}" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+          <label class="accordion-header c-hand" for="accordion_{{ cat }}">{{ cat }}</label>
+
+          <div class="accordion-body">
+            <ul class="menu menu-nav">
+              {% for item in items %}
+              <li class="menu-item">
+                <!--<input id="toggler_{{ item.id }}" type="radio" name="page-shown" hidden="" />-->
+                <!--<label class="c-hand" for="toggler_{{ item.id }}">-->
+                  <a href="#{{ item.id }}">{{ item.name }}</a>
+                <!--</label>-->
+              </li>
+              {% endfor %}
+            </ul>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <a class="off-canvas-overlay" href="#close"></a>
+
+  <div class="off-canvas-content">
+    <div class="docs-content" id="content">
+      <h3>Conferatur JSON-RPC api explorer</h3>
+      {% for item in methods %}
+      <div class="page container" id="{{ item.id }}">
+        <div class="columns">
+          <div class="column col-9 col-sm-12">
+            <h4>{{ item.name }}</h4>
+            <form class="jsonrpcform">
+              <input type="hidden" name="method" value="{{ item.name }}">
+              <div class="description docblock">{{ item.details.docs | parse_rst | safe }}</div>
+              {% for param in item.details.params %}
+                <div class="form-group">
+                  {% if param.type_doc == 'bool' %}
+                    <label class="form-switch">
+                      <input type="checkbox" name="{{ param.name }}">
+                      <i class="form-icon"></i>
+                      {{ param.description }}
+                    </label>
+                  {% else %}
+                    <label class="form-label {% if param.is_required %}required{% endif %}" for="{{ item.id }}_{{ param.name }}">
+                      <strong>{{ param.name.title().replace('_', ' ') }}</strong>
+                      {% if param.description %}
+                      <span>{{ param.description }}</span>
+                      {% endif %}
+                    </label>
+
+                    {% if param.result or param.result_type %}
+                    <p>Returns: <strong>{{ param.result_type }}</strong> {{ param.result }}</p>
+                    {% endif %}
+
+                    {% with %}
+                      {% if param.examples and param.name in param.examples[0]  %}
+                        {% set example = param.examples[0][param.name].value %}
+                      {% else %}
+                        {% set example = '' %}
+                      {% endif %}
+                      {% if param.name == 'text' or '\n' in example %}
+                      <textarea class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} rows="6" name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{{ example }}</textarea>
+                      {% else %}
+                      <input class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{{ example }}">
+                      {% endif %}
+                    {% endwith %}
+                  {% endif %}
+                  <p class="form-input-hint"></p>
+                </div>
+              {% endfor %}
+              <div class="form-group">
+                <button type="submit" class="btn btn-lg btn-primary">Execute</button>
+                {% if item.details.params %}
+                <button type="reset" class="btn btn-link">Reset to example</button>
+                {% endif %}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="page container" id="home">
+        <p>
+          Select an api method from the menu...
+        </p>
+      </div>
+    </div>
+    <div id="result">
+      <ul class="tab">
+        <li class="tab-item" >
+          <a href="#" id="tab_request">Request</a>
+        </li>
+        <li class="tab-item">
+          <a href="#" id="tab_response" class="active">
+            <span class="label label-error error">error</span>
+            <span class="loading">loading</span>
+            <span class="label label-success success">success</span>
+            Response
+          </a>
+        </li>
+        <li class="tab-item">
+          <a href="#" id="tab_logs">Logs</a>
+        </li>
+      </ul>
+
+      <div class="toast toast-error" id="error" style="display: none;">An error occured!</div>
+      <pre class="prettyprint code lang-js" data-lang="JSON" id="request"></pre>
+      <pre class="prettyprint code lang-js" data-lang="JSON" id="response"></pre>
+      <div class="logs" id="logs"></div>
+      <br>
+      <br>
+    </div>
+
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+
+<script>
+$(function() {
+
+  var tabs = ['request', 'response', 'logs'];
+  var tabssel = tabs.map(function (tab) { return '#tab_' + tab; }).join(',');
+  var tabscontentsel = tabs.map(function (tab) { return '#' + tab; }).join(',');
+  var tabsallsel = tabssel + ', ' + tabscontentsel;
+
+  var clicktab = function (ev) {
+    ev.preventDefault();
+    var active = this.id.substr(4);
+
+    $(tabsallsel).removeClass('active');
+    $('#' + active +', #tab_' + active).addClass('active');
+    return false;
+  };
+
+
+  $('#result').on('click', tabssel, clicktab);
+
+  $('.accordion-body').on('click', 'li.menu-item', function () {
+    $('#result, #logs').removeClass('active');
+  });
+
+  function sendJSONRPC(data, form) {
+    var data = JSON.stringify(data, null, 2);
+    var options = {
+      contentType: 'application/json-rpc',
+      type: 'POST',
+      dataType: 'json',
+      url: document.location.href.replace(/#.*$/, ''),
+      data: data
+    };
+
+    $('#request').text(data);
+    $(form).find('.has-error').removeClass('has-error');
+    $(form).find('.form-input-hint').text('');
+    $('#tab_response').removeClass('error success').addClass('isloading');
+
+
+    options.success = function (data) {
+        $('#tab_response').addClass('success');
+
+        if (typeof data['result']['logs'] !== 'undefined') {
+          var html = '',
+              logs = data['result']['logs'];
+          html += '<div>';
+
+
+          for (var i = 0, I = logs.length; i < I; i++) {
+            html += '<div class="row">';
+            for (var j = 0, J = logs[i].names.length; j < J; j++) {
+              html += '<div class="normalizer">';
+              html += logs[i].names[j];
+              html += '</div>';
+            }
+
+            html += '<div class="diffs bg-secondary text-primary">';
+            html += logs[i].message;
+            html += '</div>';
+
+            html += '</div>';
+          }
+
+          html += '</div>';
+
+          $('#logs').html(html);
+          $('#tab_logs').show();
+        } else {
+          $('#tab_logs').hide();
+        }
+        $('#error').hide();
+        $('#response').text(JSON.stringify(data, null, 2));
+      };
+
+    options.error = function (xhr, errorType, error) {
+        // $('#error').show();
+        $('#tab_response').addClass('error');
+        $('#tab_logs').hide();
+        var response = xhr.responseText;
+        try {
+          if (typeof response == 'string') {
+            response = JSON.parse(response);
+          }
+          if (typeof response == 'object') {
+            if (typeof response.error == 'object' && typeof(response.error.data) == 'string') {
+              try {
+                var data = JSON.parse(response.error.data);
+                var element = $(form).find('[name="' + data.field + '"]');
+                element.parent().addClass('has-error');
+                element.parent().find('.form-input-hint').text(data.message);
+                if (typeof data.index != 'undefined') {
+                  element.focus();
+                  element[0].setSelectionRange(data.index - 1, data.index);
+                }
+              } catch (e) {}
+            }
+            response = JSON.stringify(response, null, 2);
+          }
+        } catch (e) {
+          response = xhr.responseText;
+        }
+        $('#response').text(response);
+      };
+
+    options.complete = function() {
+        $('#tab_response').removeClass('isloading').click();
+        $('#result').addClass('active');
+        $(document.body).scrollTop($('#result').offset().top);
+      };
+
+    $.ajax(options);
+  }
+
+  $('form.jsonrpcform').submit(function (ev) {
+    ev.preventDefault();
+    var data = {
+      jsonrpc: "2.0",
+      id: Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1),
+      params: {}
+    };
+    var form = this;
+    var elems = form.getElementsByClassName('form-input');
+
+    $(this).serializeArray().forEach(function (d) {
+      if (d.name == 'method') {
+        data.method = d.value;
+        return;
+      }
+      var input_elems = Array.prototype.filter.call(elems, function(elem) {
+        return elem.name == d.name;
+      });
+      //var required = $form.find('.' + d.name).attr('required');
+      var required = true;
+
+      if (input_elems.length == 1) {
+        required = input_elems[0].required;
+      }
+      if (required || d.value != '') {
+        data.params[d.name] = d.value
+      }
+    });
+
+    sendJSONRPC(data, this)
+    return false;
+  });
+});
+</script>
+</body>
+</html>
