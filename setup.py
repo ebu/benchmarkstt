@@ -42,18 +42,15 @@ setup(
     package_data={'benchmarkstt': ['api/templates/*.html']},
     include_package_data=True,
     install_requires=[
-       'MarkupSafe>=1.0',
-       'Unidecode>=1.0.22',
-       'langcodes>=1.4.1'
+        'MarkupSafe>=1.0',
+        'Unidecode>=1.0.22',
+        'langcodes>=1.4.1',
+        'Flask>=1.0.2',
+        'jsonrpcserver>=4.0.1',
+        'gunicorn>=19.9.0',
+        'docutils>=0.14',
     ],
     extras_require={
-        'api': [
-            'Flask>=1.0.2',
-            'jsonrpcserver>=4.0.1',
-            'gunicorn>=19.9.0',
-            'docutils>=0.14',
-            # 'Pygments>=2.2.0',
-        ],
         'docs': [
             "sphinx==1.8.3",
             "sphinx_rtd_theme==0.4.2",

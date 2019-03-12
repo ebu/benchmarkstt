@@ -6,8 +6,10 @@ os:
 python:
   - "3.5"
   - "3.6"
+  - "3.7"
+  - "3.8-dev"
 install:
-  - pip install '.[api,test]'
+  - pip install '.[test]'
 script: pytest
 branches:
   only:
@@ -18,3 +20,4 @@ matrix:
   allow_failures:
     - os: windows
     - os: osx
+    - python: "3.8-dev"

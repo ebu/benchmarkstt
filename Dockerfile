@@ -8,7 +8,7 @@ RUN pip install --upgrade pip
 WORKDIR /home/benchmarkstt
 COPY . /home/benchmarkstt/
 
-RUN pip install '.[api]'
+RUN pip install '.[test]'
 
 RUN chown -R benchmarkstt:benchmarkstt ./
 USER benchmarkstt

@@ -36,7 +36,7 @@ From source
    .. code-block:: bash
 
       cd ai-benchmarking-stt
-      pip install '.[api]'
+      pip install .
 
    Once this is done you may remove the git repository (optional).
 
