@@ -8,7 +8,7 @@ RUN pip install --upgrade pip
 WORKDIR /home/conferatur
 COPY . /home/conferatur/
 
-RUN pip install '.[api]'
+RUN pip install '.[test]'
 
 RUN chown -R conferatur:conferatur ./
 USER conferatur

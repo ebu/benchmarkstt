@@ -8,6 +8,7 @@ Subpackages
 
     conferatur.api
     conferatur.comparison
+    conferatur.input
     conferatur.metrics
     conferatur.normalization
 
