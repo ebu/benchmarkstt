@@ -83,4 +83,3 @@ def test_roundtrip():
     schema = Schema.loads(json)
     for item in schema:
         assert type(item) is Word
-

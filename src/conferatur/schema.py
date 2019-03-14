@@ -174,4 +174,3 @@ class JSONDecoder(json.JSONDecoder):
         if type(obj) is not dict:
             raise SchemaJSONError("Expected an object")
         return Word(obj)
-

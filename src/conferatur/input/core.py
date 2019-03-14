@@ -19,4 +19,3 @@ class PlainText:
     def __iter__(self):
         for item in self._tokenizer(self._text):
             yield Word(text=item)
-
