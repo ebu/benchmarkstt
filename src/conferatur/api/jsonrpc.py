@@ -147,4 +147,3 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 for name, func in methods.items.items()}
 
     return methods
-
