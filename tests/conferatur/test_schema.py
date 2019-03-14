@@ -69,8 +69,8 @@ def test_roundtrip():
     schema = Schema()
     testlen = 1
     for i in range(testlen):
-        schema.append({'text': random_str(), 'start': randint(0, 1e10), "end": randint(0, 1e10)})
-        schema.append(Word({'text': random_str(), 'start': randint(0, 1e10), "end": randint(0, 1e10)}))
+        schema.append({'text': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)})
+        schema.append(Word({'text': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)}))
 
     schema.extend(list(schema))
     assert len(schema) == testlen * 4
