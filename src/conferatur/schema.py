@@ -5,6 +5,7 @@ import json
 from collections.abc import Mapping
 from typing import Union
 from collections import defaultdict
+from collections import OrderedDict
 
 
 class SchemaError(ValueError):
@@ -32,11 +33,11 @@ class Word(Mapping):
         if len(args) and len(kwargs):
             raise ValueError("Cannot combine both a positional and keyword arguments")
         if len(args):
-            if not isinstance(args[0], (dict, )):
+            if not isinstance(args[0], (dict, OrderedDict,)):
                 raise SchemaInvalidItemError("Expected a dict object", args[0])
-            self._val = dict(args[0])
+            self._val = OrderedDict(args[0])
         else:
-            self._val = dict(kwargs)
+            self._val = OrderedDict(kwargs)
         self.meta = Meta()
 
     def __getitem__(self, k):
@@ -55,7 +56,7 @@ class Word(Mapping):
         return Schema.dumps(self, **kwargs)
 
     def _asdict(self):
-        return dict(self._val)
+        return OrderedDict(self._val)
 
     def __eq__(self, other):
         return self._val == other
