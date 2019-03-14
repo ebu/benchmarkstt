@@ -118,4 +118,3 @@ def log(func):
         normalize_stack.pop()
         return result
     return _
-

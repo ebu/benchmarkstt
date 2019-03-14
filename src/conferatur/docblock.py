@@ -11,7 +11,8 @@ from docutils.writers import html5_polyglot
 logger = logging.getLogger(__name__)
 
 Docblock = namedtuple('Docblock', ['docs', 'params', 'result', 'result_type'])
-Param = namedtuple('Param', ['name', 'type', 'type_doc', 'is_required', 'description', 'examples'])
+Param = namedtuple('Param', ['name', 'type', 'type_doc', 'is_required',
+                             'description', 'examples'])
 DocblockParam = namedtuple('DocblockParam', ['name', 'type', 'value'])
 
 
@@ -19,7 +20,8 @@ def format_docs(docs):
     return textwrap.dedent(docs).strip()
 
 
-def doc_param_parser(docstring, key, no_name=None, allow_multiple=None, replace_strat=None):
+def doc_param_parser(docstring, key, no_name=None, allow_multiple=None,
+                     replace_strat=None):
     results = [] if no_name or allow_multiple else {}
 
     if replace_strat is None:
@@ -44,7 +46,8 @@ def doc_param_parser(docstring, key, no_name=None, allow_multiple=None, replace_
             param = DocblockParam(**param)
             if allow_multiple:
                 # check if it already exists, if not create a new object
-                idx = [idx for idx, val in enumerate(results) if match[2] not in val]
+                idx = [idx for idx, val in enumerate(results)
+                       if match[2] not in val]
                 if not len(idx):
                     idx = len(results)
                     results.append({})
@@ -61,7 +64,9 @@ def doc_param_parser(docstring, key, no_name=None, allow_multiple=None, replace_
     else:
         regex = r'^[ \t]*:%s[ \t]+(?:([^:]+)[ \t]+)?([a-z_]+):(?:[ \t]+(.*))?$'
 
-    docs = re.sub(regex % (re.escape(key),), _, docstring, flags=re.MULTILINE).strip()
+    docs = re.sub(
+        regex % (re.escape(key),), _, docstring, flags=re.MULTILINE
+    ).strip()
 
     return docs, results
 
@@ -95,7 +100,8 @@ def parse(func):
         param['value'] = decode_literal(param['value'])
         return ''
 
-    docs, examples = doc_param_parser(docs, 'example', allow_multiple=True, replace_strat=decode_examples)
+    docs, examples = doc_param_parser(docs, 'example', allow_multiple=True,
+                                      replace_strat=decode_examples)
 
     params = []
     for idx, name in enumerate(args):
@@ -106,7 +112,8 @@ def parse(func):
             description = doc_params[name].value
 
         param = Param(name,
-                      argspec.annotations[name] if name in argspec.annotations else None,
+                      argspec.annotations[name] if name in argspec.annotations
+                      else None,
                       type_,
                       idx < defaults_idx,
                       description,
@@ -132,5 +139,5 @@ class HTML5Writer(html5_polyglot.Writer):
 def rst_to_html(text):
     writer = HTML5Writer()
     settings = {'output_encoding': 'unicode', 'table_style': 'table'}
-    return publish_string(text, writer=writer, writer_name='html5', settings_overrides=settings)
-
+    return publish_string(text, writer=writer, writer_name='html5',
+                          settings_overrides=settings)
