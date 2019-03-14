@@ -11,6 +11,7 @@ Subpackages
     conferatur.input
     conferatur.metrics
     conferatur.normalization
+    conferatur.tokenization
 
 Submodules
 ----------
@@ -21,6 +22,7 @@ Submodules
    conferatur.csv
    conferatur.decorators
    conferatur.docblock
+   conferatur.schema
 
 Module contents
 ---------------

@@ -305,13 +305,16 @@ class Config:
     :param str config: configuration text
 
     :example text: "He bravely turned his tail and fled"
-    :example config: '''# using a simple config file\nLowercase \n
-    # it even supports comments
-    # If there is a space in the argument, make sure you quote it though!
-    regexreplace "y t" "Y T"
-    \n\n
-    # extraneous whitespaces are ignored
-    replace   e     a\n'''
+    :example config:
+            # using a simple config file
+            Lowercase \n
+            # it even supports comments
+            # If there is a space in the argument, make sure you quote it
+            # though!
+            regexreplace "y t" "Y T"
+            \n\n
+            # extraneous whitespaces are ignored
+            replace   e     a
     :example return: "ha bravalY Turnad his tail and flad"
     """
 

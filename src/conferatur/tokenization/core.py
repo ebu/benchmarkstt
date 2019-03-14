@@ -9,4 +9,3 @@ class Simple:
 
     def __iter__(self):
         return iter(self._text.split())
-

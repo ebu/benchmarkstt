@@ -43,4 +43,3 @@ candide_schema = Schema(
 def test_plaintext():
     assert list(PlainText(candide)) == candide_schema
     assert Schema(PlainText(candide)) == candide_schema
-

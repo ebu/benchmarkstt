@@ -32,7 +32,8 @@ Simple alphanumeric filter
 normalization.alphanumericunicode
 ---------------------------------
 
-Simple alphanumeric filter, takes into account all unicode alphanumeric characters
+Simple alphanumeric filter, takes into account all unicode alphanumeric
+characters.
 
 :example text: "Das, öder die Flipper-Wåld Gespütt!"
 :example return: "DasöderdieFlipperWåldGespütt"
@@ -43,15 +44,21 @@ Simple alphanumeric filter, takes into account all unicode alphanumeric characte
 normalization.config
 --------------------
 
-Use config notation to define normalization rules. This notation is a list of normalizers, one per line, with optional arguments (separated by a space).
+Use config notation to define normalization rules. This notation is a
+list of normalizers, one per line, with optional arguments (separated by a
+space).
 
-The normalizers can be any of the core normalizers, or you can refer to your own normalizer class (like you would use in a python import, eg. `my.own.package.MyNormalizerClass`).
+The normalizers can be any of the core normalizers, or you can refer to your
+own normalizer class (like you would use in a python import, eg.
+`my.own.package.MyNormalizerClass`).
 
 Additional rules:
   - Normalizer names are case-insensitive.
   - Arguments MAY be wrapped in double quotes.
-  - If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
-  - A double quote itself is represented in this quoted argument as two double quotes: `""`.
+  - If an argument contains a space, newline or double quote, it MUST be
+    wrapped in double quotes.
+  - A double quote itself is represented in this quoted argument as two
+    double quotes: `""`.
 
 The normalization rules are applied top-to-bottom and follow this format:
 
@@ -70,7 +77,16 @@ The normalization rules are applied top-to-bottom and follow this format:
 :param str config: configuration text
 
 :example text: "He bravely turned his tail and fled"
-:example config: '# using a simple config file\nLowercase \n\n    # it even supports comments\n# If there is a space in the argument, make sure you quote it though!\n  regexreplace "y t" "Y T"\n \n      # extraneous whitespaces are ignored \n     replace   e     a\n'
+:example config:
+        # using a simple config file
+        Lowercase 
+        # it even supports comments
+        # If there is a space in the argument, make sure you quote it
+        # though!
+        regexreplace "y t" "Y T"
+        \n\n
+        # extraneous whitespaces are ignored
+        replace   e     a
 :example return: "ha bravalY Turnad his tail and flad"
 
 :param str text: The text to normalize
@@ -79,7 +95,8 @@ The normalization rules are applied top-to-bottom and follow this format:
 normalization.configfile
 ------------------------
 
-Load config from a file, see :py:class:`Config` for information about config notation
+Load config from a file, see :py:class:`Config` for information about config
+notation
 
 :param typing.io.TextIO file: The file
 :param str encoding: The file encoding
@@ -113,7 +130,9 @@ Read one per line and pass it to the given normalizer
 normalization.localizedfile
 ---------------------------
 
-Reads and applies normalization rules from a locale-based file, it will automatically determine the "best fit" for a given locale, if one is available.
+Reads and applies normalization rules from a locale-based file, it will
+automatically determine the "best fit" for a given locale, if one is
+available.
 
 :param str|class normalizer: Normalizer name (or class)
 :param str locale: Which locale to search for
@@ -150,7 +169,8 @@ case-sensitive.
 
 Case-insensitivity is supported by adding inline modifiers.
 
-You might want to use capturing groups to preserve the case. When replacing a character not captured, the information about its case is lost...
+You might want to use capturing groups to preserve the case. When replacing
+a character not captured, the information about its case is lost...
 
 Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
 
@@ -161,7 +181,8 @@ Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
  +------------------+-------------+
 
 
-No regex flags are set by default, you can set them yourself though in the regex, and combine them at will, eg. multiline, dotall and ignorecase.
+No regex flags are set by default, you can set them yourself though in the
+regex, and combine them at will, eg. multiline, dotall and ignorecase.
 
 Eg. would replace "New<CRLF>line" to "newline":
 
@@ -215,7 +236,8 @@ checked case insensitive as well with preservation of case..
 normalization.unidecode
 -----------------------
 
-Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
+Unidecode characters to ASCII form, see `Python's Unidecode package
+<https://pypi.org/project/Unidecode>`_ for more info.
 
 :example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
 :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
