@@ -15,9 +15,10 @@ def test_csv():
 
     assert _reader('') == []
 
-    expected = [['Some line', 'some other'], ['dsfgdsg'], ['stay', 'togther  '], ['fsdss']]
+    expected = [['Some line', 'some other'], ['dsfgdsg'], ['stay', 'togther  '],
+                ['fsdss']]
     assert _reader('''
-    Some line, some other \t     
+    Some line, some other \t  \t
     dsfgdsg
 
      \n         \t  \r
@@ -65,9 +66,11 @@ def test_conf():
 
     assert _reader('replace " " "\n"') == [['replace', ' ', '\n']]
 
-    expected = [['Lowercase'], ['regexreplace', 'y t', 'Y T'], ['Replace', 'e', 'a']]
+    expected = [['Lowercase'],
+                ['regexreplace', 'y t', 'Y T'],
+                ['Replace', 'e', 'a']]
     gotten = _reader('''# using a simple config file
-Lowercase 
+Lowercase \n
 
 # it even supports comments
 # If there is a space in the argument, make sure you quote it though!
@@ -84,7 +87,8 @@ regexreplace "y t" "Y T"
     expected = [
         ['Normalizer1', 'arg1', 'arg 2'],
         ['Normalizer2'],
-        ['Normalizer3', 'This is argument 1\nSpanning multiple lines\n', 'argument 2'],
+        ['Normalizer3', 'This is argument 1\nSpanning multiple lines\n',
+         'argument 2'],
         ['Normalizer4', 'argument with double quote (")']
     ]
 
@@ -104,5 +108,6 @@ Normalizer4 "argument with double quote ("")"
     assert _reader("lower case \n") == [['lower', 'case']]
     assert _reader('test "stuff "\t') == [['test', 'stuff ']]
     assert _reader('test "stuff "\n') == [['test', 'stuff ']]
-    assert _reader('test "stuff\n\t"\n\t  \t  YEs    \t   \n') == [['test', 'stuff\n\t'], ['YEs']]
+    assert _reader('test "stuff\n\t"\n\t  \t  YEs    \t   \n') == \
+        [['test', 'stuff\n\t'], ['YEs']]
     assert _reader("\n\n\n\nline5")[0].lineno == 5

@@ -167,4 +167,3 @@ def main(parser, args):
             output_file = output_files[0]
             output_file.write(text)
             output_file.close()
-

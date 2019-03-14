@@ -26,7 +26,9 @@ default_encoding = 'UTF-8'
 
 class LocalizedFile:
     """
-    Reads and applies normalization rules from a locale-based file, it will automatically determine the "best fit" for a given locale, if one is available.
+    Reads and applies normalization rules from a locale-based file, it will
+    automatically determine the "best fit" for a given locale, if one is
+    available.
 
     :param str|class normalizer: Normalizer name (or class)
     :param str locale: Which locale to search for
@@ -44,7 +46,8 @@ class LocalizedFile:
     def __init__(self, normalizer, locale: str, path: str, encoding=None):
         path = os.path.realpath(path)
         if not os.path.isdir(path):
-            raise NotADirectoryError("Expected '%s' to be a directory" % (str(path),))
+            raise NotADirectoryError("Expected '%s' to be a directory" %
+                                     (str(path),))
 
         files = {standardize_tag(file): file
                  for file in os.listdir(path)
@@ -53,7 +56,9 @@ class LocalizedFile:
         locale = standardize_tag(locale)
         match = best_match(locale, files.keys())[0]
         if match == 'und':
-            raise FileNotFoundError("Could not find a locale file for locale '%s' in '%s'" % (locale, str(path)))
+            raise FileNotFoundError(
+                "Could not find a locale file for locale '%s' in '%s'" %
+                (locale, str(path)))
 
         file = os.path.join(path, files[match])
 
@@ -80,7 +85,7 @@ class Replace:
     :example return: "Nudge wink!"
     """
 
-    def __init__(self, search: str, replace: str=''):
+    def __init__(self, search: str, replace: str = ''):
         self._search = search
         self._replace = replace
 
@@ -106,7 +111,7 @@ class ReplaceWords:
     def __init__(self, search: str, replace: str):
         search = search.strip()
         replace = replace.strip()
-        
+
         args = tuple(map(re.escape, [
             search[0].upper(),
             search[0].lower(),
@@ -144,7 +149,8 @@ class File:
 
     def __init__(self, normalizer, file, encoding=None):
         try:
-            cls = normalizer if inspect.isclass(normalizer) else normalization.name_to_normalizer(normalizer)
+            cls = normalizer if inspect.isclass(normalizer) else \
+                normalization.name_to_normalizer(normalizer)
         except ValueError:
             raise ValueError("Unknown normalizer %s" %
                              (repr(normalizer)))
@@ -173,7 +179,8 @@ class RegexReplace:
 
     Case-insensitivity is supported by adding inline modifiers.
 
-    You might want to use capturing groups to preserve the case. When replacing a character not captured, the information about its case is lost...
+    You might want to use capturing groups to preserve the case. When replacing
+    a character not captured, the information about its case is lost...
 
     Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
 
@@ -184,7 +191,8 @@ class RegexReplace:
      +------------------+-------------+
 
 
-    No regex flags are set by default, you can set them yourself though in the regex, and combine them at will, eg. multiline, dotall and ignorecase.
+    No regex flags are set by default, you can set them yourself though in the
+    regex, and combine them at will, eg. multiline, dotall and ignorecase.
 
     Eg. would replace "New<CRLF>line" to "newline":
 
@@ -200,7 +208,7 @@ class RegexReplace:
     :example return: "HeHe! Hehehe!"
     """
 
-    def __init__(self, search: str, replace: str=None):
+    def __init__(self, search: str, replace: str = None):
         self._pattern = re.compile(search)
         self._substitution = replace if replace is not None else ''
 
@@ -223,7 +231,8 @@ class AlphaNumeric(RegexReplace):
 
 class AlphaNumericUnicode(RegexReplace):
     """
-    Simple alphanumeric filter, takes into account all unicode alphanumeric characters
+    Simple alphanumeric filter, takes into account all unicode alphanumeric
+    characters.
 
     :example text: "Das, öder die Flipper-Wåld Gespütt!"
     :example return: "DasöderdieFlipperWåldGespütt"
@@ -249,7 +258,8 @@ class Lowercase:
 
 class Unidecode:
     """
-    Unidecode characters to ASCII form, see `Python's Unidecode package <https://pypi.org/project/Unidecode>`_ for more info.
+    Unidecode characters to ASCII form, see `Python's Unidecode package
+    <https://pypi.org/project/Unidecode>`_ for more info.
 
     :example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
     :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
@@ -262,15 +272,21 @@ class Unidecode:
 
 class Config:
     r"""
-    Use config notation to define normalization rules. This notation is a list of normalizers, one per line, with optional arguments (separated by a space).
+    Use config notation to define normalization rules. This notation is a
+    list of normalizers, one per line, with optional arguments (separated by a
+    space).
 
-    The normalizers can be any of the core normalizers, or you can refer to your own normalizer class (like you would use in a python import, eg. `my.own.package.MyNormalizerClass`).
+    The normalizers can be any of the core normalizers, or you can refer to your
+    own normalizer class (like you would use in a python import, eg.
+    `my.own.package.MyNormalizerClass`).
 
     Additional rules:
       - Normalizer names are case-insensitive.
       - Arguments MAY be wrapped in double quotes.
-      - If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
-      - A double quote itself is represented in this quoted argument as two double quotes: `""`.
+      - If an argument contains a space, newline or double quote, it MUST be
+        wrapped in double quotes.
+      - A double quote itself is represented in this quoted argument as two
+        double quotes: `""`.
 
     The normalization rules are applied top-to-bottom and follow this format:
 
@@ -278,7 +294,7 @@ class Config:
 
         Normalizer1 arg1 "arg 2"
         # This is a comment
-        
+
         Normalizer2
         # (Normalizer2 has no arguments)
         Normalizer3 "This is argument 1
@@ -289,7 +305,13 @@ class Config:
     :param str config: configuration text
 
     :example text: "He bravely turned his tail and fled"
-    :example config: '# using a simple config file\nLowercase \n\n    # it even supports comments\n# If there is a space in the argument, make sure you quote it though!\n  regexreplace "y t" "Y T"\n \n      # extraneous whitespaces are ignored \n     replace   e     a\n'
+    :example config: '''# using a simple config file\nLowercase \n
+    # it even supports comments
+    # If there is a space in the argument, make sure you quote it though!
+    regexreplace "y t" "Y T"
+    \n\n
+    # extraneous whitespaces are ignored
+    replace   e     a\n'''
     :example return: "ha bravalY Turnad his tail and flad"
     """
 
@@ -313,7 +335,8 @@ class Config:
 
 class ConfigFile(Config):
     """
-    Load config from a file, see :py:class:`Config` for information about config notation
+    Load config from a file, see :py:class:`Config` for information about config
+    notation
 
     :param typing.io.TextIO file: The file
     :param str encoding: The file encoding
@@ -330,4 +353,3 @@ class ConfigFile(Config):
 
         with open(file, encoding=encoding) as f:
             self._parse_config(f)
-
