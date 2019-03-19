@@ -71,7 +71,7 @@ class Meta(defaultdict):
 
 class Schema:
     """
-    Basically a list of :py:class:`Word`s
+    Basically a list of :py:class:`Word`
     """
 
     def __init__(self, data=None):

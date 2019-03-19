@@ -7,7 +7,11 @@ Subpackages
 .. toctree::
 
     benchmarkstt.api
+    benchmarkstt.comparison
+    benchmarkstt.input
+    benchmarkstt.metrics
     benchmarkstt.normalization
+    benchmarkstt.tokenization
 
 Submodules
 ----------
@@ -18,6 +22,7 @@ Submodules
    benchmarkstt.csv
    benchmarkstt.decorators
    benchmarkstt.docblock
+   benchmarkstt.schema
 
 Module contents
 ---------------
