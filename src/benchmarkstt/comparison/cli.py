@@ -1,9 +1,6 @@
 import argparse
-from conferatur.input import available as input_available
-from conferatur.normalization import available as normalization_available
-from conferatur.metrics import available as metrics_available
-from conferatur.metrics.core import WER
-from conferatur.input import core
+from benchmarkstt.metrics.core import WER
+from benchmarkstt.input import core
 
 
 def argparser(parser: argparse.ArgumentParser):

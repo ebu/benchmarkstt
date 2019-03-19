@@ -1,5 +1,5 @@
 import difflib
-from conferatur.schema import Schema, Word
+from benchmarkstt.schema import Schema, Word
 import logging
 
 
