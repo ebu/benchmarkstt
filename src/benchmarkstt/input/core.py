@@ -2,11 +2,11 @@
 Default input formats
 
 Each format class should be accessible as iterator, each iteration should return a Word, so the input format is
-essentially usable and can be easily converted to a :py:class:`conferatur.schema.Schema`
+essentially usable and can be easily converted to a :py:class:`benchmarkstt.schema.Schema`
 """
 
-import conferatur.tokenization.core as tokenizers
-from conferatur.schema import Word
+import benchmarkstt.tokenization.core as tokenizers
+from benchmarkstt.schema import Word
 
 
 class PlainText:

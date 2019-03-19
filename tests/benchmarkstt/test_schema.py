@@ -1,4 +1,4 @@
-from conferatur.schema import Schema, Word, SchemaJSONError, SchemaInvalidItemError
+from benchmarkstt.schema import Schema, Word, SchemaJSONError, SchemaInvalidItemError
 import textwrap
 from random import sample, randint
 import pytest

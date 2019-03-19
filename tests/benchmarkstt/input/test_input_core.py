@@ -1,5 +1,5 @@
-from conferatur.input.core import PlainText
-from conferatur.schema import Word, Schema
+from benchmarkstt.input import PlainText
+from benchmarkstt.schema import Word, Schema
 
 candide = '''
 "There is a concatenation of events in this best of all possible worlds:
