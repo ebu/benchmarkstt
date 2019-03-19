@@ -4,3 +4,248 @@ Available JSON-RPC methods
 ==========================
 
 
+version
+-------
+
+Get the version of benchmarkstt
+
+:return str: BenchmarkSTT version
+
+list.normalizers
+----------------
+
+Get a list of available core normalizers
+
+:return object: With key being the normalizer name, and value its description
+
+normalization.alphanumeric
+--------------------------
+
+Simple alphanumeric filter
+
+:example text: "He's a lumberjack, and he's okay!"
+:example return: "Hesalumberjackandhesokay"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.alphanumericunicode
+---------------------------------
+
+Simple alphanumeric filter, takes into account all unicode alphanumeric
+characters.
+
+:example text: "Das, öder die Flipper-Wåld Gespütt!"
+:example return: "DasöderdieFlipperWåldGespütt"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.config
+--------------------
+
+Use config notation to define normalization rules. This notation is a
+list of normalizers, one per line, with optional arguments (separated by a
+space).
+
+The normalizers can be any of the core normalizers, or you can refer to your
+own normalizer class (like you would use in a python import, eg.
+`my.own.package.MyNormalizerClass`).
+
+Additional rules:
+  - Normalizer names are case-insensitive.
+  - Arguments MAY be wrapped in double quotes.
+  - If an argument contains a space, newline or double quote, it MUST be
+    wrapped in double quotes.
+  - A double quote itself is represented in this quoted argument as two
+    double quotes: `""`.
+
+The normalization rules are applied top-to-bottom and follow this format:
+
+.. code-block:: text
+
+    Normalizer1 arg1 "arg 2"
+    # This is a comment
+
+    Normalizer2
+    # (Normalizer2 has no arguments)
+    Normalizer3 "This is argument 1
+    Spanning multiple lines
+    " "argument 2"
+    Normalizer4 "argument with double quote ("")"
+
+:param str config: configuration text
+
+:example text: "He bravely turned his tail and fled"
+:example config: '''# using a simple config file\nLowercase \n
+# it even supports comments
+# If there is a space in the argument, make sure you quote it though!
+regexreplace "y t" "Y T"
+\n\n
+# extraneous whitespaces are ignored
+replace   e     a\n'''
+:example return: "ha bravalY Turnad his tail and flad"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.configfile
+------------------------
+
+Load config from a file, see :py:class:`Config` for information about config
+notation
+
+:param typing.io.TextIO file: The file
+:param str encoding: The file encoding
+
+:example text: "He bravely turned his tail and fled"
+:example file: "./resources/test/normalizers/configfile.conf"
+:example encoding: "UTF-8"
+:example return: "ha bravalY Turnad his tail and flad"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.file
+------------------
+
+Read one per line and pass it to the given normalizer
+
+:param str|class normalizer: Normalizer name (or class)
+:param str file: The file to read rules from
+:param str encoding: The file encoding
+
+:example text: "This is an Ex-Parakeet"
+:example normalizer: "regexreplace"
+:example file: "./resources/test/normalizers/regexreplace/en_US"
+:example encoding: "UTF-8"
+:example return: "This is an Ex Parrot"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.localizedfile
+---------------------------
+
+Reads and applies normalization rules from a locale-based file, it will
+automatically determine the "best fit" for a given locale, if one is
+available.
+
+:param str|class normalizer: Normalizer name (or class)
+:param str locale: Which locale to search for
+:param PathLike path: Location of available locale files
+:param str encoding: The file encoding
+
+:example text: "This is an Ex-Parakeet"
+:example normalizer: "regexreplace"
+:example path: "./resources/test/normalizers/regexreplace"
+:example locale: "en"
+:example encoding: "UTF-8"
+:example return: "This is an Ex Parrot"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.lowercase
+-----------------------
+
+Lowercase the text
+
+
+:example text: "Easy, Mungo, easy... Mungo..."
+:example return: "easy, mungo, easy... mungo..."
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.regexreplace
+--------------------------
+
+Simple regex replace. By default the pattern is interpreted
+case-sensitive.
+
+Case-insensitivity is supported by adding inline modifiers.
+
+You might want to use capturing groups to preserve the case. When replacing
+a character not captured, the information about its case is lost...
+
+Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
+
+ +------------------+-------------+
+ | search           | replace     |
+ +==================+=============+
+ | :code:`(?i)(h)a` | :code:`\1e` |
+ +------------------+-------------+
+
+
+No regex flags are set by default, you can set them yourself though in the
+regex, and combine them at will, eg. multiline, dotall and ignorecase.
+
+Eg. would replace "New<CRLF>line" to "newline":
+
+ +------------------------+------------------+
+ | search                 | replace          |
+ +========================+==================+
+ | :code:`(?msi)new.line` | :code:`newline`  |
+ +------------------------+------------------+
+
+:example text: "HAHA! Hahaha!"
+:example search: '(?i)(h)a'
+:example replace: r'\1e'
+:example return: "HeHe! Hehehe!"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.replace
+---------------------
+
+Simple search replace
+
+:param str search: Text to search for
+:param str replace: Text to replace with
+
+:example text: "Nudge nudge!"
+:example search: "nudge"
+:example replace: "wink"
+:example return: "Nudge wink!"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.replacewords
+--------------------------
+
+Simple search replace that only replaces "words", the first letter will be
+checked case insensitive as well with preservation of case..
+
+:param str search: Word to search for
+:param str replace: Replace with
+
+:example text: "She has a heart of formica"
+:example search: "a"
+:example replace: "the"
+:example return: "She has the heart of formica"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+normalization.unidecode
+-----------------------
+
+Unidecode characters to ASCII form, see `Python's Unidecode package
+<https://pypi.org/project/Unidecode>`_ for more info.
+
+:example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
+:example return: "Wenn ist das Nunstuck git und Slotermeyer?"
+
+:param str text: The text to normalize
+:param bool return_logs: Return normalizer logs
+
+help
+----
+
+Returns available api methods
+
+:return object: With key being the method name, and value its description
+
