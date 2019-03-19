@@ -2,9 +2,9 @@ Command line tool
 =================
 
     .. argparse::
-       :module: conferatur.cli
+       :module: benchmarkstt.cli
        :func: _parser_no_sub
-       :prog: conferatur
+       :prog: benchmarkstt
 
 
 Subcommands
