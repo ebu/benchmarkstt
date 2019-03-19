@@ -1,13 +1,13 @@
 Installation
 ============
 
-Conferatur requires Python_ version 3.5 or above.
+BenchmarkSTT requires Python_ version 3.5 or above.
 
 
 From PyPI (preferred)
 ---------------------
 
-This is the easiest and preferred way of installing conferatur.
+This is the easiest and preferred way of installing benchmarkstt.
 
 TODO
 
@@ -23,7 +23,7 @@ From source
     - `Installing Python 3 on Windows <https://docs.python-guide.org/starting/install3/win/>`_
     - `Installing Python 3 on Linux <https://docs.python-guide.org/starting/install3/linux/>`_
 
-2. Get the conferatur source code from github (assumes :code:`git` is installed on the system)
+2. Get the benchmarkstt source code from github (assumes :code:`git` is installed on the system)
 
    .. git clone https://github.com/ebu/ai-benchmarking-stt.git
 
@@ -47,11 +47,11 @@ From source
 
 4. Test and use
 
-   Conferatur should now be installed and usable.
+   BenchmarkSTT should now be installed and usable.
 
    .. code-block:: none
 
-      $ echo "IT WORKS" | conferatur normalization --lowercase
+      $ echo "IT WORKS" | benchmarkstt normalization --lowercase
       it works
 
 
@@ -59,18 +59,18 @@ From source
 
    .. code-block:: bash
 
-      conferatur --help
-      conferatur normalization --help
+      benchmarkstt --help
+      benchmarkstt normalization --help
 
    See :doc:`usage` for more information on how to use.
 
 
-Removing conferatur
--------------------
+Removing benchmarkstt
+---------------------
 
    .. code-block:: bash
 
-      pip uninstall conferatur
+      pip uninstall benchmarkstt
 
 
 Docker

@@ -10,7 +10,7 @@ with open('VERSION') as f:
     __version__ = f.read().strip()
 __author__ = 'EBU'
 # had to call it something...
-__name__ = 'conferatur'
+__name__ = 'benchmarkstt'
 
 # Auto save to __meta__
 meta_location = os.path.join(dirname, 'src', __name__, '__meta__.py')
@@ -39,7 +39,7 @@ setup(
     python_requires='>=3.5',
     packages=find_packages("src"),
     package_dir={"": "src"},
-    package_data={'conferatur': ['api/templates/*.html']},
+    package_data={'benchmarkstt': ['api/templates/*.html']},
     include_package_data=True,
     install_requires=[
        'MarkupSafe>=1.0',
