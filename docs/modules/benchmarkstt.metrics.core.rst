@@ -1,7 +1,7 @@
-conferatur.comparison.cli module
+benchmarkstt.metrics.core module
 ================================
 
-.. automodule:: conferatur.comparison.cli
+.. automodule:: benchmarkstt.metrics.core
     :members:
     :undoc-members:
     :show-inheritance:

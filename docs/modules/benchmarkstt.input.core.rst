@@ -1,7 +1,7 @@
-conferatur.metrics.core module
+benchmarkstt.input.core module
 ==============================
 
-.. automodule:: conferatur.metrics.core
+.. automodule:: benchmarkstt.input.core
     :members:
     :undoc-members:
     :show-inheritance:

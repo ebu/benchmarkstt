@@ -1,4 +1,4 @@
-conferatur.tokenization package
+benchmarkstt.comparison package
 ===============================
 
 Submodules
@@ -6,12 +6,12 @@ Submodules
 
 .. toctree::
 
-   conferatur.tokenization.core
+   benchmarkstt.comparison.cli
 
 Module contents
 ---------------
 
-.. automodule:: conferatur.tokenization
+.. automodule:: benchmarkstt.comparison
     :members:
     :undoc-members:
     :show-inheritance:

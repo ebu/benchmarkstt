@@ -1,17 +1,17 @@
-conferatur.input package
-========================
+benchmarkstt.input package
+==========================
 
 Submodules
 ----------
 
 .. toctree::
 
-   conferatur.input.core
+   benchmarkstt.input.core
 
 Module contents
 ---------------
 
-.. automodule:: conferatur.input
+.. automodule:: benchmarkstt.input
     :members:
     :undoc-members:
     :show-inheritance:

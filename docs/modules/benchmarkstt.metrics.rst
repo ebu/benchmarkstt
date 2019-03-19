@@ -1,17 +1,17 @@
-conferatur.metrics package
-==========================
+benchmarkstt.metrics package
+============================
 
 Submodules
 ----------
 
 .. toctree::
 
-   conferatur.metrics.core
+   benchmarkstt.metrics.core
 
 Module contents
 ---------------
 
-.. automodule:: conferatur.metrics
+.. automodule:: benchmarkstt.metrics
     :members:
     :undoc-members:
     :show-inheritance:
