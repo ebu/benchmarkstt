@@ -1,7 +1,7 @@
 Welcome to BenchmarkSTT's documentation!
 ========================================
 
-.. image:: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=benchmarkstt
+.. image:: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=master
     :target: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
