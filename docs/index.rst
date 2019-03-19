@@ -1,7 +1,7 @@
-Welcome to Conferatur's documentation!
-======================================
+Welcome to BenchmarkSTT's documentation!
+========================================
 
-.. image:: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=conferatur
+.. image:: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=benchmarkstt
     :target: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
@@ -9,7 +9,7 @@ Welcome to Conferatur's documentation!
 
 
 
-"Conferatur: had to call it something..."
+"BenchmarkSTT: had to call it something..."
 
 .. toctree::
    :maxdepth: 3
@@ -18,7 +18,7 @@ Welcome to Conferatur's documentation!
    INSTALL
    usage
    development
-   modules/conferatur
+   modules/benchmarkstt
 
 
 Indices and tables

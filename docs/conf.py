@@ -4,7 +4,7 @@ import sys
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
-root_dir = os.path.abspath('../conferatur')
+root_dir = os.path.abspath('../benchmarkstt')
 sys.path.insert(0, root_dir)
 
 
@@ -29,7 +29,7 @@ else:
 
 # -- Project information -----------------------------------------------------
 
-project = 'Conferatur'
+project = 'BenchmarkSTT'
 copyright = '2019, EBU'
 author = 'EBU'
 
@@ -111,7 +111,7 @@ html_context = {
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Conferaturdoc'
+htmlhelp_basename = 'BenchmarkSTTdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -138,7 +138,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Conferatur.tex', 'Conferatur Documentation',
+    (master_doc, 'BenchmarkSTT.tex', 'BenchmarkSTT Documentation',
      'EBU', 'manual'),
 ]
 
@@ -148,7 +148,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('cli', 'conferatur', 'Conferatur Documentation',
+    ('cli', 'benchmarkstt', 'BenchmarkSTT Documentation',
      [author], 1)
 ]
 
@@ -159,8 +159,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Conferatur', 'Conferatur Documentation',
-     author, 'Conferatur', 'One line description of project.',
+    (master_doc, 'BenchmarkSTT', 'BenchmarkSTT Documentation',
+     author, 'BenchmarkSTT', 'One line description of project.',
      'Miscellaneous'),
 ]
 

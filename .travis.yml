@@ -12,7 +12,7 @@ script: pytest
 branches:
   only:
     - master
-    - conferatur
+    - benchmarkstt
 matrix:
   include:
     - { python: "3.7", dist: "xenial", os: "linux" }

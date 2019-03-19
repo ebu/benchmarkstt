@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CONFERATUR" "1" "Feb 08, 2019" "" "BenchmarkSTT"
+.TH "BENCHMARKSTT" "1" "Mar 19, 2019" "" "BenchmarkSTT"
 .SH NAME
 benchmarkstt \- BenchmarkSTT Documentation
 .
@@ -40,9 +40,9 @@ BenchmarkSTT main command line script
 .nf
 .ft C
 usage: benchmarkstt [\-h]
-                  [\-\-log\-level {critical,fatal,error,warn,warning,info,debug,notset}]
-                  [\-\-version]
-                  {normalization,api}
+                    [\-\-log\-level {critical,fatal,error,warn,warning,info,debug,notset}]
+                    [\-\-version]
+                    {normalization,api}
 .ft P
 .fi
 .UNINDENT
@@ -82,15 +82,17 @@ Apply normalization to given input
 .sp
 .nf
 .ft C
-usage: benchmarkstt normalization [\-h] [\-i file] [\-o file] [\-\-alphanumeric]
-                                [\-\-alphanumericunicode] [\-\-config config]
-                                [\-\-configfile file [encoding]]
-                                [\-\-file normalizer file [encoding]]
-                                [\-\-localizedfile normalizer locale path [encoding]]
-                                [\-\-lowercase]
-                                [\-\-regexreplace search [replace]]
-                                [\-\-replace search [replace]]
-                                [\-\-replacewords search replace] [\-\-unidecode]
+usage: benchmarkstt normalization [\-h] [\-i file] [\-o file] [\-\-log]
+                                  [\-\-alphanumeric] [\-\-alphanumericunicode]
+                                  [\-\-config config]
+                                  [\-\-configfile file [encoding]]
+                                  [\-\-file normalizer file [encoding]]
+                                  [\-\-localizedfile normalizer locale path [encoding]]
+                                  [\-\-lowercase]
+                                  [\-\-regexreplace search [replace]]
+                                  [\-\-replace search [replace]]
+                                  [\-\-replacewords search replace]
+                                  [\-\-unidecode]
 .ft P
 .fi
 .UNINDENT
@@ -113,6 +115,11 @@ read input from this file, defaults to STDIN
 .TP
 .B\-o, \-\-outputfile
 write output to this file, defaults to STDOUT
+.TP
+.B\-\-log
+show normalizer logs
+.sp
+Default: False
 .UNINDENT
 .SS available normalizers
 .INDENT 0.0
@@ -138,20 +145,25 @@ Simple alphanumeric filter
 .UNINDENT
 .TP
 .B\-\-alphanumericunicode
-Simple alphanumeric filter, takes into account all unicode alphanumeric characters
+Simple alphanumeric filter, takes into account all unicode alphanumeric
+characters.
 .INDENT 7.0
 .TP
 .B example text
 "Das, öder die Flipper\-Wåld Gespütt!"
 .TP
-.B example result
+.B example return
 "DasöderdieFlipperWåldGespütt"
 .UNINDENT
 .TP
 .B\-\-config
-Use config notation to define normalization rules. This notation is a list of normalizers, one per line, with optional arguments (separated by a space).
+Use config notation to define normalization rules. This notation is a
+list of normalizers, one per line, with optional arguments (separated by a
+space).
 .sp
-The normalizers can be any of the core normalizers, or you can refer to your own normalizer class (like you would use in a python import, eg. \fImy.own.package.MyNormalizerClass\fP).
+The normalizers can be any of the core normalizers, or you can refer to your
+own normalizer class (like you would use in a python import, eg.
+\fImy.own.package.MyNormalizerClass\fP).
 .INDENT 7.0
 .TP
 .B Additional rules:
@@ -161,9 +173,11 @@ Normalizer names are case\-insensitive.
 .IP \(bu 2
 Arguments MAY be wrapped in double quotes.
 .IP \(bu 2
-If an argument contains a space, newline or double quote, it MUST be wrapped in double quotes.
+If an argument contains a space, newline or double quote, it MUST be
+wrapped in double quotes.
 .IP \(bu 2
-A double quote itself is represented in this quoted argument as two double quotes: \fI""\fP\&.
+A double quote itself is represented in this quoted argument as two
+double quotes: \fI""\fP\&.
 .UNINDENT
 .UNINDENT
 .sp
@@ -195,14 +209,20 @@ configuration text
 "He bravely turned his tail and fled"
 .TP
 .B example config
-\(aq# using a simple config filenLowercase nn    # it even supports commentsn# If there is a space in the argument, make sure you quote it though!n  regexreplace "y t" "Y T"n n      # extraneous whitespaces are ignored n     replace   e     an\(aq
-.TP
-.B example return
-"ha bravalY Turnad his tail and flad"
+\(aq\(aq\(aq# using a simple config filenLowercase n
 .UNINDENT
+.sp
+# it even supports comments
+# If there is a space in the argument, make sure you quote it though!
+regexreplace "y t" "Y T"
+nn
+# extraneous whitespaces are ignored
+replace   e     an\(aq\(aq\(aq
+:example return: "ha bravalY Turnad his tail and flad"
 .TP
 .B\-\-configfile
-Load config from a file, see \fBConfig\fP for information about config notation
+Load config from a file, see \fBConfig\fP for information about config
+notation
 .INDENT 7.0
 .TP
 .B param typing.io.TextIO file
@@ -254,7 +274,9 @@ The file encoding
 .UNINDENT
 .TP
 .B\-\-localizedfile
-Reads and applies normalization rules from a locale\-based file, it will automatically determine the "best fit" for a given locale, if one is available.
+Reads and applies normalization rules from a locale\-based file, it will
+automatically determine the "best fit" for a given locale, if one is
+available.
 .INDENT 7.0
 .TP
 .B param str|class normalizer
@@ -295,7 +317,7 @@ Lowercase the text
 .B example text
 "Easy, Mungo, easy... Mungo..."
 .TP
-.B example result
+.B example return
 "easy, mungo, easy... mungo..."
 .UNINDENT
 .TP
@@ -305,7 +327,8 @@ case\-sensitive.
 .sp
 Case\-insensitivity is supported by adding inline modifiers.
 .sp
-You might want to use capturing groups to preserve the case. When replacing a character not captured, the information about its case is lost...
+You might want to use capturing groups to preserve the case. When replacing
+a character not captured, the information about its case is lost...
 .sp
 Eg. would replace "HAHA! Hahaha!" to "HeHe! Hehehe!":
 .INDENT 7.0
@@ -330,7 +353,8 @@ _
 .UNINDENT
 .UNINDENT
 .sp
-No regex flags are set by default, you can set them yourself though in the regex, and combine them at will, eg. multiline, dotall and ignorecase.
+No regex flags are set by default, you can set them yourself though in the
+regex, and combine them at will, eg. multiline, dotall and ignorecase.
 .sp
 Eg. would replace "New<CRLF>line" to "newline":
 .INDENT 7.0
@@ -365,7 +389,7 @@ _
 .B example replace
 r\(aq1e\(aq
 .TP
-.B example result
+.B example return
 "HeHe! Hehehe!"
 .UNINDENT
 .TP
@@ -412,7 +436,7 @@ Replace with
 .B example replace
 "the"
 .TP
-.B example result
+.B example return
 "She has the heart of formica"
 .UNINDENT
 .TP
@@ -439,8 +463,8 @@ Make benchmarkstt available through a rudimentary \fI\%JSON\-RPC\fP interface
 .nf
 .ft C
 usage: benchmarkstt api [\-h] [\-\-debug] [\-\-host HOST] [\-\-port PORT]
-                      [\-\-entrypoint ENTRYPOINT] [\-\-with\-explorer]
-                      [\-\-list\-methods]
+                        [\-\-entrypoint ENTRYPOINT] [\-\-with\-explorer]
+                        [\-\-list\-methods]
 .ft P
 .fi
 .UNINDENT
@@ -467,7 +491,7 @@ the jsonrpc api address
 Default: "/api"
 .TP
 .B\-\-with\-explorer
-also create the explorer to test api calls with
+also create the explorer to test api calls with, this is a rudimentary feature currently only meant for testing and debugging
 .sp
 Default: False
 .TP

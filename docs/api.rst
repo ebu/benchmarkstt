@@ -1,7 +1,7 @@
 API
 ===
 
-Conferatur exposes its functionality through a JSON-RPC_ api.
+BenchmarkSTT exposes its functionality through a JSON-RPC_ api.
 
 Starting the server
 -------------------
@@ -10,7 +10,7 @@ You can launch a server to make the api available via:
 
     - :doc:`cli/api` (for debugging and local use only)
     - :doc:`docker`
-    - gunicorn, by running :code:`gunicorn -b :8080 conferatur.api.gunicorn`
+    - gunicorn, by running :code:`gunicorn -b :8080 benchmarkstt.api.gunicorn`
 
 
 Usage

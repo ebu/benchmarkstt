@@ -2,8 +2,8 @@ Subcommand normalization
 ========================
 
 .. argparse::
-   :module: conferatur.cli
+   :module: benchmarkstt.cli
    :func: _parser
-   :prog: conferatur
+   :prog: benchmarkstt
    :path: normalization
 
