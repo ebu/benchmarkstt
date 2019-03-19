@@ -1,4 +1,4 @@
-from conferatur import get_available
+from conferatur import get_modules_dict
 
 
-available = get_available('conferatur.metrics')
+available = get_modules_dict('conferatur.metrics')
