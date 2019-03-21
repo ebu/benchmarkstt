@@ -1,8 +1,8 @@
 Welcome to BenchmarkSTT's documentation!
 ========================================
 
-.. image:: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=master
-    :target: https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt
+.. image:: https://dev.azure.com/danielthepope/ai-benchmarking-stt/_apis/build/status/ebu.ai-benchmarking-stt?branchName=master
+    :target: https://dev.azure.com/danielthepope/ai-benchmarking-stt/_build/latest?definitionId=3&branchName=master
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :target: https://opensource.org/licenses/MIT
