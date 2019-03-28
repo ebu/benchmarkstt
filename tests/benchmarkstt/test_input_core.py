@@ -1,0 +1,111 @@
+from benchmarkstt.input.core import PlainText
+from benchmarkstt.schema import Word, Schema
+
+candide = '''
+"There is a concatenation of events in this best of all possible worlds:
+for if you had not been kicked out of a magnificent castle for love of
+Miss Cunegonde: if you had not been put into the Inquisition: if you had
+not walked over America: if you had not stabbed the Baron: if you had
+not lost all your sheep from the fine country of El Dorado: you would
+not be here eating preserved citrons and pistachio-nuts."
+
+"All that is very well," answered Candide, "but let us cultivate our
+garden."
+'''
+
+candide_schema = [Word({"text": "\"There", "@raw": "\n\"There "}),
+                  Word({"text": "is", "@raw": "is "}),
+                  Word({"text": "a", "@raw": "a "}),
+                  Word({"text": "concatenation", "@raw": "concatenation "}),
+                  Word({"text": "of", "@raw": "of "}),
+                  Word({"text": "events", "@raw": "events "}),
+                  Word({"text": "in", "@raw": "in "}),
+                  Word({"text": "this", "@raw": "this "}),
+                  Word({"text": "best", "@raw": "best "}),
+                  Word({"text": "of", "@raw": "of "}),
+                  Word({"text": "all", "@raw": "all "}),
+                  Word({"text": "possible", "@raw": "possible "}),
+                  Word({"text": "worlds:", "@raw": "worlds:\n"}),
+                  Word({"text": "for", "@raw": "for "}),
+                  Word({"text": "if", "@raw": "if "}),
+                  Word({"text": "you", "@raw": "you "}),
+                  Word({"text": "had", "@raw": "had "}),
+                  Word({"text": "not", "@raw": "not "}),
+                  Word({"text": "been", "@raw": "been "}),
+                  Word({"text": "kicked", "@raw": "kicked "}),
+                  Word({"text": "out", "@raw": "out "}),
+                  Word({"text": "of", "@raw": "of "}),
+                  Word({"text": "a", "@raw": "a "}),
+                  Word({"text": "magnificent", "@raw": "magnificent "}),
+                  Word({"text": "castle", "@raw": "castle "}),
+                  Word({"text": "for", "@raw": "for "}),
+                  Word({"text": "love", "@raw": "love "}),
+                  Word({"text": "of", "@raw": "of\n"}),
+                  Word({"text": "Miss", "@raw": "Miss "}),
+                  Word({"text": "Cunegonde:", "@raw": "Cunegonde: "}),
+                  Word({"text": "if", "@raw": "if "}),
+                  Word({"text": "you", "@raw": "you "}),
+                  Word({"text": "had", "@raw": "had "}),
+                  Word({"text": "not", "@raw": "not "}),
+                  Word({"text": "been", "@raw": "been "}),
+                  Word({"text": "put", "@raw": "put "}),
+                  Word({"text": "into", "@raw": "into "}),
+                  Word({"text": "the", "@raw": "the "}),
+                  Word({"text": "Inquisition:", "@raw": "Inquisition: "}),
+                  Word({"text": "if", "@raw": "if "}),
+                  Word({"text": "you", "@raw": "you "}),
+                  Word({"text": "had", "@raw": "had\n"}),
+                  Word({"text": "not", "@raw": "not "}),
+                  Word({"text": "walked", "@raw": "walked "}),
+                  Word({"text": "over", "@raw": "over "}),
+                  Word({"text": "America:", "@raw": "America: "}),
+                  Word({"text": "if", "@raw": "if "}),
+                  Word({"text": "you", "@raw": "you "}),
+                  Word({"text": "had", "@raw": "had "}),
+                  Word({"text": "not", "@raw": "not "}),
+                  Word({"text": "stabbed", "@raw": "stabbed "}),
+                  Word({"text": "the", "@raw": "the "}),
+                  Word({"text": "Baron:", "@raw": "Baron: "}),
+                  Word({"text": "if", "@raw": "if "}),
+                  Word({"text": "you", "@raw": "you "}),
+                  Word({"text": "had", "@raw": "had\n"}),
+                  Word({"text": "not", "@raw": "not "}),
+                  Word({"text": "lost", "@raw": "lost "}),
+                  Word({"text": "all", "@raw": "all "}),
+                  Word({"text": "your", "@raw": "your "}),
+                  Word({"text": "sheep", "@raw": "sheep "}),
+                  Word({"text": "from", "@raw": "from "}),
+                  Word({"text": "the", "@raw": "the "}),
+                  Word({"text": "fine", "@raw": "fine "}),
+                  Word({"text": "country", "@raw": "country "}),
+                  Word({"text": "of", "@raw": "of "}),
+                  Word({"text": "El", "@raw": "El "}),
+                  Word({"text": "Dorado:", "@raw": "Dorado: "}),
+                  Word({"text": "you", "@raw": "you "}),
+                  Word({"text": "would", "@raw": "would\n"}),
+                  Word({"text": "not", "@raw": "not "}),
+                  Word({"text": "be", "@raw": "be "}),
+                  Word({"text": "here", "@raw": "here "}),
+                  Word({"text": "eating", "@raw": "eating "}),
+                  Word({"text": "preserved", "@raw": "preserved "}),
+                  Word({"text": "citrons", "@raw": "citrons "}),
+                  Word({"text": "and", "@raw": "and "}),
+                  Word({"text": "pistachio-nuts.\"", "@raw": "pistachio-nuts.\"\n\n"}),
+                  Word({"text": "\"All", "@raw": "\"All "}),
+                  Word({"text": "that", "@raw": "that "}),
+                  Word({"text": "is", "@raw": "is "}),
+                  Word({"text": "very", "@raw": "very "}),
+                  Word({"text": "well,\"", "@raw": "well,\" "}),
+                  Word({"text": "answered", "@raw": "answered "}),
+                  Word({"text": "Candide,", "@raw": "Candide, "}),
+                  Word({"text": "\"but", "@raw": "\"but "}),
+                  Word({"text": "let", "@raw": "let "}),
+                  Word({"text": "us", "@raw": "us "}),
+                  Word({"text": "cultivate", "@raw": "cultivate "}),
+                  Word({"text": "our", "@raw": "our\n"}),
+                  Word({"text": "garden.\"", "@raw": "garden.\"\n"})]
+
+
+def test_plaintext():
+    assert list(PlainText(candide)) == candide_schema
+    assert Schema(PlainText(candide)) == candide_schema

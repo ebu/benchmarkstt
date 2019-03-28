@@ -4,7 +4,7 @@ from benchmarkstt.input import core
 
 
 def argparser(parser: argparse.ArgumentParser):
-    # steps: input tokenization normalize compare
+    # steps: input segmentation normalize compare
     parser.add_argument('--input-ref', nargs='+', required=True)
     parser.add_argument('--input-hyp', nargs='+', required=True)
 

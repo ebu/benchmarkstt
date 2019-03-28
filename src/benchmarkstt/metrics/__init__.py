@@ -1,4 +1,5 @@
-from benchmarkstt import get_modules_dict
+from benchmarkstt import get_modules
+from importlib import import_module
 
-
-available = get_modules_dict('benchmarkstt.metrics')
+available = import_module('benchmarkstt.metrics.core')
+print(available)

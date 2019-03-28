@@ -10,6 +10,7 @@ import textwrap
 import itertools
 from . import logger
 import logging
+from benchmarkstt.cli import args_inputfile
 
 
 class _NormalizerAction:
@@ -70,6 +71,9 @@ def argparser(parser: argparse.ArgumentParser):
     Adds the help and arguments specific to this module
     """
 
+    parser.add_argument('--log', action='store_true',
+                        help='show normalizer logs')
+
     files_desc = """
       You can provide multiple input and output files, each preceded by -i and -o
       respectively.
@@ -79,15 +83,10 @@ def argparser(parser: argparse.ArgumentParser):
       output file."""
 
     files = parser.add_argument_group('input and output files', description=files_desc)
-
-    files.add_argument('-i', '--inputfile', action='append', nargs=1,
-                       help='read input from this file, defaults to STDIN',
-                       metavar='file')
+    args_inputfile(files)
     files.add_argument('-o', '--outputfile', action='append', nargs=1,
                        help='write output to this file, defaults to STDOUT',
                        metavar='file')
-    files.add_argument('--log', action='store_true',
-                       help='show normalizer logs')
 
     normalizers_desc = """
       A list of normalizers to execute on the input, can be one or more normalizers

@@ -15,8 +15,10 @@ class WER:
         :return: float
         """
 
+        return None
+
         def wrapper(schema):
-            class Wrapper():
+            class Wrapper:
                 def __init__(self, word: Word):
                     self._word = word
 

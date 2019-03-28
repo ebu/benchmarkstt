@@ -5,17 +5,16 @@ Each format class should be accessible as iterator, each iteration should return
 essentially usable and can be easily converted to a :py:class:`benchmarkstt.schema.Schema`
 """
 
-import benchmarkstt.tokenization.core as tokenizers
+import benchmarkstt.segmentation.core as segmenters
 from benchmarkstt.schema import Word
 
 
 class PlainText:
-    def __init__(self, text, tokenizer=None):
-        if tokenizer is None:
-            tokenizer = tokenizers.Simple
+    def __init__(self, text, segmenter=None):
+        if segmenter is None:
+            segmenter = segmenters.Simple
         self._text = text
-        self._tokenizer = tokenizer
+        self._segmenter = segmenter
 
     def __iter__(self):
-        for item in self._tokenizer(self._text):
-            yield Word(text=item)
+        return iter(self._segmenter(self._text))

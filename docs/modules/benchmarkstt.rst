@@ -11,7 +11,7 @@ Subpackages
     benchmarkstt.input
     benchmarkstt.metrics
     benchmarkstt.normalization
-    benchmarkstt.tokenization
+    benchmarkstt.segmentation
 
 Submodules
 ----------

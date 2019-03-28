@@ -4,6 +4,7 @@ Available JSON-RPC methods
 ==========================
 
 
+<module 'benchmarkstt.metrics.core' from '/Users/mike/Scripts/ai-benchmarking-stt/src/benchmarkstt/metrics/core.py'>
 version
 -------
 

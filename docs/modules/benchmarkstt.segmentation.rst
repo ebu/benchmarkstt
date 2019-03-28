@@ -1,4 +1,4 @@
-benchmarkstt.tokenization package
+benchmarkstt.segmentation package
 =================================
 
 Submodules
@@ -6,12 +6,12 @@ Submodules
 
 .. toctree::
 
-   benchmarkstt.tokenization.core
+   benchmarkstt.segmentation.core
 
 Module contents
 ---------------
 
-.. automodule:: benchmarkstt.tokenization
+.. automodule:: benchmarkstt.segmentation
     :members:
     :undoc-members:
     :show-inheritance:

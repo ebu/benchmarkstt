@@ -4,9 +4,8 @@ Package benchmarkstt
 
 from .__meta__ import __author__, __version__
 from importlib import import_module
-import textwrap
 
-modules = ('normalization', 'api')
+modules = ('normalization', 'api', 'comparison')
 
 
 def get_modules(sub_module=None):

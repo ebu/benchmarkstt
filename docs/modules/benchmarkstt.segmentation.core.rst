@@ -1,7 +1,7 @@
-benchmarkstt.tokenization.core module
+benchmarkstt.segmentation.core module
 =====================================
 
-.. automodule:: benchmarkstt.tokenization.core
+.. automodule:: benchmarkstt.segmentation.core
     :members:
     :undoc-members:
     :show-inheritance:
