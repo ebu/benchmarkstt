@@ -40,7 +40,10 @@ def _parser() -> argparse.ArgumentParser:
             kwargs['formatter_class'] = cli.Formatter
         docs = cli.__doc__
         kwargs['description'] = textwrap.dedent(docs if docs is not None else '')
-        subparser = subparsers.add_parser(module, **kwargs)
+        subparser = subparsers.add_parser(module, add_help=False, **kwargs)
+
+        subparser.add_argument('--help', action='help', default=argparse.SUPPRESS,
+                               help=argparse._('show this help message and exit'))
         cli.argparser(subparser)
 
     return parser

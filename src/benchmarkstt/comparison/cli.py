@@ -1,30 +1,32 @@
 import argparse
 from benchmarkstt.metrics.core import WER
 from benchmarkstt.input import core
+import argparse
 
 
 def argparser(parser: argparse.ArgumentParser):
-    # steps: input segmentation normalize compare
-    parser.add_argument('--input-ref', nargs='+', required=True)
-    parser.add_argument('--input-hyp', nargs='+', required=True)
+    # steps: input normalize[pre?] segmentation normalize[post?] compare
+    parser.add_argument('-r', '--reference', required=True)
+    parser.add_argument('-h', '--hypothesis', required=True)
+
+    parser.add_argument('-rt', '--reference-type', default='infer')
+    parser.add_argument('-ht', '--hypothesis-type', default='infer')
+
+    parser.add_argument('-m', '--metric', nargs='?', default='wer')
 
     return parser
 
 
-def create_input(*args):
-    # todo: support multiple input formats
-    if len(args) == 1:
-        return core.File(args[0])
-
-    raise ValueError("Currently only File is supported")
-
-
 def main(parser, args):
 
-    ref = create_input(*args.input_ref)
-    hyp = create_input(*args.input_hyp)
+    ref = core.File(args.reference, args.reference_type)
+    hyp = core.File(args.hypothesis, args.reference_type)
+    ref = list(ref)
+    hyp = list(hyp)
 
-    comparison = WER()
-    print(comparison.compare(ref.schema(), hyp.schema()))
-    print(ref)
-    print(hyp)
+    metrics = WER()
+    print(metrics.compare(ref, hyp))
+
+    # print(comparison.compare(ref.schema(), hyp.schema()))
+    # print(ref)
+    # print(hyp)

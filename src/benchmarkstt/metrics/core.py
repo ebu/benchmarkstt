@@ -15,8 +15,6 @@ class WER:
         :return: float
         """
 
-        return None
-
         def wrapper(schema):
             class Wrapper:
                 def __init__(self, word: Word):
@@ -26,6 +24,10 @@ class WER:
                     return hash(self._word['text'])
 
             return [Wrapper(row) for row in schema]
+
+        # TODO: make a basic version working, current version is f'ed
+        # TODO 2: make a proper diff implementing Hunt–McIlroy algorithm
+        #         (see https://github.com/ebu/ai-benchmarking-stt/issues/30 )
 
         matcher = difflib.SequenceMatcher(None, wrapper(a), wrapper(b))
         codes = matcher.get_opcodes()
