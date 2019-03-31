@@ -8,12 +8,13 @@ logger = logging.getLogger(__name__)
 
 class WER:
     """
-    Word Error Rate, with the small modification that we count total words as
+    Word Error Rate, basically defined as:
 
-    insertions + deletions + substitions
-    ------------------------------------
-         number of reference words
+    .. code-block :: text
 
+        insertions + deletions + substitions
+        ------------------------------------
+             number of reference words
 
     See: https://en.wikipedia.org/wiki/Word_error_rate
     """

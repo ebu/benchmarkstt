@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
 
     benchmarkstt.api
-    benchmarkstt.comparison
     benchmarkstt.input
     benchmarkstt.metrics
     benchmarkstt.normalization

@@ -5,7 +5,7 @@ Package benchmarkstt
 from .__meta__ import __author__, __version__
 from importlib import import_module
 
-modules = ('normalization', 'api', 'comparison')
+modules = ('normalization', 'api', 'metrics')
 
 
 def get_modules(sub_module=None):

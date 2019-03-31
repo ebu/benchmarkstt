@@ -6,6 +6,7 @@ Submodules
 
 .. toctree::
 
+   benchmarkstt.metrics.cli
    benchmarkstt.metrics.core
 
 Module contents

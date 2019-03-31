@@ -38,8 +38,12 @@ def _parser() -> argparse.ArgumentParser:
         kwargs = dict()
         if hasattr(cli, 'Formatter'):
             kwargs['formatter_class'] = cli.Formatter
-        docs = cli.__doc__
-        kwargs['description'] = textwrap.dedent(docs if docs is not None else '')
+
+        if cli.__doc__ is None:
+            docs = 'TODO: add description to benchmarkstt.%s.cli' % (module,)
+        else:
+            docs = cli.__doc__
+        kwargs['description'] = textwrap.dedent(docs)
         subparser = subparsers.add_parser(module, add_help=False, **kwargs)
 
         subparser.add_argument('--help', action='help', default=argparse.SUPPRESS,
