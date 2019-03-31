@@ -24,8 +24,14 @@ def main(parser, args):
     ref = list(ref)
     hyp = list(hyp)
 
-    metrics = WER()
-    print(metrics.compare(ref, hyp))
+    metrics = WER(mode=WER.MODE_STRICT)
+    print('strict: %f' % metrics.compare(ref, hyp))
+
+    metrics = WER(mode=WER.MODE_HUNT)
+    print('hunt: %f' % metrics.compare(ref, hyp))
+
+    metrics = WER(mode=WER.MODE_DIFFLIBRATIO)
+    print('difflib: %f' % metrics.compare(ref, hyp))
 
     # print(comparison.compare(ref.schema(), hyp.schema()))
     # print(ref)
