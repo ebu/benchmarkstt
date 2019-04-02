@@ -20,7 +20,7 @@ __version__ = %s
 __author__ = %s
 ''' % (repr(__version__), repr(__author__)))
 
-with open('README.md') as f:
+with open('README.rst') as f:
     long_description = f.read()
 
 
@@ -30,7 +30,7 @@ setup(
     version=__version__,
     author=__author__,
     author_email='temp@example.com',
-    description='',
+    description='A library for benchmarking AI/ML applications.',
     long_description=long_description,
     classifiers=[
         'Programming Language :: Python',

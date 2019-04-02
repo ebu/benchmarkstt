@@ -23,20 +23,11 @@ From source
     - `Installing Python 3 on Windows <https://docs.python-guide.org/starting/install3/win/>`_
     - `Installing Python 3 on Linux <https://docs.python-guide.org/starting/install3/linux/>`_
 
-2. Get the benchmarkstt source code from github (assumes :code:`git` is installed on the system)
-
-   .. git clone https://github.com/ebu/ai-benchmarking-stt.git
+2. Install the package using :code:`pip`, this will also install all requirements
 
    .. code-block:: bash
 
-      git clone https://github.com/MikeSmithEU/ai-benchmarking-stt.git
-
-3. Install the package using :code:`pip`, this will also install all requirements
-
-   .. code-block:: bash
-
-      cd ai-benchmarking-stt
-      pip install .
+      pip install https://github.com/ebu/ai-benchmarking-stt.git
 
    Once this is done you may remove the git repository (optional).
 
@@ -45,7 +36,7 @@ From source
       cd ..
       rm -fr ai-benchmarking-stt
 
-4. Test and use
+3. Test and use
 
    BenchmarkSTT should now be installed and usable.
 
