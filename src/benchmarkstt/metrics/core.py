@@ -41,7 +41,7 @@ class WER:
         # TODO: proper documenting of different modes
 
         def traversible(schema):
-            return [word['text'] for word in schema]
+            return [word['item'] for word in schema]
 
         matcher = difflib.SequenceMatcher(a=traversible(ref),
                                           b=traversible(hyp),

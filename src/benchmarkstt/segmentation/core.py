@@ -28,10 +28,10 @@ class Simple:
         if start_match is not None:
             matches = iterable[0:3]
             pos = 3
-            yield Word({"text": matches[1], "@raw": ''.join(matches)})
+            yield Word({"item": matches[1], "type": "word", "@raw": ''.join(matches)})
 
         while pos < length:
             raw = ''.join(iterable[pos:pos+2])
             if raw != '':
-                yield Word({"text": iterable[pos], "@raw": raw})
+                yield Word({"item": iterable[pos], "type": "word", "@raw": raw})
             pos += 2

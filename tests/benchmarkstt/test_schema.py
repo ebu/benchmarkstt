@@ -8,13 +8,13 @@ import json
 
 def test_equality():
     assert Schema.loads('[]') == Schema()
-    assert Schema([Word(text='test')]) != Schema()
-    assert Word(text='test') == {'text': 'test'}
-    assert Word({'text': 'test'}) == Word(text='test')
+    assert Schema([Word(item='test')]) != Schema()
+    assert Word(item='test') == {'item': 'test'}
+    assert Word({'item': 'test'}) == Word(item='test')
 
 
 def test_encode():
-    item = Word(text='word', start=12, end=23)
+    item = Word(item='word', start=12, end=23)
     itemdict = item._asdict()
     line = json.dumps(itemdict)
     line_formatted = json.dumps(itemdict, indent=2)
@@ -31,7 +31,7 @@ def test_encode():
 
 
 def test_decode():
-    res = Schema.loads('[{"text": "test"}]')
+    res = Schema.loads('[{"item": "test"}]')
 
     assert type(res) is Schema
     assert len(res) is 1
@@ -69,8 +69,8 @@ def test_roundtrip():
     schema = Schema()
     testlen = 1
     for i in range(testlen):
-        schema.append({'text': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)})
-        schema.append(Word({'text': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)}))
+        schema.append({'item': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)})
+        schema.append(Word({'item': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)}))
 
     schema.extend(list(schema))
     assert len(schema) == testlen * 4

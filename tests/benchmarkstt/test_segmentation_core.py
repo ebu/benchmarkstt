@@ -25,4 +25,4 @@ def test_simple(text, expected):
         gotten = result[i]
         assert type(gotten) is Word
         assert expected_raw == gotten['@raw']
-        assert expected_raw.strip() == gotten['text']
+        assert expected_raw.strip() == gotten['item']
