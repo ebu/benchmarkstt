@@ -1,7 +1,9 @@
 
 # AI Benchmarking STT
 
-[![Build Status](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt.svg?branch=master)](https://travis-ci.com/MikeSmithEU/ai-benchmarking-stt)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Azure Build](https://img.shields.io/azure-devops/build/danielthepope/ai-benchmarking-stt/3.svg?logo=azure-devops)](https://dev.azure.com/danielthepope/ai-benchmarking-stt/_build/latest?definitionId=3&branchName=master)
+[![Azure Tests](https://img.shields.io/azure-devops/tests/danielthepope/ai-benchmarking-stt/3.svg?logo=azure-devops)](https://dev.azure.com/danielthepope/ai-benchmarking-stt/_build/latest?definitionId=3&branchName=master)
+[![License: MIT](https://img.shields.io/github/license/ebu/ai-benchmarking-stt.svg)](https://opensource.org/licenses/MIT)
 
 
 
