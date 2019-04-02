@@ -29,13 +29,6 @@ From source
 
       pip install https://github.com/ebu/ai-benchmarking-stt/archive/master.zip
 
-   Once this is done you may remove the git repository (optional).
-
-   .. code-block:: bash
-
-      cd ..
-      rm -fr ai-benchmarking-stt
-
 3. Test and use
 
    BenchmarkSTT should now be installed and usable.
