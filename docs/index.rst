@@ -1,6 +1,3 @@
-Welcome to BenchmarkSTT's documentation!
-========================================
-
 .. include:: ../README.rst
 
 
