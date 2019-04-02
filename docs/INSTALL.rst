@@ -27,7 +27,7 @@ From source
 
    .. code-block:: bash
 
-      pip install https://github.com/ebu/ai-benchmarking-stt.git
+      pip install https://github.com/ebu/ai-benchmarking-stt/archive/master.zip
 
    Once this is done you may remove the git repository (optional).
 
