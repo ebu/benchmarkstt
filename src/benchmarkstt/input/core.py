@@ -1,7 +1,7 @@
 """
 Default input formats
 
-Each format class should be accessible as iterator, each iteration should return a Word, so the input format is
+Each format class should be accessible as iterator, each iteration should return a Item, so the input format is
 essentially usable and can be easily converted to a :py:class:`benchmarkstt.schema.Schema`
 """
 

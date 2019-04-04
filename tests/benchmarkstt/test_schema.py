@@ -1,4 +1,4 @@
-from benchmarkstt.schema import Schema, Word, SchemaJSONError, SchemaInvalidItemError
+from benchmarkstt.schema import Schema, Item, SchemaJSONError, SchemaInvalidItemError
 import textwrap
 from random import sample, randint
 import pytest
@@ -8,13 +8,13 @@ import json
 
 def test_equality():
     assert Schema.loads('[]') == Schema()
-    assert Schema([Word(item='test')]) != Schema()
-    assert Word(item='test') == {'item': 'test'}
-    assert Word({'item': 'test'}) == Word(item='test')
+    assert Schema([Item(item='test')]) != Schema()
+    assert Item(item='test') == {'item': 'test'}
+    assert Item({'item': 'test'}) == Item(item='test')
 
 
 def test_encode():
-    item = Word(item='word', start=12, end=23)
+    item = Item(item='word', start=12, end=23)
     itemdict = item._asdict()
     line = json.dumps(itemdict)
     line_formatted = json.dumps(itemdict, indent=2)
@@ -35,7 +35,7 @@ def test_decode():
 
     assert type(res) is Schema
     assert len(res) is 1
-    assert type(res[0]) is Word
+    assert type(res[0]) is Item
 
     with pytest.raises(SchemaJSONError):
         Schema.loads('{"test": "test"}')
@@ -70,16 +70,16 @@ def test_roundtrip():
     testlen = 1
     for i in range(testlen):
         schema.append({'item': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)})
-        schema.append(Word({'item': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)}))
+        schema.append(Item({'item': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)}))
 
     schema.extend(list(schema))
     assert len(schema) == testlen * 4
 
     for item in schema:
-        assert type(item) is Word
+        assert type(item) is Item
 
     json = schema.json()
     assert Schema.loads(json) == schema
     schema = Schema.loads(json)
     for item in schema:
-        assert type(item) is Word
+        assert type(item) is Item

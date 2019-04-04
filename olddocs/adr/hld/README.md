@@ -31,7 +31,7 @@ Each of these connects to an STT vendor in order to create transcripion jobs.
 Implement the _transcript format guidelines_ to create consistently formated transcripts prior to analysis.
 
 ## Metric analyser
-Each of these socres the transcripts returned by the providers using a single metric (for example Word Error Rate).
+Each of these socres the transcripts returned by the providers using a single metric (for example Item Error Rate).
 
 ## Results metrics
 Lists the scores for the selected metrics for the selected providers. 

@@ -1,5 +1,5 @@
 from benchmarkstt.segmentation import core
-from benchmarkstt.schema import Word
+from benchmarkstt.schema import Item
 import pytest
 
 
@@ -23,6 +23,6 @@ def test_simple(text, expected):
     for i in range(0, len(expected)):
         expected_raw = expected[i]
         gotten = result[i]
-        assert type(gotten) is Word
+        assert type(gotten) is Item
         assert expected_raw == gotten['@raw']
         assert expected_raw.strip() == gotten['item']

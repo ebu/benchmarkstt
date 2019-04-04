@@ -20,7 +20,7 @@ class SchemaInvalidItemError(SchemaError):
     """Attempting to add an invalid item"""
 
 
-class Word(Mapping):
+class Item(Mapping):
     """
     Basic structure of each field to compare
 
@@ -50,7 +50,7 @@ class Word(Mapping):
         return iter(self._val)
 
     def __repr__(self):
-        return 'Word(%s)' % (self.json(),)
+        return 'Item(%s)' % (self.json(),)
 
     def json(self, **kwargs):
         return Schema.dumps(self, **kwargs)
@@ -71,7 +71,7 @@ class Meta(defaultdict):
 
 class Schema:
     """
-    Basically a list of :py:class:`Word`
+    Basically a list of :py:class:`Item`
     """
 
     def __init__(self, data=None):
@@ -81,7 +81,7 @@ class Schema:
         if data is None:
             self._data = []
         else:
-            self._data = [item if type(item) is Word else Word(item) for item in data]
+            self._data = [item if type(item) is Item else Item(item) for item in data]
 
     def __repr__(self):
         return 'Schema(%s)' % (self.json(),)
@@ -126,15 +126,15 @@ class Schema:
     def json(self, **kwargs):
         return self.dumps(**kwargs)
 
-    def append(self, obj: Union[Word, dict]):
+    def append(self, obj: Union[Item, dict]):
         if type(obj) is dict:
-            obj = Word(obj)
-        elif type(obj) is not Word:
+            obj = Item(obj)
+        elif type(obj) is not Item:
             raise SchemaError("Wrong type", type(obj))
         self._data.append(obj)
 
     def extend(self, iterable):
-        self._data.extend((item if type(item) is Word else Word(item) for item in iterable))
+        self._data.extend((item if type(item) is Item else Item(item) for item in iterable))
 
     def _aslist(self):
         return self._data
@@ -152,7 +152,7 @@ class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Schema):
             return obj._aslist()
-        if isinstance(obj, Word):
+        if isinstance(obj, Item):
             return obj._asdict()
         return super().default(obj)
 
@@ -173,4 +173,4 @@ class JSONDecoder(json.JSONDecoder):
     def object_hook(obj):
         if type(obj) is not dict:
             raise SchemaJSONError("Expected an object")
-        return Word(obj)
+        return Item(obj)

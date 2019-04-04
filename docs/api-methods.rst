@@ -222,7 +222,7 @@ normalization.replacewords
 Simple search replace that only replaces "words", the first letter will be
 checked case insensitive as well with preservation of case..
 
-:param str search: Word to search for
+:param str search: Item to search for
 :param str replace: Replace with
 
 :example text: "She has a heart of formica"

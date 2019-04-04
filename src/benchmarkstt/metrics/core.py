@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class WER:
     """
-    Word Error Rate, basically defined as:
+    Item Error Rate, basically defined as:
 
     .. code-block :: text
 
