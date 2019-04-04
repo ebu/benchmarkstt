@@ -1,7 +1,7 @@
 .PHONY: docs test clean gh-pages
 
 test:
-	pytest --verbose
+	pytest --doctest-modules --verbose
 
 docs: html
 
