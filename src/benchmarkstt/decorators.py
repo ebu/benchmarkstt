@@ -2,7 +2,7 @@ import logging
 from benchmarkstt import DeferredStr
 
 
-def log_call(logger: logging.Logger, log_level=logging.DEBUG, result=False):
+def log_call(logger: logging.Logger, log_level=None, result=None):
     """
     Decorator to log all calls to decorated function to given logger
 
@@ -36,16 +36,20 @@ def log_call(logger: logging.Logger, log_level=logging.DEBUG, result=False):
     DEBUG:logger_name: test(arg2='someval', arg3='someotherval')
     DEBUG:logger_name: test returned: result
     """
+
+    if log_level is None:
+        log_level = logging.DEBUG
+
     def _log_call(func: callable):
         def _(*args, **kwargs):
             arguments_format = []
             arguments_list = []
             if len(args):
                 arguments_format.append('%s')
-                arguments_list.append(', '.join([repr(a) for a in args]))
+                arguments_list.append(DeferredStr(lambda: ', '.join([repr(a) for a in args])))
             if len(kwargs):
                 arguments_format.append('%s')
-                arguments_list.append(', '.join([k + '=' + repr(kwargs[k]) for k in kwargs]))
+                arguments_list.append(DeferredStr(lambda: ', '.join([k + '=' + repr(kwargs[k]) for k in kwargs])))
 
             arguments_format = '%s(%s)' % (func.__name__, ', '.join(arguments_format))
 
