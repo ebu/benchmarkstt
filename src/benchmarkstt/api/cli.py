@@ -7,7 +7,7 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 
 import jsonrpcserver
 from flask import Flask, request, Response, render_template
-from benchmarkstt.docblock import format_docs, parse, rst_to_html
+from benchmarkstt.docblock import format_docs, parse, process_rst
 from .jsonrpc import get_methods
 
 
@@ -56,7 +56,7 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
         return Response(str(response), response.http_status, mimetype="application/json")
 
     if with_explorer:
-        app.template_filter('parse_rst')(rst_to_html)
+        app.template_filter('parse_rst')(process_rst)
 
         @app.route(entrypoint, methods=['GET'])
         def explorer():
