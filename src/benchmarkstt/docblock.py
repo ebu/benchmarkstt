@@ -148,6 +148,9 @@ class TextWriter(docutils.writers.Writer):
         def visit_Text(self, node):
             self._text += node.astext()
 
+        def visit_paragraph(self, node):
+            self._text += '\n\n'
+
         def text(self):
             return self._text
 
