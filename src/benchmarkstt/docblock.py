@@ -27,7 +27,7 @@ def doc_param_parser(docstring, key, no_name=None, allow_multiple=None,
 
     if replace_strat is None:
         def replace_strat(match, param):
-            return match[0]
+            return match.group(0)
     elif type(replace_strat) is str:
         _replace_strat = replace_strat
 
@@ -38,26 +38,26 @@ def doc_param_parser(docstring, key, no_name=None, allow_multiple=None,
     def _(match):
         nonlocal results, key, no_name, replace_strat
         if no_name:
-            param = dict(name=key, type=match[1], value=match[2])
+            param = dict(name=key, type=match.group(1), value=match.group(2))
             return_val = replace_strat(match, param)
             results.append(DocblockParam(**param))
         else:
-            value = textwrap.dedent(match[3]).strip()
-            param = dict(name=match[2], type=match[1], value=value)
+            value = textwrap.dedent(match.group(3)).strip()
+            param = dict(name=match.group(2), type=match.group(1), value=value)
             return_val = replace_strat(match, param)
             param = DocblockParam(**param)
             if allow_multiple:
                 # check if it already exists, if not create a new object
                 idx = [idx for idx, val in enumerate(results)
-                       if match[2] not in val]
+                       if match.group(2) not in val]
                 if not len(idx):
                     idx = len(results)
                     results.append({})
                 else:
                     idx = idx[0]
-                results[idx][match[2]] = param
+                results[idx][match.group(2)] = param
             else:
-                results[match[2]] = param
+                results[match.group(2)] = param
 
         return return_val
 
@@ -99,7 +99,7 @@ def parse(func):
     docs, doc_result = doc_param_parser(docs, 'return', no_name=True)
 
     def decode_examples(match, param):
-        if match[5] is None:
+        if match.group(5) is None:
             param['value'] = decode_literal(param['value'])
         else:
             param['value'] = process_rst(param['value'], 'text')
