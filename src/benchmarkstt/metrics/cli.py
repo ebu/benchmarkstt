@@ -47,4 +47,3 @@ def main(parser, args):
         print(cls.compare(ref, hyp))
         print()
         print()
-

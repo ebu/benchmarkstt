@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 class CLIDiffDialect:
     preprocessor = make_printable
-    preprocessor = lambda x: x
     delete_format = '\033[31m%s\033[0m'
     insert_format = '\033[32m%s\033[0m'
     formats = None
@@ -79,4 +78,3 @@ class DiffFormatter:
 def format_diff(a, b, opcodes=None, dialect=None, preprocessor=None):
     formatter = DiffFormatter(dialect)
     return formatter.diff(a, b, opcodes, preprocessor=preprocessor)
-

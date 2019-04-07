@@ -82,11 +82,8 @@ class WER(Base):
         counts = get_opcode_counts(diffs.get_opcodes())
 
         changes = counts['replace'] * self.SUB_PENALTY + \
-                  counts['delete'] * self.DEL_PENALTY + \
-                  counts['insert'] * self.INS_PENALTY
-
-        logger.getChild(type(self).__name__)\
-              .debug('WER comparison, reflen: %d, hyplen: %d' , ref_len, hyp_len)
+            counts['delete'] * self.DEL_PENALTY + \
+            counts['insert'] * self.INS_PENALTY
 
         return changes / (counts['equal'] + changes)
 
