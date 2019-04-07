@@ -36,12 +36,12 @@ jobs:
       versionSpec: '$(python.version)'
       architecture: 'x64'
 
-  - script: python -m pip install --upgrade pip && pip install ".[api,test]"
+  - script: python -m pip install --upgrade pip && pip install ".[test]"
     displayName: 'Install dependencies'
 
   - script: |
       pip install pytest
-      pytest tests --doctest-modules --junitxml=junit/test-results.xml
+      pytest tests --doctest-modules --verbose --junitxml=junit/test-results.xml
     displayName: 'pytest'
 
   - task: PublishTestResults@2
