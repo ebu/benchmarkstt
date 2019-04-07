@@ -1,12 +1,52 @@
-import difflib
 from benchmarkstt.schema import Schema
 import logging
-
+from benchmarkstt.diff.core import HuntMcIlroy, RatcliffObershelp
+from benchmarkstt.diff.formatter import format_diff
+from benchmarkstt.metrics import Base
 
 logger = logging.getLogger(__name__)
 
 
-class WER:
+def traversible(schema, key=None):
+    if key is None:
+        key = 'item'
+    return [word[key] for word in schema]
+
+
+def get_opcode_counts(opcodes):
+    counts = dict(equal=0, replace=0, insert=0, delete=0)
+
+    for tag, alo, ahi, blo, bhi in opcodes:
+        if tag in ['equal', 'replace', 'delete']:
+            counts[tag] += ahi - alo
+        elif tag == 'insert':
+            counts[tag] += bhi - blo
+
+    return counts
+
+
+def get_differ(a, b, differ_class):
+    if differ_class is None:
+        # differ_class = HuntMcIlroy
+        differ_class = RatcliffObershelp
+    return differ_class(traversible(a), traversible(b))
+
+
+class WordDiffs(Base):
+    def __init__(self, differ_class=None, dialect=None):
+        self._differ_class = differ_class
+        self._dialect = dialect
+
+    def compare(self, ref: Schema, hyp: Schema):
+        differ = get_differ(ref, hyp, differ_class=self._differ_class)
+        a = traversible(ref)
+        b = traversible(hyp)
+        return format_diff(a, b, differ.get_opcodes(),
+                           dialect=self._dialect,
+                           preprocessor=lambda x: ' %s' % (' '.join(x),))
+
+
+class WER(Base):
     """
     Item Error Rate, basically defined as:
 
@@ -19,50 +59,44 @@ class WER:
     See: https://en.wikipedia.org/wiki/Word_error_rate
     """
 
+    # TODO: proper documenting of different modes
     MODE_STRICT = 0
     MODE_HUNT = 1
-    MODE_DIFFLIBRATIO = 2
 
-    def __init__(self, mode=None):
-        if mode is None:
-            mode = self.MODE_STRICT
-        self._mode = mode
+    DEL_PENALTY = 1
+    INS_PENALTY = 1
+    SUB_PENALTY = 1
+
+    def __init__(self, mode=None, differ_class=None):
+        if differ_class is None:
+            differ_class = RatcliffObershelp
+        self._differ_class = differ_class
+        if mode is self.MODE_HUNT:
+            self.DEL_PENALTY = self.INS_PENALTY = .5
 
     def compare(self, ref: Schema, hyp: Schema):
-        """
-        :param Schema ref:
-        :param Schema hyp:
-        :return: float
-        """
+        diffs = get_differ(ref, hyp, differ_class=self._differ_class)
+        ref_len = len(diffs.a)
+        hyp_len = len(diffs.b)
 
-        # TODO: make a proper diff implementing Hunt–McIlroy algorithm
-        #      (see https://github.com/ebu/ai-benchmarking-stt/issues/30 )
+        counts = get_opcode_counts(diffs.get_opcodes())
 
-        # TODO: proper documenting of different modes
+        changes = counts['replace'] * self.SUB_PENALTY + \
+                  counts['delete'] * self.DEL_PENALTY + \
+                  counts['insert'] * self.INS_PENALTY
 
-        def traversible(schema):
-            return [word['item'] for word in schema]
+        logger.getChild(type(self).__name__)\
+              .debug('WER comparison, reflen: %d, hyplen: %d' , ref_len, hyp_len)
 
-        matcher = difflib.SequenceMatcher(a=traversible(ref),
-                                          b=traversible(hyp),
-                                          autojunk=False)
+        return changes / (counts['equal'] + changes)
 
-        if self._mode == self.MODE_DIFFLIBRATIO:
-            return matcher.ratio()
 
-        codes = matcher.get_opcodes()
+class DiffCounts(Base):
+    def __init__(self, differ_class=None):
+        if differ_class is None:
+            differ_class = RatcliffObershelp
+        self._differ_class = differ_class
 
-        counts = dict(equal=0, replace=0, insert=0, delete=0)
-
-        for code in codes:
-            counts[code[0]] += (code[2] - code[1]) if code[0] != 'insert' else code[4] - code[3]
-
-        logger.debug(counts)
-
-        if self._mode == self.MODE_HUNT:
-            changes = counts['replace'] + counts['delete']/2 + counts['insert']/2
-        else:
-            changes = counts['replace'] + counts['delete'] + counts['insert']
-
-        assert len(ref) == counts['replace'] + counts['delete'] + counts['equal']
-        return changes / len(ref)
+    def compare(self, ref: Schema, hyp: Schema):
+        diffs = get_differ(ref, hyp, differ_class=self._differ_class)
+        return get_opcode_counts(diffs.get_opcodes())

@@ -1,4 +1,4 @@
-from benchmarkstt.metrics.core import WER
+from benchmarkstt.metrics.core import WER, WordDiffs, DiffCounts
 from benchmarkstt.input import core
 import argparse
 
@@ -22,23 +22,29 @@ def argparser(parser: argparse.ArgumentParser):
 
 
 def main(parser, args):
-    ref = core.File(args.reference, args.reference_type)
-    hyp = core.File(args.hypothesis, args.reference_type)
+    if args.reference_type == 'argument':
+        ref = core.PlainText(args.reference)
+    else:
+        ref = core.File(args.reference, args.reference_type)
+
+    if args.hypothesis_type == 'argument':
+        hyp = core.PlainText(args.hypothesis)
+    else:
+        hyp = core.File(args.hypothesis, args.hypothesis_type)
+
     ref = list(ref)
     hyp = list(hyp)
 
     # TODO: load proper metric class
     # TODO: provide output types
 
-    metrics = WER(mode=WER.MODE_STRICT)
-    print('strict: %f' % metrics.compare(ref, hyp))
+    metrics = [WordDiffs, WER, DiffCounts]
+    for metric in metrics:
+        cls = metric()
+        print(type(cls).__name__ + ':')
+        print('=' * (len(type(cls).__name__)+1))
+        print()
+        print(cls.compare(ref, hyp))
+        print()
+        print()
 
-    metrics = WER(mode=WER.MODE_HUNT)
-    print('hunt: %f' % metrics.compare(ref, hyp))
-
-    metrics = WER(mode=WER.MODE_DIFFLIBRATIO)
-    print('difflib: %f' % metrics.compare(ref, hyp))
-
-    # print(comparison.compare(ref.schema(), hyp.schema()))
-    # print(ref)
-    # print(hyp)
