@@ -41,8 +41,7 @@ jobs:
 
   - script: |
       pip install pytest
-      pip install pytest-cov
-      pytest tests --doctest-modules --cov src --cov-report xml --cov-report html --verbose --junitxml=junit/test-results.xml
+      pytest tests --doctest-modules --verbose --junitxml=junit/test-results.xml
     displayName: 'pytest'
 
   - task: PublishTestResults@2
@@ -51,11 +50,28 @@ jobs:
       testRunTitle: 'Python $(python.version)'
     condition: succeededOrFailed()
 
-  - task: PublishCodeCoverageResults@1
-    inputs:
-      codeCoverageTool: Cobertura
-      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
-      reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+
+- job: 'CodeCoverage'
+  pool:
+    vmImage: 'Ubuntu-16.04'
+
+  steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.7'
+        architecture: 'x64'
+
+    - script: python -m pip install --upgrade pip && pip install pytest && pip install pytest-cov
+      displayName: 'Install pytest-cov'
+
+    - script: pytest tests --cov src --cov-report xml --cov-report html
+      displayName: 'Check code coverage'
+
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)/htmlcov'
 
 - job: 'Lint'
   pool:
