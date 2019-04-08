@@ -70,11 +70,11 @@ jobs:
     - script: pytest tests --cov src --cov-report xml --cov-report html
       displayName: 'Check code coverage'
 
-    - task: PublishCodeCoverageResults@1
+    - task: PublishCodeCoverageResults@0
       inputs:
-        codeCoverageTool: Cobertura
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage.xml'
-        reportDirectory: '$(System.DefaultWorkingDirectory)/htmlcov'
+#        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/benchmarkstt/coverage.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)/benchmarkstt/htmlcov'
 
 - job: 'Lint'
   pool:
