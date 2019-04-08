@@ -71,7 +71,7 @@ def test_roundtrip():
     testlen = 1
     for i in range(testlen):
         schema.append(OrderedDict(item=random_str(), start=randint(0, 1e10), end=randint(0, 1e10)))
-        schema.append(Item(item=random_str(), start=randint(0, 1e10), end=randint(0, 1e10)))
+        schema.append(Item(OrderedDict(item=random_str(), start=randint(0, 1e10), end=randint(0, 1e10))))
 
     schema.extend(list(schema))
     assert len(schema) == testlen * 4
