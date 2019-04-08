@@ -1,16 +1,19 @@
 from difflib import SequenceMatcher
 
 
+# TODO: make a proper diff implementing Hunt–McIlroy algorithm
+# (see https://github.com/ebu/ai-benchmarking-stt/issues/30 )
+
 class HuntMcIlroy:
-    """Implements the Hunt–McIlroy algorithm.
+    """
+    Implements the Hunt–McIlroy algorithm.
 
     More information available at https://en.wikipedia.org/wiki/Hunt%E2%80%93McIlroy_algorithm
 
     Mimics structure of difflib.SequenceMatcher
     Code based on https://gist.github.com/jorendorff/5040491
     """
-    # TODO: make a proper diff implementing Hunt–McIlroy algorithm
-    #      (see https://github.com/ebu/ai-benchmarking-stt/issues/30 )
+
     def __init__(self, a='', b=''):
         self.a = a
         self.b = b
@@ -48,8 +51,8 @@ class HuntMcIlroy:
         return sa, sb, n
 
     # re-use get_matching_blocks and get_opcodes from difflib
-    get_matching_blocks = SequenceMatcher.get_matching_blocks
-    get_opcodes = SequenceMatcher.get_opcodes
+    # get_matching_blocks = SequenceMatcher.get_matching_blocks
+    # get_opcodes = SequenceMatcher.get_opcodes
 
 
 class RatcliffObershelp(SequenceMatcher):

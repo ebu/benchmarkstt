@@ -39,4 +39,5 @@ gh-pages: # docs
 	git add -A && git commit -a -m 'update docs' && git push --set-upstream origin gh-pages
 
 apidocs:
-	rm docs/modules/*.rst && sphinx-apidoc -f -e -o docs/modules/ src/benchmarkstt/ && rm docs/modules/modules.rst
+	ls docs/modules/|grep '.rst$$' && rm docs/modules/*.rst || echo "no .rst files to clean"
+	sphinx-apidoc -f -e -o docs/modules/ src/benchmarkstt/ && rm docs/modules/modules.rst

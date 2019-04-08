@@ -42,7 +42,7 @@ jobs:
   - script: |
       pip install pytest
       pip install pytest-cov
-      pytest tests --doctest-modules --cov src --cov-report html --verbose --junitxml=junit/test-results.xml
+      pytest tests --doctest-modules --cov src --cov-report xml --verbose --junitxml=junit/test-results.xml
     displayName: 'pytest'
 
   - task: PublishTestResults@2
@@ -50,11 +50,12 @@ jobs:
       testResultsFiles: '**/test-results.xml'
       testRunTitle: 'Python $(python.version)'
     condition: succeededOrFailed()
+
   - task: PublishCodeCoverageResults@1
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
-      reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+      summaryFileLocation: '**/coverage.xml'
+      reportDirectory: '**/htmlcov'
 
 - job: 'Lint'
   pool:
