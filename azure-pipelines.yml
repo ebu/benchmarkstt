@@ -71,6 +71,8 @@ jobs:
         codeCoverageTool: Cobertura
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
         reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+        additionalCodeCoverageFiles: '$(System.DefaultWorkingDirectory)/**/htmlcov/*.*'
+
 
 - job: 'Lint'
   pool:
