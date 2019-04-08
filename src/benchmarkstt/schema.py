@@ -37,7 +37,7 @@ class Item(Mapping):
                 raise SchemaInvalidItemError("Expected a dict object", args[0])
             self._val = OrderedDict(args[0])
         else:
-            self._val = OrderedDict(kwargs)
+            self._val = OrderedDict(**kwargs)
         self.meta = Meta()
 
     def __getitem__(self, k):
@@ -56,7 +56,7 @@ class Item(Mapping):
         return Schema.dumps(self, **kwargs)
 
     def _asdict(self):
-        return OrderedDict(self._val)
+        return self._val
 
     def __eq__(self, other):
         return self._val == other
