@@ -65,6 +65,8 @@ jobs:
 
     - script: |
         pytest --cov=src tests
+        pwd
+        ls -alhs
         pytest --cov=src tests --cov-report xml --cov-report html
       displayName: 'Check code coverage'
 
