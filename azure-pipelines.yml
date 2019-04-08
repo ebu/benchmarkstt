@@ -60,14 +60,10 @@ jobs:
         versionSpec: '3.7'
         architecture: 'x64'
 
-    - script: python -m pip install --upgrade pip && pip install ".[test]"
-      displayName: 'Install dependencies'
-
     - script: |
-        pytest --cov=src tests
-        pwd
-        ls -alhs
+        python -m pip install --upgrade pip && pip install ".[test]"
         pytest --cov=src tests --cov-report xml --cov-report html
+        head coverage.xml
       displayName: 'Check code coverage'
 
     - task: PublishCodeCoverageResults@1
