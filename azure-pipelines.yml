@@ -71,9 +71,11 @@ jobs:
       displayName: 'Check code coverage'
 
     - task: PublishCodeCoverageResults@1
+      displayName: 'Publish code coverage from $(System.DefaultWorkingDirectory)/**/coverage.xml'
       inputs:
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/benchmarkstt/coverage.xml'
-        reportDirectory: '$(System.DefaultWorkingDirectory)/benchmarkstt/htmlcov'
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov/'
 
 - job: 'Lint'
   pool:
