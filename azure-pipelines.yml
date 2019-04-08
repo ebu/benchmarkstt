@@ -72,7 +72,6 @@ jobs:
 
     - task: PublishCodeCoverageResults@0
       inputs:
-#        codeCoverageTool: Cobertura
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/benchmarkstt/coverage.xml'
         reportDirectory: '$(System.DefaultWorkingDirectory)/benchmarkstt/htmlcov'
 
