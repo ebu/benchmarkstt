@@ -4,6 +4,7 @@ from random import sample, randint
 import pytest
 from json.decoder import JSONDecodeError
 import json
+from collections import OrderedDict
 
 
 def test_equality():
@@ -69,8 +70,8 @@ def test_roundtrip():
     schema = Schema()
     testlen = 1
     for i in range(testlen):
-        schema.append({'item': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)})
-        schema.append(Item({'item': random_str(), 'start': randint(0, 1e10), 'end': randint(0, 1e10)}))
+        schema.append(OrderedDict(item=random_str(), start=randint(0, 1e10), end=randint(0, 1e10)))
+        schema.append(Item(item=random_str(), start=randint(0, 1e10), end=randint(0, 1e10)))
 
     schema.extend(list(schema))
     assert len(schema) == testlen * 4

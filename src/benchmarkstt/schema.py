@@ -33,7 +33,7 @@ class Item(Mapping):
         if len(args) and len(kwargs):
             raise ValueError("Cannot combine both a positional and keyword arguments")
         if len(args):
-            if not isinstance(args[0], (dict, OrderedDict,)):
+            if not isinstance(args[0], dict):
                 raise SchemaInvalidItemError("Expected a dict object", args[0])
             self._val = OrderedDict(args[0])
         else:
@@ -127,7 +127,7 @@ class Schema:
         return self.dumps(**kwargs)
 
     def append(self, obj: Union[Item, dict]):
-        if type(obj) is dict:
+        if isinstance(obj, dict):
             obj = Item(obj)
         elif type(obj) is not Item:
             raise SchemaError("Wrong type", type(obj))
