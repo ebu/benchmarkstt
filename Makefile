@@ -5,6 +5,9 @@ test:
 	pycodestyle --max-line-length=120 tests
 	pycodestyle --max-line-length=120 src
 
+coverage:
+	pytest --cov=src tests
+
 docs: html
 
 html: apidocs
