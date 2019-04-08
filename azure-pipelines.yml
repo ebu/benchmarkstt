@@ -61,6 +61,9 @@ jobs:
         versionSpec: '3.7'
         architecture: 'x64'
 
+    - script: python -m pip install --upgrade pip && pip install ".[test]"
+      displayName: 'Install dependencies'
+
     - script: python -m pip install --upgrade pip && pip install pytest && pip install pytest-cov
       displayName: 'Install pytest-cov'
 
