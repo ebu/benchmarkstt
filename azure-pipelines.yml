@@ -86,5 +86,7 @@ jobs:
   - script: python -m pip install --upgrade pip && pip install pycodestyle
     displayName: 'Install pycodestyle'
 
-  - script: pycodestyle
+  - script: |
+      pycodestyle --max-line-length=120 tests
+      pycodestyle --max-line-length=120 src
     displayName: 'pycodestyle'
