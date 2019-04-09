@@ -1,11 +1,12 @@
 from benchmarkstt.normalization import core
-from benchmarkstt.normalization import NormalizationComposite, name_to_normalizer, is_normalizer
+from benchmarkstt.normalization import NormalizationComposite
 from benchmarkstt.normalization import NormalizerConfig, available_normalizers
+from benchmarkstt.normalization import factory
 
 
 def test_name_to_normalizer():
-    assert name_to_normalizer('Replace') is core.Replace
-    assert name_to_normalizer('replace') is core.Replace
+    assert factory.get_class('Replace') is core.Replace
+    assert factory.get_class('replace') is core.Replace
 
 
 def test_available_normalizers():
@@ -13,10 +14,10 @@ def test_available_normalizers():
     assert type(normalizers) is dict
 
     for name, conf in normalizers.items():
-        # normalizer = name_to_normalizer(name)
+        # normalizer = factory.get_class(name)
         assert type(conf) is NormalizerConfig
-        assert is_normalizer(conf.cls)
-        assert name_to_normalizer(name.upper()) is conf.cls
+        assert factory.is_valid(conf.cls)
+        assert factory.get_class(name.upper()) is conf.cls
 
 
 def test_is_normalizer():
@@ -25,11 +26,11 @@ def test_is_normalizer():
         False,
         None,
         "replace",
-        is_normalizer,
+        factory.is_valid,
         NormalizerConfig
     ]
 
     for not_normalizer in nope:
-        assert is_normalizer(not_normalizer) is False
+        assert factory.is_valid(not_normalizer) is False
 
-    assert is_normalizer(NormalizationComposite) is True
+    assert factory.is_valid(NormalizationComposite) is True

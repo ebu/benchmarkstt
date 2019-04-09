@@ -3,12 +3,12 @@ Apply normalization to given input
 """
 
 import sys
-from . import core, NormalizationComposite
+from . import NormalizationComposite
 import argparse
-from . import available_normalizers, name_to_normalizer
+from . import available_normalizers, factory
 import textwrap
 import itertools
-from . import logger
+from .logger import DiffLoggingFormatter, normalize_logger
 import logging
 from benchmarkstt.cli import args_inputfile
 
@@ -132,14 +132,14 @@ def main(parser, args):
 
     if args.log:
         handler = logging.StreamHandler()
-        handler.setFormatter(logger.DiffLoggingFormatter('cli'))
+        handler.setFormatter(DiffLoggingFormatter('cli'))
         handler.setLevel(logging.INFO)
-        logger.normalize_logger.addHandler(handler)
+        normalize_logger.addHandler(handler)
 
     composite = NormalizationComposite()
     for item in args.normalizers:
         normalizer_name = item.pop(0).replace('-', '.')
-        cls = name_to_normalizer(normalizer_name)
+        cls = factory.get_class(normalizer_name)
         composite.add(cls(*item))
 
     if output_files is not None:

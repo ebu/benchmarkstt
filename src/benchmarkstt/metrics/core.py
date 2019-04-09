@@ -1,6 +1,6 @@
 from benchmarkstt.schema import Schema
 import logging
-from benchmarkstt.diff.core import HuntMcIlroy, RatcliffObershelp
+from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
 
@@ -76,8 +76,6 @@ class WER(Base):
 
     def compare(self, ref: Schema, hyp: Schema):
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
-        ref_len = len(diffs.a)
-        hyp_len = len(diffs.b)
 
         counts = get_opcode_counts(diffs.get_opcodes())
 
