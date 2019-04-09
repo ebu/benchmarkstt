@@ -1,8 +1,18 @@
 import argparse
 import logging
-from . import get_modules_dict
 import textwrap
+from importlib import import_module
 from . import __meta__
+
+
+def get_modules(sub_module=None):
+    postfix = '' if sub_module is None else '.' + sub_module
+    for module in modules:
+        yield module, import_module('benchmarkstt.%s%s' % (module, postfix))
+
+
+def get_modules_dict(sub_module=None):
+    return {module: cli for module, cli in get_modules(sub_module)}
 
 
 def modules():

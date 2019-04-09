@@ -94,13 +94,12 @@ class Reader:
 
     """
 
-    def __init__(self, file: typing.io.TextIO, dialect: Dialect, debug=None):
+    def __init__(self, file: typing.io.TextIO, dialect: Dialect):
         if not issubclass(dialect, Dialect):
             raise InvalidDialectError("Invalid dialect", dialect)
         self.line_num = 0
         self._dialect = dialect
         self._file = file
-        self._debug = bool(debug)
 
     def _trimright(self, data: str):
         chars = self._dialect.trimright
@@ -141,7 +140,10 @@ class Reader:
         field = []
         line = Line()
 
-        delimiter_is_whitespace = self._dialect.delimiter in self._dialect.trimright
+        if self._dialect.trimright is not None:
+            delimiter_is_whitespace = self._dialect.delimiter in self._dialect.trimright
+        else:
+            delimiter_is_whitespace = False
 
         def yield_line():
             nonlocal line, field, mode, delimiter_is_whitespace, is_newline, cur_line
@@ -166,15 +168,15 @@ class Reader:
             field = []
             mode = MODE_OUTSIDE
 
-        debug = self._debug
-        if debug:
-            # print the color key the different modes
-            current_module = sys.modules[__name__]
-            print('MODES: ', end='')
-            print(' '.join(['\033[1;%d;40m%s\033[0;0m' % (32 + getattr(current_module, name), name[5:])
-                            for name in dir(current_module)
-                            if name.startswith('MODE_')
-                            ]))
+        # debug = True
+        # if debug:
+        #     # print the color key the different modes
+        #     current_module = sys.modules[__name__]
+        #     print('MODES: ', end='')
+        #     print(' '.join(['\033[1;%d;40m%s\033[0;0m' % (32 + getattr(current_module, name), name[5:])
+        #                     for name in dir(current_module)
+        #                     if name.startswith('MODE_')
+        #                     ]))
 
         cur_char = 0
         last_quote_line = None
@@ -185,9 +187,9 @@ class Reader:
             cur_char += 1
             idx += 1
 
-            if debug:
-                # print char to stdout with color defining mode
-                print('\033[1;%d;40m%s\033[0;0m' % (32+mode, make_printable(char)), end='')
+            # if debug:
+            #     # print char to stdout with color defining mode
+            #     print('\033[1;%d;40m%s\033[0;0m' % (32+mode, make_printable(char)), end='')
 
             is_newline = char in newlinechars
             if is_newline:
@@ -266,8 +268,8 @@ class Reader:
                 field.append(char)
                 continue
 
-        if debug:
-            print()
+        # if debug:
+        #     print()
 
         if mode == MODE_INSIDE_QUOTED:
             raise UnclosedQuoteError("Unexpected end", last_quote_line, last_quote_char, last_quote_idx)

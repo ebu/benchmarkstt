@@ -3,6 +3,7 @@ from benchmarkstt.normalization import NormalizationComposite
 from benchmarkstt.normalization import factory
 from benchmarkstt.factory import ClassConfig
 from inspect import isgenerator
+import pytest
 
 
 def test_name_to_normalizer():
@@ -20,6 +21,11 @@ def test_available_normalizers():
         assert type(conf) is ClassConfig
         assert factory.is_valid(conf.cls)
         assert factory.get_class(name.upper()) is conf.cls
+
+
+def test_not_available_normalizers():
+    with pytest.raises(ImportError):
+        factory.get_class('SomeRandomUnavailableNormalizer')
 
 
 def test_is_normalizer():

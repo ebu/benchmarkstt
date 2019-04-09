@@ -132,9 +132,6 @@ class Factory:
             else:
                 docs = cls.__doc__
             docs = format_docs(docs)
-            # docs = docs.split(':param', 1)[0]
-            # remove rst blocks
-            # docs = re.sub(r'^\s*\.\. [a-z-]+::\s+[a-z]+\s*$', '', docs, flags=re.MULTILINE)
 
             argspec = inspect.getfullargspec(cls.__init__)
             args = list(argspec.args)[1:]
