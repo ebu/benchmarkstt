@@ -8,7 +8,8 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 import jsonrpcserver
 import json
 from benchmarkstt import __meta__
-from benchmarkstt.normalization import available_normalizers, logger
+from benchmarkstt.normalization import factory
+from benchmarkstt.normalization.logger import ListHandler, DiffLoggingFormatter, normalize_logger
 from functools import wraps
 from benchmarkstt.docblock import format_docs
 import inspect
@@ -24,6 +25,7 @@ def get_methods() -> jsonrpcserver.methods.Methods:
     """
 
     methods = jsonrpcserver.methods.Methods()
+    normalizers = list(factory)
 
     def method(f, name=None):
         if name is None:
@@ -41,8 +43,6 @@ def get_methods() -> jsonrpcserver.methods.Methods:
 
         return __meta__.__version__
 
-    normalizers = available_normalizers()
-
     @method
     def list_normalizers():
         """
@@ -50,8 +50,7 @@ def get_methods() -> jsonrpcserver.methods.Methods:
 
         :return object: With key being the normalizer name, and value its description
         """
-        return {name: conf.docs
-                for name, conf in normalizers.items()}
+        return {config.name: config.docs for config in normalizers}
 
     def is_safe_path(path):
         """
@@ -87,9 +86,9 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 raise AssertionError(json.dumps(data))
 
             if return_logs:
-                handler = logger.ListHandler()
-                handler.setFormatter(logger.DiffLoggingFormatter(dialect='html'))
-                logger.normalize_logger.addHandler(handler)
+                handler = ListHandler()
+                handler.setFormatter(DiffLoggingFormatter(dialect='html'))
+                normalize_logger.addHandler(handler)
 
             try:
                 result = {
@@ -114,7 +113,7 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 raise AssertionError(json.dumps(data))
             finally:
                 if return_logs:
-                    logger.normalize_logger.removeHandler(handler)
+                    normalize_logger.removeHandler(handler)
 
         # copy signature from original normalizer, and add text param
         sig = inspect.signature(cls)
@@ -132,8 +131,9 @@ def get_methods() -> jsonrpcserver.methods.Methods:
         return _
 
     # add each normalizer as its own api call
-    for conf in normalizers.values():
-        method(serve_normalizer(conf), name='normalization.%s' % (conf.name,))
+    for conf in normalizers:
+        method(serve_normalizer(conf),
+               name='normalization.%s' % (conf.name,))
 
     @method
     def _help():

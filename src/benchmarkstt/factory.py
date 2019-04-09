@@ -2,8 +2,13 @@ import inspect
 from benchmarkstt import DeferredRepr
 import logging
 from importlib import import_module
+from benchmarkstt.docblock import format_docs
+from collections import namedtuple
+from typing import Dict
 
 logger = logging.getLogger(__name__)
+
+ClassConfig = namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])
 
 
 class Factory:
@@ -13,6 +18,11 @@ class Factory:
             self.namespaces = [base_class.__module__]
         else:
             self.namespaces = namespaces
+
+        self._registered_classes = {}
+
+        for namespace in self.namespaces:
+            self.register_namespace(namespace)
 
     def load(self, *args, **kwargs):
         raise NotImplementedError()
@@ -84,5 +94,70 @@ class Factory:
         logger.info('Not a valid class (must inherit from Base class): "%s"', DeferredRepr(tocheck))
         return False
 
-    def list(self):
-        pass
+    def register_namespace(self, namespace):
+        module = '.'.join(filter(len, namespace.split('.')))
+        if module == '':
+            module = globals()
+        else:
+            module = import_module(module)
+
+        for clsname in dir(module):
+            cls = getattr(module, clsname)
+            if not self.is_valid(cls):
+                continue
+            clsname = self.normalize_class_name(clsname)
+            if clsname in self._registered_classes:
+                raise ValueError("Conflict: class '%s' is already registered" % (clsname,))
+            self._registered_classes[clsname] = cls
+
+    def register(self, cls, alias=None):
+        """
+        Register
+        :param self.base_class cls:
+        :param str|None alias: The alias to use when trying to get the class back,
+                               by default will use normalized class name.
+        :return: None
+        """
+        if not self.is_valid(cls):
+            raise ValueError('Invalid class (must inherit from Base class)"')
+
+        if alias is None:
+            alias = cls.__name__
+
+        alias = self.normalize_class_name(alias)
+        if alias in self._registered_classes:
+            raise ValueError("Conflict: alias '%s' is already registered" % (alias,))
+        self._registered_classes[alias] = cls
+
+    def __iter__(self):
+        """
+        Get available classes with a proper ClassConfig
+
+        :return: A dictionary of registered classes
+        :rtype: Dict[str, ClassConfig]
+        """
+
+        for clsname, cls in self._registered_classes.items():
+            if cls.__doc__ is None:
+                docs = ''
+                logger.warning("No docstring for normalizer '%s'", cls.__name__)
+            else:
+                docs = cls.__doc__
+            docs = format_docs(docs)
+            # docs = docs.split(':param', 1)[0]
+            # remove rst blocks
+            # docs = re.sub(r'^\s*\.\. [a-z-]+::\s+[a-z]+\s*$', '', docs, flags=re.MULTILINE)
+
+            argspec = inspect.getfullargspec(cls.__init__)
+            args = list(argspec.args)[1:]
+            defaults = []
+            if argspec.defaults:
+                defaults = list(argspec.defaults)
+
+            defaults_idx = len(args) - len(defaults)
+            required_args = args[0:defaults_idx]
+            optional_args = args[defaults_idx:]
+
+            yield ClassConfig(name=clsname, cls=cls, docs=docs,
+                              optional_args=optional_args,
+                              required_args=required_args)

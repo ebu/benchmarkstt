@@ -5,7 +5,7 @@ Apply normalization to given input
 import sys
 from . import NormalizationComposite
 import argparse
-from . import available_normalizers, factory
+from . import factory
 import textwrap
 import itertools
 from .logger import DiffLoggingFormatter, normalize_logger
@@ -97,7 +97,8 @@ def argparser(parser: argparse.ArgumentParser):
 
     normalizers = parser.add_argument_group('available normalizers', description=normalizers_desc)
 
-    for name, conf in available_normalizers().items():
+    for conf in factory:
+        name = conf.name
         docs = conf.docs
 
         arguments = dict()

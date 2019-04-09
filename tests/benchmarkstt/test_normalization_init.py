@@ -1,7 +1,8 @@
 from benchmarkstt.normalization import core
 from benchmarkstt.normalization import NormalizationComposite
-from benchmarkstt.normalization import NormalizerConfig, available_normalizers
 from benchmarkstt.normalization import factory
+from benchmarkstt.factory import ClassConfig
+from inspect import isgenerator
 
 
 def test_name_to_normalizer():
@@ -10,12 +11,13 @@ def test_name_to_normalizer():
 
 
 def test_available_normalizers():
-    normalizers = available_normalizers()
-    assert type(normalizers) is dict
+    normalizers = iter(factory)
+    assert isgenerator(normalizers)
 
-    for name, conf in normalizers.items():
+    for conf in normalizers:
+        name = conf.name
         # normalizer = factory.get_class(name)
-        assert type(conf) is NormalizerConfig
+        assert type(conf) is ClassConfig
         assert factory.is_valid(conf.cls)
         assert factory.get_class(name.upper()) is conf.cls
 
@@ -27,7 +29,7 @@ def test_is_normalizer():
         None,
         "replace",
         factory.is_valid,
-        NormalizerConfig
+        ClassConfig
     ]
 
     for not_normalizer in nope:

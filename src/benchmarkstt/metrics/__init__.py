@@ -1,5 +1,5 @@
 from benchmarkstt.schema import Schema
-from benchmarkstt.core import Factory
+from benchmarkstt.factory import Factory
 
 
 class Base:
