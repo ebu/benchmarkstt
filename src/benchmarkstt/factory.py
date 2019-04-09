@@ -12,6 +12,10 @@ ClassConfig = namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_args',
 
 
 class Factory:
+    """
+    Factory class with auto-loading of namespaces according to a base class.
+    """
+
     def __init__(self, base_class, namespaces=None):
         self.base_class = base_class
         if namespaces is None:
@@ -19,7 +23,7 @@ class Factory:
         else:
             self.namespaces = namespaces
 
-        self._registered_classes = {}
+        self._registry = {}
 
         for namespace in self.namespaces:
             self.register_namespace(namespace)
@@ -48,43 +52,20 @@ class Factory:
         :return: The class
         :rtype: class
         """
-        namespaces = self.namespaces
-        requested = name.split('.')
-        requested_module = []
+        name = self.normalize_class_name(name)
+        if name not in self._registry:
+            raise ImportError("Could not find class '%s'" % (name,))
 
-        if len(requested) > 1:
-            requested_module = requested[:-1]
-
-        requested_class = requested[-1]
-        normalized_name = self.normalize_class_name(requested_class)
-        for lookup in namespaces:
-            try:
-                module = '.'.join(filter(len, lookup.split('.') + requested_module))
-                if module == '':
-                    continue
-                module = import_module(module)
-
-                if hasattr(module, requested_class):
-                    cls = getattr(module, requested_class)
-                    if self.is_valid(cls):
-                        return cls
-
-                # fallback, check case-insensitive matches
-                realname = [class_name for class_name in dir(module)
-                            if self.normalize_class_name(class_name) == normalized_name and
-                            self.is_valid(getattr(module, class_name))]
-
-                if len(realname) > 1:
-                    raise ImportError("Cannot determine which class to use for '$s': %s" %
-                                      (normalized_name, repr(realname)))
-                elif len(realname):
-                    return getattr(module, realname[0])
-            except ModuleNotFoundError:
-                pass
-
-        raise ImportError("Could not find class '%s'" % (name,))
+        return self._registry[name]
 
     def is_valid(self, tocheck):
+        """
+        Checks that tocheck is a valid class extending base_class
+
+        :param class tocheck: The class to check
+        :rtype: bool
+        """
+
         if tocheck is self.base_class:
             return False
         if not inspect.isclass(tocheck):
@@ -95,6 +76,12 @@ class Factory:
         return False
 
     def register_namespace(self, namespace):
+        """
+        Registers all valid classes from a given namespace
+
+        :param str|module namespace:
+        """
+
         module = '.'.join(filter(len, namespace.split('.')))
         if module == '':
             module = globals()
@@ -106,13 +93,14 @@ class Factory:
             if not self.is_valid(cls):
                 continue
             clsname = self.normalize_class_name(clsname)
-            if clsname in self._registered_classes:
+            if clsname in self._registry:
                 raise ValueError("Conflict: class '%s' is already registered" % (clsname,))
-            self._registered_classes[clsname] = cls
+            self._registry[clsname] = cls
 
     def register(self, cls, alias=None):
         """
-        Register
+        Register an alias for a class
+
         :param self.base_class cls:
         :param str|None alias: The alias to use when trying to get the class back,
                                by default will use normalized class name.
@@ -125,9 +113,9 @@ class Factory:
             alias = cls.__name__
 
         alias = self.normalize_class_name(alias)
-        if alias in self._registered_classes:
+        if alias in self._registry:
             raise ValueError("Conflict: alias '%s' is already registered" % (alias,))
-        self._registered_classes[alias] = cls
+        self._registry[alias] = cls
 
     def __iter__(self):
         """
@@ -137,7 +125,7 @@ class Factory:
         :rtype: Dict[str, ClassConfig]
         """
 
-        for clsname, cls in self._registered_classes.items():
+        for clsname, cls in self._registry.items():
             if cls.__doc__ is None:
                 docs = ''
                 logger.warning("No docstring for normalizer '%s'", cls.__name__)
