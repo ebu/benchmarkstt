@@ -42,3 +42,4 @@ def test_is_normalizer():
         assert factory.is_valid(not_normalizer) is False
 
     assert factory.is_valid(NormalizationComposite) is True
+    assert NormalizationComposite().normalize('NON-normalized') == 'NON-normalized'
