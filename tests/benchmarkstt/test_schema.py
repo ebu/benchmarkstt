@@ -1,10 +1,12 @@
-from benchmarkstt.schema import Schema, Item, SchemaJSONError, SchemaInvalidItemError
+from benchmarkstt.schema import Schema, Item
+from benchmarkstt.schema import SchemaError, SchemaJSONError, SchemaInvalidItemError
 import textwrap
 from random import sample, randint
 import pytest
 from json.decoder import JSONDecodeError
 import json
 from collections import OrderedDict
+from pytest import raises
 
 
 def test_equality():
@@ -84,3 +86,32 @@ def test_roundtrip():
     schema = Schema.loads(json)
     for item in schema:
         assert type(item) is Item
+
+
+def test_exceptions():
+    with raises(ValueError) as exc:
+        Item(None, None)
+    assert 'Expected max 1 argument' in str(exc)
+
+    with raises(ValueError) as exc:
+        Item(None, somekeyword=None)
+    assert "Cannot combine both a positional and keyword arguments" in str(exc)
+
+    schema = Schema()
+    with raises(SchemaError) as exc:
+        schema.append(None)
+    assert "Wrong type" in str(exc)
+
+
+def test_item():
+    item1 = Item()
+    assert len(item1) == 0
+    assert repr(item1) == 'Item({})'
+
+    item = Item(a='a_', b='b_')
+    assert len(item) == 2
+    for k in item:
+        assert k+'_' == item[k]
+    assert repr(item) == 'Item({"a": "a_", "b": "b_"})'
+
+    assert item1 != item
