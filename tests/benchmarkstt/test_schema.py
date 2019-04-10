@@ -47,7 +47,7 @@ def test_encode():
 
     with raises(TypeError) as exc:
         assert json.dumps(T(), cls=JSONEncoder)
-    assert "Object of type 'T' is not JSON serializable" in str(exc)
+    assert "is not JSON serializable" in str(exc)
 
 
 def test_decode():
