@@ -14,7 +14,8 @@ def test_equality():
     assert Schema.loads('[]') == Schema()
     assert Schema([Item(item='test')]) != Schema()
     assert Item(item='test') == {'item': 'test'}
-    assert Item({'item': 'test'}) == Item(item='test')
+    assert Item({'item': 'test', 'item2': 55}) == Item(item='test', item2=55)
+    assert Item({'item2': 55, 'item': 'test'}) == Item(item='test', item2=55)
 
 
 def test_encode():
