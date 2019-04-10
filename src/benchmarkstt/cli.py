@@ -4,10 +4,12 @@ import textwrap
 from importlib import import_module
 from . import __meta__
 
+_modules = ('normalization', 'api', 'metrics')
+
 
 def get_modules(sub_module=None):
     postfix = '' if sub_module is None else '.' + sub_module
-    for module in modules:
+    for module in _modules:
         yield module, import_module('benchmarkstt.%s%s' % (module, postfix))
 
 

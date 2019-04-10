@@ -42,6 +42,7 @@ def test_factory():
 
     assert "Conflict: alias 'validclass' is already registered" in str(exc)
 
+
 def test_nodoclog(caplog):
     factory = Factory(Base)
 
@@ -51,5 +52,3 @@ def test_nodoclog(caplog):
     assert caplog.record_tuples == [
         ('benchmarkstt.factory', 30, "No docstring for normalizer 'ValidClass'")
     ]
-
-

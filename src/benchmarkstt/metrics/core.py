@@ -35,6 +35,8 @@ def get_differ(a, b, differ_class):
 class WordDiffs(Base):
     def __init__(self, differ_class=None, dialect=None):
         self._differ_class = differ_class
+        if dialect is None:
+            dialect = 'cli'
         self._dialect = dialect
 
     def compare(self, ref: Schema, hyp: Schema):

@@ -4,8 +4,6 @@ Package benchmarkstt
 
 from .__meta__ import __author__, __version__
 
-modules = ('normalization', 'api', 'metrics')
-
 
 class DeferredStr:
     """Simple helper class to defer the execution of formatting functions until it is needed"""
