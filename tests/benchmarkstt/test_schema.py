@@ -136,6 +136,7 @@ def test_item():
     assert len(item) == 2
     for k in item:
         assert k+'_' == item[k]
-    assert repr(item) == 'Item({"a": "a_", "b": "b_"})'
+    assert repr(item) in ['Item({"a": "a_", "b": "b_"})',
+                          'Item({"b": "b_", "a": "a_"})']
 
     assert item1 != item
