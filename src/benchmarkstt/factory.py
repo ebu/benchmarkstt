@@ -94,7 +94,7 @@ class Factory:
                 continue
             clsname = self.normalize_class_name(clsname)
             if clsname in self._registry:
-                raise ValueError("Conflict: class '%s' is already registered" % (clsname,))
+                raise ValueError("Conflict: alias '%s' is already registered" % (clsname,))
             self._registry[clsname] = cls
 
     def register(self, cls, alias=None):
