@@ -1,4 +1,4 @@
-from benchmarkstt.schema import Schema, Item
+from benchmarkstt.schema import Schema, Item, JSONEncoder
 from benchmarkstt.schema import SchemaError, SchemaJSONError, SchemaInvalidItemError
 import textwrap
 from random import sample, randint
@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 import json
 from collections import OrderedDict
 from pytest import raises
+import io
 
 
 def test_equality():
@@ -25,12 +26,28 @@ def test_encode():
     assert item.json() == line
     assert item.json(indent=2) == line_formatted
 
+    buffer = io.StringIO()
+    Schema.dump(Schema([item]), buffer)
+    assert ('[%s]' % (item.json(),)) == buffer.getvalue()
+
+    buffer = io.StringIO()
+    Schema([item]).dump(buffer)
+    assert ('[%s]' % (item.json(),)) == buffer.getvalue()
+
     schema = Schema()
     schema.append(item)
     schema.append(item)
     assert len(schema) is 2
     assert schema.json() == '[%s, %s]' % ((line,) * 2)
     assert schema.json(indent=2) == '[\n%s,\n%s\n]' % ((textwrap.indent(line_formatted, '  '),) * 2)
+    assert repr(schema) == ('Schema(%s)' % (schema.json()))
+
+    class T:
+        ok = False
+
+    with raises(TypeError) as exc:
+        assert json.dumps(T(), cls=JSONEncoder)
+    assert "Object of type 'T' is not JSON serializable" in str(exc)
 
 
 def test_decode():
@@ -40,17 +57,24 @@ def test_decode():
     assert len(res) is 1
     assert type(res[0]) is Item
 
+    schema = Schema.load(io.StringIO(res.json()))
+    assert len(schema) is 1
+    assert type(schema[0]) is Item
+    assert schema == res
+
     with pytest.raises(SchemaJSONError):
         Schema.loads('{"test": "test"}')
 
     with pytest.raises(JSONDecodeError):
         Schema.loads('InvalidJSON')
 
-    with pytest.raises(SchemaJSONError):
+    with pytest.raises(SchemaJSONError) as exc:
         Schema.loads('"test"')
+    assert "Expected a list" in str(exc)
 
-    with pytest.raises(SchemaJSONError):
+    with pytest.raises(SchemaJSONError) as exc:
         Schema.loads('24')
+    assert "Expected a list" in str(exc)
 
     with pytest.raises(SchemaInvalidItemError):
         Schema.loads('["test"]')

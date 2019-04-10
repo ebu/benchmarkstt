@@ -171,6 +171,4 @@ class JSONDecoder(json.JSONDecoder):
 
     @staticmethod
     def object_hook(obj):
-        if type(obj) is not dict:
-            raise SchemaJSONError("Expected an object")
         return Item(obj)
