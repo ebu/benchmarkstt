@@ -59,6 +59,8 @@ class Item(Mapping):
         return self._val
 
     def __eq__(self, other):
+        if type(other) is Item:
+            other = other._asdict()
         return self._val == other
 
     def __ne__(self, other):
@@ -140,6 +142,8 @@ class Schema:
         return self._data
 
     def __eq__(self, other):
+        if type(other) is Schema:
+            other = other._aslist()
         return self._data == other
 
     def __ne__(self, other):

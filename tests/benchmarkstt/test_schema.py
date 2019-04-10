@@ -105,9 +105,9 @@ def test_roundtrip():
     for item in schema:
         assert type(item) is Item
 
-    json = schema.json()
-    assert Schema.loads(json) == schema
-    schema = Schema.loads(json)
+    json_ = schema.json()
+    assert Schema.loads(json_) == schema
+    schema = Schema.loads(json_)
     for item in schema:
         assert type(item) is Item
 
