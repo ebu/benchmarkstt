@@ -103,6 +103,7 @@ Normalizer4 "argument with double quote ("")"
     assert _reader('test "stuff\n\t"\n\t  \t  YEs    \t   \n') == \
         [['test', 'stuff\n\t'], ['YEs']]
     assert _reader("\n\n\n\nline5")[0].lineno == 5
+    assert _reader(',' == [['', '']])
 
 
 def test_exceptions():
