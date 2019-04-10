@@ -9,9 +9,9 @@ def test_log_call(caplog):
     def test(*args, **kwargs):
         return 'result'
 
-    test('arg1', arg2='someval', arg3='someotherval')
+    test('arg1', arg2='someval')
     assert caplog.record_tuples == [
-        ('root', logging.WARNING, "test('arg1', arg2='someval', arg3='someotherval')")
+        ('root', logging.WARNING, "test('arg1', arg2='someval')")
     ]
 
 
@@ -23,9 +23,9 @@ def test_log_call2(caplog):
     def test(*args, **kwargs):
         return 'result'
 
-    test(arg2='someval', arg3='someotherval')
+    test(arg2='someval')
     assert caplog.record_tuples == [
-        ('testname', logging.INFO, "test(arg2='someval', arg3='someotherval')"),
+        ('testname', logging.INFO, "test(arg2='someval')"),
         ('testname', logging.INFO, 'test returned: result')
     ]
 
