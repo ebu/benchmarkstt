@@ -132,6 +132,10 @@ def test_exceptions():
     with pytest.raises(UnallowedQuoteError):
         _reader('  fsd","')
 
+    with pytest.raises(UnallowedQuoteError) as exc:
+        _reader('""test,')
+    assert "Single quote inside quoted field" in str(exc)
+
 
 def test_own_dialect():
     class OwnDialect(Dialect):
