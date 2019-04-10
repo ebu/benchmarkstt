@@ -3,11 +3,12 @@ import pytest
 from io import StringIO
 
 
-def _reader(text, *args, **kwargs):
+def get_reader(text, *args, **kwargs):
     return list(reader(StringIO(text), *args, **kwargs))
 
 
 def test_csv():
+    _reader = get_reader
     assert _reader('replace," ","\n"') == [['replace', ' ', '\n']]
     assert type(reader(StringIO(''))) is Reader
     assert type(Reader(StringIO(''), DefaultDialect)) is Reader
@@ -50,6 +51,7 @@ def test_csv():
     assert _reader('\t t ') == [['t']]
     assert _reader('t') == [['t']]
     assert _reader('replace," ","\n"') == [['replace', ' ', '\n']]
+    assert _reader(',') == [['', '']]
 
 
 def test_conf():
@@ -103,10 +105,11 @@ Normalizer4 "argument with double quote ("")"
     assert _reader('test "stuff\n\t"\n\t  \t  YEs    \t   \n') == \
         [['test', 'stuff\n\t'], ['YEs']]
     assert _reader("\n\n\n\nline5")[0].lineno == 5
-    assert _reader(',' == [['', '']])
 
 
 def test_exceptions():
+    _reader = get_reader
+
     with pytest.raises(InvalidDialectError):
         Reader(StringIO(''), dialect=InvalidDialectError)
 
@@ -134,4 +137,4 @@ def test_own_dialect():
     class OwnDialect(Dialect):
         delimiter = ';'
 
-    assert _reader("Tester \n  No Trim  ", dialect=OwnDialect) == [['Tester '], ['  No Trim  ']]
+    assert get_reader("Tester \n  No Trim  ", dialect=OwnDialect) == [['Tester '], ['  No Trim  ']]

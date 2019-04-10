@@ -3,9 +3,7 @@ Module providing our own CSV file parser with support for whitespace trimming, e
 """
 
 import typing
-import sys
 from functools import partial
-from benchmarkstt import make_printable
 
 
 class InvalidDialectError(ValueError):
