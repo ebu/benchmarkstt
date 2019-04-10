@@ -28,8 +28,8 @@ class Factory:
         for namespace in self.namespaces:
             self.register_namespace(namespace)
 
-    def load(self, *args, **kwargs):
-        raise NotImplementedError()
+    def create(self, alias, *args, **kwargs):
+        return self.get_class(alias)(*args, **kwargs)
 
     @staticmethod
     def normalize_class_name(clsname):

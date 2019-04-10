@@ -32,6 +32,8 @@ def test_factory():
     factory.register(ValidClass, 'alias')
     assert factory.get_class('alias') == ValidClass
 
+    assert type(factory.create('alias')) == ValidClass
+
     with raises(ValueError) as exc:
         factory.register(ValidClass)
 

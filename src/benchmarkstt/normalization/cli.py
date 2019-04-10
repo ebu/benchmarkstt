@@ -140,8 +140,8 @@ def main(parser, args):
     composite = NormalizationComposite()
     for item in args.normalizers:
         normalizer_name = item.pop(0).replace('-', '.')
-        cls = factory.get_class(normalizer_name)
-        composite.add(cls(*item))
+        normalizer = factory.create(normalizer_name, *item)
+        composite.add(normalizer)
 
     if output_files is not None:
         # pre-open the output files before doing the grunt work
