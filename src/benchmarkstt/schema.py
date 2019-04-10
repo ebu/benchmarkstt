@@ -34,7 +34,7 @@ class Item(Mapping):
         if len(args):
             if not isinstance(args[0], dict):
                 raise SchemaInvalidItemError("Expected a dict object", args[0])
-            self._val = dict(args[0])
+            self._val = args[0]
         else:
             self._val = dict(**kwargs)
         self.meta = Meta()
