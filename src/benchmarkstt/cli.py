@@ -32,7 +32,7 @@ def _parser_no_sub(dont_add_submodule=False):
     parser.add_argument('--version', action='store_true',
                         help='output benchmarkstt version number')
 
-    # this is for argpars autodoc purposes
+    # this is for argparse autodoc purposes
     if not dont_add_submodule:
         parser.add_argument('subcommand', choices=modules().keys())
 
@@ -80,6 +80,7 @@ def main():
         argcomplete.autocomplete(parser)
     except ImportError:
         pass
+
     args = parser.parse_args()
     if args.version:
         print("benchmarkstt: %s" % (__meta__.__version__,))
