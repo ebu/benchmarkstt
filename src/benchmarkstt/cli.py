@@ -3,8 +3,12 @@ import logging
 import textwrap
 from importlib import import_module
 from . import __meta__
+import sys
 
-_modules = ('normalization', 'api', 'metrics')
+_modules = ['normalization', 'metrics']
+
+if sys.version_info >= (3, 6):
+    _modules.append('api')
 
 
 def get_modules(sub_module=None):
