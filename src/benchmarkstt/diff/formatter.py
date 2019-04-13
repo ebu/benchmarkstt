@@ -33,7 +33,7 @@ class UTF8Dialect(Dialect):
 
     @staticmethod
     def delete_format(txt):
-        return ''.join(c + '\u0336' for c in txt)
+        return ''.join(c + '\u0338' for c in txt)
 
     @staticmethod
     def insert_format(txt):
@@ -106,7 +106,7 @@ class DiffFormatter:
             a_ = _pre(a[alo:ahi])
 
             if tag in ('equal', 'delete'):
-                res.append(formats['equal'](_pre(a[alo:ahi])))
+                res.append(formats[tag](_pre(a[alo:ahi])))
                 continue
 
             b_ = _pre(b[blo:bhi])
@@ -118,6 +118,6 @@ class DiffFormatter:
         return ''.join(res)
 
 
-def format_diff(a, b, opcodes=None, dialect=None, preprocessor=None):
+def format_diff(a, b, opcodes=None, dialect=None):
     formatter = DiffFormatter(dialect)
-    return formatter.diff(a, b, opcodes, preprocessor=preprocessor)
+    return formatter.diff(a, b, opcodes)

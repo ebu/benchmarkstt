@@ -1,17 +1,10 @@
-from benchmarkstt.input.core import PlainText
+from benchmarkstt.input.core import PlainText, File
 from benchmarkstt.schema import Item, Schema
+import pytest
 
-candide = '''
-"There is a concatenation of events in this best of all possible worlds:
-for if you had not been kicked out of a magnificent castle for love of
-Miss Cunegonde: if you had not been put into the Inquisition: if you had
-not walked over America: if you had not stabbed the Baron: if you had
-not lost all your sheep from the fine country of El Dorado: you would
-not be here eating preserved citrons and pistachio-nuts."
-
-"All that is very well," answered Candide, "but let us cultivate our
-garden."
-'''
+candide_file = 'tests/_data/candide.txt'
+with open(candide_file) as f:
+    candide = f.read()
 
 candide_schema = [Item({"item": "\"There", "type": "word", "@raw": "\n\"There "}),
                   Item({"item": "is", "type": "word", "@raw": "is "}),
@@ -106,6 +99,22 @@ candide_schema = [Item({"item": "\"There", "type": "word", "@raw": "\n\"There "}
                   Item({"item": "garden.\"", "type": "word", "@raw": "garden.\"\n"})]
 
 
-def test_plaintext():
-    assert list(PlainText(candide)) == candide_schema
-    assert Schema(PlainText(candide)) == candide_schema
+@pytest.mark.parametrize('cls,args', [
+    [PlainText, [candide]],
+    [File, [candide_file]],
+    [File, [candide_file, 'infer']],
+    [File, [candide_file, 'plaintext']],
+])
+def test_file(cls, args):
+    assert list(cls(*args)) == candide_schema
+    assert Schema(cls(*args)) == candide_schema
+
+
+def test_exceptions():
+    with pytest.raises(ValueError) as e:
+        File('noextension')
+    assert 'without an extension' in str(e)
+
+    with pytest.raises(ValueError) as e:
+        File('unknownextension.thisisntknowm')
+    assert 'thisisntknowm' in str(e)
