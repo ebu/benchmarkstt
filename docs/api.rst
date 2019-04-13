@@ -3,6 +3,9 @@ API
 
 BenchmarkSTT exposes its functionality through a JSON-RPC_ api.
 
+.. attention::
+   Only supported for Python versions 3.6 and above!
+
 Starting the server
 -------------------
 
@@ -33,6 +36,10 @@ Using curl, for example:
 
 If you started the service with parameter `--with-explorer` (see :doc:`cli/api`), you can easily test the available JSON-RPC_
 api calls by visiting the api url (eg. `http://localhost:8080/api` in the above example).
+
+.. important::
+   The API explorer is provided as-is, without any tests or code reviews. This
+   is marked as a low-priority feature.
 
 .. toctree::
    :maxdepth: 2

@@ -31,7 +31,9 @@ def argparser(parser):
     parser.add_argument('--with-explorer', action='store_true',
                         help='also create the explorer to test api calls with, '
                              'this is a rudimentary feature currently '
-                             'only meant for testing and debugging')
+                             'only meant for testing and debugging.\n'
+                             'Warning: the API explorer is provided as-is, without any tests '
+                             'or code reviews. This is marked as a low-priority feature.')
     return parser
 
 
