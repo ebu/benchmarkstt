@@ -1,14 +1,11 @@
 """
-Make benchmarkstt available through a rudimentary JSON-RPC_ interface
+Make benchmarkstt available through a rudimentary JSON-RPC_ interfacea
+
+Only supported for Python versions 3.6 and above
 
 .. _JSON-RPC: https://www.jsonrpc.org
 
 """
-
-import sys
-if sys.version_info < (3, 6):
-    print("only supported for python >= 3.6")
-    exit(2)
 
 import jsonrpcserver
 from flask import Flask, request, Response, render_template
