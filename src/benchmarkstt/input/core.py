@@ -1,20 +1,13 @@
 """
 Default input formats
 
-Each format class should be accessible as iterator, each iteration should return a Item, so the input format is
-essentially usable and can be easily converted to a :py:class:`benchmarkstt.schema.Schema`
 """
 
 import benchmarkstt.segmentation.core as segmenters
-from sys import modules
-import inspect
+from benchmarkstt.input import factory, Base
 
 
-def is_cls(cls):
-    return inspect.isclass(cls) and hasattr(cls, '__iter__')
-
-
-class PlainText:
+class PlainText(Base):
     def __init__(self, text, segmenter=None):
         if segmenter is None:
             segmenter = segmenters.Simple
@@ -25,7 +18,7 @@ class PlainText:
         return iter(self._segmenter(self._text))
 
 
-class File:
+class File(Base):
     """
     Load the input class based on a file
     """
@@ -51,23 +44,10 @@ class File:
 
         self._file = file
 
-        self._input_class = self._get_cls(input_type)
+        if type(input_type) is str:
+            input_type = factory.get_class(input_type)
 
-    @staticmethod
-    def _get_cls(cls_or_name):
-        if type(cls_or_name) is str:
-            m = [cls for clsname, cls in inspect.getmembers(modules[__name__], is_cls)
-                 if clsname.lower() == cls_or_name.lower]
-
-            if len(m) == 0:
-                raise ValueError("Could not find a possible input type for '%s'" % (cls_or_name,))
-
-            if len(m) > 1:
-                raise ValueError("More than one possible input type for '%s'" % (cls_or_name,))
-
-            cls_or_name = m[0]
-
-        return cls_or_name
+        self._input_class = input_type
 
     def __iter__(self):
         with open(self._file) as f:

@@ -4,9 +4,10 @@ Core segmenters, each segmenter must be Iterable returning a Item
 
 import re
 from benchmarkstt.schema import Item
+from benchmarkstt.segmentation import Base
 
 
-class Simple:
+class Simple(Base):
     """
     Simplest case, split into words by white space
     """
