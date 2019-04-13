@@ -2,6 +2,9 @@ from benchmarkstt.factory import Factory
 
 
 class Base:
+    def __init__(self, a='', b=''):
+        raise NotImplementedError()
+
     def get_opcodes(self):
         """
         Return list of 5-tuples describing how to turn `a` into `b`.

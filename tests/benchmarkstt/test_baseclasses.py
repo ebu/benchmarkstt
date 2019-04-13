@@ -7,16 +7,19 @@ import pytest
 from inspect import signature
 
 
-@pytest.mark.parametrize('base_class,method', [
+@pytest.mark.parametrize('base_class,methods', [
     [NormalizationBase, '_normalize'],
     [MetricsBase, 'compare'],
-    [DiffBase, 'get_opcodes'],
+    [DiffBase, ['__init__', 'get_opcodes']],
     [SegmentationBase, '__iter__'],
     [InputBase, '__iter__'],
 ])
-def test_baseclasses(base_class, method):
-    to_call = getattr(base_class, method)
-    sig = signature(to_call)
-    with pytest.raises(NotImplementedError):
-        args = [None] * len(sig.parameters)
-        to_call(*args)
+def test_baseclasses(base_class, methods):
+    if type(methods) is str:
+        methods = [methods]
+    for method in methods:
+        to_call = getattr(base_class, method)
+        sig = signature(to_call)
+        with pytest.raises(NotImplementedError):
+            args = [None] * len(sig.parameters)
+            to_call(*args)

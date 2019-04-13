@@ -19,7 +19,7 @@ class Factory:
     def __init__(self, base_class, namespaces=None):
         self.base_class = base_class
         if namespaces is None:
-            self.namespaces = [base_class.__module__]
+            self.namespaces = [base_class.__module__ + '.core']
         else:
             self.namespaces = namespaces
 

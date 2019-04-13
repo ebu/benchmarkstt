@@ -17,7 +17,7 @@ class InvalidClass:
 
 
 def test_factory_exception():
-    factory = Factory(Base)
+    factory = Factory(Base, [test_factory_exception.__module__])
     assert factory.get_class('validclass') == ValidClass
     with raises(ValueError) as exc:
         factory.register(InvalidClass)
@@ -46,7 +46,7 @@ def test_factory():
 
 
 def test_nodoclog(caplog):
-    factory = Factory(Base)
+    factory = Factory(Base, [test_nodoclog.__module__])
 
     for conf in factory:
         pass

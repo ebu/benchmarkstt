@@ -4,10 +4,10 @@ Default input formats
 """
 
 import benchmarkstt.segmentation.core as segmenters
-from benchmarkstt.input import factory, Base
+from benchmarkstt import input
 
 
-class PlainText(Base):
+class PlainText(input.Base):
     def __init__(self, text, segmenter=None):
         if segmenter is None:
             segmenter = segmenters.Simple
@@ -18,7 +18,7 @@ class PlainText(Base):
         return iter(self._segmenter(self._text))
 
 
-class File(Base):
+class File(input.Base):
     """
     Load the input class based on a file
     """
@@ -45,7 +45,7 @@ class File(Base):
         self._file = file
 
         if type(input_type) is str:
-            input_type = factory.get_class(input_type)
+            input_type = input.factory.get_class(input_type)
 
         self._input_class = input_type
 
