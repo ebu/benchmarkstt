@@ -6,14 +6,31 @@ from unittest import mock
 from benchmarkstt.__meta__ import __version__
 
 
+candide_lowercase = """
+"there is a concatenation of events in this best of all possible worlds:
+for if you had not been kicked out of a magnificent castle for love of
+miss cunegonde: if you had not been put into the inquisition: if you had
+not walked over america: if you had not stabbed the baron: if you had
+not lost all your sheep from the fine country of el dorado: you would
+not be here eating preserved citrons and pistachio-nuts."
+
+"all that is very well," answered candide, "but let us cultivate our
+garden."
+"""
+
+
 @pytest.mark.parametrize('argv,result', [
     [[], 2],
-    [['--version'], 'benchmarkstt: %s\n' % (__version__,)],
-    [['invalidsubmodule'], 2],
-    [['normalization'], 2],
-    [['--help'], 0],
+    ['--version', 'benchmarkstt: %s\n' % (__version__,)],
+    ['invalidsubmodule', 2],
+    ['normalization', 2],
+    ['--help', 0],
+    ['normalization -i tests/_data/candide.txt --lowercase', candide_lowercase],
+    ['normalization -i tests/_data/candide.txt --file', 2],
 ])
 def test_cli(argv, result, capsys):
+    if type(argv) is str:
+        argv = argv.split()
     with mock.patch('sys.argv', ['benchmarkstt'] + argv):
         if type(result) is int:
             with pytest.raises(SystemExit) as err:

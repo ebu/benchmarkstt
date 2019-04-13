@@ -118,6 +118,6 @@ class DiffFormatter:
         return ''.join(res)
 
 
-def format_diff(a, b, opcodes=None, dialect=None):
+def format_diff(a, b, opcodes=None, dialect=None, preprocessor=None):
     formatter = DiffFormatter(dialect)
-    return formatter.diff(a, b, opcodes)
+    return formatter.diff(a, b, opcodes, preprocessor)

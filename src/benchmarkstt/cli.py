@@ -33,7 +33,7 @@ def _parser_no_sub(dont_add_submodule=False):
                         help='output benchmarkstt version number')
 
     # this is for argparse autodoc purposes
-    if not dont_add_submodule:
+    if not dont_add_submodule: # pragma: no cover
         parser.add_argument('subcommand', choices=modules().keys())
 
     return parser
@@ -44,9 +44,6 @@ def _parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest='subcommand')
 
     for module, cli in modules().items():
-        if not hasattr(cli, 'argparser'):
-            subparsers.add_parser(module)
-            continue
         kwargs = dict()
         if hasattr(cli, 'Formatter'):
             kwargs['formatter_class'] = cli.Formatter
@@ -78,7 +75,7 @@ def main():
         # support argument completion if package is installed
         import argcomplete
         argcomplete.autocomplete(parser)
-    except ImportError:
+    except ImportError:  # pragma: no cover
         pass
 
     args = parser.parse_args()
@@ -92,7 +89,8 @@ def main():
     if not args.subcommand:
         parser.error("expects at least 1 argument")
     modules()[args.subcommand].main(parser, args)
+    exit(0)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: nocover
     main()
