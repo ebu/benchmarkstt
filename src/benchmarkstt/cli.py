@@ -33,7 +33,7 @@ def _parser_no_sub(dont_add_submodule=False):
                         help='output benchmarkstt version number')
 
     # this is for argparse autodoc purposes
-    if not dont_add_submodule: # pragma: no cover
+    if not dont_add_submodule:  # pragma: no cover
         parser.add_argument('subcommand', choices=modules().keys())
 
     return parser
@@ -92,5 +92,5 @@ def main():
     exit(0)
 
 
-if __name__ == '__main__': # pragma: nocover
+if __name__ == '__main__':  # pragma: nocover
     main()

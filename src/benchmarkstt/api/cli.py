@@ -5,10 +5,10 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 
 """
 
-import jsonrpcserver
 from flask import Flask, request, Response, render_template
 from benchmarkstt.docblock import format_docs, parse, process_rst
 from .jsonrpc import get_methods
+import sys
 
 
 def argparser(parser):
@@ -24,12 +24,12 @@ def argparser(parser):
                         help='port used by the server')
     parser.add_argument('--entrypoint', default='/api',
                         help='the jsonrpc api address')
+    parser.add_argument('--list-methods', action='store_true',
+                        help='list the available jsonrpc methods')
     parser.add_argument('--with-explorer', action='store_true',
                         help='also create the explorer to test api calls with, '
                              'this is a rudimentary feature currently '
                              'only meant for testing and debugging')
-    parser.add_argument('--list-methods', action='store_true',
-                        help='list the available jsonrpc methods')
     return parser
 
 
@@ -42,6 +42,7 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
     :return:
     """
 
+    import jsonrpcserver
     app = Flask(__name__)
 
     if entrypoint is None:
@@ -89,5 +90,8 @@ def main(parser, args):
             print(format_docs(func.__doc__))
             print('')
     else:
+        if sys.version_info < (3, 6):
+            parser.error("only supported for python >= 3.6")
+
         app = create_app(args.entrypoint, args.with_explorer)
         app.run(host=args.host, port=args.port, debug=args.debug)

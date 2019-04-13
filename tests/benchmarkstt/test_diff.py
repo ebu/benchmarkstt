@@ -34,4 +34,3 @@ def test_one_delete(differ):
     assert list(sm.get_opcodes()) == [('equal', 0, 40, 0, 40),
                                       ('delete', 40, 41, 40, 40),
                                       ('equal', 41, 81, 40, 80)]
-
