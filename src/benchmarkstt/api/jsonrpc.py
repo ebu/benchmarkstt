@@ -11,50 +11,17 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 import jsonrpcserver
 import json
 from benchmarkstt import __meta__
-from benchmarkstt.normalization import factory
+from benchmarkstt.normalization import factory as normalization_factory
+from benchmarkstt.metrics import factory as metrics_factory
 from benchmarkstt.normalization.logger import ListHandler, DiffLoggingFormatter, normalize_logger
-from functools import wraps
+from functools import wraps, partial
 from benchmarkstt.docblock import format_docs
 import inspect
 import os
 import benchmarkstt.csv as csv
 
 
-def get_methods() -> jsonrpcserver.methods.Methods:
-    """
-    Returns the available JSON-RPC api methods
-
-    :return: jsonrpcserver.methods.Methods
-    """
-
-    methods = jsonrpcserver.methods.Methods()
-    normalizers = list(factory)
-
-    def method(f, name=None):
-        if name is None:
-            name = f.__name__.lstrip('_').replace('_', '.')
-
-        methods.add(**{name: f})
-
-    @method
-    def version():
-        """
-        Get the version of benchmarkstt
-
-        :return str: BenchmarkSTT version
-        """
-
-        return __meta__.__version__
-
-    @method
-    def list_normalizers():
-        """
-        Get a list of available core normalizers
-
-        :return object: With key being the normalizer name, and value its description
-        """
-        return {config.name: config.docs for config in normalizers}
-
+def add_methods_from_module(methods, name, factory, callback, extra_params=None):
     def is_safe_path(path):
         """
         Determines whether the file or path is within the current working directory
@@ -66,11 +33,13 @@ def get_methods() -> jsonrpcserver.methods.Methods:
     class SecurityError(ValueError):
         """Trying to do or access something that isn't allowed"""
 
-    def serve_normalizer(config):
+    callables = list(factory)
+
+    def serve(config):
         cls = config.cls
 
         @wraps(cls)
-        def _(text, return_logs=None, *args, **kwargs):
+        def _(*args, **kwargs):
             # only allow files from cwd to be used...
             try:
                 if 'file' in kwargs:
@@ -88,57 +57,118 @@ def get_methods() -> jsonrpcserver.methods.Methods:
                 }
                 raise AssertionError(json.dumps(data))
 
-            if return_logs:
-                handler = ListHandler()
-                handler.setFormatter(DiffLoggingFormatter(dialect='html'))
-                normalize_logger.addHandler(handler)
+            return callback(cls, *args, **kwargs)
 
-            try:
-                result = {
-                    "text": cls(*args, **kwargs).normalize(text)
-                }
-                if return_logs:
-                    logs = handler.flush()
-                    result['logs'] = []
-                    for log in logs:
-                        result['logs'].append(dict(names=log[0], message=log[1]))
-                return result
-            except csv.CSVParserError as e:
-                message = 'on line %d, character %d' % (e.line, e.char)
-                message = '\n'.join([e.__doc__, e.message, message])
-                data = {
-                    "message": message,
-                    "line": e.line,
-                    "char": e.char,
-                    "index": e.index,
-                    "field": "config"
-                }
-                raise AssertionError(json.dumps(data))
-            finally:
-                if return_logs:
-                    normalize_logger.removeHandler(handler)
-
-        # copy signature from original normalizer, and add text param
+        # copy signature from original, add params
         sig = inspect.signature(cls)
-        params = list()
-        params.append(inspect.Parameter('text', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD, annotation=str))
-        params.extend(sig.parameters.values())
-        params.append(inspect.Parameter('return_logs', kind=inspect.Parameter.POSITIONAL_OR_KEYWORD, annotation=bool,
-                                        default=None))
-        sig = sig.replace(parameters=params)
+        if extra_params:
+            def mapper(param_settings):
+                kwargs = dict(**param_settings,
+                              kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)
+                del kwargs['description']
+                return inspect.Parameter(**kwargs)
+
+            mapper = partial(map, mapper)
+            params = list(mapper(filter(lambda x: 'default' not in x, extra_params)))
+            params.extend(sig.parameters.values())
+            params.extend(list(mapper(filter(lambda x: 'default' in x, extra_params))))
+            sig = sig.replace(parameters=params)
+
+            for param in extra_params:
+                _.__doc__ += '\n    :param %s %s: %s' % (param['annotation'].__name__,
+                                                         param['name'],
+                                                         param['description'])
+
         _.__signature__ = sig
-        _.__doc__ += '\n    :param str text: The text to normalize'
-        _.__doc__ += '\n    :param bool return_logs: Return normalizer logs'
 
         # todo (?) add available files and folders as select options
         return _
 
-    # add each normalizer as its own api call
-    for conf in normalizers:
-        method(serve_normalizer(conf),
-               name='normalization.%s' % (conf.name,))
+    def lister():
+        """
+        Get a list of available core %s
 
-    @method
+        :return object: With key being the %s name, and value its description
+        """
+        return {config.name: config.docs for config in callables}
+
+    lister.__doc__ = lister.__doc__ % (name, name)
+
+    methods.add(**{"list.%s" % (name,): lister})
+
+    # add each normalizer as its own api call
+    for conf in callables:
+        apicallname = '%s.%s' % (name, conf.name,)
+        methods.add(**{apicallname: serve(conf)})
+
+
+def get_methods() -> jsonrpcserver.methods.Methods:
+    """
+    Returns the available JSON-RPC api methods
+
+    :return: jsonrpcserver.methods.Methods
+    """
+
+    methods = jsonrpcserver.methods.Methods()
+    add_methods = partial(add_methods_from_module, methods)
+
+    def version():
+        """
+        Get the version of benchmarkstt
+
+        :return str: BenchmarkSTT version
+        """
+
+        return __meta__.__version__
+
+    methods.add(version=version)
+
+    extra_params = [
+        dict(name='text', annotation=str,
+             description='The text to normalize'),
+        dict(name='return_logs', annotation=bool, default=None,
+             description='Return normalizer logs'),
+    ]
+
+    def normalization_callback(cls, text, *args, **kwargs):
+        return_logs = False
+        if 'return_logs' in kwargs:
+            return_logs = bool(kwargs['return_logs'])
+            del kwargs['return_logs']
+
+        if return_logs:
+            handler = ListHandler()
+            handler.setFormatter(DiffLoggingFormatter(dialect='html'))
+            normalize_logger.addHandler(handler)
+
+        try:
+            result = {
+                "text": cls(*args, **kwargs).normalize(text)
+            }
+            if return_logs:
+                logs = handler.flush()
+                result['logs'] = []
+                for log in logs:
+                    result['logs'].append(dict(names=log[0], message=log[1]))
+            return result
+        except csv.CSVParserError as e:
+            message = 'on line %d, character %d' % (e.line, e.char)
+            message = '\n'.join([e.__doc__, e.message, message])
+            data = {
+                "message": message,
+                "line": e.line,
+                "char": e.char,
+                "index": e.index,
+                "field": "config"
+            }
+            raise AssertionError(json.dumps(data))
+        finally:
+            if return_logs:
+                normalize_logger.removeHandler(handler)
+
+    add_methods('normalization', normalization_factory, normalization_callback, extra_params)
+    # add_methods('metrics', metrics_factory)
+
     def _help():
         """
         Returns available api methods
@@ -149,4 +179,5 @@ def get_methods() -> jsonrpcserver.methods.Methods:
         return {name: format_docs(func.__doc__)
                 for name, func in methods.items.items()}
 
+    methods.add(help=_help)
     return methods
