@@ -16,6 +16,7 @@ from benchmarkstt.metrics import factory as metrics_factory
 from benchmarkstt.normalization.logger import ListHandler, DiffLoggingFormatter, normalize_logger
 from functools import wraps, partial
 from benchmarkstt.docblock import format_docs
+from benchmarkstt.input.core import PlainText
 import inspect
 import os
 import benchmarkstt.csv as csv
@@ -57,7 +58,10 @@ def add_methods_from_module(methods, name, factory, callback, extra_params=None)
                 }
                 raise AssertionError(json.dumps(data))
 
-            return callback(cls, *args, **kwargs)
+            result = callback(cls, *args, **kwargs)
+            if isinstance(result, tuple) and hasattr(result, '_asdict'):
+                result = result._asdict()
+            return result
 
         # copy signature from original, add params
         sig = inspect.signature(cls)
@@ -123,13 +127,6 @@ def get_methods() -> jsonrpcserver.methods.Methods:
 
     methods.add(version=version)
 
-    extra_params = [
-        dict(name='text', annotation=str,
-             description='The text to normalize'),
-        dict(name='return_logs', annotation=bool, default=None,
-             description='Return normalizer logs'),
-    ]
-
     def normalization_callback(cls, text, *args, **kwargs):
         return_logs = False
         if 'return_logs' in kwargs:
@@ -166,8 +163,27 @@ def get_methods() -> jsonrpcserver.methods.Methods:
             if return_logs:
                 normalize_logger.removeHandler(handler)
 
+    extra_params = [
+        dict(name='text', annotation=str,
+             description='The text to normalize'),
+        dict(name='return_logs', annotation=bool, default=None,
+             description='Return normalizer logs'),
+    ]
     add_methods('normalization', normalization_factory, normalization_callback, extra_params)
-    # add_methods('metrics', metrics_factory)
+
+    def cb(cls, ref: str, hyp: str, *args, **kwargs):
+        try:
+            ref = PlainText(ref)
+            hyp = PlainText(hyp)
+            return cls(*args, **kwargs).compare(ref, hyp)
+        except Exception as e:
+            raise Exception(e)
+
+    extra_params = [
+        dict(name='ref', annotation=str, description='Reference'),
+        dict(name='hyp', annotation=str, description='Hypothesis'),
+    ]
+    add_methods('metrics', metrics_factory, cb, extra_params)
 
     def _help():
         """
