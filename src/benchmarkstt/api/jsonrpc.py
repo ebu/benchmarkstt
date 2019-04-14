@@ -14,7 +14,7 @@ from benchmarkstt import __meta__
 from functools import wraps, partial
 from benchmarkstt.docblock import format_docs
 from benchmarkstt.modules import Modules
-import inspect
+from inspect import _empty, Parameter, signature
 import os
 
 
@@ -60,15 +60,14 @@ def add_methods_from_module(methods, name, factory, callback):
             return result
 
         # copy signature from original
-        sig = inspect.signature(cls)
+        sig = signature(cls)
 
-        cb_params = inspect.signature(callback).parameters.values()
+        cb_params = signature(callback).parameters.values()
         extra_params = [parameter for parameter in cb_params
                         if parameter.name != 'cls' and
-                        parameter.kind not in (inspect.Parameter.VAR_KEYWORD,
-                                               inspect.Parameter.VAR_POSITIONAL)]
+                        parameter.kind not in (Parameter.VAR_KEYWORD,
+                                               Parameter.VAR_POSITIONAL)]
         if len(extra_params):
-            _empty = inspect._empty
             params = list(filter(lambda x: x.default is _empty, extra_params))
             params.extend(sig.parameters.values())
             params.extend(list(filter(lambda x: x.default is not _empty, extra_params)))
