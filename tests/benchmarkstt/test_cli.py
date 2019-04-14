@@ -28,7 +28,8 @@ garden."
     ['--help', 0],
     ['normalization -i tests/_data/candide.txt --lowercase', candide_lowercase],
     ['normalization -i tests/_data/candide.txt --file', 2],
-
+    ['metrics -r tests/_data/a.txt -h tests/_data/b.txt', 2],
+    ['metrics -r "HI" -h "HELLO" -rt argument -ht argument --wer', "wer\n===\n\n1.000000\n\n"],
     ['metrics -r tests/_data/a.txt -h tests/_data/b.txt --wer --worddiffs --diffcounts',
      dedent('''
      wer
