@@ -8,12 +8,8 @@ factory = normalization.factory
 
 def callback(cls, text: str, *args, return_logs: bool = None, **kwargs):
     """
-    :param cls:
-    :param text:
-    :param args:
-    :param return_logs:
-    :param kwargs:
-    :return:
+    :param str text: The text to normalize
+    :param bool return_logs: Return normalizer logs
     """
     if return_logs:
         handler = ListHandler()
@@ -44,11 +40,3 @@ def callback(cls, text: str, *args, return_logs: bool = None, **kwargs):
     finally:
         if return_logs:
             normalize_logger.removeHandler(handler)
-
-
-extra_params = [
-    dict(name='text', annotation=str,
-         description='The text to normalize'),
-    dict(name='return_logs', annotation=bool, default=None,
-         description='Return normalizer logs'),
-]

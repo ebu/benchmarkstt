@@ -18,7 +18,7 @@ import inspect
 import os
 
 
-def add_methods_from_module(methods, name, factory, callback, extra_params=None):
+def add_methods_from_module(methods, name, factory, callback):
     def is_safe_path(path):
         """
         Determines whether the file or path is within the current working directory
@@ -59,25 +59,22 @@ def add_methods_from_module(methods, name, factory, callback, extra_params=None)
                 result = result._asdict()
             return result
 
-        # copy signature from original, add params
+        # copy signature from original
         sig = inspect.signature(cls)
-        if extra_params:
-            def mapper(param_settings):
-                kwargs = dict(**param_settings,
-                              kind=inspect.Parameter.POSITIONAL_OR_KEYWORD)
-                del kwargs['description']
-                return inspect.Parameter(**kwargs)
 
-            mapper = partial(map, mapper)
-            params = list(mapper(filter(lambda x: 'default' not in x, extra_params)))
+        cb_params = inspect.signature(callback).parameters.values()
+        extra_params = [parameter for parameter in cb_params
+                        if parameter.name != 'cls' and
+                        parameter.kind not in (inspect.Parameter.VAR_KEYWORD,
+                                               inspect.Parameter.VAR_POSITIONAL)]
+        if len(extra_params):
+            _empty = inspect._empty
+            params = list(filter(lambda x: x.default is _empty, extra_params))
             params.extend(sig.parameters.values())
-            params.extend(list(mapper(filter(lambda x: 'default' in x, extra_params))))
+            params.extend(list(filter(lambda x: x.default is not _empty, extra_params)))
             sig = sig.replace(parameters=params)
 
-            for param in extra_params:
-                _.__doc__ += '\n    :param %s %s: %s' % (param['annotation'].__name__,
-                                                         param['name'],
-                                                         param['description'])
+        _.__doc__ += callback.__doc__
 
         _.__signature__ = sig
 
@@ -124,7 +121,7 @@ def get_methods() -> jsonrpcserver.methods.Methods:
     methods.add(version=version)
 
     for name, module in Modules('api'):
-        add_methods(name, module.factory, module.callback, module.extra_params)
+        add_methods(name, module.factory, module.callback)
 
     def _help():
         """
