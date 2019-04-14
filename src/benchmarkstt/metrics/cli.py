@@ -1,3 +1,7 @@
+"""
+Calculate metrics based on the comparison of a hypothesis with a reference.
+"""
+
 from benchmarkstt.input import core
 from benchmarkstt.metrics import factory
 from benchmarkstt.cli import args_from_factory

@@ -3,9 +3,12 @@ import logging
 from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
-from collections import OrderedDict
+from collections import namedtuple
 
 logger = logging.getLogger(__name__)
+
+OpcodeCounts = namedtuple('OpcodeCounts',
+                          ('equal', 'replace', 'insert', 'delete'))
 
 
 def traversible(schema, key=None):
@@ -15,14 +18,13 @@ def traversible(schema, key=None):
 
 
 def get_opcode_counts(opcodes):
-    counts = dict(equal=0, replace=0, insert=0, delete=0)
-
+    counts = OpcodeCounts(0, 0, 0, 0)._asdict()
     for tag, alo, ahi, blo, bhi in opcodes:
         if tag in ['equal', 'replace', 'delete']:
             counts[tag] += ahi - alo
         elif tag == 'insert':
             counts[tag] += bhi - blo
-    return OrderedDict(sorted(counts.items(), key=lambda x: x[1], reverse=True))
+    return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
 
 
 def get_differ(a, b, differ_class):
@@ -56,7 +58,7 @@ class WER(Base):
     """
     Word Error Rate, basically defined as:
 
-    .. code-block :: text
+    .. code-block:: text
 
         insertions + deletions + substitions
         ------------------------------------
@@ -85,11 +87,11 @@ class WER(Base):
 
         counts = get_opcode_counts(diffs.get_opcodes())
 
-        changes = counts['replace'] * self.SUB_PENALTY + \
-            counts['delete'] * self.DEL_PENALTY + \
-            counts['insert'] * self.INS_PENALTY
+        changes = counts.replace * self.SUB_PENALTY + \
+            counts.delete * self.DEL_PENALTY + \
+            counts.insert * self.INS_PENALTY
 
-        return changes / (counts['equal'] + changes)
+        return changes / (counts.equal + changes)
 
 
 class DiffCounts(Base):

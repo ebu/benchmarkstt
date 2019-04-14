@@ -44,7 +44,7 @@ garden."
      diffcounts
      ==========
 
-     OrderedDict([('equal', 6), ('replace', 1), ('insert', 0), ('delete', 0)])
+     OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
 
      ''').lstrip()]
 ])
