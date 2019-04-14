@@ -1,29 +1,9 @@
 import argparse
 import logging
-from importlib import import_module
 from . import __meta__
-import sys
 import textwrap
 import itertools
-
-_modules = ['normalization', 'metrics']
-
-if sys.version_info >= (3, 6):
-    _modules.append('api')
-
-
-def get_modules(sub_module=None):
-    postfix = '' if sub_module is None else '.' + sub_module
-    for module in _modules:
-        yield module, import_module('benchmarkstt.%s%s' % (module, postfix))
-
-
-def get_modules_dict(sub_module=None):
-    return {module: cli for module, cli in get_modules(sub_module)}
-
-
-def modules():
-    return get_modules_dict('cli')
+from benchmarkstt.modules import Modules
 
 
 def _parser_no_sub(dont_add_submodule=False):
@@ -39,7 +19,7 @@ def _parser_no_sub(dont_add_submodule=False):
 
     # this is for argparse autodoc purposes
     if not dont_add_submodule:  # pragma: no cover
-        parser.add_argument('subcommand', choices=modules().keys())
+        parser.add_argument('subcommand', choices=Modules('cli').keys())
 
     return parser
 
@@ -48,7 +28,7 @@ def _parser() -> argparse.ArgumentParser:
     parser = _parser_no_sub(True)
     subparsers = parser.add_subparsers(dest='subcommand')
 
-    for module, cli in modules().items():
+    for module, cli in Modules('cli'):
         kwargs = dict()
         if hasattr(cli, 'Formatter'):
             kwargs['formatter_class'] = cli.Formatter
@@ -170,7 +150,7 @@ def main():
 
     if not args.subcommand:
         parser.error("expects at least 1 argument")
-    modules()[args.subcommand].main(parser, args)
+    Modules('cli')[args.subcommand].main(parser, args)
     exit(0)
 
 

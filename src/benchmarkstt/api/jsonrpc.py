@@ -11,15 +11,11 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 import jsonrpcserver
 import json
 from benchmarkstt import __meta__
-from benchmarkstt.normalization import factory as normalization_factory
-from benchmarkstt.metrics import factory as metrics_factory
-from benchmarkstt.normalization.logger import ListHandler, DiffLoggingFormatter, normalize_logger
 from functools import wraps, partial
 from benchmarkstt.docblock import format_docs
-from benchmarkstt.input.core import PlainText
+from benchmarkstt.modules import Modules
 import inspect
 import os
-import benchmarkstt.csv as csv
 
 
 def add_methods_from_module(methods, name, factory, callback, extra_params=None):
@@ -127,63 +123,8 @@ def get_methods() -> jsonrpcserver.methods.Methods:
 
     methods.add(version=version)
 
-    def normalization_callback(cls, text, *args, **kwargs):
-        return_logs = False
-        if 'return_logs' in kwargs:
-            return_logs = bool(kwargs['return_logs'])
-            del kwargs['return_logs']
-
-        if return_logs:
-            handler = ListHandler()
-            handler.setFormatter(DiffLoggingFormatter(dialect='html'))
-            normalize_logger.addHandler(handler)
-
-        try:
-            result = {
-                "text": cls(*args, **kwargs).normalize(text)
-            }
-            if return_logs:
-                logs = handler.flush()
-                result['logs'] = []
-                for log in logs:
-                    result['logs'].append(dict(names=log[0], message=log[1]))
-            return result
-        except csv.CSVParserError as e:
-            message = 'on line %d, character %d' % (e.line, e.char)
-            message = '\n'.join([e.__doc__, e.message, message])
-            data = {
-                "message": message,
-                "line": e.line,
-                "char": e.char,
-                "index": e.index,
-                "field": "config"
-            }
-            raise AssertionError(json.dumps(data))
-        finally:
-            if return_logs:
-                normalize_logger.removeHandler(handler)
-
-    extra_params = [
-        dict(name='text', annotation=str,
-             description='The text to normalize'),
-        dict(name='return_logs', annotation=bool, default=None,
-             description='Return normalizer logs'),
-    ]
-    add_methods('normalization', normalization_factory, normalization_callback, extra_params)
-
-    def cb(cls, ref: str, hyp: str, *args, **kwargs):
-        try:
-            ref = PlainText(ref)
-            hyp = PlainText(hyp)
-            return cls(*args, **kwargs).compare(ref, hyp)
-        except Exception as e:
-            raise Exception(e)
-
-    extra_params = [
-        dict(name='ref', annotation=str, description='Reference'),
-        dict(name='hyp', annotation=str, description='Hypothesis'),
-    ]
-    add_methods('metrics', metrics_factory, cb, extra_params)
+    for name, module in Modules('api'):
+        add_methods(name, module.factory, module.callback, module.extra_params)
 
     def _help():
         """
