@@ -44,7 +44,7 @@ garden."
      diffcounts
      ==========
 
-     {'equal': 6, 'replace': 1, 'insert': 0, 'delete': 0}
+     OrderedDict([('equal', 6), ('replace', 1), ('insert', 0), ('delete', 0)])
 
      ''').lstrip()]
 ])

@@ -3,6 +3,7 @@ import logging
 from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
+from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
@@ -21,8 +22,7 @@ def get_opcode_counts(opcodes):
             counts[tag] += ahi - alo
         elif tag == 'insert':
             counts[tag] += bhi - blo
-
-    return counts
+    return OrderedDict(sorted(counts.items(), key=lambda x: x[1], reverse=True))
 
 
 def get_differ(a, b, differ_class):

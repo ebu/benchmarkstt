@@ -1,4 +1,3 @@
-from benchmarkstt.metrics.core import WER, WordDiffs, DiffCounts
 from benchmarkstt.input import core
 from benchmarkstt.metrics import factory
 from benchmarkstt.cli import args_from_factory
