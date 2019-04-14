@@ -6,64 +6,9 @@ import sys
 from . import NormalizationComposite
 import argparse
 from . import factory
-import textwrap
-import itertools
 from .logger import DiffLoggingFormatter, normalize_logger
 import logging
-from benchmarkstt.cli import args_inputfile
-
-
-class _NormalizerAction:
-    """
-    Placeholder class to recognize an argument is a NormalizerAction in argparse
-    """
-
-
-def normalizer_action(required_args, optional_args):
-    """
-    Custom argparse action to support a variable amount of arguments
-    :param list required_args: required arguments
-    :param list optional_args: optional arguments
-    :rtype: NormalizerAction
-    """
-
-    minlen = len(required_args)
-    maxlen = minlen + len(optional_args)
-
-    class NormalizerAction(argparse.Action, _NormalizerAction):
-        def __call__(self, parser, args, values, option_string=None):
-            if len(values) < minlen or len(values) > maxlen:
-                raise argparse.ArgumentTypeError('argument "%s" requires between %d and %d arguments (got %d)' %
-                                                 (self.dest, minlen, maxlen, len(values)))
-
-            if 'normalizers' not in args:
-                args.normalizers = []
-
-            args.normalizers.append([self.dest] + values)
-
-    return NormalizerAction
-
-
-class Formatter(argparse.HelpFormatter):
-    """
-    Custom formatter for argparse that allows us to properly display _NormalizerActions and docblock documentation
-    """
-
-    def _format_args(self, action, default_metavar):
-        if isinstance(action, _NormalizerAction):
-            return ' '.join(action.metavar)
-
-        return super()._format_args(action, default_metavar)
-
-    def _split_lines(self, text, width):
-        def wrap(txt):
-            if txt == '':
-                return ['']
-            return textwrap.wrap(txt, width=width)
-
-        text = text.splitlines()
-        text = list(itertools.chain.from_iterable(map(wrap, text)))
-        return text
+from benchmarkstt.cli import args_inputfile, args_from_factory
 
 
 def argparser(parser: argparse.ArgumentParser):
@@ -96,24 +41,7 @@ def argparser(parser: argparse.ArgumentParser):
       At least one normalizer needs to be provided."""
 
     normalizers = parser.add_argument_group('available normalizers', description=normalizers_desc)
-
-    for conf in factory:
-        name = conf.name
-        docs = conf.docs
-
-        arguments = dict()
-        arguments['help'] = docs
-        arguments['nargs'] = 0
-
-        if len(conf.required_args) or len(conf.optional_args):
-            arguments['nargs'] = '+'
-            optionals = list(map(lambda x: '[%s]' % x, conf.optional_args))
-            arguments['metavar'] = tuple(conf.required_args + optionals)
-
-        arguments['action'] = normalizer_action(conf.required_args, conf.optional_args)
-
-        normalizers.add_argument('--%s' % (name,), **arguments)
-
+    args_from_factory('normalizers', factory, normalizers)
     return parser
 
 

@@ -1,5 +1,7 @@
 from benchmarkstt.metrics.core import WER, WordDiffs, DiffCounts
 from benchmarkstt.input import core
+from benchmarkstt.metrics import factory
+from benchmarkstt.cli import args_from_factory
 import argparse
 
 
@@ -15,9 +17,13 @@ def argparser(parser: argparse.ArgumentParser):
     parser.add_argument('-ht', '--hypothesis-type', default='infer',
                         help='Type of hypothesis file')
 
-    parser.add_argument('-m', '--metric', default='wer',
-                        help='The type of metric to run')
+    # parser.add_argument('-m', '--metric', default='wer', nargs='+',
+    #                     help='The type of metric(s) to run')
 
+    metrics_desc = " A list of metrics to calculate. At least one metric needs to be provided."
+
+    subparser = parser.add_argument_group('available metrics', description=metrics_desc)
+    args_from_factory('metrics', factory, subparser)
     return parser
 
 
@@ -35,15 +41,15 @@ def main(parser, args):
     ref = list(ref)
     hyp = list(hyp)
 
-    # TODO: load proper metric class
-    # TODO: provide output types
+    if 'metrics' not in args or not len(args.metrics):
+        parser.error("need at least one metric")
 
-    metrics = [WordDiffs, WER, DiffCounts]
-    for metric in metrics:
-        cls = metric()
-        print(type(cls).__name__ + ':')
-        print('=' * (len(type(cls).__name__)+1))
+    for item in args.metrics:
+        metric_name = item.pop(0).replace('-', '.')
+        print(metric_name)
+        print('=' * len(metric_name))
         print()
-        print(cls.compare(ref, hyp))
-        print()
+        metric = factory.create(metric_name, *item)
+        # todo: different output options
+        print(metric.compare(ref, hyp))
         print()

@@ -52,5 +52,5 @@ def test_nodoclog(caplog):
         pass
 
     assert caplog.record_tuples == [
-        ('benchmarkstt.factory', 30, "No docstring for normalizer 'ValidClass'")
+        ('benchmarkstt.factory', 30, "No docstring for 'ValidClass'")
     ]

@@ -1,5 +1,6 @@
 import pytest
 import sys
+from textwrap import dedent
 from benchmarkstt.cli import main
 from unittest import mock
 
@@ -27,6 +28,25 @@ garden."
     ['--help', 0],
     ['normalization -i tests/_data/candide.txt --lowercase', candide_lowercase],
     ['normalization -i tests/_data/candide.txt --file', 2],
+
+    ['metrics -r tests/_data/a.txt -h tests/_data/b.txt --wer --worddiffs --diffcounts',
+     dedent('''
+     wer
+     ===
+
+     0.14285714285714285
+
+     worddiffs
+     =========
+
+     ·TEST·my·data·should·be\033[31m·one\033[0m\033[32m·ONE\033[0m·difference
+
+     diffcounts
+     ==========
+
+     {'equal': 6, 'replace': 1, 'insert': 0, 'delete': 0}
+
+     ''').lstrip()]
 ])
 def test_cli(argv, result, capsys):
     if type(argv) is str:

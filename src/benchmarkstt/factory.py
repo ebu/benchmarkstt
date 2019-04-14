@@ -128,7 +128,7 @@ class Factory:
         for clsname, cls in self._registry.items():
             if cls.__doc__ is None:
                 docs = ''
-                logger.warning("No docstring for normalizer '%s'", cls.__name__)
+                logger.warning("No docstring for '%s'", cls.__name__)
             else:
                 docs = cls.__doc__
             docs = format_docs(docs)

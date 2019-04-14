@@ -33,6 +33,10 @@ def get_differ(a, b, differ_class):
 
 
 class WordDiffs(Base):
+    """
+    Calculate the differences on a per-word basis
+    """
+
     def __init__(self, differ_class=None, dialect=None):
         self._differ_class = differ_class
         if dialect is None:
@@ -89,6 +93,10 @@ class WER(Base):
 
 
 class DiffCounts(Base):
+    """
+    Get the amount of differences between reference and hypothesis
+    """
+
     def __init__(self, differ_class=None):
         if differ_class is None:
             differ_class = RatcliffObershelp
