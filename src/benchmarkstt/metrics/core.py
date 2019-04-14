@@ -54,7 +54,7 @@ class WordDiffs(Base):
 
 class WER(Base):
     """
-    Item Error Rate, basically defined as:
+    Word Error Rate, basically defined as:
 
     .. code-block :: text
 
