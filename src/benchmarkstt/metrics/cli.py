@@ -51,5 +51,9 @@ def main(parser, args):
         print()
         metric = factory.create(metric_name, *item)
         # todo: different output options
-        print(metric.compare(ref, hyp))
+        result = metric.compare(ref, hyp)
+        if type(result) is float:
+            print("%.6f" % (result,))
+        else:
+            print(result)
         print()
