@@ -18,7 +18,17 @@ from inspect import _empty, Parameter, signature
 import os
 
 
-def add_methods_from_module(methods, name, factory, callback):
+class SecurityError(ValueError):
+    """Trying to do or access something that isn't allowed"""
+
+
+class MagicMethods:
+    possible_path_args = ['file', 'path']
+
+    def __init__(self):
+        self.methods = jsonrpcserver.methods.Methods()
+
+    @staticmethod
     def is_safe_path(path):
         """
         Determines whether the file or path is within the current working directory
@@ -27,26 +37,26 @@ def add_methods_from_module(methods, name, factory, callback):
         """
         return os.path.abspath(path).startswith(os.path.abspath(os.getcwd()))
 
-    class SecurityError(ValueError):
-        """Trying to do or access something that isn't allowed"""
+    def serve(self, config, callback):
+        """
+        Responsible for creating a callback with proper documentation and arguments
+        signature that can be registered as an api call.
 
-    callables = list(factory)
-
-    def serve(config):
+        :param config:
+        :param callback:
+        :return: callable
+        """
         cls = config.cls
 
         @wraps(cls)
         def _(*args, **kwargs):
             # only allow files from cwd to be used...
             try:
-                if 'file' in kwargs:
-                    if not is_safe_path(kwargs['file']):
-                        raise SecurityError("Access to unallowed file attempted", 'file')
-
-                if 'path' in kwargs:
-                    if not is_safe_path(kwargs['path']):
-                        raise SecurityError("Access to unallowed directory attempted", 'path')
-
+                # todo (?) add available files and folders as select options
+                for name in self.possible_path_args:
+                    if name in kwargs:
+                        if not self.is_safe_path(kwargs[name]):
+                            raise SecurityError("Access to unallowed file attempted", name)
             except SecurityError as e:
                 data = {
                     "message": e.args[0],
@@ -74,28 +84,65 @@ def add_methods_from_module(methods, name, factory, callback):
             sig = sig.replace(parameters=params)
 
         _.__doc__ += callback.__doc__
-
         _.__signature__ = sig
-
-        # todo (?) add available files and folders as select options
         return _
 
-    def lister():
+    def load(self, name, module):
         """
-        Get a list of available core %s
+        Load all possible callbacks for a given module
 
-        :return object: With key being the %s name, and value its description
+        :param str name:
+        :param Module module:
         """
-        return {config.name: config.docs for config in callables}
+        factory = module.factory
+        callables = list(factory)
 
-    lister.__doc__ = lister.__doc__ % (name, name)
+        def lister():
+            """
+            Get a list of available core %s
 
-    methods.add(**{"list.%s" % (name,): lister})
+            :return object: With key being the %s name, and value its description
+            """
+            return {config.name: config.docs for config in callables}
 
-    # add each normalizer as its own api call
-    for conf in callables:
-        apicallname = '%s.%s' % (name, conf.name,)
-        methods.add(**{apicallname: serve(conf)})
+        lister.__doc__ = lister.__doc__ % (name, name)
+
+        self.register("list.%s" % (name,), lister)
+
+        # add each callable as its own api call
+        for conf in callables:
+            apicallname = '%s.%s' % (name, conf.name,)
+            self.register(apicallname, self.serve(conf, module.callback))
+
+    def register(self, name, callback):
+        """
+        Register a callback as an api call
+        :param str name:
+        :param callable callback:
+        """
+        self.methods.add(**{name: callback})
+
+
+class DefaultMethods:
+    @staticmethod
+    def version():
+        """
+        Get the version of benchmarkstt
+
+        :return str: BenchmarkSTT version
+        """
+        return __meta__.__version__
+
+    @staticmethod
+    def help(methods):
+        def _():
+            """
+            Returns available api methods
+
+            :return object: With key being the method name, and value its description
+            """
+            return {name: format_docs(func.__doc__) for name, func in methods.items.items()}
+        return _
 
 
 def get_methods() -> jsonrpcserver.methods.Methods:
@@ -105,32 +152,10 @@ def get_methods() -> jsonrpcserver.methods.Methods:
     :return: jsonrpcserver.methods.Methods
     """
 
-    methods = jsonrpcserver.methods.Methods()
-    add_methods = partial(add_methods_from_module, methods)
-
-    def version():
-        """
-        Get the version of benchmarkstt
-
-        :return str: BenchmarkSTT version
-        """
-
-        return __meta__.__version__
-
-    methods.add(version=version)
-
+    methods = MagicMethods()
+    methods.register('version', DefaultMethods.version)
     for name, module in Modules('api'):
-        add_methods(name, module.factory, module.callback)
+        methods.load(name, module)
 
-    def _help():
-        """
-        Returns available api methods
-
-        :return object: With key being the method name, and value its description
-        """
-
-        return {name: format_docs(func.__doc__)
-                for name, func in methods.items.items()}
-
-    methods.add(help=_help)
-    return methods
+    methods.register('help', DefaultMethods.help(methods.methods))
+    return methods.methods
