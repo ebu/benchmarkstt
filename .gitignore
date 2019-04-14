@@ -1,6 +1,7 @@
 # sphinx documentation
 docs/build/
 docs/modules/*.rst
+docs/api-methods.rst
 
 # python caches and build
 __pycache__
