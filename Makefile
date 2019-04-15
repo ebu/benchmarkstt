@@ -3,8 +3,8 @@
 test:
 	pytest src --doctest-modules --verbose
 	pytest tests --verbose
-	pycodestyle --max-line-length=120 tests
-	pycodestyle --max-line-length=120 src
+	pycodestyle tests
+	pycodestyle src
 
 docs: html
 
