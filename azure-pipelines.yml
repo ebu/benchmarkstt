@@ -41,7 +41,6 @@ jobs:
 
   - script: |
       pytest tests --junitxml=junit/test-results-unit.xml -vv
-      pytest src --doctest-modules --junitxml=junit/test-results-doctest.xml
     displayName: 'pytest'
 
   - task: PublishTestResults@2
