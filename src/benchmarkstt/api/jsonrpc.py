@@ -11,7 +11,7 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 import jsonrpcserver
 import json
 from benchmarkstt import __meta__
-from functools import wraps, partial
+from functools import wraps
 from benchmarkstt.docblock import format_docs
 from benchmarkstt.modules import Modules
 from inspect import _empty, Parameter, signature

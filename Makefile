@@ -1,7 +1,8 @@
 .PHONY: docs test clean gh-pages
 
 test:
-	pytest --doctest-modules --verbose
+	pytest src --doctest-modules --verbose
+	pytest tests --verbose
 	pycodestyle --max-line-length=120 tests
 	pycodestyle --max-line-length=120 src
 
