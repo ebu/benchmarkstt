@@ -7,8 +7,11 @@ from benchmarkstt.modules import Modules
 
 
 def _parser_no_sub(dont_add_submodule=False):
-    parser = argparse.ArgumentParser(prog='benchmarkstt', add_help=__name__ != '__main__',
+    parser = argparse.ArgumentParser(prog='benchmarkstt', add_help=False,
                                      description='BenchmarkSTT main command line script')
+
+    parser.add_argument('--help', action='help', default=argparse.SUPPRESS,
+                        help=argparse._('show this help message and exit'))
 
     parser.add_argument('--log-level', type=str.lower, default='warning', dest='log_level',
                         choices=list(map(str.lower, logging._nameToLevel.keys())),
