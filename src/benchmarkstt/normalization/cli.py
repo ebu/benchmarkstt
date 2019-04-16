@@ -8,7 +8,13 @@ import argparse
 from . import factory
 from .logger import DiffLoggingFormatter, normalize_logger
 import logging
-from benchmarkstt.cli import args_inputfile, args_from_factory
+from benchmarkstt.cli import args_from_factory
+
+
+def args_inputfile(parser):
+    parser.add_argument('-i', '--inputfile', action='append', nargs=1,
+                        help='read input from this file, defaults to STDIN',
+                        metavar='file')
 
 
 def argparser(parser: argparse.ArgumentParser):
