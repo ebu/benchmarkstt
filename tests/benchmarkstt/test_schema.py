@@ -63,8 +63,9 @@ def test_decode():
     assert type(schema[0]) is Item
     assert schema == res
 
-    with pytest.raises(SchemaJSONError):
+    with pytest.raises(SchemaJSONError) as exc:
         Schema.loads('{"test": "test"}')
+    assert "Expected a list" in str(exc)
 
     with pytest.raises(JSONDecodeError):
         Schema.loads('InvalidJSON')

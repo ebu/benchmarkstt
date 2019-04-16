@@ -17,6 +17,5 @@ def test_format_diff(dialect, expected):
     assert gotten == expected
 
 
-def test_format_replace():
-    pass
-    # assert format_diff('ABCDEF', 'ABBDEF', dialect='cli') == ''
+def test_no_diff():
+    assert format_diff(a, a, dialect='cli') == a

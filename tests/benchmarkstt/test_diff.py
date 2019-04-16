@@ -4,18 +4,6 @@ import pytest
 differs = [differ.cls for differ in diff.factory]
 differs_decorator = pytest.mark.parametrize('differ', differs)
 
-# from benchmarkstt.segmentation import Base
-# class CharSegmenter(Base):
-#     def __init__(self, text: str):
-#         self.text = text
-#
-#     def __iter__(self):
-#         return iter(self.text)
-
-
-# some tests copied from https://github.com/python/cpython/blob/master/Lib/test/test_difflib.py
-# additional tests to follow
-
 
 @differs_decorator
 def test_one_insert(differ):

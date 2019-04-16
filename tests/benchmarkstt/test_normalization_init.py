@@ -17,7 +17,6 @@ def test_available_normalizers():
 
     for conf in normalizers:
         name = conf.name
-        # normalizer = factory.get_class(name)
         assert type(conf) is ClassConfig
         assert factory.is_valid(conf.cls)
         assert factory.get_class(name.upper()) is conf.cls

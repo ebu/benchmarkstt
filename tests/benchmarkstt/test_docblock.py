@@ -110,4 +110,4 @@ def test_parse():
 
     parsed = parse(dummy_func)
     assert parsed.docs == expected.docs
-    # assert parsed.params == expected.params
+    # todo: test the other Docblock properties as well
