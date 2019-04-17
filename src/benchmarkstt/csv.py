@@ -3,7 +3,9 @@ Module providing our own CSV file parser with support for whitespace trimming, e
 """
 
 import typing
+import sys
 from functools import partial
+from benchmarkstt import DeferredList, make_printable
 
 
 class InvalidDialectError(ValueError):
@@ -92,12 +94,13 @@ class Reader:
 
     """
 
-    def __init__(self, file: typing.io.TextIO, dialect: Dialect):
+    def __init__(self, file: typing.io.TextIO, dialect: Dialect, debug=None):
         if not issubclass(dialect, Dialect):
             raise InvalidDialectError("Invalid dialect", dialect)
         self.line_num = 0
         self._dialect = dialect
         self._file = file
+        self._debug = bool(debug)
 
     def _trimright(self, data: str):
         chars = self._dialect.trimright
@@ -126,6 +129,24 @@ class Reader:
     def __iter__(self):
         readchar = iter(partial(self._file.read, 1), '')
         cur_line = 1
+
+        if self._debug:
+            current_module = sys.modules[__name__]
+            # print the color key the different modes
+            print('MODES: ', end='')
+            print(' '.join(['\033[1;%d;40m%s\033[0;0m' % (32 + getattr(current_module, name), name[5:])
+                            for name in dir(current_module)
+                            if name.startswith('MODE_')
+                            ]))
+
+            def debug(txt='', args=tuple(), **kwargs):
+                if type(args) is not tuple:
+                    args = tuple(DeferredList(args))
+                print(txt % args, **kwargs)
+                pass
+        else:
+            def debug(*args, **kwargs):
+                pass
 
         newlinechars = '\n\r'
 
@@ -161,16 +182,6 @@ class Reader:
             field = []
             mode = MODE_OUTSIDE
 
-        # debug = True
-        # if debug:
-        #     # print the color key the different modes
-        #     current_module = sys.modules[__name__]
-        #     print('MODES: ', end='')
-        #     print(' '.join(['\033[1;%d;40m%s\033[0;0m' % (32 + getattr(current_module, name), name[5:])
-        #                     for name in dir(current_module)
-        #                     if name.startswith('MODE_')
-        #                     ]))
-
         cur_char = 0
         last_quote_line = None
         last_quote_char = None
@@ -180,9 +191,8 @@ class Reader:
             cur_char += 1
             idx += 1
 
-            # if debug:
-            #     # print char to stdout with color defining mode
-            #     print('\033[1;%d;40m%s\033[0;0m' % (32+mode, make_printable(char)), end='')
+            # print char to stdout with color defining mode
+            debug('\033[1;%d;40m%s\033[0;0m', lambda: (32+mode, make_printable(char)), end='')
 
             is_newline = char in newlinechars
             if is_newline:
@@ -261,8 +271,7 @@ class Reader:
                 field.append(char)
                 continue
 
-        # if debug:
-        #     print()
+        debug()
 
         if mode == MODE_INSIDE_QUOTED:
             raise UnclosedQuoteError("Unexpected end", last_quote_line, last_quote_char, last_quote_idx)
@@ -271,7 +280,7 @@ class Reader:
             yield yield_line()
 
 
-def reader(file: typing.io.TextIO, dialect: typing.Union[None, str, Dialect] = None) -> Reader:
+def reader(file: typing.io.TextIO, dialect: typing.Union[None, str, Dialect] = None, **kwargs) -> Reader:
     if dialect is None:
         dialect = DefaultDialect
     elif type(dialect) is str:
@@ -279,4 +288,4 @@ def reader(file: typing.io.TextIO, dialect: typing.Union[None, str, Dialect] = N
             raise UnknownDialectError("Dialect not known", dialect)
         dialect = known_dialects[dialect]
 
-    return Reader(file, dialect)
+    return Reader(file, dialect, **kwargs)

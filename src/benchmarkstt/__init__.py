@@ -30,6 +30,21 @@ class DeferredRepr:
         return self.__str__()
 
 
+class DeferredList:
+    def __init__(self, cb):
+        self._cb = cb
+        self._list = None
+
+    @property
+    def list(self):
+        if self._list is None:
+            self._list = self._cb()
+        return self._list
+
+    def __getitem__(self, item):
+        return self.list[item]
+
+
 def make_printable(char):
     """
     Return printable representation of ascii/utf-8 control characters

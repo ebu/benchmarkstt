@@ -2,6 +2,21 @@ from benchmarkstt.csv import *
 import pytest
 from io import StringIO
 
+example1 = '''
+Some line, some other \t  \t
+dsfgdsg
+
+ \n         \t  \r
+ \n \r
+
+"stay","togther  "
+
+# commented out
+fsdss
+'''
+
+expected1 = [['Some line', 'some other'], ['dsfgdsg'], ['stay', 'togther  '], ['fsdss']]
+
 
 def get_reader(text, *args, **kwargs):
     return list(reader(StringIO(text), *args, **kwargs))
@@ -17,20 +32,7 @@ def test_csv():
 
     assert _reader('') == []
 
-    expected = [['Some line', 'some other'], ['dsfgdsg'], ['stay', 'togther  '],
-                ['fsdss']]
-    assert _reader('''
-    Some line, some other \t  \t
-    dsfgdsg
-
-     \n         \t  \r
-     \n \r
-
-    "stay","togther  "
-
-    # commented out
-    fsdss
-    ''') == expected
+    assert _reader(example1) == expected1
 
     assert _reader('"","test"," quiot"""') == [['', 'test', ' quiot"']]
 
@@ -142,3 +144,12 @@ def test_own_dialect():
         delimiter = ';'
 
     assert get_reader("Tester \n  No Trim  ", dialect=OwnDialect) == [['Tester '], ['  No Trim  ']]
+
+
+def test_debugger(capsys):
+    gotten = get_reader(example1, debug=True)
+
+    assert gotten == expected1
+    with open('tests/_data/csv.debugging.output.txt') as f:
+        expected_debug = f.read()
+    assert capsys.readouterr().out == expected_debug
