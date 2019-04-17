@@ -150,6 +150,6 @@ def test_debugger(capsys):
     gotten = get_reader(example1, debug=True)
 
     assert gotten == expected1
-    with open('tests/_data/csv.debugging.output.txt') as f:
+    with open('tests/_data/csv.debugging.output.txt', encoding='UTF-8') as f:
         expected_debug = f.read()
     assert capsys.readouterr().out == expected_debug
