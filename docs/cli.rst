@@ -15,6 +15,7 @@ Subcommands
 
        cli/normalization
        cli/api
+       cli/metrics
 
 Bash completion
 ---------------

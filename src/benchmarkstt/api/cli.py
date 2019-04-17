@@ -1,5 +1,7 @@
 """
-Make benchmarkstt available through a rudimentary JSON-RPC_ interface
+Make benchmarkstt available through a rudimentary JSON-RPC_ interfacea
+
+Only supported for Python versions 3.6 and above
 
 .. _JSON-RPC: https://www.jsonrpc.org
 
@@ -7,7 +9,7 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 
 import jsonrpcserver
 from flask import Flask, request, Response, render_template
-from benchmarkstt.docblock import format_docs, parse, rst_to_html
+from benchmarkstt.docblock import format_docs, parse, process_rst
 from .jsonrpc import get_methods
 
 
@@ -24,12 +26,14 @@ def argparser(parser):
                         help='port used by the server')
     parser.add_argument('--entrypoint', default='/api',
                         help='the jsonrpc api address')
+    parser.add_argument('--list-methods', action='store_true',
+                        help='list the available jsonrpc methods')
     parser.add_argument('--with-explorer', action='store_true',
                         help='also create the explorer to test api calls with, '
                              'this is a rudimentary feature currently '
-                             'only meant for testing and debugging')
-    parser.add_argument('--list-methods', action='store_true',
-                        help='list the available jsonrpc methods')
+                             'only meant for testing and debugging.\n'
+                             'Warning: the API explorer is provided as-is, without any tests '
+                             'or code reviews. This is marked as a low-priority feature.')
     return parser
 
 
@@ -55,8 +59,8 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
         response = jsonrpcserver.dispatch(req, methods=methods, debug=True, convert_camel_case=False)
         return Response(str(response), response.http_status, mimetype="application/json")
 
-    if with_explorer:
-        app.template_filter('parse_rst')(rst_to_html)
+    if with_explorer:  # pragma: nocover
+        app.template_filter('parse_rst')(process_rst)
 
         @app.route(entrypoint, methods=['GET'])
         def explorer():
@@ -89,5 +93,6 @@ def main(parser, args):
             print(format_docs(func.__doc__))
             print('')
     else:
+
         app = create_app(args.entrypoint, args.with_explorer)
         app.run(host=args.host, port=args.port, debug=args.debug)

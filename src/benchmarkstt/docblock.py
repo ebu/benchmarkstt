@@ -6,6 +6,7 @@ from collections import namedtuple
 import logging
 from docutils.core import publish_string
 from docutils.writers import html5_polyglot
+import docutils
 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +27,7 @@ def doc_param_parser(docstring, key, no_name=None, allow_multiple=None,
 
     if replace_strat is None:
         def replace_strat(match, param):
-            return match[0]
+            return match.group(0)
     elif type(replace_strat) is str:
         _replace_strat = replace_strat
 
@@ -37,32 +38,33 @@ def doc_param_parser(docstring, key, no_name=None, allow_multiple=None,
     def _(match):
         nonlocal results, key, no_name, replace_strat
         if no_name:
-            param = dict(name=key, type=match[1], value=match[2])
+            param = dict(name=key, type=match.group(1), value=match.group(2))
             return_val = replace_strat(match, param)
             results.append(DocblockParam(**param))
         else:
-            param = dict(name=match[2], type=match[1], value=match[3])
+            value = textwrap.dedent(match.group(3)).strip()
+            param = dict(name=match.group(2), type=match.group(1), value=value)
             return_val = replace_strat(match, param)
             param = DocblockParam(**param)
             if allow_multiple:
                 # check if it already exists, if not create a new object
                 idx = [idx for idx, val in enumerate(results)
-                       if match[2] not in val]
+                       if match.group(2) not in val]
                 if not len(idx):
                     idx = len(results)
                     results.append({})
                 else:
                     idx = idx[0]
-                results[idx][match[2]] = param
+                results[idx][match.group(2)] = param
             else:
-                results[match[2]] = param
+                results[match.group(2)] = param
 
         return return_val
 
     if no_name:
         regex = r'^[ \t]*:%s[ \t]*([a-z_]+)?:[ \t]+(.*)$'
     else:
-        regex = r'^[ \t]*:%s[ \t]+(?:([^:]+)[ \t]+)?([a-z_]+):(?:[ \t]+(.*))?$'
+        regex = r'^[ \t]*:%s[ \t]+(?:([^:]+)[ \t]+)?([a-z_]+):[ \t]*(.+$|(?:$[ \t]*\n)*([ \t]+)([^\n]*)$(?:\4.*\n|\n)+)'
 
     docs = re.sub(
         regex % (re.escape(key),), _, docstring, flags=re.MULTILINE
@@ -97,7 +99,10 @@ def parse(func):
     docs, doc_result = doc_param_parser(docs, 'return', no_name=True)
 
     def decode_examples(match, param):
-        param['value'] = decode_literal(param['value'])
+        if match.group(5) is None:
+            param['value'] = decode_literal(param['value'])
+        else:
+            param['value'] = process_rst(param['value'], 'text')
         return ''
 
     docs, examples = doc_param_parser(docs, 'example', allow_multiple=True,
@@ -136,8 +141,32 @@ class HTML5Writer(html5_polyglot.Writer):
         return subs['body']
 
 
-def rst_to_html(text):
-    writer = HTML5Writer()
+class TextWriter(docutils.writers.Writer):
+    class TextVisitor(docutils.nodes.SparseNodeVisitor):
+        _text = ''
+
+        def visit_Text(self, node):
+            self._text += node.astext()
+
+        def visit_paragraph(self, node):
+            self._text += '\n\n'
+
+        def text(self):
+            return self._text
+
+    def translate(self):
+        visitor = self.TextVisitor(self.document)
+        self.document.walkabout(visitor)
+        self.output = visitor.text()
+
+
+def process_rst(text, writer=None):
+    if writer is None or writer == 'html':
+        writer = HTML5Writer()
+    elif writer == 'text':
+        writer = TextWriter()
+    elif type(writer) is str:
+        raise ValueError("Unknown writer %s", str)
     settings = {'output_encoding': 'unicode', 'table_style': 'table'}
     return publish_string(text, writer=writer, writer_name='html5',
                           settings_overrides=settings)

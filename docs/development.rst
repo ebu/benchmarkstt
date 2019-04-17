@@ -9,7 +9,7 @@ This assumes :code:`git` and :code:`Python` 3.5 or above are already installed o
 1. Fork the `repository source code <https://github.com/EBU/ai-benchmarking-stt.git>`_ from github to your own account.
 
 2. Clone the repository from github to your local development environment (replace :code:`[YOURUSERNAME]` with your
-   github username.
+   github username).
 
    .. code-block:: bash
 

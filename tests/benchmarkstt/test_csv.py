@@ -2,11 +2,28 @@ from benchmarkstt.csv import *
 import pytest
 from io import StringIO
 
+example1 = '''
+Some line, some other \t  \t
+dsfgdsg
+
+ \n         \t  \r
+ \n \r
+
+"stay","togther  "
+
+# commented out
+fsdss
+'''
+
+expected1 = [['Some line', 'some other'], ['dsfgdsg'], ['stay', 'togther  '], ['fsdss']]
+
+
+def get_reader(text, *args, **kwargs):
+    return list(reader(StringIO(text), *args, **kwargs))
+
 
 def test_csv():
-    def _reader(text):
-        return list(reader(StringIO(text)))
-
+    _reader = get_reader
     assert _reader('replace," ","\n"') == [['replace', ' ', '\n']]
     assert type(reader(StringIO(''))) is Reader
     assert type(Reader(StringIO(''), DefaultDialect)) is Reader
@@ -15,33 +32,11 @@ def test_csv():
 
     assert _reader('') == []
 
-    expected = [['Some line', 'some other'], ['dsfgdsg'], ['stay', 'togther  '],
-                ['fsdss']]
-    assert _reader('''
-    Some line, some other \t  \t
-    dsfgdsg
-
-     \n         \t  \r
-     \n \r
-
-    "stay","togther  "
-
-    # commented out
-    fsdss
-    ''') == expected
-
-    with pytest.raises(CSVParserError):
-        _reader('stray"quote')
+    assert _reader(example1) == expected1
 
     assert _reader('"","test"," quiot"""') == [['', 'test', ' quiot"']]
 
     assert _reader('       val1     ,\t   val2  \n') == [['val1', 'val2']]
-
-    with pytest.raises(UnclosedQuoteError):
-        _reader('  s  ,"')
-
-    with pytest.raises(UnallowedQuoteError):
-        _reader('  fsd","')
 
     assert _reader('    ","') == [[',']]
 
@@ -58,6 +53,7 @@ def test_csv():
     assert _reader('\t t ') == [['t']]
     assert _reader('t') == [['t']]
     assert _reader('replace," ","\n"') == [['replace', ' ', '\n']]
+    assert _reader(',') == [['', '']]
 
 
 def test_conf():
@@ -111,3 +107,49 @@ Normalizer4 "argument with double quote ("")"
     assert _reader('test "stuff\n\t"\n\t  \t  YEs    \t   \n') == \
         [['test', 'stuff\n\t'], ['YEs']]
     assert _reader("\n\n\n\nline5")[0].lineno == 5
+
+
+def test_exceptions():
+    _reader = get_reader
+
+    with pytest.raises(InvalidDialectError):
+        Reader(StringIO(''), dialect=InvalidDialectError)
+
+    with pytest.raises(UnknownDialectError):
+        _reader('', dialect='notknown')
+
+    with pytest.raises(UnallowedQuoteError) as exc:
+        _reader('test "')
+
+    assert "Quote not allowed here" in str(exc)
+
+    with pytest.raises(CSVParserError):
+        _reader('stray"quote')
+
+    with pytest.raises(UnclosedQuoteError) as exc:
+        _reader('  s  ,"')
+
+    assert "Unexpected end" in str(exc)
+
+    with pytest.raises(UnallowedQuoteError):
+        _reader('  fsd","')
+
+    with pytest.raises(UnallowedQuoteError) as exc:
+        _reader('""test,')
+    assert "Single quote inside quoted field" in str(exc)
+
+
+def test_own_dialect():
+    class OwnDialect(Dialect):
+        delimiter = ';'
+
+    assert get_reader("Tester \n  No Trim  ", dialect=OwnDialect) == [['Tester '], ['  No Trim  ']]
+
+
+def test_debugger(capsys):
+    gotten = get_reader(example1, debug=True)
+
+    assert gotten == expected1
+    with open('tests/_data/csv.debugging.output.txt', encoding='UTF-8') as f:
+        expected_debug = f.read()
+    assert capsys.readouterr().out == expected_debug

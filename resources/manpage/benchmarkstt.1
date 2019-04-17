@@ -209,16 +209,19 @@ configuration text
 "He bravely turned his tail and fled"
 .TP
 .B example config
-\(aq\(aq\(aq# using a simple config filenLowercase n
-.UNINDENT
-.sp
+# using a simple config file
+Lowercase n
 # it even supports comments
-# If there is a space in the argument, make sure you quote it though!
+# If there is a space in the argument, make sure you quote it
+# though!
 regexreplace "y t" "Y T"
 nn
 # extraneous whitespaces are ignored
-replace   e     an\(aq\(aq\(aq
-:example return: "ha bravalY Turnad his tail and flad"
+replace   e     a
+.TP
+.B example return
+"ha bravalY Turnad his tail and flad"
+.UNINDENT
 .TP
 .B\-\-configfile
 Load config from a file, see \fBConfig\fP for information about config
@@ -422,7 +425,7 @@ checked case insensitive as well with preservation of case..
 .INDENT 7.0
 .TP
 .B param str search
-Word to search for
+Item to search for
 .TP
 .B param str replace
 Replace with
