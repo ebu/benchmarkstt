@@ -1,7 +1,7 @@
 import sys
 from importlib import import_module
 
-_modules = ['normalization', 'metrics']
+_modules = ['normalization', 'metrics', 'flow']
 
 if sys.version_info >= (3, 6):
     _modules.append('api')

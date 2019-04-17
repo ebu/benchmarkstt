@@ -17,13 +17,28 @@ def args_inputfile(parser):
                         metavar='file')
 
 
+def args_logs(parser: argparse.ArgumentParser):
+    parser.add_argument('--log', action='store_true',
+                        help='show normalizer logs')
+
+
+def args_normalizers(parser: argparse.ArgumentParser):
+    normalizers_desc = """
+      A list of normalizers to execute on the input, can be one or more normalizers
+      which are applied sequentially.
+      The program will automatically find the normalizer in benchmarkstt.normalization.core,
+      then benchmarkstt.normalization and finally in the global namespace.
+      At least one normalizer needs to be provided."""
+
+    normalizers = parser.add_argument_group('available normalizers', description=normalizers_desc)
+    args_from_factory('normalizers', factory, normalizers)
+
+
 def argparser(parser: argparse.ArgumentParser):
     """
     Adds the help and arguments specific to this module
     """
-
-    parser.add_argument('--log', action='store_true',
-                        help='show normalizer logs')
+    args_logs(parser)
 
     files_desc = """
       You can provide multiple input and output files, each preceded by -i and -o
@@ -39,16 +54,27 @@ def argparser(parser: argparse.ArgumentParser):
                        help='write output to this file, defaults to STDOUT',
                        metavar='file')
 
-    normalizers_desc = """
-      A list of normalizers to execute on the input, can be one or more normalizers
-      which are applied sequentially.
-      The program will automatically find the normalizer in benchmarkstt.normalization.core,
-      then benchmarkstt.normalization and finally in the global namespace.
-      At least one normalizer needs to be provided."""
-
-    normalizers = parser.add_argument_group('available normalizers', description=normalizers_desc)
-    args_from_factory('normalizers', factory, normalizers)
+    args_normalizers(parser)
     return parser
+
+
+def get_normalizer_from_args(args):
+
+    if args.log:
+        handler = logging.StreamHandler()
+        handler.setFormatter(DiffLoggingFormatter('cli'))
+        handler.setLevel(logging.INFO)
+        normalize_logger.addHandler(handler)
+
+    composite = NormalizationComposite()
+
+    if 'normalizers' in args:
+        for item in args.normalizers:
+            normalizer_name = item.pop(0).replace('-', '.')
+            normalizer = factory.create(normalizer_name, *item)
+            composite.add(normalizer)
+
+    return composite
 
 
 def main(parser, args):
@@ -65,17 +91,7 @@ def main(parser, args):
         if len(input_files) != len(output_files):
             parser.error("when using multiple input or output files, there needs to be an equal amount of each")
 
-    if args.log:
-        handler = logging.StreamHandler()
-        handler.setFormatter(DiffLoggingFormatter('cli'))
-        handler.setLevel(logging.INFO)
-        normalize_logger.addHandler(handler)
-
-    composite = NormalizationComposite()
-    for item in args.normalizers:
-        normalizer_name = item.pop(0).replace('-', '.')
-        normalizer = factory.create(normalizer_name, *item)
-        composite.add(normalizer)
+    composite = get_normalizer_from_args(args)
 
     if output_files is not None:
         # pre-open the output files before doing the grunt work

@@ -8,14 +8,15 @@ from benchmarkstt import input
 
 
 class PlainText(input.Base):
-    def __init__(self, text, segmenter=None):
+    def __init__(self, text, segmenter=None, normalizer=None):
         if segmenter is None:
             segmenter = segmenters.Simple
         self._text = text
         self._segmenter = segmenter
+        self._normalizer = normalizer
 
     def __iter__(self):
-        return iter(self._segmenter(self._text))
+        return iter(self._segmenter(self._text, normalizer=self._normalizer))
 
 
 class File(input.Base):
@@ -28,7 +29,8 @@ class File(input.Base):
         "json": None
     }
 
-    def __init__(self, file, input_type=None):
+    def __init__(self, file, input_type=None, normalizer=None):
+        self._normalizer = normalizer
         if input_type is None or input_type == 'infer':
             if '.' not in file:
                 raise ValueError('Cannot infer input file type of files without an extension')
@@ -53,4 +55,4 @@ class File(input.Base):
         with open(self._file) as f:
             text = f.read()
 
-        return iter(self._input_class(text))
+        return iter(self._input_class(text, normalizer=self._normalizer))

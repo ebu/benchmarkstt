@@ -8,8 +8,7 @@ from benchmarkstt.cli import args_from_factory
 import argparse
 
 
-def argparser(parser: argparse.ArgumentParser):
-    # steps: input normalize[pre?] segmentation normalize[post?] compare
+def args_reference_hypothesis(parser):
     parser.add_argument('-r', '--reference', required=True,
                         help='The file to use as reference')
     parser.add_argument('-h', '--hypothesis', required=True,
@@ -20,8 +19,11 @@ def argparser(parser: argparse.ArgumentParser):
     parser.add_argument('-ht', '--hypothesis-type', default='infer',
                         help='Type of hypothesis file')
 
-    # parser.add_argument('-m', '--metric', default='wer', nargs='+',
-    #                     help='The type of metric(s) to run')
+
+def argparser(parser: argparse.ArgumentParser):
+    # steps: input normalize[pre?] segmentation normalize[post?] compare
+
+    args_reference_hypothesis(parser)
 
     metrics_desc = " A list of metrics to calculate. At least one metric needs to be provided."
 
@@ -30,16 +32,15 @@ def argparser(parser: argparse.ArgumentParser):
     return parser
 
 
-def main(parser, args):
-    if args.reference_type == 'argument':
-        ref = core.PlainText(args.reference)
-    else:
-        ref = core.File(args.reference, args.reference_type)
+def file_to_iterable(file, type_, normalizer=None):
+    if type_ == 'argument':
+        return core.PlainText(file, normalizer=normalizer)
+    return core.File(file, type_, normalizer=normalizer)
 
-    if args.hypothesis_type == 'argument':
-        hyp = core.PlainText(args.hypothesis)
-    else:
-        hyp = core.File(args.hypothesis, args.hypothesis_type)
+
+def main(parser, args, normalizer=None):
+    ref = file_to_iterable(args.reference, args.reference_type, normalizer=normalizer)
+    hyp = file_to_iterable(args.hypothesis, args.hypothesis_type, normalizer=normalizer)
 
     ref = list(ref)
     hyp = list(hyp)

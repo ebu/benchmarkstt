@@ -12,9 +12,12 @@ class Simple(Base):
     Simplest case, split into words by white space
     """
 
-    def __init__(self, text: str, pattern=r'[\n\t\s]+'):
+    def __init__(self, text: str, pattern=r'[\n\t\s]+', normalizer=None):
         self._text = text
         self._re = re.compile('(%s)' % (pattern,))
+        self._normalizer = normalizer
+        if self._normalizer is not None:
+            self._text = self._normalizer.normalize(text)
 
     def __iter__(self):
         start_match = self._re.match(self._text)
