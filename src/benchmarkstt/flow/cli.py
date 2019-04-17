@@ -18,8 +18,5 @@ def argparser(parser: argparse.ArgumentParser):
 
 
 def main(parser, args):
-    if 'metrics' not in args or not len(args.metrics):
-        parser.error("need at least one metric")
-
     normalizer = get_normalizer_from_args(args)
     do_metrics(parser, args, normalizer)
