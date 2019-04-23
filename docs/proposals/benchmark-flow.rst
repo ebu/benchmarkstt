@@ -17,9 +17,8 @@ Throughout this document we will use the Command Line Interface (CLI) as an exam
 References
 ----------
 
-- _`Add simple flow based on current normalizers and metrics #53 <https://github.com/ebu/ai-benchmarking-stt/issues/46>`_
-- _`Handling multiple files for normalization rules #46
- <https://github.com/ebu/ai-benchmarking-stt/issues/53>`_
+- `Add simple flow based on current normalizers and metrics #53 <https://github.com/ebu/ai-benchmarking-stt/issues/46>`_
+- `Handling multiple files for normalization rules #46 <https://github.com/ebu/ai-benchmarking-stt/issues/53>`_
 
 -----------------------------
 Context and Problem Statement
@@ -31,7 +30,7 @@ How can the user easily and in a non-confusing way provide multiple normalizatio
 Decision Drivers
 ----------------
 
-(Also see: _`Project Principles <https://github.com/ebu/ai-benchmarking-stt/wiki/Principles>`_)
+(Also see: `Project Principles <https://github.com/ebu/ai-benchmarking-stt/wiki/Principles>`_)
 
 - Usability: reduce complexity so the user can easily start using the toolkit without reading pages of documentation and avoiding user confusion due to non-intuitive program-specific rules
 - Extensibility: the user still needs to be able to adapt rulesets
@@ -203,14 +202,14 @@ Pros:
 
 Cons:
 
-- Even though simple, it requires the user to understand that the normalizer needs to be explicitly stated (eg. `regex regexfile`)
+- Even though simple, it requires the user to understand that the normalizer needs to be explicitly stated (eg. ``regex regexfile``)
 
 Allow all/combination of the above
 ----------------------------------
 
 A combination of the above can be supported as well, this would just mean that the type of normalization should be specified.
 
-We may want to limit that to only the "main" normalizers, i.e. no `--lowercase`, etc. But only support eg. `--path directory/`, `--rules rulesfile`, `--filelist fileslist.txt`. This would essentially exclude the first proposed option 'Command Line Arguments'.
+We may want to limit that to only the "main" normalizers, i.e. no ``--lowercase``, etc. But only support eg. ``--path directory/``, ``--rules rulesfile``, ``--filelist fileslist.txt``. This would essentially exclude the first proposed option 'Command Line Arguments'.
 
 Examples:
 
