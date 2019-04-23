@@ -11,6 +11,16 @@
    modules/benchmarkstt
 
 
+Proposals
+=========
+
+.. toctree::
+   :glob:
+
+   proposals/*
+
+
+
 Indices and tables
 ==================
 
