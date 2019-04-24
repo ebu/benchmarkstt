@@ -10,7 +10,7 @@ Benchmarking toolkit road map
 		<th>Results</th>
 	</tr>
 	<tr>
-		<td><a href="https://github.com/ebu/benchmarkstt/blob/master/docs/releases/1.0/README.md">1</a></td>
+		<td><a href="https://github.com/ebu/benchmarkstt/blob/master/olddocs/releases/1.0/README.md">1</a></td>
 		<td>Manual. Send audio for transcription and retrieve transcript using a UI. The audio file contains clean standard speech.</td>
 		<td>Define a native schema, initially for words only. Use the native schema to convert to normalized JSON. 
 			<pre>
