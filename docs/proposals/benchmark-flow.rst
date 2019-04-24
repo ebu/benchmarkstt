@@ -193,13 +193,14 @@ A rules file describes a rule per line:
 
 Pros:
 
-- Still quite simple to use
+- Still quite simple to use and readable
 - Very descriptive, even allowing comments and empty lines
 - Easily used for prototyping/testing (easily change order of normalizers, comment one out, etc)
 - Transparant order of normalizers (top-to-bottom)
 - No amibiguity about which normalizer uses what input file as this is explicitly stated
 - Support of non-filebased normalizers such as lowercase and utf8decode
 - Support for non-standard/custom normalizers
+- Support of additional arguments, eg. file encoding ``regex en-GB/regex.csv "iso 8859-1"``
 
 Cons:
 
@@ -226,8 +227,10 @@ Pros:
 
 - Allows the user to decide which best fits his needs or preferences
 - Much more verbose and descriptive
-- All the pros of each proposed notation is essentially combined.
+- All the pros of each proposed notation are essentially combined.
 
 Cons:
 
-- All the cons of each proposed notation is essentially combined.
+- All the cons of each proposed notation are essentially combined
+- Adds a great amount of complexity in both usage, support and documentation
+- We should avoid having multiple ways of doing things

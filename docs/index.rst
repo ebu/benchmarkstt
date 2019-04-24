@@ -4,18 +4,22 @@
 .. toctree::
    :maxdepth: 3
 
-   LICENSE
    INSTALL
    usage
+   LICENSE
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Technical
+
    development
    modules/benchmarkstt
 
 
-Proposals
-=========
-
 .. toctree::
    :glob:
+   :maxdepth: 1
+   :caption: Proposals
 
    proposals/*
 
