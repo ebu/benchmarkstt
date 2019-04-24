@@ -6,7 +6,7 @@ Build the image
 
 This assumes docker is already installed on your system.
 
-1. Download the code from github at https://github.com/ebu/ai-benchmarking-stt/archive/master.zip
+1. Download the code from github at https://github.com/ebu/benchmarkstt/archive/master.zip
 
 2. Unzip the file
 
