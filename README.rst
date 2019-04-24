@@ -4,7 +4,7 @@ AI Benchmarking STT
 .. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
     :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
 
-.. image:: https://img.shields.io/azure-devops/build/danielthepope/benchmarkstt/4.svg?logo=azure-devops
+.. image:: https://img.shields.io/azure-devops/build/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build/latest?definitionId=4&branchName=master
 
 .. image:: https://img.shields.io/azure-devops/tests/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
