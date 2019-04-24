@@ -113,7 +113,7 @@ def test_file(cls, args):
 def test_exceptions():
     with pytest.raises(ValueError) as e:
         File('noextension')
-    assert 'without an extension' in str(e)
+    assert 'with an extension' in str(e)
 
     with pytest.raises(ValueError) as e:
         File('unknownextension.thisisntknowm')
