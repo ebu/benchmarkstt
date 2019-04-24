@@ -1,15 +1,6 @@
 """
 Some basic/simple normalization classes
 
-
-Each normalization class has a method called `normalize`:
-
-.. code-block:: python
-
-    def normalize(text: str) -> str:
-        "\""Returns normalized text with rules supplied by the called class.
-        "\""
-
 """
 
 import re
@@ -19,12 +10,12 @@ import os
 import inspect
 from langcodes import best_match, standardize_tag
 from benchmarkstt import csv, normalization
-from benchmarkstt.normalization.logger import log
+from benchmarkstt.normalization import Base
 
 default_encoding = 'UTF-8'
 
 
-class LocalizedFile:
+class LocalizedFile(Base):
     """
     Reads and applies normalization rules from a locale-based file, it will
     automatically determine the "best fit" for a given locale, if one is
@@ -67,12 +58,11 @@ class LocalizedFile:
 
         self._normalizer = File(normalizer, file, encoding=encoding)
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
 
 
-class Replace:
+class Replace(Base):
     """
     Simple search replace
 
@@ -89,12 +79,11 @@ class Replace:
         self._search = search
         self._replace = replace
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return text.replace(self._search, self._replace)
 
 
-class ReplaceWords:
+class ReplaceWords(Base):
     """
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
@@ -127,12 +116,11 @@ class ReplaceWords:
 
         return ''.join([self._replace[0].lower(), self._replace[1:]])
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return self._pattern.sub(self._replacement_callback, text)
 
 
-class File:
+class File(Base):
     """
     Read one per line and pass it to the given normalizer
 
@@ -149,8 +137,10 @@ class File:
 
     def __init__(self, normalizer, file, encoding=None):
         try:
-            cls = normalizer if inspect.isclass(normalizer) else \
-                normalization.name_to_normalizer(normalizer)
+            if inspect.isclass(normalizer):
+                cls = normalizer
+            else:
+                cls = normalization.factory.get_class(normalizer)
         except ValueError:
             raise ValueError("Unknown normalizer %s" %
                              (repr(normalizer)))
@@ -167,12 +157,11 @@ class File:
                 except TypeError as e:
                     raise ValueError("Line %d: %s" % (line.lineno, str(e)))
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
 
 
-class RegexReplace:
+class RegexReplace(Base):
     r"""
     Simple regex replace. By default the pattern is interpreted
     case-sensitive.
@@ -187,7 +176,7 @@ class RegexReplace:
      +------------------+-------------+
      | search           | replace     |
      +==================+=============+
-     | :code:`(?i)(h)a` | :code:`\1e` |
+     | ``(?i)(h)a``     | ``\1e``     |
      +------------------+-------------+
 
 
@@ -199,7 +188,7 @@ class RegexReplace:
      +------------------------+------------------+
      | search                 | replace          |
      +========================+==================+
-     | :code:`(?msi)new.line` | :code:`newline`  |
+     | ``(?msi)new.line``     | ``newline``      |
      +------------------------+------------------+
 
     :example text: "HAHA! Hahaha!"
@@ -212,8 +201,7 @@ class RegexReplace:
         self._pattern = re.compile(search)
         self._substitution = replace if replace is not None else ''
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return self._pattern.sub(self._substitution, text)
 
 
@@ -242,7 +230,7 @@ class AlphaNumericUnicode(RegexReplace):
         super().__init__(r'[^\w]+')
 
 
-class Lowercase:
+class Lowercase(Base):
     """
     Lowercase the text
 
@@ -251,12 +239,11 @@ class Lowercase:
     :example return: "easy, mungo, easy... mungo..."
     """
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return text.lower()
 
 
-class Unidecode:
+class Unidecode(Base):
     """
     Unidecode characters to ASCII form, see `Python's Unidecode package
     <https://pypi.org/project/Unidecode>`_ for more info.
@@ -265,12 +252,11 @@ class Unidecode:
     :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
     """
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return unidecode(text)
 
 
-class Config:
+class Config(Base):
     r"""
     Use config notation to define normalization rules. This notation is a
     list of normalizers, one per line, with optional arguments (separated by a
@@ -286,7 +272,7 @@ class Config:
       - If an argument contains a space, newline or double quote, it MUST be
         wrapped in double quotes.
       - A double quote itself is represented in this quoted argument as two
-        double quotes: `""`.
+        double quotes: ``""``.
 
     The normalization rules are applied top-to-bottom and follow this format:
 
@@ -305,13 +291,22 @@ class Config:
     :param str config: configuration text
 
     :example text: "He bravely turned his tail and fled"
-    :example config: '''# using a simple config file\nLowercase \n
-    # it even supports comments
-    # If there is a space in the argument, make sure you quote it though!
-    regexreplace "y t" "Y T"
-    \n\n
-    # extraneous whitespaces are ignored
-    replace   e     a\n'''
+    :example config:
+
+        .. code-block:: text
+
+            # using a simple config file
+            Lowercase
+
+            # it even supports comments
+            # If there is a space in the argument,
+            # make sure you quote it though!
+
+            regexreplace "y t" "Y T"
+
+            # extraneous whitespaces are ignored
+            replace   e     a
+
     :example return: "ha bravalY Turnad his tail and flad"
     """
 
@@ -322,14 +317,13 @@ class Config:
         self._normalizer = normalization.NormalizationComposite()
         for line in csv.reader(file, dialect='whitespace'):
             try:
-                normalizer = normalization.name_to_normalizer(line[0])
+                normalizer = normalization.factory.get_class(line[0])
             except ValueError:
                 raise ValueError("Unknown normalizer %s on line %d: %s" %
                                  (repr(line[0]), line.lineno, repr(' '.join(line))))
             self._normalizer.add(normalizer(*line[1:]))
 
-    @log
-    def normalize(self, text: str) -> str:
+    def _normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
 
 
