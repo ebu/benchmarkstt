@@ -2,7 +2,7 @@
 
 At the heart of the benchmarking framework is an open source toolkit. This library is supported and supplemented by other contributions. For example, it may be necessary to define a stadard format to test data, or to build a web UI for quickly assessing vendors without deploying the toolkit locally. See below for descriptions of the different components.        
 
-![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ebu/ai-benchmarking-stt/master/docs/adr/hld/plantUML.txt&cachebust=1)
+![alternative text](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ebu/benchmarkstt/master/docs/adr/hld/plantUML.txt&cachebust=1)
 
 `This diagram is generated from the plantUML.txt file in this folder. Github caches images, so if this diagram is not refreshed after merging changes to the text file, change the number at the end of the link above, e.g. &cachebust=2387452673`    
 
