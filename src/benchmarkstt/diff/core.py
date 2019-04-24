@@ -11,7 +11,7 @@ from benchmarkstt.diff import Base
 #     Mimics structure of difflib.SequenceMatcher
 #
 #     Status: TODO make a proper diff implementing Hunt–McIlroy algorithm
-#     (see https://github.com/ebu/ai-benchmarking-stt/issues/30)
+#     (see https://github.com/ebu/benchmarkstt/issues/30)
 #
 #     """
 #
