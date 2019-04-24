@@ -27,7 +27,7 @@ From source
 
    .. code-block:: bash
 
-      pip install https://github.com/ebu/ai-benchmarking-stt/archive/master.zip
+      pip install https://github.com/ebu/benchmarkstt/archive/master.zip
 
 3. Test and use
 

@@ -6,7 +6,7 @@ In order to focus the initial development on the important part of the system, t
 
 This version will focus on defining the diff and WER algorithms and return WER scores for transcripts manually submitted to a small number of cloud providers. 
 
-For an overview of the system and component names see https://github.com/ebu/ai-benchmarking-stt/wiki
+For an overview of the system and component names see https://github.com/ebu/benchmarkstt/wiki
 
 This release will include:
 

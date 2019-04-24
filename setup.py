@@ -26,7 +26,7 @@ with open('README.rst') as f:
 
 setup(
     name=__name__,
-    url='https://github.com/ebu/ai-benchmarking-stt/',
+    url='https://github.com/ebu/benchmarkstt/',
     version=__version__,
     author=__author__,
     author_email='temp@example.com',
