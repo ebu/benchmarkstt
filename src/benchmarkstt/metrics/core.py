@@ -39,7 +39,7 @@ class WordDiffs(Base):
     Calculate the differences on a per-word basis
     """
 
-    def __init__(self, differ_class=None, dialect=None):
+    def __init__(self, dialect=None, differ_class=None):
         self._differ_class = differ_class
         if dialect is None:
             dialect = 'cli'

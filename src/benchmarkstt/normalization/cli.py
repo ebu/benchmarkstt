@@ -28,7 +28,7 @@ def args_normalizers(parser: argparse.ArgumentParser):
       which are applied sequentially.
       The program will automatically find the normalizer in benchmarkstt.normalization.core,
       then benchmarkstt.normalization and finally in the global namespace.
-      At least one normalizer needs to be provided."""
+      """
 
     normalizers = parser.add_argument_group('available normalizers', description=normalizers_desc)
     args_from_factory('normalizers', factory, normalizers)

@@ -65,7 +65,8 @@ setup(
     platforms='any',
     entry_points={
         'console_scripts': [
-            "%s=%s.cli:main" % (__name__, __name__)
+            "%s=%s.cli:main" % (__name__, __name__),
+            "%s-tools=%s.cli:tools" % (__name__, __name__)
         ],
     }
 )

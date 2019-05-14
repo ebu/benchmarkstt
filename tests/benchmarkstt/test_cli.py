@@ -1,7 +1,7 @@
 import pytest
 import sys
 from textwrap import dedent
-from benchmarkstt.cli import main
+from benchmarkstt.cli import main, tools
 from unittest import mock
 
 from benchmarkstt.__meta__ import __version__
@@ -22,7 +22,6 @@ garden."
 
 @pytest.mark.parametrize('argv,result', [
     [[], 2],
-    ['--version', 'benchmarkstt: %s\n' % (__version__,)],
     ['invalidsubmodule', 2],
     ['normalization', 2],
     ['--help', 0],
@@ -49,17 +48,30 @@ garden."
 
      ''').lstrip()]
 ])
+def test_clitools(argv, result, capsys):
+    commandline_tester('benchmarkstt-tools', tools, argv, result, capsys)
+
+
+@pytest.mark.parametrize('argv,result', [
+    [[], 2],
+    ['--version', 'benchmarkstt: %s\n' % (__version__,)],
+    ['--help', 0],
+])
 def test_cli(argv, result, capsys):
+    commandline_tester('benchmarkstt', main, argv, result, capsys)
+
+
+def commandline_tester(prog_name, app, argv, result, capsys):
     if type(argv) is str:
         argv = argv.split()
-    with mock.patch('sys.argv', ['benchmarkstt'] + argv):
+    with mock.patch('sys.argv', [prog_name] + argv):
         if type(result) is int:
             with pytest.raises(SystemExit) as err:
-                main()
+                app()
             assert str(err).endswith(': %d' % (result,))
         else:
             with pytest.raises(SystemExit) as err:
-                main()
+                app()
             assert str(err).endswith(': 0')
 
             captured = capsys.readouterr()

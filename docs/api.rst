@@ -34,7 +34,7 @@ Using curl, for example:
         "id": null
     }'
 
-If you started the service with parameter `--with-explorer` (see :doc:`cli/api`), you can easily test the available JSON-RPC_
+If you started the service with parameter ``--with-explorer`` (see :doc:`cli/api`), you can easily test the available JSON-RPC_
 api calls by visiting the api url (eg. `http://localhost:8080/api` in the above example).
 
 .. important::

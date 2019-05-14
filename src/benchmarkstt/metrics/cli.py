@@ -25,7 +25,7 @@ def argparser(parser: argparse.ArgumentParser):
 
     args_reference_hypothesis(parser)
 
-    metrics_desc = " A list of metrics to calculate. At least one metric needs to be provided."
+    metrics_desc = "A list of metrics to calculate. At least one metric needs to be provided."
 
     subparser = parser.add_argument_group('available metrics', description=metrics_desc)
     args_from_factory('metrics', factory, subparser)

@@ -1,7 +1,9 @@
 """
-Make benchmarkstt available through a rudimentary JSON-RPC_ interfacea
+Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 
-Only supported for Python versions 3.6 and above
+.. attention::
+
+    Only supported for Python versions 3.6 and above
 
 .. _JSON-RPC: https://www.jsonrpc.org
 
