@@ -37,6 +37,8 @@ From source
 
       $ benchmarkstt --version
       benchmarkstt: |version|
+      $ echo IT WORKS! | benchmarkstt-tools normalization --lowercase
+      it works!
 
 
    Use the :code:`--help` option to get all available options.
