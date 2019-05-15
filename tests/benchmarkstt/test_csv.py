@@ -50,6 +50,8 @@ def test_csv():
 
     assert _reader('"#nocomment",#yescomment\n') == [['#nocomment', '']]
     assert _reader('"#nocomment",#here  ') == [['#nocomment', '']]
+    assert _reader('"#nocomment",#') == [['#nocomment', '']]
+    assert _reader('"#nocomment"# test') == [['#nocomment']]
     assert _reader('"#nocomment"    # commented') == [['#nocomment']]
     assert _reader('\t t ') == [['t']]
     assert _reader('t') == [['t']]
