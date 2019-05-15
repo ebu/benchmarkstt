@@ -238,6 +238,8 @@ class Config(normalization.Base):
     :example return: "ha bravalY Turnad his tail and flad"
     """
 
+    default_section = None
+
     def __init__(self, file, section=None, encoding=None):
         if encoding is None or encoding == '':
             encoding = DEFAULT_ENCODING
@@ -248,9 +250,8 @@ class Config(normalization.Base):
         # next filenames are relative from path of the config file...
         path = os.path.dirname(os.path.realpath(file))
 
-        # todo: wanna keep default section? (maybe just change it for cli)
         if section is None:
-            section = 'normalization'
+            section = self.default_section
 
         if section is not None:
             reader = reader[section]

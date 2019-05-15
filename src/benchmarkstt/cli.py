@@ -4,6 +4,7 @@ import textwrap
 import itertools
 from benchmarkstt.modules import Modules
 from benchmarkstt import __meta__
+from benchmarkstt.normalization.core import Config
 import sys
 
 
@@ -133,6 +134,7 @@ def main():
     logging.basicConfig(level=log_level)
     logging.getLogger().setLevel(log_level)
 
+    Config.default_section = 'normalization'
     Modules('cli')['benchmark'].main(parser, args)
     exit(0)
 
