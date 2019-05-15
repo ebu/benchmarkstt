@@ -63,14 +63,14 @@ def test_conf():
     assert _reader('replace " " "\n"') == [['replace', ' ', '\n']]
 
     expected = [['Lowercase'],
-                ['regexreplace', 'y t', 'Y T'],
+                ['regex', 'y t', 'Y T'],
                 ['Replace', 'e', 'a']]
     gotten = _reader('''# using a simple config file
 Lowercase \n
 
 # it even supports comments
 # If there is a space in the argument, make sure you quote it though!
-regexreplace "y t" "Y T"
+regex "y t" "Y T"
 
       # extraneous whitespaces are ignored
    Replace   e     a''')

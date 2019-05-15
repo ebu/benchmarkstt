@@ -23,6 +23,13 @@ class Base:
         raise NotImplementedError()
 
 
+class BaseWithFileSupport(Base):
+    """
+    This kind of normalization class supports loading the values from a file, i.e.
+    being wrapped in a core.File wrapper.
+    """
+
+
 factory = Factory(Base, _normalizer_namespaces)
 
 

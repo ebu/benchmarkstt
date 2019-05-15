@@ -27,8 +27,8 @@ class LocalizedFile(Base):
     :param str encoding: The file encoding
 
     :example text: "This is an Ex-Parakeet"
-    :example normalizer: "regexreplace"
-    :example path: "./resources/test/normalizers/regexreplace"
+    :example normalizer: "regex"
+    :example path: "./resources/test/normalizers/regex"
     :example locale: "en"
     :example encoding: "UTF-8"
     :example return: "This is an Ex Parrot"
@@ -129,8 +129,8 @@ class File(Base):
     :param str encoding: The file encoding
 
     :example text: "This is an Ex-Parakeet"
-    :example normalizer: "regexreplace"
-    :example file: "./resources/test/normalizers/regexreplace/en_US"
+    :example normalizer: "regex"
+    :example file: "./resources/test/normalizers/regex/en_US"
     :example encoding: "UTF-8"
     :example return: "This is an Ex Parrot"
     """
@@ -161,7 +161,7 @@ class File(Base):
         return self._normalizer.normalize(text)
 
 
-class RegexReplace(Base):
+class Regex(Base):
     r"""
     Simple regex replace. By default the pattern is interpreted
     case-sensitive.
@@ -203,31 +203,6 @@ class RegexReplace(Base):
 
     def _normalize(self, text: str) -> str:
         return self._pattern.sub(self._substitution, text)
-
-
-class AlphaNumeric(RegexReplace):
-    """
-    Simple alphanumeric filter
-
-    :example text: "He's a lumberjack, and he's okay!"
-    :example return: "Hesalumberjackandhesokay"
-    """
-
-    def __init__(self):
-        super().__init__('[^A-Za-z0-9]+')
-
-
-class AlphaNumericUnicode(RegexReplace):
-    """
-    Simple alphanumeric filter, takes into account all unicode alphanumeric
-    characters.
-
-    :example text: "Das, öder die Flipper-Wåld Gespütt!"
-    :example return: "DasöderdieFlipperWåldGespütt"
-    """
-
-    def __init__(self):
-        super().__init__(r'[^\w]+')
 
 
 class Lowercase(Base):
@@ -302,7 +277,7 @@ class Config(Base):
             # If there is a space in the argument,
             # make sure you quote it though!
 
-            regexreplace "y t" "Y T"
+            regex "y t" "Y T"
 
             # extraneous whitespaces are ignored
             replace   e     a

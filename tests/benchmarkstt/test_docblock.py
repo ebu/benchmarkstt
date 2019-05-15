@@ -59,7 +59,7 @@ def test_parse():
                 # If there is a space in the argument,
                 # make sure you quote it though!
 
-                regexreplace "y t" "Y T"
+                regex "y t" "Y T"
 
                 # extraneous whitespaces are ignored
                 replace   e     a
@@ -95,7 +95,7 @@ def test_parse():
                                                    # If there is a space in the argument,
                                                    # make sure you quote it though!
 
-                                                   regexreplace "y t" "Y T"
+                                                   regex "y t" "Y T"
 
                                                    # extraneous whitespaces are ignored
                                                    replace   e     a''').strip()),

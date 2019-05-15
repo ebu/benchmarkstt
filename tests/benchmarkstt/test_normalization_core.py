@@ -11,7 +11,7 @@ def test_logs(caplog):
      lowercase
      # Let's replace double quotes with single quotes (note wrapping in double
      # quotes, to allow the use of double quotes in an argument.
-     RegexReplace "[""]" '
+     Regex "[""]" '
      # A space in the argument: wrap in double quotes as well
      Replace 'ni' "'ecky ecky ecky'"
      '''
@@ -68,32 +68,19 @@ def test_lowercase():
     assert Lowercase().normalize('PRÁZdNÉ VLAŠToVKY') == 'prázdné vlaštovky'
 
 
-def test_unicode():
+def test_unidecode():
     assert Unidecode().normalize('Eine große europäische Schwalbe') == \
         'Eine grosse europaische Schwalbe'
 
 
-def test_alphanumericunicode():
-    assert AlphaNumericUnicode().normalize(
-        "Das, öder die Flipper-Wåld Gespütt!"
-    ) == 'DasöderdieFlipperWåldGespütt'
-
-
-def test_alphanumeric():
-    assert AlphaNumeric().normalize("She turned me into a newt.") == \
-        'Sheturnedmeintoanewt'
-    assert AlphaNumeric().normalize("Das, öder die Flipper-Wåld Gespütt!") == \
-        'DasderdieFlipperWldGesptt'
-
-
-def test_regexreplace():
-    normalizer = RegexReplace('(scratch)', r"\1 (his arm's off)")
+def test_regex():
+    normalizer = Regex('(scratch)', r"\1 (his arm's off)")
     assert normalizer.normalize('Tis but a scratch.') == \
         "Tis but a scratch (his arm's off)."
-    assert RegexReplace('ha', 'he').normalize('HA! Hahaha!') == 'HA! Hahehe!'
-    assert RegexReplace('(?i)(h)a', r'\1e').normalize('HAHA! Hahaha!') == \
+    assert Regex('ha', 'he').normalize('HA! Hahaha!') == 'HA! Hahehe!'
+    assert Regex('(?i)(h)a', r'\1e').normalize('HAHA! Hahaha!') == \
         'HeHe! Hehehe!'
-    assert RegexReplace('(?msi)new.line', 'newline').normalize("New\nline") == \
+    assert Regex('(?msi)new.line', 'newline').normalize("New\nline") == \
         'newline'
 
 
