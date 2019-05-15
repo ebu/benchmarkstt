@@ -113,6 +113,11 @@ class Reader:
             return False
         return char in self._dialect.trimleft
 
+    def _is_ignore_right(self, char: str):
+        if self._dialect.trimright is None:
+            return False
+        return char in self._dialect.trimright
+
     def _is_comment(self, char: str):
         if self._dialect.commentchar is None:
             return False
@@ -260,6 +265,13 @@ class Reader:
                 if is_newline:
                     yield yield_line()
                     continue
+
+                if not delimiter_is_whitespace:
+                    if self._is_ignore_right(char):
+                        continue
+                    if self._is_comment(char):
+                        yield yield_line()
+                        continue
 
                 raise UnallowedQuoteError("Single quote inside quoted field", cur_line, cur_char, idx)
 
