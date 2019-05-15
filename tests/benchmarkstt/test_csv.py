@@ -76,6 +76,9 @@ regex "y t" "Y T"
    Replace   e     a''')
     assert gotten == expected
 
+    expected = [['Lowercase'],
+                ['regex', 'regextestforconf.csv'],
+                ['Replace', 'simplereplacetestforconf.csv']]
     file = './resources/test/normalizers/configfile.conf'
     with open(file) as f:
         assert list(reader(f, 'whitespace')) == expected

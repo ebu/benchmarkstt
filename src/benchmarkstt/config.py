@@ -25,8 +25,8 @@ class SectionConfigReader:
         return self.config[self.sections[k]]
 
 
-def reader(file):
-    with open(file) as f:
+def reader(file, encoding=None):
+    with open(file, encoding=encoding) as f:
         csvreader = csv.reader(f, 'whitespace')
         sectionreader = SectionConfigReader(csvreader)
     return sectionreader

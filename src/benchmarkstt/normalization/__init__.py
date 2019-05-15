@@ -1,6 +1,9 @@
 from benchmarkstt.normalization.logger import log
 import logging
 from benchmarkstt.factory import Factory
+from benchmarkstt import DEFAULT_ENCODING
+from benchmarkstt import csv
+import os
 
 _normalizer_namespaces = (
     "benchmarkstt.normalization.core",
@@ -29,8 +32,8 @@ class BaseWithFileSupport(Base):
     being wrapped in a core.File wrapper.
     """
 
-
-factory = Factory(Base, _normalizer_namespaces)
+    def _normalize(self, text: str) -> str:
+        raise NotImplementedError()
 
 
 class NormalizationComposite(Base):
@@ -54,3 +57,57 @@ class NormalizationComposite(Base):
         for normalizer in self._normalizers:
             text = normalizer.normalize(text)
         return text
+
+
+class File(Base):
+    """
+    Read one per line and pass it to the given normalizer
+
+    :param str|class normalizer: Normalizer name (or class)
+    :param str file: The file to read rules from
+    :param str encoding: The file encoding
+
+    :example text: "This is an Ex-Parakeet"
+    :example normalizer: "regex"
+    :example file: "./resources/test/normalizers/regex/en_US"
+    :example encoding: "UTF-8"
+    :example return: "This is an Ex Parrot"
+    """
+
+    def __init__(self, normalizer, file, encoding=None):
+        self._repr = '%s<%s>' % (repr(normalizer), file)
+
+        if encoding is None:
+            encoding = DEFAULT_ENCODING
+
+        with open(file, encoding=encoding) as f:
+            self._normalizer = NormalizationComposite()
+
+            for line in csv.reader(f):
+                try:
+                    self._normalizer.add(normalizer(*line))
+                except TypeError as e:
+                    raise ValueError("Line %d: %s" % (line.lineno, str(e)))
+
+    def _normalize(self, text: str) -> str:
+        return self._normalizer.normalize(text)
+
+    def __repr__(self):
+        return self._repr
+
+
+factory = Factory(Base, _normalizer_namespaces)
+
+
+class FileFactory(Factory):
+    def create(self, name, file=None, encoding=None, path=None):
+        cls = super().get_class(name)
+        if path is not None:
+            file = os.path.join(path, file)
+        return File(cls, file, encoding)
+
+    def get_class(self, name):
+        raise NotImplementedError("Not supported")
+
+
+file_factory = FileFactory(BaseWithFileSupport, _normalizer_namespaces)

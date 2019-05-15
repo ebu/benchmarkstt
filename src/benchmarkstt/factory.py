@@ -28,6 +28,9 @@ class Factory:
         for namespace in self.namespaces:
             self.register_namespace(namespace)
 
+    def __contains__(self, item):
+        return self.normalize_class_name(item) in self._registry
+
     def create(self, alias, *args, **kwargs):
         return self.get_class(alias)(*args, **kwargs)
 

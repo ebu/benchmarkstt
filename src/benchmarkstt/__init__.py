@@ -62,3 +62,6 @@ def make_printable(char):
         return chr(0x2400 | codepoint)
 
     return char if char != ' ' else '·'
+
+
+DEFAULT_ENCODING = 'UTF-8'
