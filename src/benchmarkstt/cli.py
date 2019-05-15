@@ -105,8 +105,9 @@ def args_complete(parser):
 
 def main_parser():
     name = 'benchmarkstt'
+    desc = 'BenchmarkSTT main command line script, for additional tools, see ``benchmarkstt-tools``.'
     parser = argparse.ArgumentParser(prog=name, add_help=False,
-                                     description='BenchmarkSTT main command line script',
+                                     description=desc,
                                      formatter_class=ActionWithArgumentsFormatter)
 
     Modules('cli')['benchmark'].argparser(parser)
@@ -120,12 +121,11 @@ def main_parser():
 
 
 def main():
-    name = 'benchmarkstt'
     parser = main_parser()
     args_complete(parser)
 
     if '--version' in sys.argv:
-        print("%s: %s" % (name, __meta__.__version__))
+        print("benchmarkstt: %s" % (__meta__.__version__,))
         parser.exit(0)
 
     args = parser.parse_args()
