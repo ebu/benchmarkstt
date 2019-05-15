@@ -83,6 +83,14 @@ def test_replacewords():
     assert normalizer.normalize('Ni! We are the Knights Who Say "ni"!') == \
         'Ecky ecky! We are the Knights Who Say "ecky ecky"!'
 
+    normalizer = ReplaceWords("ni", "")
+    assert normalizer.normalize('Ni! We are the Knights Who Say "ni"!') == \
+        '! We are the Knights Who Say ""!'
+
+    normalizer = ReplaceWords("ni", ".")
+    assert normalizer.normalize('Ni! We are the Knights Who Say "ni"!') == \
+        '.! We are the Knights Who Say "."!'
+
 
 def test_replace():
     normalizer = Replace('scratch', 'flesh wound')

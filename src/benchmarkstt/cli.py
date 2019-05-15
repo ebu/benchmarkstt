@@ -61,8 +61,12 @@ def action_with_arguments(action, required_args, optional_args):
     class ActionWithArguments(argparse.Action, _ActionWithArguments):
         def __call__(self, parser, args, values, option_string=None):
             if len(values) < minlen or len(values) > maxlen:
-                raise argparse.ArgumentTypeError('argument "%s" requires between %d and %d arguments (got %d)' %
-                                                 (self.dest, minlen, maxlen, len(values)))
+                if minlen == maxlen:
+                    lentxt = str(minlen)
+                else:
+                    lentxt = 'between %d and % d' % (minlen, maxlen)
+                raise argparse.ArgumentTypeError('argument "%s" requires %s arguments (got %d)' %
+                                                 (self.dest, lentxt, len(values)))
 
             if not hasattr(args, action):
                 setattr(args, action, [])

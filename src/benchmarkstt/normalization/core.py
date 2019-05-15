@@ -108,6 +108,9 @@ class ReplaceWords(normalization.BaseWithFileSupport):
         self._replace = replace
 
     def _replacement_callback(self, matches):
+        if len(self._replace) == 0:
+            return ''
+
         if matches.group(0)[0].isupper():
             return ''.join([self._replace[0].upper(), self._replace[1:]])
 
