@@ -105,7 +105,7 @@ def args_complete(parser):
 
 def main_parser():
     name = 'benchmarkstt'
-    desc = 'BenchmarkSTT main command line script, for additional tools, see ``benchmarkstt-tools``.'
+    desc = 'BenchmarkSTT main command line script, for additional tools, see ``benchmarkstt-tools --help``.'
     parser = argparse.ArgumentParser(prog=name, add_help=False,
                                      description=desc,
                                      formatter_class=ActionWithArgumentsFormatter)
