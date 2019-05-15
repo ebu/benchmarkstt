@@ -64,6 +64,8 @@ def test_csv():
 "<[^>]+>"," " # test
 "[,.-\?]", ""    # more comments''') == [['(?s)<\\?xml.*</head>', ''], ['<[^>]+>', ' '], ['[,.-\\?]', '']]
 
+    assert _reader('test,ok\n\n   \n\t\n\t\n.\n\n') == [['test', 'ok'], ['.']]
+
     assert _reader('"Some", "words"   # comment') == [['Some', 'words']]
 
 
