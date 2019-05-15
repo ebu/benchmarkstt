@@ -248,6 +248,10 @@ class Config(normalization.Base):
         # next filenames are relative from path of the config file...
         path = os.path.dirname(os.path.realpath(file))
 
+        # todo: wanna keep default section? (maybe just change it for cli)
+        if section is None:
+            section = 'normalization'
+
         if section is not None:
             reader = reader[section]
 
