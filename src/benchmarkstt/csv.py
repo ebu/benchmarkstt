@@ -218,7 +218,9 @@ class Reader:
                 if self._is_ignore_left(char):
                     continue
 
-                if mode is MODE_FIRST and self._is_comment(char):
+                if self._is_comment(char):
+                    if mode is MODE_OUTSIDE:
+                        yield yield_line()
                     mode = MODE_COMMENT
                     continue
 
@@ -249,6 +251,11 @@ class Reader:
                     next_field()
                     continue
 
+                if self._is_comment(char):
+                    yield yield_line()
+                    mode = MODE_COMMENT
+                    continue
+
                 field.append(char)
                 continue
 
@@ -271,6 +278,7 @@ class Reader:
                         continue
                     if self._is_comment(char):
                         yield yield_line()
+                        mode = MODE_COMMENT
                         continue
 
                 raise UnallowedQuoteError("Single quote inside quoted field", cur_line, cur_char, idx)

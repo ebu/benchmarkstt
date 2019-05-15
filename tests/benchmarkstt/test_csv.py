@@ -48,12 +48,21 @@ def test_csv():
 
     assert _reader('     A\tB, \t   B\tA\t   ,') == [['A\tB', 'B\tA', '']]
 
-    assert _reader('"#nocomment",#here  \n') == [['#nocomment', '#here']]
-    assert _reader('"#nocomment",#here  ') == [['#nocomment', '#here']]
+    assert _reader('"#nocomment",#yescomment\n') == [['#nocomment', '']]
+    assert _reader('"#nocomment",#here  ') == [['#nocomment', '']]
+    assert _reader('"#nocomment"    # commented') == [['#nocomment']]
     assert _reader('\t t ') == [['t']]
     assert _reader('t') == [['t']]
     assert _reader('replace," ","\n"') == [['replace', ' ', '\n']]
     assert _reader(',') == [['', '']]
+    assert _reader('#yescomment,#here  \n') == []
+    assert _reader(r'''# test
+"(?s)<\?xml.*</head>",""   # inline comment
+   # ignore
+"<[^>]+>"," " # test
+"[,.-\?]", ""    # more comments''') == [['(?s)<\\?xml.*</head>', ''], ['<[^>]+>', ' '], ['[,.-\\?]', '']]
+
+    assert _reader('"Some", "words"   # comment') == [['Some', 'words']]
 
 
 def test_conf():
