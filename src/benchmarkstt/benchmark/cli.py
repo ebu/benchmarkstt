@@ -11,9 +11,9 @@ import argparse
 
 
 def argparser(parser: argparse.ArgumentParser):
-    args_logs(parser)
     args_metrics(parser)
     args_normalizers(parser)
+    args_logs(parser)
     return parser
 
 

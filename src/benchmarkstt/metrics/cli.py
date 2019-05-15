@@ -8,22 +8,16 @@ from benchmarkstt.cli import args_from_factory
 import argparse
 
 
-def args_reference_hypothesis(parser):
-    parser.add_argument('-r', '--reference', required=True,
-                        help='The file to use as reference')
-    parser.add_argument('-h', '--hypothesis', required=True,
-                        help='The file to use as hypothesis')
+def argparser(parser: argparse.ArgumentParser):
+    # steps: input normalize[pre?] segmentation normalize[post?] compare
+
+    parser.add_argument('reference', help='The file to use as reference')
+    parser.add_argument('hypothesis', help='The file to use as hypothesis')
 
     parser.add_argument('-rt', '--reference-type', default='infer',
                         help='Type of reference file')
     parser.add_argument('-ht', '--hypothesis-type', default='infer',
                         help='Type of hypothesis file')
-
-
-def argparser(parser: argparse.ArgumentParser):
-    # steps: input normalize[pre?] segmentation normalize[post?] compare
-
-    args_reference_hypothesis(parser)
 
     metrics_desc = "A list of metrics to calculate. At least one metric needs to be provided."
 

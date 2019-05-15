@@ -108,12 +108,13 @@ def main_parser():
                                      description='BenchmarkSTT main command line script',
                                      formatter_class=ActionWithArgumentsFormatter)
 
+    Modules('cli')['benchmark'].argparser(parser)
+
     parser.add_argument('--version', action='store_true',
                         help='output %s version number' % (name,))
 
-    args_help(parser)
     args_common(parser)
-    Modules('cli')['benchmark'].argparser(parser)
+    args_help(parser)
     return parser
 
 
