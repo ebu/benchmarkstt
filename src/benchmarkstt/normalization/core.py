@@ -9,7 +9,6 @@ from unidecode import unidecode
 # import os
 # from langcodes import best_match, standardize_tag
 from benchmarkstt import csv, normalization
-from benchmarkstt.normalization import Base, BaseWithFileSupport
 from benchmarkstt import config, DEFAULT_ENCODING
 
 #
@@ -60,7 +59,7 @@ from benchmarkstt import config, DEFAULT_ENCODING
 #         return self._normalizer.normalize(text)
 
 
-class Replace(BaseWithFileSupport):
+class Replace(normalization.BaseWithFileSupport):
     """
     Simple search replace
 
@@ -81,7 +80,7 @@ class Replace(BaseWithFileSupport):
         return text.replace(self._search, self._replace)
 
 
-class ReplaceWords(BaseWithFileSupport):
+class ReplaceWords(normalization.BaseWithFileSupport):
     """
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
@@ -118,7 +117,7 @@ class ReplaceWords(BaseWithFileSupport):
         return self._pattern.sub(self._replacement_callback, text)
 
 
-class Regex(BaseWithFileSupport):
+class Regex(normalization.BaseWithFileSupport):
     r"""
     Simple regex replace. By default the pattern is interpreted
     case-sensitive.
@@ -162,7 +161,7 @@ class Regex(BaseWithFileSupport):
         return self._pattern.sub(self._substitution, text)
 
 
-class Lowercase(Base):
+class Lowercase(normalization.Base):
     """
     Lowercase the text
 
@@ -175,7 +174,7 @@ class Lowercase(Base):
         return text.lower()
 
 
-class Unidecode(Base):
+class Unidecode(normalization.Base):
     """
     Unidecode characters to ASCII form, see `Python's Unidecode package
     <https://pypi.org/project/Unidecode>`_ for more info.
@@ -188,7 +187,7 @@ class Unidecode(Base):
         return unidecode(text)
 
 
-class Config(Base):
+class Config(normalization.Base):
     r"""
     Use config file notation to define normalization rules. This notation is a
     list of normalizers, one per line.
