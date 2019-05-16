@@ -96,10 +96,3 @@ def test_replace():
     normalizer = Replace('scratch', 'flesh wound')
     assert normalizer.normalize('Tis but a scratch.') == \
         'Tis but a flesh wound.'
-
-#
-# def test_localizedfile():
-#     path = './resources/test/normalizers/configfile'
-#     normalizer = LocalizedFile('Config', 'en_UK', path)
-#     assert normalizer.normalize("𝔊𝔯𝔞𝔫𝔡𝔢 𝔖𝔞𝔰𝔰𝔬 𝔡'ℑ𝔱𝔞𝔩𝔦𝔞") == \
-#         "gran sasso d'italia"

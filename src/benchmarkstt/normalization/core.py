@@ -6,57 +6,8 @@ Some basic/simple normalization classes
 import re
 import os
 from unidecode import unidecode
-# import os
-# from langcodes import best_match, standardize_tag
-from benchmarkstt import csv, normalization
+from benchmarkstt import normalization
 from benchmarkstt import config, DEFAULT_ENCODING
-
-#
-# class LocalizedFile(Base):
-#     """
-#     Reads and applies normalization rules from a locale-based file, it will
-#     automatically determine the "best fit" for a given locale, if one is
-#     available.
-#
-#     :param str|class normalizer: Normalizer name (or class)
-#     :param str locale: Which locale to search for
-#     :param PathLike path: Location of available locale files
-#     :param str encoding: The file encoding
-#
-#     :example text: "This is an Ex-Parakeet"
-#     :example normalizer: "regex"
-#     :example path: "./resources/test/normalizers/regex"
-#     :example locale: "en"
-#     :example encoding: "UTF-8"
-#     :example return: "This is an Ex Parrot"
-#     """
-#
-#     def __init__(self, normalizer, locale: str, path: str, encoding=None):
-#         path = os.path.realpath(path)
-#         if not os.path.isdir(path):
-#             raise NotADirectoryError("Expected '%s' to be a directory" %
-#                                      (str(path),))
-#
-#         files = {standardize_tag(file): file
-#                  for file in os.listdir(path)
-#                  if os.path.isfile(os.path.join(path, file))}
-#
-#         locale = standardize_tag(locale)
-#         match = best_match(locale, files.keys())[0]
-#         if match == 'und':
-#             raise FileNotFoundError(
-#                 "Could not find a locale file for locale '%s' in '%s'" %
-#                 (locale, str(path)))
-#
-#         file = os.path.join(path, files[match])
-#
-#         if encoding is None:
-#             encoding = default_encoding
-#
-#         self._normalizer = File(normalizer, file, encoding=encoding)
-#
-#     def _normalize(self, text: str) -> str:
-#         return self._normalizer.normalize(text)
 
 
 class Replace(normalization.BaseWithFileSupport):
