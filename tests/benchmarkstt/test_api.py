@@ -22,3 +22,13 @@ def test_normalization(args, expected):
 ])
 def test_metrics(args, expected):
     assert metrics_api(*args) == expected
+
+
+def test_error():
+    with pytest.raises(AssertionError) as exc:
+        normalization_api(normalizers.Config, 'sometext', False, './resources/test/normalizers/invalidconfig.conf')
+
+    assert 'Unexpected end' in str(exc)
+
+    with pytest.raises(TypeError) as exc:
+        metrics_api(metrics.WER)
