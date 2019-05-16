@@ -25,11 +25,11 @@ garden."
     ['invalidsubmodule', 2],
     ['normalization', 2],
     ['--help', 0],
-    ['normalization -i tests/_data/candide.txt --lowercase', candide_lowercase],
-    ['normalization -i tests/_data/candide.txt --file', 2],
-    ['metrics tests/_data/a.txt -h tests/_data/b.txt', 2],
+    ['normalization -i ./resources/test/_data/candide.txt --lowercase', candide_lowercase],
+    ['normalization -i ./resources/test/_data/candide.txt --file', 2],
+    ['metrics ./resources/test/_data/a.txt -h ./resources/test/_data/b.txt', 2],
     ['metrics "HI" "HELLO" -rt argument -ht argument --wer', "wer\n===\n\n1.000000\n\n"],
-    ['metrics tests/_data/a.txt tests/_data/b.txt --wer --worddiffs --diffcounts',
+    ['metrics ./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts',
      dedent('''
      wer
      ===
