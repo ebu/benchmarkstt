@@ -2,7 +2,7 @@
 
 test:
 	pytest src --doctest-modules --verbose
-	pytest tests --verbose
+	pytest --cov=src --cov-report html:htmlcov tests --verbose
 	pycodestyle tests
 	pycodestyle src
 

@@ -1,6 +1,7 @@
 from benchmarkstt.normalization import core, NormalizationComposite, File
 import logging
 from io import StringIO
+import pytest
 
 
 def test_logs(caplog):
@@ -95,3 +96,9 @@ def test_replace():
     normalizer = core.Replace('scratch', 'flesh wound')
     assert normalizer.normalize('Tis but a scratch.') == \
         'Tis but a flesh wound.'
+
+
+def test_invalid_normalizer_config():
+    with pytest.raises(ValueError) as e:
+        core.Config(StringIO("unknownnormalizer"))
+    assert 'Unknown normalizer' in str(e)
