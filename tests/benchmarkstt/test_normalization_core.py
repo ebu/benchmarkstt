@@ -1,20 +1,20 @@
 from benchmarkstt.normalization import core, NormalizationComposite, File
 import logging
+from io import StringIO
 
 
-def itest_logs(caplog):
+def test_logs(caplog):
     caplog.set_level(logging.DEBUG)
     config = '''
      # using a simple config file
      lowercase
      lowercase
-     # Let's replace double quotes with single quotes (note wrapping in double
-     # quotes, to allow the use of double quotes in an argument.
-     Regex "[""]" '
-     # A space in the argument: wrap in double quotes as well
-     Replace 'ni' "'ecky ecky ecky'"
+     Regex ./resources/test/normalizers/doublequotestosinglequotes.regex
+
+     # 'ni' -> 'ecky ecky ecky'
+     Replace ./resources/test/normalizers/nitoeckyecky.replace
      '''
-    normalizer = core.Config(config)
+    normalizer = core.Config(StringIO(config))
     normalized = normalizer.normalize('No! Not the Knights Who Say "Ni"!')
     assert normalized == "no! not the knights who say 'ecky ecky ecky'!"
 

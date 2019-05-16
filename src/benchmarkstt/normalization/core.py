@@ -201,11 +201,17 @@ class Config(normalization.Base):
         if section is None:
             section = self.default_section
 
-        reader = config.reader(file, encoding=encoding)
+        if type(file) in (str, os.PathLike):
+            # next filenames are relative from path of the config file...
+            path = os.path.dirname(os.path.realpath(file))
+            title = file
 
-        # next filenames are relative from path of the config file...
-        path = os.path.dirname(os.path.realpath(file))
-        title = file
+            with open(file, encoding=encoding) as f:
+                reader = config.reader(f)
+        else:
+            path = None
+            title = 'rawinput'
+            reader = config.reader(file)
 
         if section is not None:
             reader = reader[section]
