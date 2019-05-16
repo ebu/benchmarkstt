@@ -38,7 +38,7 @@ def log(func):
     """
 
     def _(cls, text):
-        normalize_stack.append(repr(cls)) # type(cls).__name__)
+        normalize_stack.append(repr(cls))
 
         result = func(cls, text)
         logger_ = normalize_logger
