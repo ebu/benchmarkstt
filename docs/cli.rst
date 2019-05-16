@@ -7,17 +7,17 @@ Command line tool
        :prog: benchmarkstt
 
 
-Subcommands
------------
+Additional tools
+----------------
 
-Some more helpful features can be accessed through the ``benchmarkstt-tools`` command line tool.
+Some additional helpful tools are available through ``benchmarkstt-tools``, which provides these subcommands:
 
-    .. toctree::
-       :maxdepth: 1
+   .. toctree::
+      :maxdepth: 1
 
-       cli/api
-       cli/normalization
-       cli/metrics
+      cli/api
+      cli/normalization
+      cli/metrics
 
 Bash completion
 ---------------

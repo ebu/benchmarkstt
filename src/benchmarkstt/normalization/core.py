@@ -231,9 +231,9 @@ class Config(normalization.Base):
         # loads replace expressions from replaces.csv in default encoding
         replace     replaces.csv
 
-    :param typing.io.TextIO file: The file
-    :param str encoding: The file encoding
-    :param str section: The section of the config file to use
+    :param file: The config file
+    :param encoding: The file encoding
+    :param section: The subsection of the config file to use (if applicable)
 
     :example text: "He bravely turned his tail and fled"
     :example file: "./resources/test/normalizers/configfile.conf"
@@ -247,17 +247,20 @@ class Config(normalization.Base):
         if encoding is None or encoding == '':
             encoding = DEFAULT_ENCODING
 
-        self._normalizer = normalization.NormalizationComposite()
+        if section is None:
+            section = self.default_section
+
         reader = config.reader(file, encoding=encoding)
 
         # next filenames are relative from path of the config file...
         path = os.path.dirname(os.path.realpath(file))
-
-        if section is None:
-            section = self.default_section
+        title = file
 
         if section is not None:
             reader = reader[section]
+            title += '[%s]' % (section,)
+
+        self._normalizer = normalization.NormalizationComposite(title)
 
         for line in reader:
             try:

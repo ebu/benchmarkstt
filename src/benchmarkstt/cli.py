@@ -109,7 +109,8 @@ def args_complete(parser):
 
 def main_parser():
     name = 'benchmarkstt'
-    desc = 'BenchmarkSTT main command line script, for additional tools, see ``benchmarkstt-tools --help``.'
+    desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
+           'for additional tools, see ``benchmarkstt-tools --help``.'
     parser = argparse.ArgumentParser(prog=name, add_help=False,
                                      description=desc,
                                      formatter_class=ActionWithArgumentsFormatter)
@@ -145,8 +146,9 @@ def main():
 
 def tools_parser():
     name = 'benchmarkstt-tools'
+    desc = 'Some additional helpful tools'
     parser = argparse.ArgumentParser(prog=name, add_help=False,
-                                     description='BenchmarkSTT command line script for tools')
+                                     description=desc)
 
     subparsers = parser.add_subparsers(dest='subcommand')
 

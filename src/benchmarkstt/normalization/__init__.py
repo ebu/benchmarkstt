@@ -22,6 +22,9 @@ class Base:
         """
         return self._normalize(text)
 
+    def __repr__(self):
+        return type(self).__name__
+
     def _normalize(self, text: str) -> str:
         raise NotImplementedError()
 
@@ -41,8 +44,9 @@ class NormalizationComposite(Base):
     Combining normalizers
     """
 
-    def __init__(self):
+    def __init__(self, title=None):
         self._normalizers = []
+        self._title = type(self).__name__ if title is None else title
 
     def add(self, normalizer):
         """Adds a normalizer to the composite "stack"
@@ -57,6 +61,9 @@ class NormalizationComposite(Base):
         for normalizer in self._normalizers:
             text = normalizer.normalize(text)
         return text
+
+    def __repr__(self):
+        return self._title
 
 
 class File(Base):
@@ -74,14 +81,16 @@ class File(Base):
     :example return: "This is an Ex Parrot"
     """
 
-    def __init__(self, normalizer, file, encoding=None):
-        self._repr = '%s<%s>' % (repr(normalizer), file)
-
+    def __init__(self, normalizer, file, encoding=None, path=None):
         if encoding is None:
             encoding = DEFAULT_ENCODING
 
+        title = file
+        if path is not None:
+            file = os.path.join(path, file)
+
         with open(file, encoding=encoding) as f:
-            self._normalizer = NormalizationComposite()
+            self._normalizer = NormalizationComposite(title=title)
 
             for line in csv.reader(f):
                 try:
@@ -92,9 +101,6 @@ class File(Base):
     def _normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
 
-    def __repr__(self):
-        return self._repr
-
 
 factory = Factory(Base, _normalizer_namespaces)
 
@@ -102,9 +108,7 @@ factory = Factory(Base, _normalizer_namespaces)
 class FileFactory(Factory):
     def create(self, name, file=None, encoding=None, path=None):
         cls = super().get_class(name)
-        if path is not None:
-            file = os.path.join(path, file)
-        return File(cls, file, encoding)
+        return File(cls, file, encoding, path=path)
 
     def get_class(self, name):
         raise NotImplementedError("Not supported")
