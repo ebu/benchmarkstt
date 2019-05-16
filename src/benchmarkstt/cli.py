@@ -5,6 +5,7 @@ import itertools
 from benchmarkstt.modules import Modules
 from benchmarkstt import __meta__
 from benchmarkstt.normalization.core import Config
+from argparse import ArgumentError
 import sys
 
 
@@ -65,8 +66,7 @@ def action_with_arguments(action, required_args, optional_args):
                     lentxt = str(minlen)
                 else:
                     lentxt = 'between %d and % d' % (minlen, maxlen)
-                raise argparse.ArgumentTypeError('argument "%s" requires %s arguments (got %d)' %
-                                                 (self.dest, lentxt, len(values)))
+                raise ArgumentError(self, 'requires %s arguments (got %d)' % (lentxt, len(values)))
 
             if not hasattr(args, action):
                 setattr(args, action, [])

@@ -1,6 +1,4 @@
 import pytest
-import sys
-from textwrap import dedent
 from benchmarkstt.cli import main, tools
 from unittest import mock
 
@@ -61,6 +59,15 @@ def test_clitools(argv, result, capsys):
     ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts', a_vs_b_result],
 ])
 def test_cli(argv, result, capsys):
+    commandline_tester('benchmarkstt', main, argv, result, capsys)
+
+
+@pytest.mark.parametrize('argv,result', [
+    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --replace --wer', 2],
+    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --replace "" "" "" --wer', 2],
+    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --replacewords "" "" "" --wer', 2],
+])
+def test_cli_errors(argv, result, capsys):
     commandline_tester('benchmarkstt', main, argv, result, capsys)
 
 
