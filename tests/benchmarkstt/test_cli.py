@@ -20,6 +20,24 @@ garden."
 """
 
 
+a_vs_b_result = '''wer
+===
+
+0.142857
+
+worddiffs
+=========
+
+·TEST·my·data·should·be\033[31m·one\033[0m\033[32m·ONE\033[0m·difference
+
+diffcounts
+==========
+
+OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
+
+'''
+
+
 @pytest.mark.parametrize('argv,result', [
     [[], 2],
     ['invalidsubmodule', 2],
@@ -29,24 +47,8 @@ garden."
     ['normalization -i ./resources/test/_data/candide.txt --file', 2],
     ['metrics ./resources/test/_data/a.txt -h ./resources/test/_data/b.txt', 2],
     ['metrics "HI" "HELLO" -rt argument -ht argument --wer', "wer\n===\n\n1.000000\n\n"],
-    ['metrics ./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts',
-     dedent('''
-     wer
-     ===
-
-     0.142857
-
-     worddiffs
-     =========
-
-     ·TEST·my·data·should·be\033[31m·one\033[0m\033[32m·ONE\033[0m·difference
-
-     diffcounts
-     ==========
-
-     OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
-
-     ''').lstrip()]
+    ['metrics ./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts', a_vs_b_result],
+    ['metrics "HI" "HELLO" -rt argument -ht argument', 2],
 ])
 def test_clitools(argv, result, capsys):
     commandline_tester('benchmarkstt-tools', tools, argv, result, capsys)
@@ -56,6 +58,7 @@ def test_clitools(argv, result, capsys):
     [[], 2],
     ['--version', 'benchmarkstt: %s\n' % (__version__,)],
     ['--help', 0],
+    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts', a_vs_b_result],
 ])
 def test_cli(argv, result, capsys):
     commandline_tester('benchmarkstt', main, argv, result, capsys)

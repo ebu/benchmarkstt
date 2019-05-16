@@ -141,6 +141,7 @@ def main():
 
     Config.default_section = 'normalization'
     Modules('cli')['benchmark'].main(parser, args)
+    Config.default_section = None
     exit(0)
 
 

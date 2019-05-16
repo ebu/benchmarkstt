@@ -102,3 +102,8 @@ def test_invalid_normalizer_config():
     with pytest.raises(ValueError) as e:
         core.Config(StringIO("unknownnormalizer"))
     assert 'Unknown normalizer' in str(e)
+
+
+def test_config_section():
+    normalizer = core.Config(StringIO("test1\n[normalization]\nlowercase"), section='normalization')
+    assert normalizer.normalize('ToLowerCase') == 'tolowercase'

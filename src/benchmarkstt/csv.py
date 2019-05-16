@@ -251,11 +251,6 @@ class Reader:
                     next_field()
                     continue
 
-                if self._is_comment(char):
-                    yield yield_line()
-                    mode = MODE_COMMENT
-                    continue
-
                 field.append(char)
                 continue
 
