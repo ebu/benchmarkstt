@@ -18,7 +18,7 @@ Creating accurate verbatim transcripts for use as reference is time-consuming an
 
 .. warning:: 
 
-  The reference file and transcripts are made for the purposes of this demo only. The results will be skewed by the inaccurate reference and must not be taken as an indication of overall performance or as an endorsement of a particular vendor or engine.  
+This is a demo of work in progress. The benchmarking tool is still in development and evaluations are not done for the purpose of assessing tools. In addition, the use of subtitles as reference will skew the results so they should not be taken as an indication of overall performance or as an endorsement of a particular vendor or engine.
 
 We will use the subtitles file for the BBC's Question Time Brexit debate. This program was chosen for its length (90 minutes) and because live debates are challenging to transcribe.
 
