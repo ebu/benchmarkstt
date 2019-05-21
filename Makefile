@@ -26,7 +26,7 @@ html: apidocs
 clean:
 	cd docs/ && make clean
 
-gh-pages: # docs
+gh-pages: docs
 	TMPDIR=`mktemp -d` || exit 1; \
 	trap 'rm -rf "$$TMPDIR"' EXIT; \
 	echo $$TMPDIR; \
