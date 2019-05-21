@@ -10,6 +10,11 @@ from benchmarkstt import normalization
 from benchmarkstt import config, DEFAULT_ENCODING
 
 
+file_types = (str,)
+if hasattr(os, 'PathLike'):
+    file_types = (str, os.PathLike)
+
+
 class Replace(normalization.BaseWithFileSupport):
     """
     Simple search replace
@@ -207,7 +212,7 @@ class Config(normalization.Base):
         if section is None:
             section = self.default_section
 
-        if type(file) in (str, os.PathLike):
+        if type(file) in file_types:
             # next filenames are relative from path of the config file...
             path = os.path.dirname(os.path.realpath(file))
             title = file
