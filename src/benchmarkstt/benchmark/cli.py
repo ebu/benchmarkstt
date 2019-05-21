@@ -7,6 +7,9 @@ from benchmarkstt.metrics.cli import main as do_metrics
 from benchmarkstt.normalization.cli import args_logs, args_normalizers, get_normalizer_from_args
 import argparse
 
+# hidden: don't add this as a subcommand to benchmarkstt-tools
+hidden = True
+
 
 def argparser(parser: argparse.ArgumentParser):
     args_metrics(parser)

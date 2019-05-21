@@ -108,6 +108,8 @@ def args_complete(parser):
 
 
 def main_parser():
+    # import done here to avoid circular references
+    import benchmarkstt.benchmark.cli as benchmark_cli
     name = 'benchmarkstt'
     desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
            'for additional tools, see ``benchmarkstt-tools --help``.'
@@ -115,7 +117,7 @@ def main_parser():
                                      description=desc,
                                      formatter_class=ActionWithArgumentsFormatter)
 
-    Modules('cli')['benchmark'].argparser(parser)
+    benchmark_cli.argparser(parser)
 
     parser.add_argument('--version', action='store_true',
                         help='output %s version number' % (name,))
@@ -126,6 +128,8 @@ def main_parser():
 
 
 def main():
+    # import done here to avoid circular references
+    import benchmarkstt.benchmark.cli as benchmark_cli
     parser = main_parser()
     args_complete(parser)
 
@@ -140,7 +144,7 @@ def main():
     logging.getLogger().setLevel(log_level)
 
     Config.default_section = 'normalization'
-    Modules('cli')['benchmark'].main(parser, args)
+    benchmark_cli.main(parser, args)
     Config.default_section = None
     exit(0)
 

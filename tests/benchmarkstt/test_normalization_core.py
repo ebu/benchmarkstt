@@ -107,3 +107,6 @@ def test_invalid_normalizer_config():
 def test_config_section():
     normalizer = core.Config(StringIO("test1\n[normalization]\nlowercase"), section='normalization')
     assert normalizer.normalize('ToLowerCase') == 'tolowercase'
+
+    with pytest.raises(core.ConfigSectionNotFoundError):
+        core.Config(StringIO("test1\n[normalization]\nlowercase"), section='sectiondoesntexist')

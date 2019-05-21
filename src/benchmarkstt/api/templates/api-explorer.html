@@ -274,7 +274,7 @@
                       {% else %}
                         {% set example = '' %}
                       {% endif %}
-                      {% if param.name == 'text' or '\n' in example %}
+                      {% if param.name in ('text', 'hyp', 'ref') or '\n' in example %}
                       <textarea class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} rows="6" name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{{ example }}</textarea>
                       {% else %}
                       <input class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{{ example }}">

@@ -37,6 +37,8 @@ def get_differ(a, b, differ_class):
 class WordDiffs(Base):
     """
     Calculate the differences on a per-word basis
+
+    :example dialect: 'html'
     """
 
     def __init__(self, dialect=None, differ_class=None):

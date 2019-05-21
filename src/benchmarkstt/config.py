@@ -24,6 +24,9 @@ class SectionConfigReader:
     def __getitem__(self, k):
         return self.config[self.sections[k]]
 
+    def __contains__(self, item):
+        return item in self.sections
+
 
 def reader(file):
     csvreader = csv.reader(file, 'whitespace')

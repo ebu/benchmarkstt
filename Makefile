@@ -30,12 +30,12 @@ gh-pages: # docs
 	TMPDIR=`mktemp -d` || exit 1; \
 	trap 'rm -rf "$$TMPDIR"' EXIT; \
 	echo $$TMPDIR; \
-	GITORIGIN=$(shell git remote get-url origin); \
+	GITORIGIN=https://github.com/ebu/benchmarkstt.git ; \
 	git clone "$$GITORIGIN" -b gh-pages --single-branch "$$TMPDIR"; \
 	rm -r "$$TMPDIR/"*; \
-	echo "benchmarkstt.mikesmith.eu" > "$$TMPDIR/CNAME"; \
 	cp -r docs/build/html/* "$$TMPDIR"; \
 	cd "$$TMPDIR" ;\
+	touch .nojekyll; \
 	git add -A && git commit -a -m 'update docs' && git push --set-upstream origin gh-pages
 
 apidocs:

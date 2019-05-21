@@ -19,8 +19,8 @@ def args_inputfile(parser):
 
 def args_logs(parser: argparse.ArgumentParser):
     parser.add_argument('--log', action='store_true',
-                        help='show normalizer logs (warning: for large files with many normalization rules this will '
-                             'cause a significant performance penalty and a lot of output data)')
+                        help='show normalization logs (warning: for large files with many normalization rules this will'
+                             ' cause a significant performance penalty and a lot of output data)')
 
 
 def args_normalizers(parser: argparse.ArgumentParser):

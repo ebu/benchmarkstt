@@ -141,6 +141,12 @@ class Unidecode(normalization.Base):
         return unidecode(text)
 
 
+class ConfigSectionNotFoundError(ValueError):
+    """
+    Raised when a requested config section was not found
+    """
+
+
 class Config(normalization.Base):
     r"""
     Use config file notation to define normalization rules. This notation is a
@@ -210,10 +216,13 @@ class Config(normalization.Base):
                 reader = config.reader(f)
         else:
             path = None
-            title = 'rawinput'
+            title = ''
             reader = config.reader(file)
 
         if section is not None:
+            if section not in reader:
+                raise ConfigSectionNotFoundError(section)
+
             reader = reader[section]
             title += '[%s]' % (section,)
 

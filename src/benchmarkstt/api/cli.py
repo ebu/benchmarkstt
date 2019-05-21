@@ -59,7 +59,8 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
     def jsonrpc():
         req = request.get_data().decode()
         response = jsonrpcserver.dispatch(req, methods=methods, debug=True, convert_camel_case=False)
-        return Response(str(response), response.http_status, mimetype="application/json")
+        response_str = str(response)
+        return Response(response_str, response.http_status, mimetype="application/json")
 
     if with_explorer:  # pragma: nocover
         app.template_filter('parse_rst')(process_rst)
