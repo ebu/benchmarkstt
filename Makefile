@@ -16,13 +16,6 @@ html: apidocs
 	benchmarkstt-tools api --list-methods >> docs/api-methods.rst
 	cd docs/ && make clean html
 
-# man: build-man
-# 	cp resources/manpage/*.1 /usr/local/share/man/man1
-
-# build-man: docs
-# 	cd docs/ && make clean man
-#	cp docs/build/man/* resources/manpage/
-
 clean:
 	cd docs/ && make clean
 
