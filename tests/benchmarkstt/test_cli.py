@@ -45,6 +45,7 @@ OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
     ['normalization', 2],
     ['--help', 0],
     ['normalization -i ./resources/test/_data/candide.txt --lowercase', candide_lowercase],
+    ['normalization -i ./resources/test/_data/candide.txt --lowercase --log', candide_lowercase],
     ['normalization -i ./resources/test/_data/candide.txt --file', 2],
     ['metrics ./resources/test/_data/a.txt -h ./resources/test/_data/b.txt', 2],
     ['metrics "HI" "HELLO" -rt argument -ht argument --wer', "wer\n===\n\n1.000000\n\n"],
