@@ -87,7 +87,7 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
     return app
 
 
-def main(parser, args):
+def main(parser, args):  # pragma: nocover
     if args.list_methods:
         methods = get_methods()
         for name, func in methods.items.items():

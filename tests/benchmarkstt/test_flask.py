@@ -5,6 +5,69 @@ import sys
 
 pytestmark = pytest.mark.skipif(sys.version_info < (3, 6), reason="requires python3.6 or higher")
 
+benchmarkparams = {
+    "ref": "Hello darkness my OLD friend",
+    "hyp": "Hello darkness my old foe",
+    "config": "[normalization]\n# using a simple config file\nLowercase"
+}
+
+benchmarklogs = [
+      {
+        "names": [
+          "[REFERENCE]",
+          "Config",
+          "[normalization]",
+          "Lowercase"
+        ],
+        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness "
+                   "my <span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
+      },
+      {
+        "names": [
+          "[REFERENCE]",
+          "Config",
+          "[normalization]"
+        ],
+        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+                   "<span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
+      },
+      {
+        "names": [
+          "[REFERENCE]",
+          "Config"
+        ],
+        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+                   "<span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
+      },
+      {
+        "names": [
+          "[HYPOTHESIS]",
+          "Config",
+          "[normalization]",
+          "Lowercase"
+        ],
+        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+                   "old foe"
+      },
+      {
+        "names": [
+          "[HYPOTHESIS]",
+          "Config",
+          "[normalization]"
+        ],
+        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+                   "old foe"
+      },
+      {
+        "names": [
+          "[HYPOTHESIS]",
+          "Config"
+        ],
+        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+                   "old foe"
+      }
+    ]
+
 
 @pytest.fixture
 def client():
@@ -26,6 +89,11 @@ def test_general_stuff(client):
     ['list.normalization', {}, None],
     ['normalization.replace', {"text": "Nudge nudge!", "search": "nudge", "replace": "wink"}, {"text": 'Nudge wink!'}],
     ['metrics.diffcounts', {"ref": "Hello M", "hyp": "Hello W"}, {"equal": 1, "replace": 1, "insert": 0, "delete": 0}],
+    ['benchmark.wer', benchmarkparams, {"wer": 0.2}],
+    ['benchmark.diffcounts', benchmarkparams, {'diffcounts': {'delete': 0, 'equal': 4, 'insert': 0, 'replace': 1}}],
+    ['benchmark.wer', dict(**benchmarkparams, return_logs="on"), dict(wer=0.2, logs=benchmarklogs)],
+    ['benchmark.diffcounts', dict(**benchmarkparams, return_logs="on"),
+     dict(diffcounts={'delete': 0, 'equal': 4, 'insert': 0, 'replace': 1}, logs=benchmarklogs)],
 ])
 def test_correct_calls(method, params, result, client):
     request = {
