@@ -85,12 +85,8 @@ def main(parser, args):
     if 'normalizers' not in args or not len(args.normalizers):
         parser.error("need at least one normalizer")
 
-    if input_files is None and output_files is not None and len(output_files) > 1:
-        parser.error("can only write output to one file when reading from stdin")
-    elif input_files is not None and output_files is not None:
-        # straight mapping from input to output, needs equal length
-        if len(input_files) != len(output_files):
-            parser.error("when using multiple input or output files, there needs to be an equal amount of each")
+    if input_files is None and output_files is not None:
+        parser.error("can only write output to stdout when reading from stdin")
 
     composite = get_normalizer_from_args(args)
 
@@ -112,9 +108,4 @@ def main(parser, args):
     else:
         text = sys.stdin.read()
         text = composite.normalize(text)
-        if output_files is None:
-            sys.stdout.write(text)
-        else:
-            output_file = output_files[0]
-            output_file.write(text)
-            output_file.close()
+        sys.stdout.write(text)

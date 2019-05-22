@@ -1,6 +1,9 @@
 import pytest
 from benchmarkstt.cli import main, tools
 from unittest import mock
+from tempfile import NamedTemporaryFile
+from os import unlink
+from io import StringIO
 
 from benchmarkstt.__meta__ import __version__
 
@@ -47,9 +50,35 @@ OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
     ['metrics "HI" "HELLO" -rt argument -ht argument --wer', "wer\n===\n\n1.000000\n\n"],
     ['metrics ./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts', a_vs_b_result],
     ['metrics "HI" "HELLO" -rt argument -ht argument', 2],
+    ['normalization -o /tmp/test.txt --lowercase', 2],
+    ['normalization -i ./resources/test/_data/candide.txt ./resources/test/_data/candide.txt -o /dev/null', 2],
 ])
 def test_clitools(argv, result, capsys):
     commandline_tester('benchmarkstt-tools', tools, argv, result, capsys)
+
+
+@pytest.mark.parametrize('argv,result', [
+    ['normalization -i ./resources/test/_data/candide.txt -o %s --lowercase', candide_lowercase],
+])
+def test_withtempfile(argv, result, capsys):
+    with NamedTemporaryFile('w') as f:
+        name = f.name
+
+    argv = argv % (name,)
+    try:
+        commandline_tester('benchmarkstt-tools', tools, argv, result, name)
+    finally:
+        unlink(name)
+
+
+@pytest.mark.parametrize('inputfile,argv,result', [
+    ['./resources/test/_data/candide.txt', 'normalization --lowercase', candide_lowercase],
+])
+def test_withstdin(inputfile, argv, result, capsys, monkeypatch):
+    with open(inputfile) as f:
+        monkeypatch.setattr('sys.stdin', StringIO(f.read()))
+        commandline_tester('benchmarkstt-tools', tools, argv, result, capsys)
+        monkeypatch.delattr('sys.stdin')
 
 
 @pytest.mark.parametrize('argv,result', [
@@ -84,9 +113,13 @@ def commandline_tester(prog_name, app, argv, result, capsys):
                 app()
             assert str(err).endswith(': 0')
 
-            captured = capsys.readouterr()
-            if type(result) is list:
-                assert captured.out == result[0]
-                assert captured.err == result[1]
+            if type(capsys) is str:
+                with open(capsys) as f:
+                    assert f.read() == result
             else:
-                assert captured.out == result
+                captured = capsys.readouterr()
+                if type(result) is list:
+                    assert captured.out == result[0]
+                    assert captured.err == result[1]
+                else:
+                    assert captured.out == result

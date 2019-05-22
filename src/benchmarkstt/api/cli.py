@@ -96,6 +96,5 @@ def main(parser, args):
             print(format_docs(func.__doc__))
             print('')
     else:
-
         app = create_app(args.entrypoint, args.with_explorer)
         app.run(host=args.host, port=args.port, debug=args.debug)
