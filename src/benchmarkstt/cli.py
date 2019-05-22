@@ -164,10 +164,7 @@ def tools_parser():
         else:
             kwargs['formatter_class'] = ActionWithArgumentsFormatter
 
-        if cli.__doc__ is None:
-            docs = 'TODO: add description to benchmarkstt.%s.cli' % (module,)
-        else:
-            docs = cli.__doc__
+        docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s.cli' % (module,))
         kwargs['description'] = textwrap.dedent(docs)
         subparser = subparsers.add_parser(module, add_help=False, **kwargs)
 

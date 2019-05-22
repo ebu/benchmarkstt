@@ -93,7 +93,10 @@ class WER(Base):
             counts.delete * self.DEL_PENALTY + \
             counts.insert * self.INS_PENALTY
 
-        return changes / (counts.equal + changes)
+        total_ref = counts.equal + counts.replace + counts.delete
+        if total_ref == 0:
+            return 1
+        return changes / total_ref
 
 
 class DiffCounts(Base):

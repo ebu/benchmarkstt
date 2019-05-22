@@ -73,5 +73,6 @@ class LogCapturer:
         return [dict(names=log_[0], message=log_[1]) for log_ in self.handler.logs]
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self.handler.flush()
         normalize_logger.removeHandler(self.handler)
         self.handler = None
