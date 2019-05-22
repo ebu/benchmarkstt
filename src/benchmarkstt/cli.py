@@ -98,12 +98,12 @@ class ActionWithArgumentsFormatter(argparse.HelpFormatter):
         return text
 
 
-def args_complete(parser):
+def args_complete(parser):  # pragma: no cover
     try:
         # support argument completion if package is installed
         import argcomplete
         argcomplete.autocomplete(parser)
-    except ImportError:  # pragma: no cover
+    except ImportError:
         pass
 
 
