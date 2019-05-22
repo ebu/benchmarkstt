@@ -1,7 +1,8 @@
-from benchmarkstt.normalization import core, NormalizationComposite, File
+from benchmarkstt.normalization import core, NormalizationComposite, File, BaseWithFileSupport, FileFactory
 import logging
 from io import StringIO
 import pytest
+from benchmarkstt.csv import UnclosedQuoteError
 
 
 def test_logs(caplog):
@@ -78,6 +79,22 @@ def test_configfile():
     assert normalizer.normalize('Ee ecky thump!') == 'aa ackY Thump!'
 
 
+def test_invalidfile():
+    file = './resources/test/normalizers/replacecommentstestwrongfile'
+
+    with pytest.raises(UnclosedQuoteError) as exc:
+        File(core.Replace, file)
+
+    assert exc.value.line == 13
+    assert exc.value.char == 1
+
+
+def test_toomanyargs():
+    file = './resources/test/normalizers/replacecommentstest'
+    with pytest.raises(ValueError):
+        File(core.Lowercase, file)
+
+
 def test_replacewords():
     normalizer = core.ReplaceWords("ni", "ecky ecky")
     assert normalizer.normalize('Ni! We are the Knights Who Say "ni"!') == \
@@ -110,3 +127,13 @@ def test_config_section():
 
     with pytest.raises(core.ConfigSectionNotFoundError):
         core.Config(StringIO("test1\n[normalization]\nlowercase"), section='sectiondoesntexist')
+
+
+def test_base_with_file_notimplemented():
+    with pytest.raises(NotImplementedError):
+        BaseWithFileSupport().normalize('')
+
+
+def test_filefactory():
+    with pytest.raises(NotImplementedError):
+        FileFactory.get_class(FileFactory, 'none')
