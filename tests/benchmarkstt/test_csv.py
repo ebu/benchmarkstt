@@ -1,4 +1,4 @@
-from benchmarkstt.csv import *
+import benchmarkstt.csv as csv
 import pytest
 from io import StringIO
 
@@ -19,14 +19,14 @@ expected1 = [['Some line', 'some other'], ['dsfgdsg'], ['stay', 'togther  '], ['
 
 
 def get_reader(text, *args, **kwargs):
-    return list(reader(StringIO(text), *args, **kwargs))
+    return list(csv.reader(StringIO(text), *args, **kwargs))
 
 
 def test_csv():
     _reader = get_reader
     assert _reader('replace," ","\n"') == [['replace', ' ', '\n']]
-    assert type(reader(StringIO(''))) is Reader
-    assert type(Reader(StringIO(''), DefaultDialect)) is Reader
+    assert type(csv.reader(StringIO(''))) is csv.Reader
+    assert type(csv.Reader(StringIO(''), csv.DefaultDialect)) is csv.Reader
 
     assert _reader('""') == [['']]
 
@@ -71,7 +71,7 @@ def test_csv():
 
 def test_conf():
     def _reader(text):
-        return list(reader(StringIO(text), 'whitespace'))
+        return list(csv.reader(StringIO(text), 'whitespace'))
 
     assert _reader('replace " " "\n"') == [['replace', ' ', '\n']]
 
@@ -94,7 +94,7 @@ regex "y t" "Y T"
                 ['Replace', 'simplereplacetestforconf.csv']]
     file = './resources/test/normalizers/configfile.conf'
     with open(file) as f:
-        assert list(reader(f, 'whitespace')) == expected
+        assert list(csv.reader(f, 'whitespace')) == expected
 
     expected = [
         ['Normalizer1', 'arg1', 'arg 2'],
@@ -128,35 +128,35 @@ Normalizer4 "argument with double quote ("")"
 def test_exceptions():
     _reader = get_reader
 
-    with pytest.raises(InvalidDialectError):
-        Reader(StringIO(''), dialect=InvalidDialectError)
+    with pytest.raises(csv.InvalidDialectError):
+        csv.Reader(StringIO(''), dialect=csv.InvalidDialectError)
 
-    with pytest.raises(UnknownDialectError):
+    with pytest.raises(csv.UnknownDialectError):
         _reader('', dialect='notknown')
 
-    with pytest.raises(UnallowedQuoteError) as exc:
+    with pytest.raises(csv.UnallowedQuoteError) as exc:
         _reader('test "')
 
     assert "Quote not allowed here" in str(exc)
 
-    with pytest.raises(CSVParserError):
+    with pytest.raises(csv.CSVParserError):
         _reader('stray"quote')
 
-    with pytest.raises(UnclosedQuoteError) as exc:
+    with pytest.raises(csv.UnclosedQuoteError) as exc:
         _reader('  s  ,"')
 
     assert "Unexpected end" in str(exc)
 
-    with pytest.raises(UnallowedQuoteError):
+    with pytest.raises(csv.UnallowedQuoteError):
         _reader('  fsd","')
 
-    with pytest.raises(UnallowedQuoteError) as exc:
+    with pytest.raises(csv.UnallowedQuoteError) as exc:
         _reader('""test,')
     assert "Single quote inside quoted field" in str(exc)
 
 
 def test_own_dialect():
-    class OwnDialect(Dialect):
+    class OwnDialect(csv.Dialect):
         delimiter = ';'
 
     assert get_reader("Tester \n  No Trim  ", dialect=OwnDialect) == [['Tester '], ['  No Trim  ']]

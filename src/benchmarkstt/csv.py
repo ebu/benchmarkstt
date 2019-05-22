@@ -115,7 +115,8 @@ class Reader:
 
     def _is_ignore_right(self, char: str):
         if self._dialect.trimright is None:
-            return False
+            # currently no dialect with no trimright
+            return False  # pragma: nocover
         return char in self._dialect.trimright
 
     def _is_comment(self, char: str):

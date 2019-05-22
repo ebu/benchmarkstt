@@ -11,7 +11,12 @@ import benchmarkstt.metrics.core as metrics
         [normalizers.Replace, 'HELLO', True, 'E', 'A'],
         {'text': 'HALLO', 'logs':
             [{'message': 'H<span class="delete">E</span><span class="insert">A</span>LLO',
-              'names': ['Replace']}]}],
+              'names': ['Replace']}]}
+    ],
+    [
+        [normalizers.Replace, 'HELLO', True, 'A', 'A'],
+        {'text': 'HELLO', 'logs': []}
+    ]
 ])
 def test_normalization(args, expected):
     assert normalization_api(*args) == expected

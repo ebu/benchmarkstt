@@ -1,4 +1,4 @@
-from benchmarkstt.diff.formatter import format_diff
+import benchmarkstt.diff.formatter as formatter
 import pytest
 
 a = 'ABCDEFGHJKLMN'
@@ -12,10 +12,25 @@ b = 'ABBCDEFHHIJKLM'
              'H<span class="insert">HI</span>JKLM<span class="delete">N</span>']
 ])
 def test_format_diff(dialect, expected):
-    gotten = format_diff(a, b, dialect=dialect)
+    gotten = formatter.format_diff(a, b, dialect=dialect)
     assert gotten == expected
     assert gotten == expected
 
 
 def test_no_diff():
-    assert format_diff(a, a, dialect='cli') == a
+    assert formatter.format_diff(a, a, dialect='cli') == a
+
+
+def test_dialect_formatters():
+    with pytest.raises(NotImplementedError):
+        formatter.Dialect.format(None, None)
+
+    assert formatter.UTF8Dialect.format(['a', 'b'], 'diff') == 'a|b: diff'
+
+
+def test_dialect_exceptions():
+    with pytest.raises(ValueError) as exc:
+        formatter.DiffFormatter(dialect='dialectdoesntexist')
+    assert 'Unknown diff dialect' in str(exc)
+
+    assert formatter.DiffFormatter().diff(a, b) == formatter.format_diff(a, b)
