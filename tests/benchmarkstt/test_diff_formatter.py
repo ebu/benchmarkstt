@@ -14,7 +14,6 @@ b = 'ABBCDEFHHIJKLM'
 def test_format_diff(dialect, expected):
     gotten = formatter.format_diff(a, b, dialect=dialect)
     assert gotten == expected
-    assert gotten == expected
 
 
 def test_no_diff():
@@ -33,4 +32,6 @@ def test_dialect_exceptions():
         formatter.DiffFormatter(dialect='dialectdoesntexist')
     assert 'Unknown diff dialect' in str(exc)
 
+
+def test_default_dialect():
     assert formatter.DiffFormatter().diff(a, b) == formatter.format_diff(a, b)
