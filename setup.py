@@ -57,9 +57,9 @@ setup(
             "sphinx-argparse==0.2.5",
         ],
         'test': [
-            "pytest>=4.2.0",
+            "pytest==4.2.0",
             "pycodestyle==2.5.0",
-            "pytest-cov>=2.5.1"
+            "pytest-cov==2.5.1"
         ]
     },
     platforms='any',
