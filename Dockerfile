@@ -3,7 +3,7 @@ FROM python:3.7-alpine
 RUN adduser -D benchmarkstt
 RUN apk --update add python py-pip openssl ca-certificates py-openssl wget
 RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip setuptools wheel
 
 WORKDIR /home/benchmarkstt
 COPY . /home/benchmarkstt/
