@@ -57,7 +57,7 @@ class Factory:
         """
         name = self.normalize_class_name(name)
         if name not in self._registry:
-            raise ImportError("Could not find class '%s'" % (name,))
+            raise ImportError("Could not find class '%s', available: %s" % (name, ', '.join(self._registry.keys())))
 
         return self._registry[name]
 
@@ -77,6 +77,9 @@ class Factory:
             return True
         logger.info('Not a valid class (must inherit from Base class): "%s"', DeferredRepr(tocheck))
         return False
+
+    def keys(self):
+        return self._registry.keys()
 
     def register_namespace(self, namespace):
         """

@@ -152,12 +152,22 @@ class Schema:
 class JSONEncoder(json.JSONEncoder):
     """Custom JSON encoding for schema"""
 
-    def default(self, obj):
-        if isinstance(obj, Schema):
-            return obj._aslist()
-        if isinstance(obj, Item):
-            return obj._asdict()
-        return super().default(obj)
+    def default(self, o):
+        if isinstance(o, Schema):
+            return o._aslist()
+
+        if isinstance(o, (tuple, Item)) and hasattr(o, '_asdict'):
+            return o._asdict()
+
+        return super().default(o)
+
+    def encode(self, obj):
+        try:
+            obj = self.default(obj)
+        except TypeError:
+            pass
+
+        return super().encode(obj)
 
 
 class JSONDecoder(json.JSONDecoder):

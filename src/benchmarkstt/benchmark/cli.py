@@ -2,8 +2,7 @@
 Do a complete flow of input -> normalization -> segmentation -> metrics
 """
 
-from benchmarkstt.metrics.cli import argparser as args_metrics
-from benchmarkstt.metrics.cli import main as do_metrics
+import benchmarkstt.metrics.cli as metrics_cli
 from benchmarkstt.normalization.cli import args_logs, args_normalizers, get_normalizer_from_args
 import argparse
 
@@ -12,7 +11,7 @@ hidden = True
 
 
 def argparser(parser: argparse.ArgumentParser):
-    args_metrics(parser)
+    metrics_cli.argparser(parser)
     args_normalizers(parser)
     args_logs(parser)
     return parser
@@ -20,4 +19,4 @@ def argparser(parser: argparse.ArgumentParser):
 
 def main(parser, args):
     normalizer = get_normalizer_from_args(args)
-    do_metrics(parser, args, normalizer)
+    metrics_cli.main(parser, args, normalizer)
