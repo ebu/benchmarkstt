@@ -1,8 +1,8 @@
 .PHONY: docs test clean gh-pages
 
 test:
-	pytest src --doctest-modules --verbose
-	pytest --cov=src --cov-report html:htmlcov tests --verbose
+	pytest src --doctest-modules -vvv
+	pytest --cov=src --cov-report html:htmlcov tests -vvv
 	pycodestyle tests
 	pycodestyle src
 

@@ -46,7 +46,7 @@ class Json(output.Base):
 
     def result(self, title, result):
         if self._line != 0:
-            print(', ')
+            print(',')
         self._line += 1
         en = Schema.dumps
         print('\t%s: %s' % (en(title), en(result)), end='')
