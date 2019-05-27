@@ -115,6 +115,8 @@ class JSONDiffDialect(Dialect):
         txt = txt.split()
         if txt2 is None:
             txt2 = txt
+        else:
+            txt2 = txt2.split()
         for idx, word in enumerate(txt):
             ref = word if kind != 'insert' else None
             hyp = txt2[idx] if kind != 'delete' else None
@@ -149,8 +151,14 @@ class ListDialect(Dialect):
         txt = txt.split()
         if txt2 is None:
             txt2 = txt
+        else:
+            txt2 = txt2.split()
+
+        oor = len(txt2)
         for idx, word in enumerate(txt):
             ref = word if kind != 'insert' else None
+            if idx >= oor:
+                kind = 'delete'
             hyp = txt2[idx] if kind != 'delete' else None
             result = OrderedDict((('kind', kind), ('reference', ref), ('hypothesis', hyp)))
             self._output.append(result)
