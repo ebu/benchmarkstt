@@ -24,7 +24,7 @@ def test_dialect_formatters():
     with pytest.raises(NotImplementedError):
         formatter.Dialect.format(None, None)
 
-    assert formatter.UTF8Dialect.format(['a', 'b'], 'diff') == 'a|b: diff'
+    assert formatter.UTF8Dialect().format(['a', 'b'], 'diff') == 'a|b: diff'
 
 
 def test_dialect_exceptions():

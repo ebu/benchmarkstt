@@ -53,6 +53,11 @@ def main(parser, args, normalizer=None):
     with output_factory.create(args.output_format) as out:
         for item in args.metrics:
             metric_name = item.pop(0).replace('-', '.')
-            metric = factory.create(metric_name, *item)
+            cls = factory.get_class(metric_name)
+            kwargs = dict()
+            if hasattr(cls, 'has_dialect'):
+                if cls.has_dialect(args.output_format):
+                    kwargs['dialect'] = args.output_format
+            metric = cls(*item, **kwargs)
             result = metric.compare(ref, hyp)
             out.result(metric_name, result)

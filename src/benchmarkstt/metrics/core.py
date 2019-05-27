@@ -1,7 +1,7 @@
 from benchmarkstt.schema import Schema
 import logging
 from benchmarkstt.diff.core import RatcliffObershelp
-from benchmarkstt.diff.formatter import format_diff
+from benchmarkstt.diff.formatter import format_diff, DiffFormatter
 from benchmarkstt.metrics import Base
 from collections import namedtuple
 
@@ -46,6 +46,10 @@ class WordDiffs(Base):
         if dialect is None:
             dialect = 'cli'
         self._dialect = dialect
+
+    @classmethod
+    def has_dialect(cls, dialect):
+        return DiffFormatter.has_dialect(dialect)
 
     def compare(self, ref: Schema, hyp: Schema):
         differ = get_differ(ref, hyp, differ_class=self._differ_class)
