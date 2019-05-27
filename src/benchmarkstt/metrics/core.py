@@ -47,10 +47,6 @@ class WordDiffs(Base):
             dialect = 'cli'
         self._dialect = dialect
 
-    @classmethod
-    def has_dialect(cls, dialect):
-        return DiffFormatter.has_dialect(dialect)
-
     def compare(self, ref: Schema, hyp: Schema):
         differ = get_differ(ref, hyp, differ_class=self._differ_class)
         a = traversible(ref)
