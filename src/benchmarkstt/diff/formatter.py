@@ -4,6 +4,7 @@ import difflib
 from markupsafe import escape
 from benchmarkstt.schema import Schema
 from io import StringIO
+from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
@@ -117,11 +118,7 @@ class JSONDiffDialect(Dialect):
         for idx, word in enumerate(txt):
             ref = word if kind != 'insert' else None
             hyp = txt2[idx] if kind != 'delete' else None
-            result = {
-                "kind": kind,
-                "reference": ref,
-                "hypothesis": hyp,
-            }
+            result = OrderedDict(kind=kind, reference=ref, hypothesis=hyp)
             if self._line != 0:
                 self._stream.write(',\n\t')
             self._line += 1
