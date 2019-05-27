@@ -118,7 +118,7 @@ class JSONDiffDialect(Dialect):
         for idx, word in enumerate(txt):
             ref = word if kind != 'insert' else None
             hyp = txt2[idx] if kind != 'delete' else None
-            result = OrderedDict(kind=kind, reference=ref, hypothesis=hyp)
+            result = OrderedDict((('kind', kind), ('reference', ref), ('hypothesis', hyp)))
             if self._line != 0:
                 self._stream.write(',\n\t')
             self._line += 1
@@ -152,7 +152,7 @@ class ListDialect(Dialect):
         for idx, word in enumerate(txt):
             ref = word if kind != 'insert' else None
             hyp = txt2[idx] if kind != 'delete' else None
-            result = OrderedDict(kind=kind, reference=ref, hypothesis=hyp)
+            result = OrderedDict((('kind', kind), ('reference', ref), ('hypothesis', hyp)))
             self._output.append(result)
 
     def __enter__(self):
