@@ -152,11 +152,7 @@ class ListDialect(Dialect):
         for idx, word in enumerate(txt):
             ref = word if kind != 'insert' else None
             hyp = txt2[idx] if kind != 'delete' else None
-            result = {
-                "kind": kind,
-                "reference": ref,
-                "hypothesis": hyp,
-            }
+            result = OrderedDict(kind=kind, reference=ref, hypothesis=hyp)
             self._output.append(result)
 
     def __enter__(self):
