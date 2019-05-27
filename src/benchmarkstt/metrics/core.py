@@ -44,7 +44,7 @@ class WordDiffs(Base):
     def __init__(self, dialect=None, differ_class=None):
         self._differ_class = differ_class
         if dialect is None:
-            dialect = 'cli'
+            dialect = 'list'
         self._dialect = dialect
 
     @classmethod

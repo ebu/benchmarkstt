@@ -56,8 +56,12 @@ def main(parser, args, normalizer=None):
             cls = factory.get_class(metric_name)
             kwargs = dict()
             if hasattr(cls, 'has_dialect'):
-                if cls.has_dialect(args.output_format):
+                if args.output_format == 'json':
+                    dialect = 'list'
+                elif cls.has_dialect(args.output_format):
                     kwargs['dialect'] = args.output_format
+                else:
+                    kwargs['dialect'] = 'cli'
             metric = cls(*item, **kwargs)
             result = metric.compare(ref, hyp)
             out.result(metric_name, result)

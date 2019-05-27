@@ -33,6 +33,9 @@ class Dialect:
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
 
+    def output(self):
+        return self._stream.getvalue()
+
 
 class CLIDiffDialect(Dialect):
     @staticmethod
@@ -78,7 +81,7 @@ class HTMLDiffDialect(Dialect):
 class JSONDiffDialect(Dialect):
     @staticmethod
     def preprocessor(txt):
-        return Schema.dumps(txt)
+        return txt
 
     def __init__(self):
         self._line = None
@@ -100,7 +103,7 @@ class JSONDiffDialect(Dialect):
         if self._line is not None:
             raise ValueError("Already opened")
         self._stream = StringIO()
-        self._stream.write('[\n')
+        self._stream.write('[\n\t')
         self._line = 0
         return self._stream
 
@@ -108,7 +111,6 @@ class JSONDiffDialect(Dialect):
         self._stream.write('\n]')
 
     def _format(self, kind, txt, txt2=None):
-        results = []
         txt = txt.split()
         if txt2 is None:
             txt2 = txt
@@ -120,11 +122,55 @@ class JSONDiffDialect(Dialect):
                 "reference": ref,
                 "hypothesis": hyp,
             }
-            results.append(result)
-        if self._line != 0:
-            self._stream.write(',\n')
-        self._line += 1
-        self._stream.write(',\n'.join(list(map(Schema.dumps, results))))
+            if self._line != 0:
+                self._stream.write(',\n\t')
+            self._line += 1
+            self._stream.write(Schema.dumps(result))
+
+    def format(self, names, diff):
+        return names, diff
+
+
+class ListDialect(Dialect):
+    @staticmethod
+    def preprocessor(txt):
+        return txt
+
+    def delete_format(self, txt):
+        return self._format('delete', txt)
+
+    def insert_format(self, txt):
+        return self._format('insert', txt)
+
+    def equal_format(self, txt):
+        return self._format('equal', txt)
+
+    def replace_format(self, a, b):
+        return self._format('replace', a, b)
+
+    def _format(self, kind, txt, txt2=None):
+        txt = txt.split()
+        if txt2 is None:
+            txt2 = txt
+        for idx, word in enumerate(txt):
+            ref = word if kind != 'insert' else None
+            hyp = txt2[idx] if kind != 'delete' else None
+            result = {
+                "kind": kind,
+                "reference": ref,
+                "hypothesis": hyp,
+            }
+            self._output.append(result)
+
+    def __enter__(self):
+        self._output = []
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+    def output(self):
+        return self._output
 
     def format(self, names, diff):
         return names, diff
@@ -136,6 +182,7 @@ class DiffFormatter:
         "html": HTMLDiffDialect,
         "text": UTF8Dialect,
         "json": JSONDiffDialect,
+        "list": ListDialect,
     }
 
     def __init__(self, dialect=None):
@@ -193,7 +240,7 @@ class DiffFormatter:
                         formats[tag](b_)
                     else:
                         formats[tag](a_, b_)
-        return stream.getvalue()
+        return dialect.output()
 
     @classmethod
     def has_dialect(cls, dialect):
