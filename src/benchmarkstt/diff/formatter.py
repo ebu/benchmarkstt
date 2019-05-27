@@ -79,57 +79,6 @@ class HTMLDiffDialect(Dialect):
         return names, diff
 
 
-class JSONDiffDialect(Dialect):
-    @staticmethod
-    def preprocessor(txt):
-        return txt
-
-    def __init__(self):
-        self._line = None
-        super().__init__()
-
-    def delete_format(self, txt):
-        return self._format('delete', txt)
-
-    def insert_format(self, txt):
-        return self._format('insert', txt)
-
-    def equal_format(self, txt):
-        return self._format('equal', txt)
-
-    def replace_format(self, a, b):
-        return self._format('replace', a, b)
-
-    def __enter__(self):
-        if self._line is not None:
-            raise ValueError("Already opened")
-        self._stream = StringIO()
-        self._stream.write('[\n\t')
-        self._line = 0
-        return self._stream
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self._stream.write('\n]')
-
-    def _format(self, kind, txt, txt2=None):
-        txt = txt.split()
-        if txt2 is None:
-            txt2 = txt
-        else:
-            txt2 = txt2.split()
-        for idx, word in enumerate(txt):
-            ref = word if kind != 'insert' else None
-            hyp = txt2[idx] if kind != 'delete' else None
-            result = OrderedDict((('kind', kind), ('reference', ref), ('hypothesis', hyp)))
-            if self._line != 0:
-                self._stream.write(',\n\t')
-            self._line += 1
-            self._stream.write(Schema.dumps(result))
-
-    def format(self, names, diff):
-        return names, diff
-
-
 class ListDialect(Dialect):
     @staticmethod
     def preprocessor(txt):
@@ -175,6 +124,27 @@ class ListDialect(Dialect):
 
     def format(self, names, diff):
         return names, diff
+
+
+class JSONDiffDialect(ListDialect):
+    def __init__(self):
+        self._line = None
+
+    def __enter__(self):
+        super().__enter__()
+        if self._line is not None:
+            raise ValueError("Already open")
+        self._stream = StringIO()
+        self._line = 0
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        super().__exit__(exc_type, exc_val, exc_tb)
+        self._line = None
+        self._stream.write(Schema.dumps(super().output()))
+
+    def output(self):
+        return self._stream.getvalue()
 
 
 class DiffFormatter:
