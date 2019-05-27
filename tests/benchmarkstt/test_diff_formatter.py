@@ -1,5 +1,6 @@
 import benchmarkstt.diff.formatter as formatter
 import pytest
+from collections import OrderedDict
 
 a = 'ABCDEFGHJKLMN'
 b = 'ABBCDEFHHIJKLM'
@@ -20,6 +21,17 @@ b = 'ABBCDEFHHIJKLM'
              '{"kind": "equal", "reference": "JKLM", "hypothesis": "JKLM"}, '
              '{"kind": "delete", "reference": "N", "hypothesis": null}'
              ']'],
+    ['list', [
+        OrderedDict([('kind', 'equal'), ('reference', 'A'), ('hypothesis', 'A')]),
+        OrderedDict([('kind', 'insert'), ('reference', None), ('hypothesis', 'B')]),
+        OrderedDict([('kind', 'equal'), ('reference', 'BCDEF'), ('hypothesis', 'BCDEF')]),
+        OrderedDict([('kind', 'delete'), ('reference', 'G'), ('hypothesis', None)]),
+        OrderedDict([('kind', 'equal'), ('reference', 'H'), ('hypothesis', 'H')]),
+        OrderedDict([('kind', 'insert'), ('reference', None), ('hypothesis', 'HI')]),
+        OrderedDict([('kind', 'equal'), ('reference', 'JKLM'), ('hypothesis', 'JKLM')]),
+        OrderedDict([('kind', 'delete'), ('reference', 'N'), ('hypothesis', None)])
+    ]
+    ]
 ])
 def test_format_diff(dialect, expected):
     gotten = formatter.format_diff(a, b, dialect=dialect)

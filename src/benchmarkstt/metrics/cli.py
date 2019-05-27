@@ -8,6 +8,7 @@ from benchmarkstt.metrics import factory
 from benchmarkstt.cli import args_from_factory
 from benchmarkstt.cli import ActionWithArgumentsFormatter
 import argparse
+from inspect import signature, Parameter
 
 
 Formatter = ActionWithArgumentsFormatter
@@ -55,8 +56,21 @@ def main(parser, args, normalizer=None):
             metric_name = item.pop(0).replace('-', '.')
             cls = factory.get_class(metric_name)
             kwargs = dict()
-            if hasattr(cls, 'has_dialect') and args.output_format == 'json':
-                kwargs['dialect'] = 'list'
+
+            # somewhat hacky default diff formats for metrics
+            sig = signature(cls.__init__).parameters
+            sigkeys = list(sig)
+
+            if 'dialect' in sigkeys:
+                idx = sigkeys.index('dialect') - 1
+                sig = sig['dialect']
+                if sig.kind in (Parameter.POSITIONAL_OR_KEYWORD, Parameter.POSITIONAL_ONLY):
+                    if len(item) <= idx:
+                        if args.output_format == 'json':
+                            kwargs['dialect'] = 'list'
+                        else:
+                            kwargs['dialect'] = 'cli'
+
             metric = cls(*item, **kwargs)
             result = metric.compare(ref, hyp)
             out.result(metric_name, result)

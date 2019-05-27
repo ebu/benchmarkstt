@@ -4,6 +4,7 @@ from unittest import mock
 from tempfile import NamedTemporaryFile
 from os import unlink
 from io import StringIO
+import shlex
 
 from benchmarkstt.__meta__ import __version__
 
@@ -52,6 +53,10 @@ OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
     ['metrics ./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts', a_vs_b_result],
     ['metrics "HI" "HELLO" -rt argument -ht argument', 2],
     ['normalization -o /tmp/test.txt --lowercase', 2],
+    ['metrics "HELLO WORLD" "GOODBYE CRUEL WORLD" -rt argument -ht argument --worddiffs --output-format json',
+     '{\n\t"worddiffs": [{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}]\n}\n'
+     ],
     ['normalization -i ./resources/test/_data/candide.txt ./resources/test/_data/candide.txt -o /dev/null', 2],
 ])
 def test_clitools(argv, result, capsys):
@@ -103,7 +108,7 @@ def test_cli_errors(argv, result, capsys):
 
 def commandline_tester(prog_name, app, argv, result, capsys):
     if type(argv) is str:
-        argv = argv.split()
+        argv = shlex.split(argv)
     with mock.patch('sys.argv', [prog_name] + argv):
         if type(result) is int:
             with pytest.raises(SystemExit) as err:

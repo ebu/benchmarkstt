@@ -132,8 +132,6 @@ class JSONDiffDialect(ListDialect):
 
     def __enter__(self):
         super().__enter__()
-        if self._line is not None:
-            raise ValueError("Already open")
         self._stream = StringIO()
         self._line = 0
         return self
