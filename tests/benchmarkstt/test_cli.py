@@ -1,8 +1,8 @@
 import pytest
 from benchmarkstt.cli import main, tools
 from unittest import mock
-from tempfile import NamedTemporaryFile
-from os import unlink
+from tempfile import TemporaryDirectory
+from os import path
 from io import StringIO
 import shlex
 
@@ -76,17 +76,10 @@ def test_clitools(argv, result, capsys):
     ['normalization -i ./resources/test/_data/candide.txt -o %s --lowercase', candide_lowercase],
 ])
 def test_withtempfile(argv, result, capsys):
-    with NamedTemporaryFile('w') as f:
-        name = f.name
-
-    argv = argv % (name,)
-    try:
-        commandline_tester('benchmarkstt-tools', tools, argv, result, name)
-    finally:
-        try:
-            unlink(name)
-        except FileNotFoundError:
-            pass
+    with TemporaryDirectory() as tmpdir:
+        tmpfile = path.join(tmpdir, 'tmpfile')
+        argv = argv % (tmpfile,)
+        commandline_tester('benchmarkstt-tools', tools, argv, result, tmpfile)
 
 
 @pytest.mark.parametrize('inputfile,argv,result', [
