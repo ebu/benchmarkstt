@@ -78,7 +78,7 @@ def test_clitools(argv, result, capsys):
 def test_withtempfile(argv, result, capsys):
     with TemporaryDirectory() as tmpdir:
         tmpfile = path.join(tmpdir, 'tmpfile')
-        argv = argv % (tmpfile,)
+        argv = argv % ('"%s"' % (tmpfile,),)
         commandline_tester('benchmarkstt-tools', tools, argv, result, tmpfile)
 
 
