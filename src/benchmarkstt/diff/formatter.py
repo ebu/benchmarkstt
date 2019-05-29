@@ -112,6 +112,11 @@ class ListDialect(Dialect):
             result = OrderedDict((('kind', kind), ('reference', ref), ('hypothesis', hyp)))
             self._output.append(result)
 
+        if idx < oor:
+            for word_ in txt2[idx+1:]:
+                result = OrderedDict((('kind', 'insert'), ('reference', None), ('hypothesis', word_)))
+                self._output.append(result)
+
     def __enter__(self):
         self._output = []
         return self
