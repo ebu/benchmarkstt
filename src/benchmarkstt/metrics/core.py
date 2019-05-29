@@ -68,8 +68,8 @@ class WER(Base):
     """
 
     # TODO: proper documenting of different modes
-    MODE_STRICT = 0
-    MODE_HUNT = 1
+    MODE_STRICT = 'strict'
+    MODE_HUNT = 'hunt'
 
     DEL_PENALTY = 1
     INS_PENALTY = 1
@@ -79,7 +79,7 @@ class WER(Base):
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
-        if mode is self.MODE_HUNT:
+        if mode == self.MODE_HUNT:
             self.DEL_PENALTY = self.INS_PENALTY = .5
 
     def compare(self, ref: Schema, hyp: Schema):

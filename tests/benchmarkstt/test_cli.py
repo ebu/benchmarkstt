@@ -54,30 +54,32 @@ OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
     ['metrics "HI" "HELLO" -rt argument -ht argument', 2],
     ['normalization -o /tmp/test.txt --lowercase', 2],
     ['metrics "HELLO WORLD" "GOODBYE CRUEL WORLD" -rt argument -ht argument --worddiffs --output-format json',
-     '{\n\t"worddiffs": [{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '[\n\t{"title": "worddiffs", "result": ['
+     '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
      '{"kind": "insert", "reference": null, "hypothesis": "CRUEL"}, '
-     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}]\n}\n'
+     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}'
+     ']}\n]\n'
      ],
     ['normalization -i ./resources/test/_data/candide.txt ./resources/test/_data/candide.txt -o /dev/null', 2],
     ['metrics "HELLO WORLD OF MINE" "GOODBYE CRUEL WORLD OF MINE" -rt argument -ht argument '
      '--worddiffs --output-format json',
-     '{\n\t"worddiffs": ['
+     '[\n\t{"title": "worddiffs", "result": ['
      '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
      '{"kind": "insert", "reference": null, "hypothesis": "CRUEL"}, '
      '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
      '{"kind": "equal", "reference": "OF", "hypothesis": "OF"}, '
      '{"kind": "equal", "reference": "MINE", "hypothesis": "MINE"}'
-     ']\n}\n'
+     ']}\n]\n'
      ],
     ['metrics "HELLO CRUEL WORLD OF MINE" "GOODBYE WORLD OF MINE" -rt argument -ht argument '
      '--worddiffs --output-format json',
-     '{\n\t"worddiffs": ['
+     '[\n\t{"title": "worddiffs", "result": ['
      '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
      '{"kind": "delete", "reference": "CRUEL", "hypothesis": null}, '
      '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
      '{"kind": "equal", "reference": "OF", "hypothesis": "OF"}, '
      '{"kind": "equal", "reference": "MINE", "hypothesis": "MINE"}'
-     ']\n}\n'
+     ']}\n]\n'
      ]
 ])
 def test_clitools(argv, result, capsys):

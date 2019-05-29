@@ -1,6 +1,7 @@
 from benchmarkstt import output
 from benchmarkstt.schema import Schema
 from csv import writer
+from collections import OrderedDict
 import sys
 
 
@@ -36,20 +37,20 @@ class Json(output.Base):
     def __enter__(self):
         if self._line is not None:
             raise ValueError("Already open")
-        print('{')
+        print('[')
         self._line = 0
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._line = None
-        print('\n}')
+        print('\n]')
 
     def result(self, title, result):
         if self._line != 0:
             print(',')
         self._line += 1
-        en = Schema.dumps
-        print('\t%s: %s' % (en(title), en(result)), end='')
+        print('\t', end='')
+        print(Schema.dumps(OrderedDict((('title', title), ('result', result)))), end='')
 
 
 class Csv(output.Base):

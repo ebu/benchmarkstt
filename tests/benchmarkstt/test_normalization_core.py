@@ -137,4 +137,4 @@ def test_base_with_file_notimplemented():
 
 def test_filefactory():
     with pytest.raises(NotImplementedError):
-        FileFactory.get_class(FileFactory, 'none')
+        FileFactory.get_class(None, 'none')

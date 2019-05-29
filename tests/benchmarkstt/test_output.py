@@ -40,7 +40,7 @@ result
     ],
     [
         'json',
-        '{\n\t"title": "result",\n\t"somethingelse": 0.42\n}\n'
+        '[\n\t{"title": "title", "result": "result"},\n\t{"title": "somethingelse", "result": 0.42}\n]\n'
     ]
 ])
 def test_core(kind, expected, capsys):
