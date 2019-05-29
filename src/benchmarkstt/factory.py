@@ -8,7 +8,16 @@ from typing import Dict
 
 logger = logging.getLogger(__name__)
 
-ClassConfig = namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])
+
+class ClassConfig(namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])):
+    @property
+    def docs(self):
+        if self.cls.__doc__ is None:
+            docs = ''
+            logger.warning("No docstring for '%s'", self.name)
+        else:
+            docs = self.cls.__doc__
+        return format_docs(docs)
 
 
 class Factory:
@@ -132,13 +141,6 @@ class Factory:
         """
 
         for clsname, cls in self._registry.items():
-            if cls.__doc__ is None:
-                docs = ''
-                logger.warning("No docstring for '%s'", cls.__name__)
-            else:
-                docs = cls.__doc__
-            docs = format_docs(docs)
-
             argspec = inspect.getfullargspec(cls.__init__)
             args = list(argspec.args)[1:]
             defaults = []
@@ -149,6 +151,7 @@ class Factory:
             required_args = args[0:defaults_idx]
             optional_args = args[defaults_idx:]
 
-            yield ClassConfig(name=clsname, cls=cls, docs=docs,
+            yield ClassConfig(name=clsname, cls=cls,
+                              docs=None,
                               optional_args=optional_args,
                               required_args=required_args)

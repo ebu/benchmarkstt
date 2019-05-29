@@ -16,6 +16,7 @@ def test_logs(caplog):
      # 'ni' -> 'ecky ecky ecky'
      Replace ./resources/test/normalizers/nitoeckyecky.replace
      '''
+    assert core.Config._default_section is None
     normalizer = core.Config(StringIO(config))
     normalized = normalizer.normalize('No! Not the Knights Who Say "Ni"!')
     assert normalized == "no! not the knights who say 'ecky ecky ecky'!"

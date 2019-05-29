@@ -1,5 +1,5 @@
 import logging
-from benchmarkstt import DeferredStr
+from benchmarkstt import DeferredCallback
 
 
 def log_call(logger: logging.Logger, log_level=None, result=None):
@@ -38,10 +38,10 @@ def log_call(logger: logging.Logger, log_level=None, result=None):
             arguments_list = []
             if len(args):
                 arguments_format.append('%s')
-                arguments_list.append(DeferredStr(lambda: ', '.join([repr(a) for a in args])))
+                arguments_list.append(DeferredCallback(lambda: ', '.join([repr(a) for a in args])))
             if len(kwargs):
                 arguments_format.append('%s')
-                arguments_list.append(DeferredStr(lambda: ', '.join([k + '=' + repr(kwargs[k]) for k in kwargs])))
+                arguments_list.append(DeferredCallback(lambda: ', '.join([k + '=' + repr(kwargs[k]) for k in kwargs])))
 
             arguments_format = '%s(%s)' % (func.__name__, ', '.join(arguments_format))
 

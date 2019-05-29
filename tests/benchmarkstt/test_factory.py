@@ -49,8 +49,9 @@ def test_nodoclog(caplog):
     factory = Factory(Base, [test_nodoclog.__module__])
 
     for conf in factory:
+        conf.docs
         pass
 
     assert caplog.record_tuples == [
-        ('benchmarkstt.factory', 30, "No docstring for 'ValidClass'")
+        ('benchmarkstt.factory', 30, "No docstring for 'validclass'")
     ]

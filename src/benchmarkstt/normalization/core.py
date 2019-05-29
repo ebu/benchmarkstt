@@ -8,6 +8,7 @@ import os
 from unidecode import unidecode
 from benchmarkstt import normalization
 from benchmarkstt import config, DEFAULT_ENCODING
+from contextlib import contextmanager
 
 
 file_types = (str,)
@@ -153,7 +154,7 @@ class ConfigSectionNotFoundError(ValueError):
 
 
 class Config(normalization.Base):
-    r"""
+    doc_string = r"""
     Use config file notation to define normalization rules. This notation is a
     list of normalizers, one per line.
 
@@ -178,6 +179,7 @@ class Config(normalization.Base):
 
     .. code-block:: text
 
+        {[section]}
         # This is a comment
 
         # (Normalizer2 has no arguments)
@@ -195,7 +197,7 @@ class Config(normalization.Base):
 
     :param file: The config file
     :param encoding: The file encoding
-    :param section: The subsection of the config file to use (if applicable)
+    :param section: The subsection of the config file to use, {section}
 
     :example text: "He bravely turned his tail and fled"
     :example file: "./resources/test/normalizers/configfile.conf"
@@ -203,14 +205,14 @@ class Config(normalization.Base):
     :example return: "ha bravalY Turnad his tail and flad"
     """
 
-    default_section = None
+    _default_section = None
 
     def __init__(self, file, section=None, encoding=None):
         if encoding is None or encoding == '':
             encoding = DEFAULT_ENCODING
 
         if section is None:
-            section = self.default_section
+            section = self._default_section
 
         if type(file) in file_types:
             # next filenames are relative from path of the config file...
@@ -246,3 +248,23 @@ class Config(normalization.Base):
 
     def _normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
+
+    @classmethod
+    @contextmanager
+    def default_section(cls, section):
+        prev_section = cls._default_section
+        cls._default_section = section
+        try:
+            cls.refresh_docstring()
+            yield
+        finally:
+            cls._default_section = prev_section
+
+    @classmethod
+    def refresh_docstring(cls):
+        section = 'defaults to %s' % (repr(cls._default_section),) if cls._default_section else 'no section by default'
+        section_tag = '[%s]' % (cls._default_section,) if cls._default_section else ''
+        cls.__doc__ = cls.doc_string.replace('{section}', section).replace('{[section]}', section_tag)
+
+
+Config.refresh_docstring()

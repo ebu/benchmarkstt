@@ -6,6 +6,7 @@ from benchmarkstt.modules import Modules
 from benchmarkstt import __meta__
 from benchmarkstt.normalization.core import Config
 from argparse import ArgumentError
+from contextlib import contextmanager
 import sys
 
 
@@ -107,45 +108,54 @@ def args_complete(parser):  # pragma: no cover
         pass
 
 
+@contextmanager
+def main_parser_context():
+    with Config.default_section('normalization'):
+        try:
+            # import done here to avoid circular references
+            import benchmarkstt.benchmark.cli as benchmark_cli
+            name = 'benchmarkstt'
+            desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
+                   'for additional tools, see ``benchmarkstt-tools --help``.'
+            parser = argparse.ArgumentParser(prog=name, add_help=False,
+                                             description=desc,
+                                             formatter_class=ActionWithArgumentsFormatter)
+
+            benchmark_cli.argparser(parser)
+
+            parser.add_argument('--version', action='store_true',
+                                help='output %s version number' % (name,))
+
+            args_common(parser)
+            args_help(parser)
+            yield parser
+        finally:
+            pass
+
+
 def main_parser():
-    # import done here to avoid circular references
-    import benchmarkstt.benchmark.cli as benchmark_cli
-    name = 'benchmarkstt'
-    desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
-           'for additional tools, see ``benchmarkstt-tools --help``.'
-    parser = argparse.ArgumentParser(prog=name, add_help=False,
-                                     description=desc,
-                                     formatter_class=ActionWithArgumentsFormatter)
-
-    benchmark_cli.argparser(parser)
-
-    parser.add_argument('--version', action='store_true',
-                        help='output %s version number' % (name,))
-
-    args_common(parser)
-    args_help(parser)
-    return parser
+    with main_parser_context() as parser:
+        return parser
 
 
 def main():
     # import done here to avoid circular references
     import benchmarkstt.benchmark.cli as benchmark_cli
-    parser = main_parser()
-    args_complete(parser)
+    with main_parser_context() as parser:
+        args_complete(parser)
 
-    if '--version' in sys.argv:
-        print("benchmarkstt: %s" % (__meta__.__version__,))
-        parser.exit(0)
+        if '--version' in sys.argv:
+            print("benchmarkstt: %s" % (__meta__.__version__,))
+            parser.exit(0)
 
-    args = parser.parse_args()
+        args = parser.parse_args()
 
-    log_level = args.log_level.upper() if 'log_level' in args else 'WARNING'
-    logging.basicConfig(level=log_level)
-    logging.getLogger().setLevel(log_level)
+        log_level = args.log_level.upper() if 'log_level' in args else 'WARNING'
+        logging.basicConfig(level=log_level)
+        logging.getLogger().setLevel(log_level)
 
-    Config.default_section = 'normalization'
-    benchmark_cli.main(parser, args)
-    Config.default_section = None
+        benchmark_cli.main(parser, args)
+
     exit(0)
 
 

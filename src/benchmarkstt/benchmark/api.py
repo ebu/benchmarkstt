@@ -1,4 +1,3 @@
-import benchmarkstt.benchmark as benchmark
 import benchmarkstt.metrics as metrics
 from io import StringIO
 from benchmarkstt.input.core import PlainText
