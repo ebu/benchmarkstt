@@ -19,13 +19,6 @@ class DeferredCallback:
         return '<%s:%s>' % (self.__class__.__name__, repr(self._cb()))
 
 
-class DeferredRepr(DeferredCallback):
-    """Simple helper class to defer the execution of repr call until it is needed"""
-
-    def __init__(self, val):
-        super().__init__(repr, val)
-
-
 class DeferredList:
     def __init__(self, cb):
         self._cb = cb

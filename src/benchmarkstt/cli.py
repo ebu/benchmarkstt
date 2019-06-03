@@ -139,6 +139,17 @@ def main_parser():
 
 
 def main():
+    # Set log-level manually before parse_args(), so that also factory logs, etc. get output
+    log_level = 'WARNING'
+    if '--log-level' in sys.argv:
+        idx = sys.argv.index('--log-level') + 1
+        if idx < len(sys.argv):
+            if sys.argv[idx].upper() in logging._nameToLevel:
+                log_level = sys.argv[idx].upper()
+
+    logging.basicConfig(level=log_level)
+    logging.getLogger().setLevel(log_level)
+
     # import done here to avoid circular references
     import benchmarkstt.benchmark.cli as benchmark_cli
     with main_parser_context() as parser:
@@ -149,11 +160,6 @@ def main():
             parser.exit(0)
 
         args = parser.parse_args()
-
-        log_level = args.log_level.upper() if 'log_level' in args else 'WARNING'
-        logging.basicConfig(level=log_level)
-        logging.getLogger().setLevel(log_level)
-
         benchmark_cli.main(parser, args)
 
     exit(0)

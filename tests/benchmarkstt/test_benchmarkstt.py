@@ -1,4 +1,4 @@
-from benchmarkstt import DeferredRepr, DeferredCallback, make_printable
+from benchmarkstt import DeferredCallback, make_printable
 import pytest
 
 
@@ -27,16 +27,6 @@ def test_deferred_str():
     assert str(deferred) == '[test]'
     assert callback.cb_count == 1
     assert repr(deferred) == '<DeferredCallback:\'[test]\'>'
-    assert callback.cb_count == 2
-
-
-def test_deferred_repr():
-    callback = ToDefer(None)
-    deferred = DeferredRepr(callback)
-    assert callback.cb_count == 0
-    assert str(deferred) == '<ToDefer:None>'
-    assert callback.cb_count == 1
-    assert repr(deferred) == "<DeferredRepr:'<ToDefer:None>'>"
     assert callback.cb_count == 2
 
 

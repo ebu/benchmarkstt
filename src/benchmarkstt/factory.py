@@ -1,5 +1,4 @@
 import inspect
-from benchmarkstt import DeferredRepr
 import logging
 from importlib import import_module
 from benchmarkstt.docblock import format_docs
@@ -82,10 +81,10 @@ class Factory:
             return False
         if not inspect.isclass(tocheck):
             return False
-        if issubclass(tocheck, self.base_class):
-            return True
-        logger.info('Not a valid class (must inherit from Base class): "%s"', DeferredRepr(tocheck))
-        return False
+        if not issubclass(tocheck, self.base_class):
+            return False
+
+        return True
 
     def keys(self):
         return self._registry.keys()

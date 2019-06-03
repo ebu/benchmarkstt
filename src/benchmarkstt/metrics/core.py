@@ -1,7 +1,7 @@
 from benchmarkstt.schema import Schema
 import logging
 from benchmarkstt.diff.core import RatcliffObershelp
-from benchmarkstt.diff.formatter import format_diff, DiffFormatter
+from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
 from collections import namedtuple
 
