@@ -133,12 +133,7 @@ def main_parser_context():
             pass
 
 
-def main_parser():
-    with main_parser_context() as parser:
-        return parser
-
-
-def main():
+def determine_log_level():
     # Set log-level manually before parse_args(), so that also factory logs, etc. get output
     log_level = 'WARNING'
     if '--log-level' in sys.argv:
@@ -150,6 +145,11 @@ def main():
     logging.basicConfig(level=log_level)
     logging.getLogger().setLevel(log_level)
 
+    logging.debug('START')
+
+
+def main():
+    determine_log_level()
     # import done here to avoid circular references
     import benchmarkstt.benchmark.cli as benchmark_cli
     with main_parser_context() as parser:
@@ -157,6 +157,7 @@ def main():
 
         if '--version' in sys.argv:
             print("benchmarkstt: %s" % (__meta__.__version__,))
+            logging.getLogger().info('python version: %s', sys.version)
             parser.exit(0)
 
         args = parser.parse_args()
@@ -193,14 +194,11 @@ def tools_parser():
 
 
 def tools():
+    determine_log_level()
     parser = tools_parser()
     args_complete(parser)
 
     args = parser.parse_args()
-
-    log_level = args.log_level.upper() if 'log_level' in args else 'WARNING'
-    logging.basicConfig(level=log_level)
-    logging.getLogger().setLevel(log_level)
 
     if not args.subcommand:
         parser.error("expects at least 1 argument")

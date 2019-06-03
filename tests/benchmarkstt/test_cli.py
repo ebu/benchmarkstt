@@ -97,7 +97,7 @@ def test_withtempfile(argv, result, capsys):
 
 
 @pytest.mark.parametrize('inputfile,argv,result', [
-    ['./resources/test/_data/candide.txt', 'normalization --lowercase', candide_lowercase],
+    ['./resources/test/_data/candide.txt', 'normalization --lowercase --log-level info', candide_lowercase],
 ])
 def test_withstdin(inputfile, argv, result, capsys, monkeypatch):
     with open(inputfile) as f:
@@ -116,13 +116,14 @@ def test_cli(argv, result, capsys):
     commandline_tester('benchmarkstt', main, argv, result, capsys)
 
 
-@pytest.mark.parametrize('argv,result', [
-    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --replace --wer', 2],
-    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --replace "" "" "" --wer', 2],
-    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --replacewords "" "" "" --wer', 2],
+@pytest.mark.parametrize('argv', [
+    './resources/test/_data/a.txt ./resources/test/_data/b.txt --replace --wer',
+    './resources/test/_data/a.txt ./resources/test/_data/b.txt --replace "" "" "" --wer',
+    './resources/test/_data/a.txt ./resources/test/_data/b.txt --replacewords "" "" "" --wer',
+    '--log-level doesntexist',
 ])
-def test_cli_errors(argv, result, capsys):
-    commandline_tester('benchmarkstt', main, argv, result, capsys)
+def test_cli_errors(argv, capsys):
+    commandline_tester('benchmarkstt', main, argv, 2, capsys)
 
 
 def commandline_tester(prog_name, app, argv, result, capsys):
