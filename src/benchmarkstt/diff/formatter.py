@@ -19,10 +19,6 @@ class Dialect:
     def __init__(self):
         self._stream = StringIO()
 
-    @staticmethod
-    def format(names, diff):
-        raise NotImplementedError()
-
     @property
     def stream(self):
         return self._stream
@@ -46,10 +42,6 @@ class CLIDiffDialect(Dialect):
     delete_format = '\033[31m%s\033[0m'
     insert_format = '\033[32m%s\033[0m'
 
-    @staticmethod
-    def format(names, diff):
-        return '|'.join(names) + ': ' + diff
-
 
 class UTF8Dialect(Dialect):
     @staticmethod
@@ -62,9 +54,6 @@ class UTF8Dialect(Dialect):
     def insert_format(self, txt):
         self._stream.writelines(c + '\u0359' for c in txt)
 
-    def format(self, names, diff):
-        return '|'.join(names) + ': ' + diff
-
 
 class HTMLDiffDialect(Dialect):
     @staticmethod
@@ -73,10 +62,6 @@ class HTMLDiffDialect(Dialect):
 
     delete_format = '<span class="delete">%s</span>'
     insert_format = '<span class="insert">%s</span>'
-
-    @staticmethod
-    def format(names, diff):
-        return names, diff
 
 
 class ListDialect(Dialect):
@@ -127,9 +112,6 @@ class ListDialect(Dialect):
     def output(self):
         return self._output
 
-    def format(self, names, diff):
-        return names, diff
-
 
 class JSONDiffDialect(ListDialect):
     def __init__(self):
@@ -167,7 +149,7 @@ class DiffFormatter:
         self._dialect = self.diff_dialects[dialect]()
 
     def format(self, record):
-        return self._dialect.format(record.args[0], self.diff(record.args[1], record.args[2]))
+        return record.args[0], self.diff(record.args[1], record.args[2])
 
     def diff(self, a, b, opcodes=None, preprocessor=None):
         formats = dict(insert=None, delete=None, equal=None, replace=None)

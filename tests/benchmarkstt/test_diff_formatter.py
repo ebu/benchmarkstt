@@ -42,13 +42,6 @@ def test_no_diff():
     assert formatter.format_diff(a, a, dialect='cli') == a
 
 
-def test_dialect_formatters():
-    with pytest.raises(NotImplementedError):
-        formatter.Dialect.format(None, None)
-
-    assert formatter.UTF8Dialect().format(['a', 'b'], 'diff') == 'a|b: diff'
-
-
 def test_dialect_exceptions():
     with pytest.raises(ValueError) as exc:
         formatter.DiffFormatter(dialect='dialectdoesntexist')
