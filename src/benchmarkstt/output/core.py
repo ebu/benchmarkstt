@@ -1,8 +1,6 @@
 from benchmarkstt import output
 from benchmarkstt.schema import Schema
-from csv import writer
 from collections import OrderedDict
-import sys
 
 
 class ReStructuredText(output.Base):
@@ -51,21 +49,3 @@ class Json(output.Base):
         self._line += 1
         print('\t', end='')
         print(Schema.dumps(OrderedDict((('title', title), ('result', result)))), end='')
-
-
-class Csv(output.Base):
-    def __init__(self, dialect=None):
-        self._writer = None
-        self._dialect = dialect
-
-    def __enter__(self):
-        if self._writer is not None:
-            raise ValueError('Already open')
-        self._writer = writer(sys.stdout, self._dialect)
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self._writer = None
-
-    def result(self, title, result):
-        self._writer.writerow([title, result])

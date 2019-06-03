@@ -23,10 +23,6 @@ somethingelse
 '''
     ],
     [
-        'csv',
-        'title,result\r\nsomethingelse,0.42\r\n'
-    ],
-    [
         'markdown',
         '''# title
 
@@ -56,7 +52,7 @@ def test_core(kind, expected, capsys):
     assert captured.out == expected
 
 
-@pytest.mark.parametrize('cls', ['csv', 'json'])
+@pytest.mark.parametrize('cls', ['json'])
 def test_already_open(cls):
     with pytest.raises(ValueError) as exc:
         with factory.create(cls) as instance:
