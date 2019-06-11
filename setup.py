@@ -57,15 +57,16 @@ setup(
             "sphinx-argparse==0.2.5",
         ],
         'test': [
-            "pytest>=4.2.0",
+            "pytest==4.2.0",
             "pycodestyle==2.5.0",
-            "pytest-cov>=2.5.1"
+            "pytest-cov==2.5.1"
         ]
     },
     platforms='any',
     entry_points={
         'console_scripts': [
-            "%s=%s.cli:main" % (__name__, __name__)
+            "%s=%s.cli:main" % (__name__, __name__),
+            "%s-tools=%s.cli:tools" % (__name__, __name__)
         ],
     }
 )

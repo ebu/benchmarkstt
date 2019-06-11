@@ -1,8 +1,10 @@
 import pytest
-import sys
-from textwrap import dedent
-from benchmarkstt.cli import main
+from benchmarkstt.cli import main, tools
 from unittest import mock
+from tempfile import TemporaryDirectory
+from os import path
+from io import StringIO
+import shlex
 
 from benchmarkstt.__meta__ import __version__
 
@@ -20,51 +22,130 @@ garden."
 """
 
 
+a_vs_b_result = '''wer
+===
+
+0.142857
+
+worddiffs
+=========
+
+·TEST·my·data·should·be\033[31m·one\033[0m\033[32m·ONE\033[0m·difference
+
+diffcounts
+==========
+
+OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
+
+'''
+
+
 @pytest.mark.parametrize('argv,result', [
     [[], 2],
-    ['--version', 'benchmarkstt: %s\n' % (__version__,)],
     ['invalidsubmodule', 2],
     ['normalization', 2],
     ['--help', 0],
-    ['normalization -i tests/_data/candide.txt --lowercase', candide_lowercase],
-    ['normalization -i tests/_data/candide.txt --file', 2],
-    ['metrics -r tests/_data/a.txt -h tests/_data/b.txt', 2],
-    ['metrics -r "HI" -h "HELLO" -rt argument -ht argument --wer', "wer\n===\n\n1.000000\n\n"],
-    ['metrics -r tests/_data/a.txt -h tests/_data/b.txt --wer --worddiffs --diffcounts',
-     dedent('''
-     wer
-     ===
+    ['normalization -i ./resources/test/_data/candide.txt --lowercase', candide_lowercase],
+    ['normalization -i ./resources/test/_data/candide.txt --lowercase --log', candide_lowercase],
+    ['normalization -i ./resources/test/_data/candide.txt --file', 2],
+    ['metrics ./resources/test/_data/a.txt -h ./resources/test/_data/b.txt', 2],
+    ['metrics "HI" "HELLO" -rt argument -ht argument --wer', "wer\n===\n\n1.000000\n\n"],
+    ['metrics ./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts', a_vs_b_result],
+    ['metrics "HI" "HELLO" -rt argument -ht argument', 2],
+    ['normalization -o /tmp/test.txt --lowercase', 2],
+    ['metrics "HELLO WORLD" "GOODBYE CRUEL WORLD" -rt argument -ht argument --worddiffs --output-format json',
+     '[\n\t{"title": "worddiffs", "result": ['
+     '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '{"kind": "insert", "reference": null, "hypothesis": "CRUEL"}, '
+     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}'
+     ']}\n]\n'
+     ],
+    ['normalization -i ./resources/test/_data/candide.txt ./resources/test/_data/candide.txt -o /dev/null', 2],
+    ['metrics "HELLO WORLD OF MINE" "GOODBYE CRUEL WORLD OF MINE" -rt argument -ht argument '
+     '--worddiffs --output-format json',
+     '[\n\t{"title": "worddiffs", "result": ['
+     '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '{"kind": "insert", "reference": null, "hypothesis": "CRUEL"}, '
+     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
+     '{"kind": "equal", "reference": "OF", "hypothesis": "OF"}, '
+     '{"kind": "equal", "reference": "MINE", "hypothesis": "MINE"}'
+     ']}\n]\n'
+     ],
+    ['metrics "HELLO CRUEL WORLD OF MINE" "GOODBYE WORLD OF MINE" -rt argument -ht argument '
+     '--worddiffs --output-format json',
+     '[\n\t{"title": "worddiffs", "result": ['
+     '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '{"kind": "delete", "reference": "CRUEL", "hypothesis": null}, '
+     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
+     '{"kind": "equal", "reference": "OF", "hypothesis": "OF"}, '
+     '{"kind": "equal", "reference": "MINE", "hypothesis": "MINE"}'
+     ']}\n]\n'
+     ]
+])
+def test_clitools(argv, result, capsys):
+    commandline_tester('benchmarkstt-tools', tools, argv, result, capsys)
 
-     0.142857
 
-     worddiffs
-     =========
+@pytest.mark.parametrize('argv,result', [
+    ['normalization -i ./resources/test/_data/candide.txt -o %s --lowercase', candide_lowercase],
+])
+def test_withtempfile(argv, result, capsys):
+    with TemporaryDirectory() as tmpdir:
+        tmpfile = path.join(tmpdir, 'tmpfile')
+        argv = argv % ('"%s"' % (tmpfile,),)
+        commandline_tester('benchmarkstt-tools', tools, argv, result, tmpfile)
 
-     ·TEST·my·data·should·be\033[31m·one\033[0m\033[32m·ONE\033[0m·difference
 
-     diffcounts
-     ==========
+@pytest.mark.parametrize('inputfile,argv,result', [
+    ['./resources/test/_data/candide.txt', 'normalization --lowercase --log-level info', candide_lowercase],
+])
+def test_withstdin(inputfile, argv, result, capsys, monkeypatch):
+    with open(inputfile) as f:
+        monkeypatch.setattr('sys.stdin', StringIO(f.read()))
+        commandline_tester('benchmarkstt-tools', tools, argv, result, capsys)
+        monkeypatch.delattr('sys.stdin')
 
-     OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
 
-     ''').lstrip()]
+@pytest.mark.parametrize('argv,result', [
+    [[], 2],
+    ['--version', 'benchmarkstt: %s\n' % (__version__,)],
+    ['--help', 0],
+    ['./resources/test/_data/a.txt ./resources/test/_data/b.txt --wer --worddiffs --diffcounts', a_vs_b_result],
 ])
 def test_cli(argv, result, capsys):
+    commandline_tester('benchmarkstt', main, argv, result, capsys)
+
+
+@pytest.mark.parametrize('argv', [
+    './resources/test/_data/a.txt ./resources/test/_data/b.txt --replace --wer',
+    './resources/test/_data/a.txt ./resources/test/_data/b.txt --replace "" "" "" --wer',
+    './resources/test/_data/a.txt ./resources/test/_data/b.txt --replacewords "" "" "" --wer',
+    '--log-level doesntexist',
+])
+def test_cli_errors(argv, capsys):
+    commandline_tester('benchmarkstt', main, argv, 2, capsys)
+
+
+def commandline_tester(prog_name, app, argv, result, capsys):
     if type(argv) is str:
-        argv = argv.split()
-    with mock.patch('sys.argv', ['benchmarkstt'] + argv):
+        argv = shlex.split(argv)
+    with mock.patch('sys.argv', [prog_name] + argv):
         if type(result) is int:
             with pytest.raises(SystemExit) as err:
-                main()
+                app()
             assert str(err).endswith(': %d' % (result,))
         else:
             with pytest.raises(SystemExit) as err:
-                main()
+                app()
             assert str(err).endswith(': 0')
 
-            captured = capsys.readouterr()
-            if type(result) is list:
-                assert captured.out == result[0]
-                assert captured.err == result[1]
+            if type(capsys) is str:
+                with open(capsys) as f:
+                    assert f.read() == result
             else:
-                assert captured.out == result
+                captured = capsys.readouterr()
+                if type(result) is list:
+                    assert captured.out == result[0]
+                    assert captured.err == result[1]
+                else:
+                    assert captured.out == result

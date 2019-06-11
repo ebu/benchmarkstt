@@ -1,55 +1,24 @@
 import argparse
 import logging
-from . import __meta__
 import textwrap
 import itertools
 from benchmarkstt.modules import Modules
+from benchmarkstt import __meta__
+from benchmarkstt.normalization.core import Config
+from argparse import ArgumentError
+from contextlib import contextmanager
+import sys
 
 
-def _parser_no_sub(dont_add_submodule=False):
-    parser = argparse.ArgumentParser(prog='benchmarkstt', add_help=False,
-                                     description='BenchmarkSTT main command line script')
-
+def args_help(parser):
     parser.add_argument('--help', action='help', default=argparse.SUPPRESS,
                         help=argparse._('show this help message and exit'))
 
+
+def args_common(parser):
     parser.add_argument('--log-level', type=str.lower, default='warning', dest='log_level',
                         choices=list(map(str.lower, logging._nameToLevel.keys())),
-                        help='set the logging output level')
-
-    parser.add_argument('--version', action='store_true',
-                        help='output benchmarkstt version number')
-
-    # this is for argparse autodoc purposes
-    if not dont_add_submodule:  # pragma: no cover
-        parser.add_argument('subcommand', choices=Modules('cli').keys())
-
-    return parser
-
-
-def _parser() -> argparse.ArgumentParser:
-    parser = _parser_no_sub(True)
-    subparsers = parser.add_subparsers(dest='subcommand')
-
-    for module, cli in Modules('cli'):
-        kwargs = dict()
-        if hasattr(cli, 'Formatter'):
-            kwargs['formatter_class'] = cli.Formatter
-        else:
-            kwargs['formatter_class'] = ActionWithArgumentsFormatter
-
-        if cli.__doc__ is None:
-            docs = 'TODO: add description to benchmarkstt.%s.cli' % (module,)
-        else:
-            docs = cli.__doc__
-        kwargs['description'] = textwrap.dedent(docs)
-        subparser = subparsers.add_parser(module, add_help=False, **kwargs)
-
-        subparser.add_argument('--help', action='help', default=argparse.SUPPRESS,
-                               help=argparse._('show this help message and exit'))
-        cli.argparser(subparser)
-
-    return parser
+                        help=argparse._('set the logging output level'))
 
 
 def args_from_factory(action, factory, parser):
@@ -94,8 +63,11 @@ def action_with_arguments(action, required_args, optional_args):
     class ActionWithArguments(argparse.Action, _ActionWithArguments):
         def __call__(self, parser, args, values, option_string=None):
             if len(values) < minlen or len(values) > maxlen:
-                raise argparse.ArgumentTypeError('argument "%s" requires between %d and %d arguments (got %d)' %
-                                                 (self.dest, minlen, maxlen, len(values)))
+                if minlen == maxlen:
+                    lentxt = str(minlen)
+                else:
+                    lentxt = 'between %d and % d' % (minlen, maxlen)
+                raise ArgumentError(self, 'requires %s arguments (got %d)' % (lentxt, len(values)))
 
             if not hasattr(args, action):
                 setattr(args, action, [])
@@ -127,26 +99,110 @@ class ActionWithArgumentsFormatter(argparse.HelpFormatter):
         return text
 
 
-def main():
-    parser = _parser()
-
+def args_complete(parser):  # pragma: no cover
     try:
         # support argument completion if package is installed
         import argcomplete
         argcomplete.autocomplete(parser)
-    except ImportError:  # pragma: no cover
+    except ImportError:
         pass
 
-    args = parser.parse_args()
-    if args.version:
-        print("benchmarkstt: %s" % (__meta__.__version__,))
-        parser.exit(0)
 
-    logging.basicConfig(level=args.log_level.upper())
-    logging.getLogger().setLevel(args.log_level.upper())
+@contextmanager
+def main_parser_context():
+    with Config.default_section('normalization'):
+        try:
+            # import done here to avoid circular references
+            import benchmarkstt.benchmark.cli as benchmark_cli
+            name = 'benchmarkstt'
+            desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
+                   'for additional tools, see ``benchmarkstt-tools --help``.'
+            parser = argparse.ArgumentParser(prog=name, add_help=False,
+                                             description=desc,
+                                             formatter_class=ActionWithArgumentsFormatter)
+
+            benchmark_cli.argparser(parser)
+
+            parser.add_argument('--version', action='store_true',
+                                help='output %s version number' % (name,))
+
+            args_common(parser)
+            args_help(parser)
+            yield parser
+        finally:
+            pass
+
+
+def determine_log_level():
+    # Set log-level manually before parse_args(), so that also factory logs, etc. get output
+    log_level = 'WARNING'
+    if '--log-level' in sys.argv:
+        idx = sys.argv.index('--log-level') + 1
+        if idx < len(sys.argv):
+            if sys.argv[idx].upper() in logging._nameToLevel:
+                log_level = sys.argv[idx].upper()
+
+    logging.basicConfig(level=log_level)
+    logging.getLogger().setLevel(log_level)
+
+    logging.debug('START')
+
+
+def main():
+    determine_log_level()
+    # import done here to avoid circular references
+    import benchmarkstt.benchmark.cli as benchmark_cli
+    with main_parser_context() as parser:
+        args_complete(parser)
+
+        if '--version' in sys.argv:
+            print("benchmarkstt: %s" % (__meta__.__version__,))
+            logging.getLogger().info('python version: %s', sys.version)
+            parser.exit(0)
+
+        args = parser.parse_args()
+        benchmark_cli.main(parser, args)
+
+    exit(0)
+
+
+def tools_parser():
+    name = 'benchmarkstt-tools'
+    desc = 'Some additional helpful tools'
+    parser = argparse.ArgumentParser(prog=name, add_help=False,
+                                     description=desc)
+
+    subparsers = parser.add_subparsers(dest='subcommand')
+
+    for module, cli in Modules('cli'):
+        kwargs = dict()
+        if hasattr(cli, 'Formatter'):
+            kwargs['formatter_class'] = cli.Formatter
+        else:
+            kwargs['formatter_class'] = ActionWithArgumentsFormatter
+
+        docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s.cli' % (module,))
+        kwargs['description'] = textwrap.dedent(docs)
+        subparser = subparsers.add_parser(module, add_help=False, **kwargs)
+
+        cli.argparser(subparser)
+        args_common(subparser)
+        args_help(subparser)
+
+    args_help(parser)
+    return parser
+
+
+def tools():
+    determine_log_level()
+    parser = tools_parser()
+    args_complete(parser)
+
+    args = parser.parse_args()
 
     if not args.subcommand:
         parser.error("expects at least 1 argument")
+
     Modules('cli')[args.subcommand].main(parser, args)
     exit(0)
 

@@ -17,6 +17,10 @@ class ListHandler(logging.StreamHandler):
         msg = self.format(record)
         self._logs.append(msg)
 
+    @property
+    def logs(self):
+        return self._logs
+
     def flush(self):
         result = self._logs
         self._logs = []
@@ -38,7 +42,7 @@ def log(func):
     """
 
     def _(cls, text):
-        normalize_stack.append(type(cls).__name__)
+        normalize_stack.append(repr(cls))
 
         result = func(cls, text)
         logger_ = normalize_logger
@@ -51,3 +55,24 @@ def log(func):
         normalize_stack.pop()
         return result
     return _
+
+
+class LogCapturer:
+    def __init__(self, dialect=None):
+        self.dialect = dialect
+        self.handler = None
+
+    def __enter__(self):
+        self.handler = ListHandler()
+        self.handler.setFormatter(DiffLoggingFormatter(dialect=self.dialect))
+        normalize_logger.addHandler(self.handler)
+        return self
+
+    @property
+    def logs(self):
+        return [dict(names=log_[0], message=log_[1]) for log_ in self.handler.logs]
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.handler.flush()
+        normalize_logger.removeHandler(self.handler)
+        self.handler = None

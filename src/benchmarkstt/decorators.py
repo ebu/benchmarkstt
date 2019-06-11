@@ -1,5 +1,5 @@
 import logging
-from benchmarkstt import DeferredStr
+from benchmarkstt import DeferredCallback
 
 
 def log_call(logger: logging.Logger, log_level=None, result=None):
@@ -8,33 +8,25 @@ def log_call(logger: logging.Logger, log_level=None, result=None):
 
     >>> import logging, sys, io
     >>>
-    >>> def get_logger():
-    ...     logger = logging.getLogger('logger_name')
-    ...     logger.setLevel(logging.DEBUG)
-    ...     stream = io.StringIO()
-    ...     ch = logging.StreamHandler(stream)
-    ...     ch.setLevel(logging.DEBUG)
-    ...     ch.setFormatter(logging.Formatter('%(levelname)s:%(name)s: %(message)s'))
-    ...     logger.addHandler(ch)
-    ...     return logger, stream
+    >>> logger = logging.getLogger('logger_name')
+    >>> logger.setLevel(logging.DEBUG)
+    >>> ch = logging.StreamHandler(sys.stdout)
+    >>> ch.setFormatter(logging.Formatter('%(levelname)s:%(name)s: %(message)s'))
+    >>> logger.addHandler(ch)
     >>>
-    >>> logger, stream = get_logger()
     >>> @log_call(logger, logging.WARNING)
     ... def test(*args, **kwargs):
     ...     return 'result'
     >>> test('arg1', arg2='someval', arg3='someotherval')
-    'result'
-    >>> print(stream.getvalue().strip())
     WARNING:logger_name: test('arg1', arg2='someval', arg3='someotherval')
-    >>> logger, stream = get_logger()
+    'result'
     >>> @log_call(logger, result=True)
     ... def test(*args, **kwargs):
     ...     return 'result'
     >>> test(arg2='someval', arg3='someotherval')
-    'result'
-    >>> print(stream.getvalue().strip())
     DEBUG:logger_name: test(arg2='someval', arg3='someotherval')
     DEBUG:logger_name: test returned: result
+    'result'
     """
 
     if log_level is None:
@@ -46,10 +38,10 @@ def log_call(logger: logging.Logger, log_level=None, result=None):
             arguments_list = []
             if len(args):
                 arguments_format.append('%s')
-                arguments_list.append(DeferredStr(lambda: ', '.join([repr(a) for a in args])))
+                arguments_list.append(DeferredCallback(lambda: ', '.join([repr(a) for a in args])))
             if len(kwargs):
                 arguments_format.append('%s')
-                arguments_list.append(DeferredStr(lambda: ', '.join([k + '=' + repr(kwargs[k]) for k in kwargs])))
+                arguments_list.append(DeferredCallback(lambda: ', '.join([k + '=' + repr(kwargs[k]) for k in kwargs])))
 
             arguments_format = '%s(%s)' % (func.__name__, ', '.join(arguments_format))
 

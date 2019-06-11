@@ -2,7 +2,7 @@ from benchmarkstt.input.core import PlainText, File
 from benchmarkstt.schema import Item, Schema
 import pytest
 
-candide_file = 'tests/_data/candide.txt'
+candide_file = './resources/test/_data/candide.txt'
 with open(candide_file) as f:
     candide = f.read()
 

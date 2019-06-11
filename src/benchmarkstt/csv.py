@@ -113,6 +113,12 @@ class Reader:
             return False
         return char in self._dialect.trimleft
 
+    def _is_ignore_right(self, char: str):
+        if self._dialect.trimright is None:
+            # currently no dialect with no trimright
+            return False  # pragma: nocover
+        return char in self._dialect.trimright
+
     def _is_comment(self, char: str):
         if self._dialect.commentchar is None:
             return False
@@ -213,7 +219,9 @@ class Reader:
                 if self._is_ignore_left(char):
                     continue
 
-                if mode is MODE_FIRST and self._is_comment(char):
+                if self._is_comment(char):
+                    if mode is MODE_OUTSIDE:
+                        yield yield_line()
                     mode = MODE_COMMENT
                     continue
 
@@ -260,6 +268,14 @@ class Reader:
                 if is_newline:
                     yield yield_line()
                     continue
+
+                if not delimiter_is_whitespace:
+                    if self._is_ignore_right(char):
+                        continue
+                    if self._is_comment(char):
+                        yield yield_line()
+                        mode = MODE_COMMENT
+                        continue
 
                 raise UnallowedQuoteError("Single quote inside quoted field", cur_line, cur_char, idx)
 

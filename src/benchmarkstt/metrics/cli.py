@@ -3,43 +3,47 @@ Calculate metrics based on the comparison of a hypothesis with a reference.
 """
 
 from benchmarkstt.input import core
+from benchmarkstt.output import factory as output_factory
 from benchmarkstt.metrics import factory
 from benchmarkstt.cli import args_from_factory
+from benchmarkstt.cli import ActionWithArgumentsFormatter
 import argparse
+from inspect import signature, Parameter
+
+
+Formatter = ActionWithArgumentsFormatter
 
 
 def argparser(parser: argparse.ArgumentParser):
     # steps: input normalize[pre?] segmentation normalize[post?] compare
-    parser.add_argument('-r', '--reference', required=True,
-                        help='The file to use as reference')
-    parser.add_argument('-h', '--hypothesis', required=True,
-                        help='The file to use as hypothesis')
+
+    parser.add_argument('reference', help='file to use as reference')
+    parser.add_argument('hypothesis', help='file to use as hypothesis')
 
     parser.add_argument('-rt', '--reference-type', default='infer',
-                        help='Type of reference file')
+                        help='type of reference file')
     parser.add_argument('-ht', '--hypothesis-type', default='infer',
-                        help='Type of hypothesis file')
+                        help='type of hypothesis file')
 
-    # parser.add_argument('-m', '--metric', default='wer', nargs='+',
-    #                     help='The type of metric(s) to run')
+    parser.add_argument('-o', '--output-format', default='restructuredtext', choices=output_factory.keys(),
+                        help='format of the outputted results')
 
-    metrics_desc = " A list of metrics to calculate. At least one metric needs to be provided."
+    metrics_desc = "A list of metrics to calculate. At least one metric needs to be provided."
 
     subparser = parser.add_argument_group('available metrics', description=metrics_desc)
     args_from_factory('metrics', factory, subparser)
     return parser
 
 
-def main(parser, args):
-    if args.reference_type == 'argument':
-        ref = core.PlainText(args.reference)
-    else:
-        ref = core.File(args.reference, args.reference_type)
+def file_to_iterable(file, type_, normalizer=None):
+    if type_ == 'argument':
+        return core.PlainText(file, normalizer=normalizer)
+    return core.File(file, type_, normalizer=normalizer)
 
-    if args.hypothesis_type == 'argument':
-        hyp = core.PlainText(args.hypothesis)
-    else:
-        hyp = core.File(args.hypothesis, args.hypothesis_type)
+
+def main(parser, args, normalizer=None):
+    ref = file_to_iterable(args.reference, args.reference_type, normalizer=normalizer)
+    hyp = file_to_iterable(args.hypothesis, args.hypothesis_type, normalizer=normalizer)
 
     ref = list(ref)
     hyp = list(hyp)
@@ -47,16 +51,26 @@ def main(parser, args):
     if 'metrics' not in args or not len(args.metrics):
         parser.error("need at least one metric")
 
-    for item in args.metrics:
-        metric_name = item.pop(0).replace('-', '.')
-        print(metric_name)
-        print('=' * len(metric_name))
-        print()
-        metric = factory.create(metric_name, *item)
-        # todo: different output options
-        result = metric.compare(ref, hyp)
-        if type(result) is float:
-            print("%.6f" % (result,))
-        else:
-            print(result)
-        print()
+    with output_factory.create(args.output_format) as out:
+        for item in args.metrics:
+            metric_name = item.pop(0).replace('-', '.')
+            cls = factory.get_class(metric_name)
+            kwargs = dict()
+
+            # somewhat hacky default diff formats for metrics
+            sig = signature(cls.__init__).parameters
+            sigkeys = list(sig)
+
+            if 'dialect' in sigkeys:
+                idx = sigkeys.index('dialect') - 1
+                sig = sig['dialect']
+                if sig.kind in (Parameter.POSITIONAL_OR_KEYWORD, Parameter.POSITIONAL_ONLY):
+                    if len(item) <= idx:
+                        if args.output_format == 'json':
+                            kwargs['dialect'] = 'list'
+                        else:
+                            kwargs['dialect'] = 'cli'
+
+            metric = cls(*item, **kwargs)
+            result = metric.compare(ref, hyp)
+            out.result(metric_name, result)

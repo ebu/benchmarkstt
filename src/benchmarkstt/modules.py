@@ -1,7 +1,7 @@
 import sys
 from importlib import import_module
 
-_modules = ['normalization', 'metrics']
+_modules = ['normalization', 'metrics', 'benchmark']
 
 if sys.version_info >= (3, 6):
     _modules.append('api')
@@ -24,7 +24,11 @@ class Modules:
     def __getitem__(self, key):
         name = 'benchmarkstt.%s%s' % (key, self._postfix)
         try:
-            return import_module(name)
+            module = import_module(name)
+            if hasattr(module, 'hidden'):
+                if module.hidden:
+                    raise ImportError()
+            return module
         except ImportError:
             raise IndexError('Module not found', key)
 

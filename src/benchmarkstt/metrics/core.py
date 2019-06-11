@@ -37,12 +37,12 @@ def get_differ(a, b, differ_class):
 class WordDiffs(Base):
     """
     Calculate the differences on a per-word basis
+
+    :example dialect: 'html'
     """
 
-    def __init__(self, differ_class=None, dialect=None):
+    def __init__(self, dialect=None, differ_class=None):
         self._differ_class = differ_class
-        if dialect is None:
-            dialect = 'cli'
         self._dialect = dialect
 
     def compare(self, ref: Schema, hyp: Schema):
@@ -68,8 +68,8 @@ class WER(Base):
     """
 
     # TODO: proper documenting of different modes
-    MODE_STRICT = 0
-    MODE_HUNT = 1
+    MODE_STRICT = 'strict'
+    MODE_HUNT = 'hunt'
 
     DEL_PENALTY = 1
     INS_PENALTY = 1
@@ -79,7 +79,7 @@ class WER(Base):
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
-        if mode is self.MODE_HUNT:
+        if mode == self.MODE_HUNT:
             self.DEL_PENALTY = self.INS_PENALTY = .5
 
     def compare(self, ref: Schema, hyp: Schema):
@@ -91,7 +91,10 @@ class WER(Base):
             counts.delete * self.DEL_PENALTY + \
             counts.insert * self.INS_PENALTY
 
-        return changes / (counts.equal + changes)
+        total_ref = counts.equal + counts.replace + counts.delete
+        if total_ref == 0:
+            return 1
+        return changes / total_ref
 
 
 class DiffCounts(Base):

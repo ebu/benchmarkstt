@@ -33,10 +33,12 @@ From source
 
    BenchmarkSTT should now be installed and usable.
 
-   .. code-block:: none
+   .. parsed-literal::
 
-      $ echo "IT WORKS" | benchmarkstt normalization --lowercase
-      it works
+      $ benchmarkstt --version
+      benchmarkstt: |version|
+      $ echo IT WORKS! | benchmarkstt-tools normalization --lowercase
+      it works!
 
 
    Use the :code:`--help` option to get all available options.
@@ -44,7 +46,7 @@ From source
    .. code-block:: bash
 
       benchmarkstt --help
-      benchmarkstt normalization --help
+      benchmarkstt-tools normalization --help
 
    See :doc:`usage` for more information on how to use.
 
@@ -60,12 +62,13 @@ Removing benchmarkstt
 Docker
 ------
 
-See instructions at:
+See instructions for setting up and running as a docker_ image at:
 
     .. toctree::
-       :maxdepth: 1
+       :maxdepth: 2
 
        docker
 
 
 .. _Python: https://www.python.org
+.. _docker: https://www.docker.com

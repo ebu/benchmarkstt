@@ -1,5 +1,4 @@
 import inspect
-from benchmarkstt import DeferredRepr
 import logging
 from importlib import import_module
 from benchmarkstt.docblock import format_docs
@@ -8,7 +7,16 @@ from typing import Dict
 
 logger = logging.getLogger(__name__)
 
-ClassConfig = namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])
+
+class ClassConfig(namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])):
+    @property
+    def docs(self):
+        if self.cls.__doc__ is None:
+            docs = ''
+            logger.warning("No docstring for '%s'", self.name)
+        else:
+            docs = self.cls.__doc__
+        return format_docs(docs)
 
 
 class Factory:
@@ -27,6 +35,9 @@ class Factory:
 
         for namespace in self.namespaces:
             self.register_namespace(namespace)
+
+    def __contains__(self, item):
+        return self.normalize_class_name(item) in self._registry
 
     def create(self, alias, *args, **kwargs):
         return self.get_class(alias)(*args, **kwargs)
@@ -54,7 +65,7 @@ class Factory:
         """
         name = self.normalize_class_name(name)
         if name not in self._registry:
-            raise ImportError("Could not find class '%s'" % (name,))
+            raise ImportError("Could not find class '%s', available: %s" % (name, ', '.join(self._registry.keys())))
 
         return self._registry[name]
 
@@ -70,10 +81,13 @@ class Factory:
             return False
         if not inspect.isclass(tocheck):
             return False
-        if issubclass(tocheck, self.base_class):
-            return True
-        logger.info('Not a valid class (must inherit from Base class): "%s"', DeferredRepr(tocheck))
-        return False
+        if not issubclass(tocheck, self.base_class):
+            return False
+
+        return True
+
+    def keys(self):
+        return self._registry.keys()
 
     def register_namespace(self, namespace):
         """
@@ -126,13 +140,6 @@ class Factory:
         """
 
         for clsname, cls in self._registry.items():
-            if cls.__doc__ is None:
-                docs = ''
-                logger.warning("No docstring for '%s'", cls.__name__)
-            else:
-                docs = cls.__doc__
-            docs = format_docs(docs)
-
             argspec = inspect.getfullargspec(cls.__init__)
             args = list(argspec.args)[1:]
             defaults = []
@@ -143,6 +150,7 @@ class Factory:
             required_args = args[0:defaults_idx]
             optional_args = args[defaults_idx:]
 
-            yield ClassConfig(name=clsname, cls=cls, docs=docs,
+            yield ClassConfig(name=clsname, cls=cls,
+                              docs=None,
                               optional_args=optional_args,
                               required_args=required_args)

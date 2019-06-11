@@ -34,9 +34,12 @@ copyright = '2019, EBU'
 author = 'EBU'
 
 # The short X.Y version
-version = ''
-# The full version, including alpha/beta/rc tags
-release = ''
+
+with open('../VERSION') as f:
+    # The full version, including alpha/beta/rc tags
+    release = f.read()
+
+version = release
 
 
 # -- General configuration ---------------------------------------------------
@@ -190,3 +193,5 @@ epub_exclude_files = ['search.html']
 # smartquotes_action = 'q'
 #
 # smartquotes_excludes = {'builders': ['man', 'text']}
+
+rst_epilog = '.. |version| replace:: %s\n' % (version,)
