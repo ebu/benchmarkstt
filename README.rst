@@ -1,5 +1,5 @@
-AI Benchmarking STT
-===================
+Benchmarking STT
+================
 
 .. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
     :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
@@ -13,24 +13,29 @@ AI Benchmarking STT
 .. image:: https://img.shields.io/azure-devops/coverage/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
 
+A tool for benchmarking Automatic Speech Recognition engines designed for non-academic production environments (see more below). 
+
+Usage
+-----
+
 .. code-block:: bash
 
 ``$ benchmarkstt reference.txt hypothesis.txt --wer``
-
+.....................................................
 Return the Word Error Rate for an automatically generated transcript (hypothesis) by comparing it to the ground truth (referece).
 
 
 .. code-block:: bash
 
 ``$ benchmarkstt reference.txt hypothesis.txt --wer --lowercase``
-
+...................................................................
 Return the Word Error Rate after lowercasing both reference and hypothesis. This improves the accuracy of the Word Error Rate.
 
 .. code-block:: bash
 
-``$ benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf``
-
-Return the differences between the reference and the hypothesis after applying all the normalization rules specified in the config file.  
+``$ benchmarkstt reference.txt hypothesis.txt --worddiffs --wer --lowercase --config conf``
+.............................................................................................
+Return WER and a visual diff after applying all the normalization rules specified in the config file.
 
 
 
