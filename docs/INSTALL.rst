@@ -7,9 +7,8 @@ BenchmarkSTT requires Python_ version 3.5 or above.
 From PyPI (preferred)
 ---------------------
 
-This is the easiest and preferred way of installing benchmarkstt.
+This will be the easiest and preferred way of installing ``benchmarkstt`` once it is officially released. To install the current release candidate follow the instructions below. 
 
-TODO
 
 
 From source
