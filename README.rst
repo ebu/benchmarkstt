@@ -13,7 +13,9 @@ Benchmarking STT
 .. image:: https://img.shields.io/azure-devops/coverage/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
 
-A tool for benchmarking Automatic Speech Recognition engines designed for non-academic production environments (see more below). 
+
+This is a command line tool for benchmarking Automatic Speech Recognition engines. It is designed for non-academic production environments and prioritises simplicity and relative ranking over high accuracy and absolute scores.
+ 
 
 Usage
 -----
@@ -29,13 +31,13 @@ Return the Word Error Rate for an automatically generated transcript (hypothesis
 
 ``$ benchmarkstt reference.txt hypothesis.txt --wer --lowercase``
 ...................................................................
-Return the Word Error Rate after lowercasing both reference and hypothesis. This improves the accuracy of the Word Error Rate.
+Return the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate.
 
 .. code-block:: bash
 
-``$ benchmarkstt reference.txt hypothesis.txt --worddiffs --wer --lowercase --config conf``
-.............................................................................................
-Return WER and a visual diff after applying all the normalization rules specified in the config file.
+``$ benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf``
+..................................................................................
+Return a visual diff after applying all the normalization rules specified in the config file.
 
 
 
