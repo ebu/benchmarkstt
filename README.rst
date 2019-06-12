@@ -15,7 +15,10 @@ Benchmarking STT
 
 
 This is a command line tool for benchmarking Automatic Speech Recognition engines. It is designed for non-academic production environments and prioritises simplicity and relative ranking over high accuracy and absolute scores.
- 
+
+Because of the wide range of languages, algorithms and audio characteristics, it is unlikely that a single STT engine can out perform all others in all cases. For this reason, responsibility is placed on users of this tool to design their own benchmarking and to decide, based on the combination of test data and metrics, which vendor is best suited for their use case. 
+
+
 
 Usage
 -----
@@ -40,10 +43,15 @@ Return the Word Error Rate after lowercasing both reference and hypothesis. This
 Return a visual diff after applying all the normalization rules specified in the config file.
 
 
+Further information
+-------------------
 
+This is a collaborative project to create a library for benchmarking AI/ML applications. It evolved out of conversations among broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `Media Information Management & AI group <https://tech.ebu.ch/groups/mim>`_. 
 
-This is a collaborative project to create a library for benchmarking AI/ML applications. It evolved out of conversations among broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `Media Information Management & AI group <https://tech.ebu.ch/groups/mim>`_. Currently the group is focussing on Speech-to-Text, but it will consider creating benchmarking tools for other AI/ML services.
+Currently the group is focussing on Speech-to-Text, but it will consider creating benchmarking tools for other AI/ML services.
 
-For general information about this project, including the `motivations <https://github.com/ebu/benchmarkstt/wiki>`_ and `guiding principles <https://github.com/ebu/benchmarkstt/wiki/Principles>`_, please see the project `wiki <https://github.com/ebu/benchmarkstt/wiki>`_ and `documentation <https://ebu.github.io/benchmarkstt/>`_.
+For general information about this project, including the `motivations <https://github.com/ebu/benchmarkstt/wiki>`_ and `guiding principles <https://github.com/ebu/benchmarkstt/wiki/Principles>`_, please see the project `wiki <https://github.com/ebu/benchmarkstt/wiki>`_ 
+
+To install and start using the tool,go to the `documentation <https://ebu.github.io/benchmarkstt/>`_.
 
 
