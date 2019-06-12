@@ -12,19 +12,24 @@ AI Benchmarking STT
 
 .. image:: https://img.shields.io/azure-devops/coverage/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
-    
 
-``benchmarkstt reference.txt hypothesis.txt --wer``
-----------------------------------------------------------
+.. code-block:: bash
+
+``$ benchmarkstt reference.txt hypothesis.txt --wer``
+
 Return the Word Error Rate for an automatically generated transcript (hypothesis) by comparing it to the ground truth (referece).
 
 
-``benchmarkstt reference.txt hypothesis.txt --wer --lowercase``
----------------------------------------------------------------
+.. code-block:: bash
+
+``$ benchmarkstt reference.txt hypothesis.txt --wer --lowercase``
+
 Return the Word Error Rate after lowercasing both reference and hypothesis. This improves the accuracy of the Word Error Rate.
 
-``benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf``
------------------------------------------------------------------------
+.. code-block:: bash
+
+``$ benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf``
+
 Return the differences between the reference and the hypothesis after applying all the normalization rules specified in the config file.  
 
 
