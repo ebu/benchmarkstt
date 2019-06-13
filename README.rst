@@ -13,15 +13,19 @@ Benchmarking STT
 .. image:: https://img.shields.io/azure-devops/coverage/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
 
+About
+------
 
-This is a command line tool for benchmarking Automatic Speech Recognition engines. It is designed for non-academic production environments and prioritises simplicity and relative ranking over high accuracy and absolute scores.
+This is a command line tool for benchmarking Automatic Speech Recognition engines. 
 
-Because of the wide range of languages, algorithms and audio characteristics, it is unlikely that a single STT engine can out perform all others in all cases. For this reason, responsibility is placed on users of this tool to design their own benchmarking and to decide, based on the combination of test data and metrics, which vendor is best suited for their use case. 
+It is designed for non-academic production environments, and prioritises ease of use and relative benchmarking over scientific procedure and high-accuracy absolute scoring.
+
+Because of the wide range of languages, algorithms and audio characteristics, no single STT engine can be expected to excel in all circumstances. For this reason, this tool places responsibility on the users to design their own benchmarking procedure and to decide, based on the combination of test data and metrics, which engine is best suited for their particular use case.
 
 
 
 Usage
------
+------
 
 .. code-block:: bash
 
@@ -34,7 +38,7 @@ Return the Word Error Rate for an automatically generated transcript (hypothesis
 
 ``$ benchmarkstt reference.txt hypothesis.txt --wer --lowercase``
 ...................................................................
-Return the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate.
+Return the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate as it removes diffs that might otherwise be considered errors.
 
 .. code-block:: bash
 
@@ -46,7 +50,7 @@ Return a visual diff after applying all the normalization rules specified in the
 Further information
 -------------------
 
-This is a collaborative project to create a library for benchmarking AI/ML applications. It evolved out of conversations among broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `Media Information Management & AI group <https://tech.ebu.ch/groups/mim>`_. 
+This is a collaborative project to create a library for benchmarking AI/ML applications. It was created in response to the needs of broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `Media Information Management & AI group <https://tech.ebu.ch/groups/mim>`_. 
 
 Currently the group is focussing on Speech-to-Text, but it will consider creating benchmarking tools for other AI/ML services.
 

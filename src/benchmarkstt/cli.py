@@ -12,13 +12,13 @@ import sys
 
 def args_help(parser):
     parser.add_argument('--help', action='help', default=argparse.SUPPRESS,
-                        help=argparse._('show this help message and exit'))
+                        help=argparse._('Show this help message and exit'))
 
 
 def args_common(parser):
     parser.add_argument('--log-level', type=str.lower, default='warning', dest='log_level',
                         choices=list(map(str.lower, logging._nameToLevel.keys())),
-                        help=argparse._('set the logging output level'))
+                        help=argparse._('Set the logging output level'))
 
 
 def args_from_factory(action, factory, parser):
@@ -124,7 +124,7 @@ def main_parser_context():
             benchmark_cli.argparser(parser)
 
             parser.add_argument('--version', action='store_true',
-                                help='output %s version number' % (name,))
+                                help='Output %s version number' % (name,))
 
             args_common(parser)
             args_help(parser)
