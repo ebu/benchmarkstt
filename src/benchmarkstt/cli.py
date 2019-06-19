@@ -166,6 +166,11 @@ def main():
     exit(0)
 
 
+def main_parser():
+    with main_parser_context() as parser:
+        return parser
+
+
 def tools_parser():
     name = 'benchmarkstt-tools'
     desc = 'Some additional helpful tools'
