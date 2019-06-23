@@ -14,7 +14,7 @@ Benchmarking STT
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
 
 
-.. image:: https://github.com/ebu/benchmarkstt/docs/img/benchmarksttcli.png
+.. image:: docs/img/benchmarksttcli.png
 
 
 About
