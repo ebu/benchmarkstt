@@ -17,7 +17,6 @@ Make the "reference"
 Creating accurate verbatim transcripts for use as reference is time-consuming and expensive. As a quick and easy alternative, we will make a "reference" from a subtitles file. Subtitles are slightly edited and they include additional text like descriptions of sounds and actions, so they are not a verbatim transcription of the speech. Consequently, they are not suitable for calculating absolute WER. However, we are interested in calculating relative WER for illustration purposes only, so this use of subtitles is deemed acceptable. 
 
 .. warning:: 
-
 	This is a demo of work in progress. The benchmarking tool is still in development and evaluations are not done for the purpose of assessing tools. In addition, the use of subtitles as reference will skew the results so they should not be taken as an indication of overall performance or as an endorsement of a particular vendor or engine.
 
 We will use the subtitles file for the BBC's Question Time Brexit debate. This program was chosen for its length (90 minutes) and because live debates are particularly challenging to transcribe.
@@ -112,6 +111,7 @@ Above, we used two ocommands: :code:`benchmarkstt-tools` for the normalization a
 First, let's create a file for the regex normalizaiton rules. Create a text document with this content:
 
 .. code:: bash
+
 	# Replace XML tags with space
 	"<[^>]+>" " "
 	# Replace punctuation with space
@@ -123,6 +123,7 @@ Save this file as :code:`rules.regex`.
 Now let's create a config file that contains all the normalization rules. It references the regex rules file above, and also includes one of the built-in rukes:
 
 .. code:: bash 
+
 	[normalization]
 	# Load regex rules file
 	Regex rules.regex
