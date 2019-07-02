@@ -16,8 +16,9 @@ Make the "reference"
 
 Creating accurate verbatim transcripts for use as reference is time-consuming and expensive. As a quick and easy alternative, we will make a "reference" from a subtitles file. Subtitles are slightly edited and they include additional text like descriptions of sounds and actions, so they are not a verbatim transcription of the speech. Consequently, they are not suitable for calculating absolute WER. However, we are interested in calculating relative WER for illustration purposes only, so this use of subtitles is deemed acceptable. 
 
-.. warning:: 
-	This is a demo of work in progress. The benchmarking tool is still in development and evaluations are not done for the purpose of assessing tools. In addition, the use of subtitles as reference will skew the results so they should not be taken as an indication of overall performance or as an endorsement of a particular vendor or engine.
+.. warning::
+
+    This is a demo of work in progress. The benchmarking tool is still in development and evaluations are not done for the purpose of assessing tools. In addition, the use of subtitles as reference will skew the results so they should not be taken as an indication of overall performance or as an endorsement of a particular vendor or engine.
 
 We will use the subtitles file for the BBC's Question Time Brexit debate. This program was chosen for its length (90 minutes) and because live debates are particularly challenging to transcribe.
 
@@ -26,7 +27,7 @@ The subtitles file includes a lot of extra text in XML tags. This text shouldn't
 
 .. code:: bash
 
-	benchmarkstt-tools normalization --in qt_subs.xml --out qt_reference.txt --regex "<[^>]+>" " "
+    benchmarkstt-tools normalization --in qt_subs.xml --out qt_reference.txt --regex "<[^>]+>" " "
 
 The normalization rule :code:`--regex` takes two parameters: a regular expression pattern and the replacement string. In this case all XML tags will be replaced with a space. This will result in a lot of space characters, but these are ignored by the diff algorithm later so we don't have to clean these up. :code:`--in` and :code:`--out` are the input and output files. 
 
@@ -55,21 +56,21 @@ Calculate WER for AWS Transcribe:
 
 .. code:: bash
 
-  benchmarkstt --reference qt_reference.txt --hypothesis qt_aws_hypothesis.txt --wer --diffcounts
+    benchmarkstt --reference qt_reference.txt --hypothesis qt_aws_hypothesis.txt --wer --diffcounts
 
 
 Calculate WER for BBC-Kaldi:
 
 .. code:: bash
 
-  benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --wer --diffcounts
+    benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --wer --diffcounts
 
 
 After running these two commands, you can see that the WER for both transcripts is quite high (around 30%). Let's see the actual differences between the reference and the hypotheses by adding the :code:`--worddiffs` flag:
 
 .. code:: bash
 
-  benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --wer --diffcounts --worddiffs
+    benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --wer --diffcounts --worddiffs
 
 
 Normalize
@@ -80,11 +81,11 @@ You can see that a lot of the differences are due to capitalization and punctuat
 
 .. code:: bash   
 
-  benchmarkstt-tools normalization -i qt_reference.txt -o qt_reference_normalized.txt --lowercase --regex "[,.-]" " "
+    benchmarkstt-tools normalization -i qt_reference.txt -o qt_reference_normalized.txt --lowercase --regex "[,.-]" " "
 
-  benchmarkstt-tools normalization -i qt_kaldi_hypothesis.txt -o qt_kaldi_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
+    benchmarkstt-tools normalization -i qt_kaldi_hypothesis.txt -o qt_kaldi_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
 
-  benchmarkstt-tools normalization -i qt_aws_hypothesis.txt -o qt_aws_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
+    benchmarkstt-tools normalization -i qt_aws_hypothesis.txt -o qt_aws_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
 
 We now have normalized versions of the reference and two hypothesis files. 
 
@@ -96,9 +97,9 @@ Let's run the :code:`benchmarkstt` command again, this time calculating WER base
 
 .. code:: bash
 
-  benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_kaldi_hypothesis_normalized.txt --wer --diffcounts --worddiff
+    benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_kaldi_hypothesis_normalized.txt --wer --diffcounts --worddiff
 
-  benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_aws_hypothesis_normalized.txt --wer --diffcounts --worddiff
+    benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_aws_hypothesis_normalized.txt --wer --diffcounts --worddiff
 
 You can see that this time there are fewer differences between the reference and hypothesis. Accordingly, the WER is much lower for both hypotheses. The transcript with the lower WER is closer to the reference made from subtitles. 
 
@@ -110,25 +111,25 @@ Above, we used two ocommands: :code:`benchmarkstt-tools` for the normalization a
 
 First, let's create a file for the regex normalizaiton rules. Create a text document with this content:
 
-::
+.. code-block:: bash
 
-	# Replace XML tags with space
-	"<[^>]+>" " "
-	# Replace punctuation with space
-	"[,.-]" " "
+    # Replace XML tags with space
+    "<[^>]+>" " "
+    # Replace punctuation with space
+    "[,.-]" " "
 
 Save this file as :code:`rules.regex`.
 
 
 Now let's create a config file that contains all the normalization rules. It references the regex rules file above, and also includes one of the built-in rukes:
 
-:: 
+.. code-block:: bash
 
-	[normalization]
-	# Load regex rules file
-	Regex rules.regex
-	# Built in rule
-	lowercase
+    [normalization]
+    # Load regex rules file
+    Regex rules.regex
+    # Built in rule
+    lowercase
 
 Save the above as :code:`config.conf`. These rules will be applied to both hypothesis and reference.
 
@@ -136,13 +137,13 @@ Now run :code:`benchmarkstt` with the :code:`--conf` argument. We also need to t
 
 .. code:: bash
 
-	benchmarkstt qt_subs.xml -rt plaintext qt_kaldi_hypothesis.txt --config normalization.conf --wer
+    benchmarkstt qt_subs.xml -rt plaintext qt_kaldi_hypothesis.txt --config normalization.conf --wer
 
 And again for the other transcript:
 
 
 .. code:: bash
 
-	benchmarkstt qt_subs.xml -rt plaintext qt_aws_hypothesis.txt --config normalization.conf --wer
+    benchmarkstt qt_subs.xml -rt plaintext qt_aws_hypothesis.txt --config normalization.conf --wer
 
 
