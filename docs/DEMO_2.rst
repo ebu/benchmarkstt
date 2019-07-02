@@ -42,7 +42,7 @@ Make hypotheses
 
 The first release of :code:`benchmarkstt` does not integrate directly with STT vendors or engines, so transcripts for benchmarking have to be retrieved separately and converted to plain text. 
 
-For this demo, two machine transcripts were retrieved for the Question Time audio: from AWS Transcribe and from the BBC's version of Kaldi, an open-source STT framework. This version was trained on BBC content so is expected to perform better. 
+For this demo, two machine transcripts were retrieved for the Question Time audio: from AWS Transcribe and from the BBC's version of Kaldi, an open-source STT framework.
 
 Both AWS and BBC-Kaldi return the transcript in JSON format, with word-level timings. They also contain a field with the entire transcript as a single string, and this is the value we will use (we don't benchmark timings in this version). To make the hypothesis files, simply copy the contents of the transcript field from both documents into two new text files: :code:`qt_aws_hypothesis.txt` and :code:`qt_kaldi_hypothesis.txt`.
 
@@ -77,7 +77,7 @@ After running these two commands, you can see that the WER for both transcripts 
 Normalize
 ---------
 
-You can see that a lot of the differences are due to capitalization and punctuation. Because we are only interested in the correct identification of words, these types of differences should not count as errors. To get a more accurate WER, we will remove punctuations and convert all letters to lowercase. We will do this for the reference and both hypothesis files by using the :code:`benchmarkstt-tools normalize` subcommand again, with two rules: the built-in :code:`--lowercase` shortcut rule and the :code:`--regex` rule:
+You can see that a lot of the differences are due to capitalization and punctuation. Because we are only interested in the correct identification of words, these types of differences should not count as errors. To get a more accurate WER, we will remove punctuation marks and convert all letters to lowercase. We will do this for the reference and both hypothesis files by using the :code:`benchmarkstt-tools normalize` subcommand again, with two rules: the built-in :code:`--lowercase` shortcut rule and the :code:`--regex` rule:
 
 
 .. code:: bash   
@@ -134,7 +134,7 @@ Now let's create a config file that contains all the normalization rules. It ref
 
 Save the above as :code:`config.conf`. These rules will be applied to both hypothesis and reference.
 
-Now run :code:`benchmarkstt` with the :code:`--conf` argument. We also need to tell the tool to treat the XML as plain text. We do this with the reference type argument :code:`-rt`:
+Now run :code:`benchmarkstt` with the :code:`--conf` argument. We also need to tell the tool to treat the XML as plain text. We do this with the 'reference type' argument :code:`-rt`:
 
 .. code:: bash
 
