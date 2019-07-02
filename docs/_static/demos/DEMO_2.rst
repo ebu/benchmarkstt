@@ -110,7 +110,7 @@ Above, we used two ocommands: :code:`benchmarkstt-tools` for the normalization a
 
 First, let's create a file for the regex normalizaiton rules. Create a text document with this content:
 
-.. code-block:: bash
+::
 
 	# Replace XML tags with space
 	"<[^>]+>" " "
@@ -122,7 +122,7 @@ Save this file as :code:`rules.regex`.
 
 Now let's create a config file that contains all the normalization rules. It references the regex rules file above, and also includes one of the built-in rukes:
 
-.. code-block:: bash 
+:: 
 
 	[normalization]
 	# Load regex rules file
