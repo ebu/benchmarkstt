@@ -138,13 +138,12 @@ Now run :code:`benchmarkstt` with the :code:`--conf` argument. We also need to t
 
 .. code:: bash
 
-	benchmarkstt qt_subs.xml -rt plaintext qt_kaldi_hypothesis.txt --config normalization.conf --wer
+	benchmarkstt --reference qt_subs.xml -rt plaintext --hypothesis qt_kaldi_hypothesis.txt --config normalization.conf --wer
 
-And again for the other transcript:
-
+And again for the other transcript, using the short form for arguments:
 
 .. code:: bash
 
-	benchmarkstt qt_subs.xml -rt plaintext qt_aws_hypothesis.txt --config normalization.conf --wer
+	benchmarkstt -r qt_subs.xml -rt plaintext -h qt_aws_hypothesis.txt --config normalization.conf --wer
 
 
