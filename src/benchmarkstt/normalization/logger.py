@@ -1,11 +1,15 @@
 import logging
 import os
 from benchmarkstt.diff.formatter import DiffFormatter
+from collections import namedtuple
 
 normalize_logger = logging.getLogger('benchmarkstt.normalize')
 normalize_logger.setLevel(logging.INFO)
 normalize_logger.propagate = False
 normalize_stack = []
+
+
+NormalizedLogItem = namedtuple('NormalizedLogItem', ['stack', 'original', 'normalized'])
 
 
 class ListHandler(logging.StreamHandler):
@@ -30,10 +34,15 @@ class ListHandler(logging.StreamHandler):
 class DiffLoggingFormatter(logging.Formatter):
     def __init__(self, dialect=None):
         self._differ = DiffFormatter(dialect)
+        self._dialect = dialect
         super().__init__()
 
     def format(self, record):
-        return self._differ.format(record)
+        item = record.msg
+        if type(item) is NormalizedLogItem:
+            return ': '.join(['/'.join(item.stack),
+                              self._differ.diff(item.original, item.normalized)])
+        return super().format(record)
 
 
 def log(func):
@@ -48,9 +57,7 @@ def log(func):
         logger_ = normalize_logger
 
         if text != result:
-            logger_.info('%s: %s -> %s', list(normalize_stack), text, result)
-        else:
-            logger_.debug('NORMALIZED [NOCHANGE]')
+            logger_.info(NormalizedLogItem(normalize_stack, text, result))
 
         normalize_stack.pop()
         return result

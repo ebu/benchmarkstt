@@ -144,12 +144,10 @@ class DiffFormatter:
     def __init__(self, dialect=None):
         if dialect is None:
             dialect = 'text'
+
         if not self.has_dialect(dialect):
             raise ValueError("Unknown diff dialect", dialect)
         self._dialect = self.diff_dialects[dialect]()
-
-    def format(self, record):
-        return record.args[0], self.diff(record.args[1], record.args[2])
 
     def diff(self, a, b, opcodes=None, preprocessor=None):
         formats = dict(insert=None, delete=None, equal=None, replace=None)
