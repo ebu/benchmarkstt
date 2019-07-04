@@ -17,16 +17,16 @@ Formatter = ActionWithArgumentsFormatter
 def argparser(parser: argparse.ArgumentParser):
     # steps: input normalize[pre?] segmentation normalize[post?] compare
 
-    parser.add_argument('reference', help='file to use as reference')
-    parser.add_argument('hypothesis', help='file to use as hypothesis')
+    parser.add_argument('reference', help='File to use as reference')
+    parser.add_argument('hypothesis', help='File to use as hypothesis')
 
     parser.add_argument('-rt', '--reference-type', default='infer',
-                        help='type of reference file')
+                        help='Type of reference file')
     parser.add_argument('-ht', '--hypothesis-type', default='infer',
-                        help='type of hypothesis file')
+                        help='Type of hypothesis file')
 
     parser.add_argument('-o', '--output-format', default='restructuredtext', choices=output_factory.keys(),
-                        help='format of the outputted results')
+                        help='Format of the outputted results')
 
     metrics_desc = "A list of metrics to calculate. At least one metric needs to be provided."
 

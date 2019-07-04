@@ -21,17 +21,17 @@ def argparser(parser):
     """
 
     parser.add_argument('--debug', action='store_true',
-                        help='run in debug mode')
+                        help='Run in debug mode')
     parser.add_argument('--host',
-                        help='hostname or ip to serve api')
+                        help='Hostname or ip to serve api')
     parser.add_argument('--port', type=int, default=8080,
-                        help='port used by the server')
+                        help='Port used by the server')
     parser.add_argument('--entrypoint', default='/api',
-                        help='the jsonrpc api address')
+                        help='The jsonrpc api address')
     parser.add_argument('--list-methods', action='store_true',
-                        help='list the available jsonrpc methods')
+                        help='List the available jsonrpc methods')
     parser.add_argument('--with-explorer', action='store_true',
-                        help='also create the explorer to test api calls with, '
+                        help='Also create the explorer to test api calls with, '
                              'this is a rudimentary feature currently '
                              'only meant for testing and debugging.\n'
                              'Warning: the API explorer is provided as-is, without any tests '
