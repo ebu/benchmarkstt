@@ -72,7 +72,8 @@ def main(parser, args, normalizer=None):
                     if len(item) <= idx:
                         if args.output_format == 'json':
                             kwargs['dialect'] = 'list'
-                            kwargs['diff_formatter_dialect'] = 'dict'
+                            if 'diff_formatter_dialect' in sigkeys:
+                                kwargs['diff_formatter_dialect'] = 'dict'
                         else:
                             kwargs['dialect'] = 'cli'
 
