@@ -3,6 +3,7 @@ from benchmarkstt.normalization.api import callback as normalization_api
 import benchmarkstt.normalization.core as normalizers
 from benchmarkstt.metrics.api import callback as metrics_api
 import benchmarkstt.metrics.core as metrics
+from collections import OrderedDict
 
 
 @pytest.mark.parametrize('args,expected', [
@@ -10,8 +11,11 @@ import benchmarkstt.metrics.core as metrics
     [
         [normalizers.Replace, 'HELLO', True, 'E', 'A'],
         {'text': 'HALLO', 'logs':
-            [{'message': 'H<span class="delete">E</span><span class="insert">A</span>LLO',
-              'names': ['Replace']}]}
+            [OrderedDict(
+                title=None,
+                stack=['Replace'],
+                diff='H<span class="delete">E</span><span class="insert">A</span>LLO',
+              )]}
     ],
     [
         [normalizers.Replace, 'HELLO', True, 'A', 'A'],

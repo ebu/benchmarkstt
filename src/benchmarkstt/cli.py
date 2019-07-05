@@ -145,8 +145,6 @@ def determine_log_level():
     logging.basicConfig(level=log_level)
     logging.getLogger().setLevel(log_level)
 
-    logging.debug('START')
-
 
 def main():
     determine_log_level()
