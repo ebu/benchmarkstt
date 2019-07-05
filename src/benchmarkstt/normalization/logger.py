@@ -2,14 +2,17 @@ import logging
 import os
 from benchmarkstt.diff.formatter import DiffFormatter
 from collections import namedtuple
-
-normalize_logger = logging.getLogger('benchmarkstt.normalize')
-normalize_logger.setLevel(logging.INFO)
-normalize_logger.propagate = False
-normalize_stack = []
-
+from collections import OrderedDict
 
 NormalizedLogItem = namedtuple('NormalizedLogItem', ['stack', 'original', 'normalized'])
+
+
+class Logger:
+    title = None
+    logger = logging.getLogger('benchmarkstt.normalize')
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    stack = []
 
 
 class ListHandler(logging.StreamHandler):
@@ -41,22 +44,26 @@ class DiffLoggingTextFormatterDialect(DiffLoggingFormatterDialect):
         args = []
         if title is not None:
             args.append(title)
-        return ': '.join(['/'.join(stack), diff])
+        elif Logger.title is not None:
+            args.append(Logger.title)
+        args.append('/'.join(stack))
+        args.append(diff)
+        return ': '.join(args)
 
 
-class DiffLoggingJsonFormatterDialect(DiffLoggingFormatterDialect):
+class DiffLoggingDictFormatterDialect(DiffLoggingFormatterDialect):
     def format(self, title, stack, diff):
-        # todo: json formatter
-        return DiffLoggingTextFormatterDialect().format(title, stack, diff)
+        return OrderedDict(title=title, stack=stack, diff=diff)
 
 
 class DiffLoggingFormatter(logging.Formatter):
     diff_logging_formatter_dialects = {
         "text": DiffLoggingTextFormatterDialect,
-        "json": DiffLoggingJsonFormatterDialect,
+        "dict": DiffLoggingDictFormatterDialect,
     }
 
-    def __init__(self, dialect=None, diff_formatter_dialect=None):
+    def __init__(self, dialect=None, diff_formatter_dialect=None, title=None):
+        self._title = title
         self._differ = DiffFormatter(dialect)
         strict = False
         if diff_formatter_dialect is None:
@@ -71,7 +78,7 @@ class DiffLoggingFormatter(logging.Formatter):
         item = record.msg
         if type(item) is NormalizedLogItem:
             diff = self._differ.diff(item.original, item.normalized)
-            return self._formatter_dialect.format(None, item.stack, diff)
+            return self._formatter_dialect.format(self._title, item.stack, diff)
         return super().format(record)
 
     @classmethod
@@ -98,35 +105,35 @@ def log(func):
     """
 
     def _(cls, text):
-        normalize_stack.append(repr(cls))
+        Logger.stack.append(repr(cls))
 
         result = func(cls, text)
-        logger_ = normalize_logger
+        logger_ = Logger.logger
 
         if text != result:
-            logger_.info(NormalizedLogItem(normalize_stack, text, result))
+            logger_.info(NormalizedLogItem(list(Logger.stack), text, result))
 
-        normalize_stack.pop()
+        Logger.stack.pop()
         return result
     return _
 
 
 class LogCapturer:
-    def __init__(self, dialect=None):
-        self.dialect = dialect
+    def __init__(self, *args, **kwargs):
+        self.formatter_args = (args, kwargs)
         self.handler = None
 
     def __enter__(self):
         self.handler = ListHandler()
-        self.handler.setFormatter(DiffLoggingFormatter(dialect=self.dialect))
-        normalize_logger.addHandler(self.handler)
+        self.handler.setFormatter(DiffLoggingFormatter(*self.formatter_args[0], **self.formatter_args[1]))
+        Logger.logger.addHandler(self.handler)
         return self
 
     @property
     def logs(self):
-        return [dict(names=log_[0], message=log_[1]) for log_ in self.handler.logs]
+        return list(self.handler.logs)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.handler.flush()
-        normalize_logger.removeHandler(self.handler)
+        Logger.logger.removeHandler(self.handler)
         self.handler = None

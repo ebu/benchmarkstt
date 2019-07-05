@@ -383,14 +383,19 @@ $(function() {
 
           for (var i = 0, I = logs.length; i < I; i++) {
             html += '<div class="row">';
-            for (var j = 0, J = logs[i].names.length; j < J; j++) {
+            if (logs[i].title) {
+              html += '<div class="normalizer_log_title">';
+              html += logs[i].title;
+              html += '</div>';
+            }
+            for (var j = 0, J = logs[i].stack.length; j < J; j++) {
               html += '<div class="normalizer">';
-              html += logs[i].names[j];
+              html += logs[i].stack[j];
               html += '</div>';
             }
 
             html += '<div class="diffs bg-secondary text-primary">';
-            html += logs[i].message;
+            html += logs[i].diff;
             html += '</div>';
 
             html += '</div>';

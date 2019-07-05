@@ -3,6 +3,7 @@ from io import StringIO
 from benchmarkstt.input.core import PlainText
 from benchmarkstt.normalization.core import Config
 from benchmarkstt.normalization.logger import LogCapturer
+import logging
 
 factory = metrics.factory
 
@@ -45,18 +46,13 @@ def callback(cls, ref: str, hyp: str, config: str = None, return_logs: bool = No
             cls_name: result
         }
 
-    with LogCapturer(dialect='html') as logcap:
+    with LogCapturer(dialect='html', diff_formatter_dialect='dict', title='Reference') as logcap:
         ref = list(ref)
         logs_ref = logcap.logs
 
-    with LogCapturer(dialect='html') as logcap:
+    with LogCapturer(dialect='html', diff_formatter_dialect='dict', title='Hypothesis') as logcap:
         hyp = list(hyp)
         logs_hyp = logcap.logs
-
-    for log in logs_ref:
-        log['names'].insert(0, '[REFERENCE]')
-    for log in logs_hyp:
-        log['names'].insert(0, '[HYPOTHESIS]')
 
     result = metric.compare(ref, hyp)
     if isinstance(result, tuple) and hasattr(result, '_asdict'):

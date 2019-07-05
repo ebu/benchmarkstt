@@ -16,7 +16,7 @@ def callback(cls, text: str, return_logs: bool = None, *args, **kwargs):
         if not return_logs:
             return dict(text=instance.normalize(text))
 
-        with LogCapturer(dialect='html') as logcap:
+        with LogCapturer(dialect='html', diff_formatter_dialect='dict') as logcap:
             result = dict(text=instance.normalize(text))
             result['logs'] = logcap.logs
             return result

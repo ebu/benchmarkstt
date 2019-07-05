@@ -7,8 +7,10 @@ from benchmarkstt.output import factory as output_factory
 from benchmarkstt.metrics import factory
 from benchmarkstt.cli import args_from_factory
 from benchmarkstt.cli import ActionWithArgumentsFormatter
+from benchmarkstt.normalization.logger import Logger
 import argparse
 from inspect import signature, Parameter
+import logging
 
 
 Formatter = ActionWithArgumentsFormatter
@@ -42,11 +44,13 @@ def file_to_iterable(file, type_, normalizer=None):
 
 
 def main(parser, args, normalizer=None):
-    ref = file_to_iterable(args.reference, args.reference_type, normalizer=normalizer)
-    hyp = file_to_iterable(args.hypothesis, args.hypothesis_type, normalizer=normalizer)
-
-    ref = list(ref)
-    hyp = list(hyp)
+    logging.getLogger()
+    prev_title = Logger.title
+    Logger.title = 'Reference'
+    ref = list(file_to_iterable(args.reference, args.reference_type, normalizer=normalizer))
+    Logger.title = 'Hypothesis'
+    hyp = list(file_to_iterable(args.hypothesis, args.hypothesis_type, normalizer=normalizer))
+    Logger.title = prev_title
 
     if 'metrics' not in args or not len(args.metrics):
         parser.error("need at least one metric")
@@ -68,6 +72,7 @@ def main(parser, args, normalizer=None):
                     if len(item) <= idx:
                         if args.output_format == 'json':
                             kwargs['dialect'] = 'list'
+                            kwargs['diff_formatter_dialect'] = 'dict'
                         else:
                             kwargs['dialect'] = 'cli'
 

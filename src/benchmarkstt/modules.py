@@ -4,6 +4,7 @@ from importlib import import_module
 _modules = ['normalization', 'metrics', 'benchmark']
 
 if sys.version_info >= (3, 6):
+    # only supported in python >= 3.6
     _modules.append('api')
 
 
