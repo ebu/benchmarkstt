@@ -31,18 +31,65 @@ class ListHandler(logging.StreamHandler):
         return result
 
 
+class DiffLoggingFormatterDialect:
+    def format(self, title, stack, diff):
+        raise NotImplementedError()
+
+
+class DiffLoggingTextFormatterDialect(DiffLoggingFormatterDialect):
+    def format(self, title, stack, diff):
+        args = []
+        if title is not None:
+            args.append(title)
+        return ': '.join(['/'.join(stack), diff])
+
+
+class DiffLoggingJsonFormatterDialect(DiffLoggingFormatterDialect):
+    def format(self, title, stack, diff):
+        # todo: json formatter
+        return DiffLoggingTextFormatterDialect().format(title, stack, diff)
+
+
 class DiffLoggingFormatter(logging.Formatter):
-    def __init__(self, dialect=None):
+    diff_logging_formatter_dialects = {
+        "text": DiffLoggingTextFormatterDialect,
+        "json": DiffLoggingJsonFormatterDialect,
+    }
+
+    def __init__(self, dialect=None, diff_formatter_dialect=None):
         self._differ = DiffFormatter(dialect)
-        self._dialect = dialect
+        strict = False
+        if diff_formatter_dialect is None:
+            diff_formatter_dialect = dialect
+        else:
+            strict = True
+
+        self._formatter_dialect = self.get_dialect(diff_formatter_dialect, strict)
         super().__init__()
 
     def format(self, record):
         item = record.msg
         if type(item) is NormalizedLogItem:
-            return ': '.join(['/'.join(item.stack),
-                              self._differ.diff(item.original, item.normalized)])
+            diff = self._differ.diff(item.original, item.normalized)
+            return self._formatter_dialect.format(None, item.stack, diff)
         return super().format(record)
+
+    @classmethod
+    def has_dialect(cls, dialect):
+        return dialect in cls.diff_logging_formatter_dialects
+
+    @classmethod
+    def get_dialect(cls, dialect, strict=None):
+        if dialect is None:
+            dialect = 'text'
+
+        if not cls.has_dialect(dialect):
+            if strict:
+                raise ValueError("Unknown diff formatter dialect", dialect)
+
+            dialect = 'text'
+
+        return cls.diff_logging_formatter_dialects[dialect]()
 
 
 def log(func):
