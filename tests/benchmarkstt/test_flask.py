@@ -1,4 +1,5 @@
 from benchmarkstt.__meta__ import __version__
+from collections import OrderedDict
 import pytest
 import json
 import sys
@@ -12,61 +13,62 @@ benchmarkparams = {
 }
 
 benchmarklogs = [
-      {
-        "names": [
-          "[REFERENCE]",
-          "Config",
-          "[normalization]",
-          "Lowercase"
+    OrderedDict(
+        title='Reference',
+        stack=[
+            "Config",
+            "[normalization]",
+            "Lowercase"
         ],
-        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness "
-                   "my <span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
-      },
-      {
-        "names": [
-          "[REFERENCE]",
-          "Config",
-          "[normalization]"
+        diff="<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness "
+             "my <span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
+    ),
+    OrderedDict(
+        title='Reference',
+        stack=[
+            "Config",
+            "[normalization]"
         ],
-        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
-                   "<span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
-      },
-      {
-        "names": [
-          "[REFERENCE]",
-          "Config"
+        diff="<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+             "<span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
+    ),
+    OrderedDict(
+        title='Reference',
+        stack=[
+            "Config"
         ],
-        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
-                   "<span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
-      },
-      {
-        "names": [
-          "[HYPOTHESIS]",
-          "Config",
-          "[normalization]",
-          "Lowercase"
+        diff="<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+             "<span class=\"delete\">OLD</span><span class=\"insert\">old</span> friend"
+    ),
+    OrderedDict(
+        title='Hypothesis',
+        stack=[
+            "Config",
+            "[normalization]",
+            "Lowercase"
         ],
-        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
-                   "old foe"
-      },
-      {
-        "names": [
-          "[HYPOTHESIS]",
-          "Config",
-          "[normalization]"
+        diff="<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+             "old foe"
+    ),
+
+    OrderedDict(
+        title='Hypothesis',
+        stack=[
+            "Config",
+            "[normalization]"
         ],
-        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
-                   "old foe"
-      },
-      {
-        "names": [
-          "[HYPOTHESIS]",
-          "Config"
+        diff="<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+             "old foe"
+    ),
+    OrderedDict(
+        title='Hypothesis',
+        stack=[
+            "Config"
         ],
-        "message": "<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
-                   "old foe"
-      }
-    ]
+        diff="<span class=\"delete\">H</span><span class=\"insert\">h</span>ello darkness my "
+             "old foe"
+    ),
+]
 
 
 @pytest.fixture
