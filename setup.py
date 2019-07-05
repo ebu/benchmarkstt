@@ -34,7 +34,6 @@ setup(
     maintainer_email='ai-stt@list.ebu.ch',
     description='A library for benchmarking AI/ML applications.',
     long_description=long_description,
-    long_description_content_type='text/x-rst',
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
