@@ -20,7 +20,7 @@ Benchmarking STT
 About
 ------
 
-This is a command line tool for benchmarking Automatic Speech Recognition engines. 
+This is a command line tool for benchmarking Automatic Speech Recognition engines.
 
 It is designed for non-academic production environments, and prioritises ease of use and relative benchmarking over scientific procedure and high-accuracy absolute scoring.
 
@@ -33,32 +33,30 @@ Usage
 
 .. code-block:: bash
 
-``$ benchmarkstt reference.txt hypothesis.txt --wer``
-.....................................................
-Return the Word Error Rate for an automatically generated transcript (hypothesis) by comparing it to the ground truth (referece).
+    $ benchmarkstt reference.txt hypothesis.txt --wer
 
 
 .. code-block:: bash
 
-``$ benchmarkstt reference.txt hypothesis.txt --wer --lowercase``
-...................................................................
+    $ benchmarkstt reference.txt hypothesis.txt --wer --lowercase
+
 Return the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate as it removes diffs that might otherwise be considered errors.
 
 .. code-block:: bash
 
-``$ benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf``
-..................................................................................
+    $ benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf
+
 Return a visual diff after applying all the normalization rules specified in the config file.
 
 
 Further information
 -------------------
 
-This is a collaborative project to create a library for benchmarking AI/ML applications. It was created in response to the needs of broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `Media Information Management & AI group <https://tech.ebu.ch/groups/mim>`_. 
+This is a collaborative project to create a library for benchmarking AI/ML applications. It was created in response to the needs of broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `Media Information Management & AI group <https://tech.ebu.ch/groups/mim>`_.
 
 Currently the group is focussing on Speech-to-Text, but it will consider creating benchmarking tools for other AI/ML services.
 
-For general information about this project, including the `motivations <https://github.com/ebu/benchmarkstt/wiki>`_ and `guiding principles <https://github.com/ebu/benchmarkstt/wiki/Principles>`_, please see the project `wiki <https://github.com/ebu/benchmarkstt/wiki>`_ 
+For general information about this project, including the `motivations <https://github.com/ebu/benchmarkstt/wiki>`_ and `guiding principles <https://github.com/ebu/benchmarkstt/wiki/Principles>`_, please see the project `wiki <https://github.com/ebu/benchmarkstt/wiki>`_
 
 To install and start using the tool,go to the `documentation <https://ebu.github.io/benchmarkstt/>`_.
 
