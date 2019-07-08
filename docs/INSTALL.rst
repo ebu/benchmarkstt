@@ -26,7 +26,7 @@ From source
 
    .. code-block:: bash
 
-      pip install https://github.com/ebu/benchmarkstt/archive/master.zip
+      pip install benchmarkstt
 
 3. Test and use
 
