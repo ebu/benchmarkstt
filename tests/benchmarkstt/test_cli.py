@@ -126,6 +126,13 @@ def test_cli_errors(argv, capsys):
     commandline_tester('benchmarkstt', main, argv, 2, capsys)
 
 
+@pytest.mark.parametrize('argv', [
+    'normalization -i ./resources/test/_data/candide.txt --lower',
+])
+def test_clitools_errors(argv, capsys):
+    commandline_tester('benchmarkstt-tools', tools, argv, 2, capsys)
+
+
 def commandline_tester(prog_name, app, argv, result, capsys):
     if type(argv) is str:
         argv = shlex.split(argv)
