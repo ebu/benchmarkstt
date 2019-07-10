@@ -58,30 +58,30 @@ OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
     ['metrics --reference "HELLO WORLD" --hypothesis "GOODBYE CRUEL WORLD" '
      '-rt argument -ht argument --worddiffs --output-format json',
      '[\n\t{"title": "worddiffs", "result": ['
-     '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
-     '{"kind": "insert", "reference": null, "hypothesis": "CRUEL"}, '
-     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}'
+     '{"type": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '{"type": "insert", "reference": null, "hypothesis": "CRUEL"}, '
+     '{"type": "equal", "reference": "WORLD", "hypothesis": "WORLD"}'
      ']}\n]\n'
      ],
     ['normalization -i ./resources/test/_data/candide.txt ./resources/test/_data/candide.txt -o /dev/null', 2],
     ['metrics -r "HELLO WORLD OF MINE" --hypothesis "GOODBYE CRUEL WORLD OF MINE" -rt argument -ht argument '
      '--worddiffs --output-format json',
      '[\n\t{"title": "worddiffs", "result": ['
-     '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
-     '{"kind": "insert", "reference": null, "hypothesis": "CRUEL"}, '
-     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
-     '{"kind": "equal", "reference": "OF", "hypothesis": "OF"}, '
-     '{"kind": "equal", "reference": "MINE", "hypothesis": "MINE"}'
+     '{"type": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '{"type": "insert", "reference": null, "hypothesis": "CRUEL"}, '
+     '{"type": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
+     '{"type": "equal", "reference": "OF", "hypothesis": "OF"}, '
+     '{"type": "equal", "reference": "MINE", "hypothesis": "MINE"}'
      ']}\n]\n'
      ],
     ['metrics -r "HELLO CRUEL WORLD OF MINE" -h "GOODBYE WORLD OF MINE" -rt argument -ht argument '
      '--worddiffs --output-format json',
      '[\n\t{"title": "worddiffs", "result": ['
-     '{"kind": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
-     '{"kind": "delete", "reference": "CRUEL", "hypothesis": null}, '
-     '{"kind": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
-     '{"kind": "equal", "reference": "OF", "hypothesis": "OF"}, '
-     '{"kind": "equal", "reference": "MINE", "hypothesis": "MINE"}'
+     '{"type": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+     '{"type": "delete", "reference": "CRUEL", "hypothesis": null}, '
+     '{"type": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
+     '{"type": "equal", "reference": "OF", "hypothesis": "OF"}, '
+     '{"type": "equal", "reference": "MINE", "hypothesis": "MINE"}'
      ']}\n]\n'
      ]
 ])

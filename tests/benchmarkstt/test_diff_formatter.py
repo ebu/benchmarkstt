@@ -12,24 +12,24 @@ b = 'ABBCDEFHHIJKLM'
     ['html', 'A<span class="insert">B</span>BCDEF<span class="delete">G</span>'
              'H<span class="insert">HI</span>JKLM<span class="delete">N</span>'],
     ['json', '['
-             '{"kind": "equal", "reference": "A", "hypothesis": "A"}, '
-             '{"kind": "insert", "reference": null, "hypothesis": "B"}, '
-             '{"kind": "equal", "reference": "BCDEF", "hypothesis": "BCDEF"}, '
-             '{"kind": "delete", "reference": "G", "hypothesis": null}, '
-             '{"kind": "equal", "reference": "H", "hypothesis": "H"}, '
-             '{"kind": "insert", "reference": null, "hypothesis": "HI"}, '
-             '{"kind": "equal", "reference": "JKLM", "hypothesis": "JKLM"}, '
-             '{"kind": "delete", "reference": "N", "hypothesis": null}'
+             '{"type": "equal", "reference": "A", "hypothesis": "A"}, '
+             '{"type": "insert", "reference": null, "hypothesis": "B"}, '
+             '{"type": "equal", "reference": "BCDEF", "hypothesis": "BCDEF"}, '
+             '{"type": "delete", "reference": "G", "hypothesis": null}, '
+             '{"type": "equal", "reference": "H", "hypothesis": "H"}, '
+             '{"type": "insert", "reference": null, "hypothesis": "HI"}, '
+             '{"type": "equal", "reference": "JKLM", "hypothesis": "JKLM"}, '
+             '{"type": "delete", "reference": "N", "hypothesis": null}'
              ']'],
     ['list', [
-        OrderedDict([('kind', 'equal'), ('reference', 'A'), ('hypothesis', 'A')]),
-        OrderedDict([('kind', 'insert'), ('reference', None), ('hypothesis', 'B')]),
-        OrderedDict([('kind', 'equal'), ('reference', 'BCDEF'), ('hypothesis', 'BCDEF')]),
-        OrderedDict([('kind', 'delete'), ('reference', 'G'), ('hypothesis', None)]),
-        OrderedDict([('kind', 'equal'), ('reference', 'H'), ('hypothesis', 'H')]),
-        OrderedDict([('kind', 'insert'), ('reference', None), ('hypothesis', 'HI')]),
-        OrderedDict([('kind', 'equal'), ('reference', 'JKLM'), ('hypothesis', 'JKLM')]),
-        OrderedDict([('kind', 'delete'), ('reference', 'N'), ('hypothesis', None)])
+        OrderedDict([('type', 'equal'), ('reference', 'A'), ('hypothesis', 'A')]),
+        OrderedDict([('type', 'insert'), ('reference', None), ('hypothesis', 'B')]),
+        OrderedDict([('type', 'equal'), ('reference', 'BCDEF'), ('hypothesis', 'BCDEF')]),
+        OrderedDict([('type', 'delete'), ('reference', 'G'), ('hypothesis', None)]),
+        OrderedDict([('type', 'equal'), ('reference', 'H'), ('hypothesis', 'H')]),
+        OrderedDict([('type', 'insert'), ('reference', None), ('hypothesis', 'HI')]),
+        OrderedDict([('type', 'equal'), ('reference', 'JKLM'), ('hypothesis', 'JKLM')]),
+        OrderedDict([('type', 'delete'), ('reference', 'N'), ('hypothesis', None)])
     ]
     ]
 ])
