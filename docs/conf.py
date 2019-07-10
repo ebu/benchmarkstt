@@ -18,7 +18,7 @@ sys.path.insert(0, src_dir)
 sphinx_apidoc(['-e', '-f', '-o', docs_modules_dir, src_dir])
 os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
-with open(os.path.join(os.path.abs_path(root_dir), 'docs/api-methods.rst'), 'w') as f:
+with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') as f:
     f.write("Available JSON-RPC methods\n==========================\n\n")
     f.write(".. attention::\n")
     f.write("    Only supported for Python versions 3.6 and above\n\n")
