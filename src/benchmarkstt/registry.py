@@ -25,3 +25,6 @@ class Registry:
 
     def unregister(self, key):
         return self.__delitem__(key)
+
+    def keys(self):
+        return self._registry.keys()

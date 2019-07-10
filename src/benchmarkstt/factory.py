@@ -53,6 +53,11 @@ class Factory(Registry):
 
         return super().__getitem__(name)
 
+    def __delitem__(self, key):
+        if type(key) is not str:
+            key = self.normalize_class_name(key.__name__)
+        super().__delitem__(key)
+
     def create(self, alias, *args, **kwargs):
         return self[alias](*args, **kwargs)
 
@@ -85,9 +90,6 @@ class Factory(Registry):
             return False
 
         return True
-
-    def keys(self):
-        return self._registry.keys()
 
     def register_namespace(self, namespace):
         """
@@ -125,11 +127,6 @@ class Factory(Registry):
 
         alias = self.normalize_class_name(alias)
         super().register(alias, cls)
-
-    def __delitem__(self, key):
-        if type(key) is not str:
-            key = self.normalize_class_name(key.__name__)
-        super().__delitem__(key)
 
     def __iter__(self):
         """
