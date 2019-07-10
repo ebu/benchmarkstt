@@ -5,9 +5,14 @@ from setuptools import setup, find_packages
 if sys.version_info < (3, 5):
     sys.exit('Sorry, Python < 3.5 is not supported')
 
+
+def from_file(filename):
+    with open(filename) as f:
+        result = f.read()
+    return result
+
 dirname = os.path.dirname(__file__)
-with open('VERSION') as f:
-    __version__ = f.read().strip()
+__version__ = from_file('VERSION').strip()
 __author__ = 'EBU'
 __name__ = 'benchmarkstt'
 
@@ -19,8 +24,7 @@ __version__ = %s
 __author__ = %s
 ''' % (repr(__version__), repr(__author__)))
 
-with open('README.rst') as f:
-    long_description = f.read()
+long_description = from_file('README.rst')
 
 
 setup(
@@ -57,11 +61,7 @@ setup(
         'docutils>=0.14',
     ],
     extras_require={
-        'docs': [
-            "sphinx==1.8.3",
-            "sphinx_rtd_theme==0.4.2",
-            "sphinx-argparse==0.2.5",
-        ],
+        'docs': from_file('docs/requirements.txt').split('\n'),
         'test': [
             "pytest==4.2.0",
             "pycodestyle==2.5.0",

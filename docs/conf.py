@@ -1,12 +1,21 @@
 import os
 import sys
+from sphinx.ext.apidoc import main as sphinx_apidoc
+
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
-root_dir = os.path.abspath('../benchmarkstt')
-sys.path.insert(0, root_dir)
+root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+src_dir = os.path.join(os.path.abspath(root_dir), 'src')
+docs_modules_dir = os.path.join(os.path.abspath(root_dir), 'docs/modules')
 
+sys.path.insert(0, root_dir)
+sys.path.insert(0, src_dir)
+
+# -- Auto build module docs --------------------------------------------------
+sphinx_apidoc(['-e', '-f', '-o', docs_modules_dir, src_dir])
+os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
 extensions = [
     'sphinx.ext.autodoc',
