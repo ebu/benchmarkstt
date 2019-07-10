@@ -106,10 +106,7 @@ class Factory(Registry):
             cls = getattr(module, clsname)
             if not self.is_valid(cls):
                 continue
-            clsname = self.normalize_class_name(clsname)
-            if clsname in self._registry:
-                raise ValueError("Conflict: alias '%s' is already registered" % (clsname,))
-            self._registry[clsname] = cls
+            self.register(cls, clsname)
 
     def register(self, cls, alias=None):
         """
@@ -127,8 +124,6 @@ class Factory(Registry):
             alias = cls.__name__
 
         alias = self.normalize_class_name(alias)
-        if alias in self._registry:
-            raise ValueError("Conflict: alias '%s' is already registered" % (alias,))
         super().register(alias, cls)
 
     def __delitem__(self, key):
