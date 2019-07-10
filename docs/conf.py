@@ -19,16 +19,16 @@ sphinx_apidoc(['-e', '-f', '-o', docs_modules_dir, src_dir])
 os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
 with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') as f:
-    f.write("Available JSON-RPC methods\n==========================\n\n")
-    f.write(".. attention::\n")
-    f.write("    Only supported for Python versions 3.6 and above\n\n")
+    f.write("Available JSON-RPC methods\n==========================\n\n\n")
+    f.write(".. attention::\n\n")
+    f.write("    Only supported for Python versions 3.6 and above\n\n\n")
 
     methods = get_methods()
     for name, func in methods.items.items():
-        f.write('%s\n%s' % (name, '-' * len(name)))
-        f.write('')
+        f.write('%s\n%s\n' % (name, '-' * len(name)))
+        f.write('\n')
         f.write(format_docs(func.__doc__))
-        f.write('')
+        f.write('\n')
 
 extensions = [
     'sphinx.ext.autodoc',
