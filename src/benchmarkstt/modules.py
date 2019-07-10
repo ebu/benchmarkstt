@@ -66,3 +66,15 @@ def load_object(name, transform=None):
         return getattr(module, found_class_name)
 
     raise ImportError("Could not find an object for %r" % (name,))
+
+
+class Proxy:
+    """
+    Automatically load a class from any namespace, and pass all function calls to it
+    """
+
+    def __init__(self, name, *args, **kwargs):
+        self._proxied_class = load_object(name)(*args, **kwargs)
+
+    def __getattr__(self, item):
+        return getattr(self._proxied_class, item)

@@ -9,7 +9,7 @@ from unidecode import unidecode
 from benchmarkstt import normalization
 from benchmarkstt import config, DEFAULT_ENCODING
 from contextlib import contextmanager
-from benchmarkstt.modules import load_object
+from benchmarkstt.modules import Proxy
 
 
 file_types = (str,)
@@ -268,17 +268,15 @@ class Config(normalization.Base):
         cls.__doc__ = cls.doc_string.replace('{section}', section).replace('{[section]}', section_tag)
 
 
-class ExternalNormalizer(normalization.BaseWithFileSupport):
+class ExternalNormalizer(Proxy, normalization.BaseWithFileSupport):
     """
     Automatically loads an external normalizer class.
 
     :param name: The name of the normalizer to load (eg. mymodule.normalization.Normalizer)
     """
-    def __init__(self, name, *args, **kwargs):
-        self._obj = load_object(name)(*args, **kwargs)
 
     def _normalize(self, text: str) -> str:
-        return self._obj.normalize(text)
+        return self._proxied_class._normalize(text)
 
 
 Config.refresh_docstring()
