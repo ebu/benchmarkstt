@@ -29,7 +29,7 @@ class Replace(normalization.BaseWithFileSupport):
     :example return: "Nudge wink!"
     """
 
-    def __init__(self, search: str, replace):
+    def __init__(self, search: str, replace: str):
         self._search = search
         self._replace = replace
 

@@ -131,6 +131,11 @@ class Factory:
             raise ValueError("Conflict: alias '%s' is already registered" % (alias,))
         self._registry[alias] = cls
 
+    def unregister(self, alias):
+        if type(alias) is not str:
+            alias = self.normalize_class_name(alias.__name__)
+        del self._registry[alias]
+
     def __iter__(self):
         """
         Get available classes with a proper ClassConfig

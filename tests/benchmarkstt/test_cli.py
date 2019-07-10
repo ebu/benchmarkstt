@@ -5,7 +5,8 @@ from tempfile import TemporaryDirectory
 from os import path
 from io import StringIO
 import shlex
-
+from benchmarkstt.normalization import Base as NormalizationBase
+from benchmarkstt.normalization import factory as NormalizationFactory
 from benchmarkstt.__meta__ import __version__
 
 
@@ -126,6 +127,24 @@ def test_cli(argv, result, capsys):
 ])
 def test_cli_errors(argv, capsys):
     commandline_tester('benchmarkstt', main, argv, 2, capsys)
+
+
+@pytest.mark.parametrize('argv,result', [
+    [
+        '-r "And finally" -rt argument -h "and FINally" -ht argument --myownnormalizer --wer',
+        'wer\n===\n\n0.000000\n\n'
+    ],
+])
+def test_exensibility(argv, result, capsys):
+    class MyOwnNormalizer(NormalizationBase):
+        def _normalize(self, text: str) -> str:
+            return text.upper()
+
+    NormalizationFactory.register(MyOwnNormalizer)
+    try:
+        commandline_tester('benchmarkstt', main, argv, result, capsys)
+    finally:
+        NormalizationFactory.unregister(MyOwnNormalizer)
 
 
 def commandline_tester(prog_name, app, argv, result, capsys):
