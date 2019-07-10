@@ -144,7 +144,7 @@ def test_exensibility(argv, result, capsys):
     try:
         commandline_tester('benchmarkstt', main, argv, result, capsys)
     finally:
-        NormalizationFactory.unregister(MyOwnNormalizer)
+        del NormalizationFactory[MyOwnNormalizer]
 
 
 def commandline_tester(prog_name, app, argv, result, capsys):

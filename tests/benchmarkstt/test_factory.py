@@ -31,7 +31,7 @@ def test_factory():
 
     factory.register(ValidClass)
     assert factory['validclass'] == ValidClass
-    factory.register(ValidClass, 'alias')
+    factory['alias'] = ValidClass
     assert factory['alias'] == ValidClass
 
     assert type(factory.create('alias')) == ValidClass
@@ -46,7 +46,7 @@ def test_factory():
 
     assert "Conflict: alias 'validclass' is already registered" in str(exc)
 
-    factory.unregister(ValidClass)
+    del factory[ValidClass]
     assert type(factory.create('alias')) == ValidClass
 
     with raises(ImportError) as exc:

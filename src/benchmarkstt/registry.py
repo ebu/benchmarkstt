@@ -1,11 +1,3 @@
-import inspect
-import logging
-from importlib import import_module
-from typing import Dict
-
-logger = logging.getLogger(__name__)
-
-
 class Registry:
     """
     Simple registry class holding aliases and their corresponding values
@@ -27,3 +19,9 @@ class Registry:
 
     def __delitem__(self, key):
         del self._registry[key]
+
+    def register(self, key, value):
+        return self.__setitem__(key, value)
+
+    def unregister(self, key):
+        return self.__delitem__(key)

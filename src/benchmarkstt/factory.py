@@ -129,12 +129,12 @@ class Factory(Registry):
         alias = self.normalize_class_name(alias)
         if alias in self._registry:
             raise ValueError("Conflict: alias '%s' is already registered" % (alias,))
-        self[alias] = cls
+        super().register(alias, cls)
 
-    def unregister(self, alias):
-        if type(alias) is not str:
-            alias = self.normalize_class_name(alias.__name__)
-        del self[alias]
+    def __delitem__(self, key):
+        if type(key) is not str:
+            key = self.normalize_class_name(key.__name__)
+        super().__delitem__(key)
 
     def __iter__(self):
         """
