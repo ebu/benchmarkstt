@@ -70,11 +70,20 @@ def load_object(name, transform=None):
 
 class Proxy:
     """
-    Automatically load a class from any namespace, and pass all function calls to it
+    Automatically load a class from any namespace, and pass all function calls to it,
+    or to parent class if it is not implemented.
     """
 
     def __init__(self, name, *args, **kwargs):
-        self._proxied_class = load_object(name)(*args, **kwargs)
+        self._instance = load_object(name)(*args, **kwargs)
 
-    def __getattr__(self, item):
-        return getattr(self._proxied_class, item)
+    def __getattribute__(self, item):
+        cls = object.__getattribute__(self, '_instance')
+
+        if item == '_instance':
+            return cls
+
+        if hasattr(cls, item):
+            return getattr(cls, item)
+
+        return object.__getattribute__(self, item)

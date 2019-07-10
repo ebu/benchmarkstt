@@ -275,8 +275,5 @@ class ExternalNormalizer(Proxy, normalization.BaseWithFileSupport):
     :param name: The name of the normalizer to load (eg. mymodule.normalization.Normalizer)
     """
 
-    def _normalize(self, text: str) -> str:
-        return self._proxied_class._normalize(text)
-
 
 Config.refresh_docstring()
