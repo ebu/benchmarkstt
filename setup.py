@@ -9,7 +9,7 @@ if sys.version_info < (3, 5):
 def from_file(filename):
     with open(filename) as f:
         result = f.read()
-    return result
+    return result.strip()
 
 dirname = os.path.dirname(__file__)
 __version__ = from_file('VERSION').strip()
@@ -25,7 +25,6 @@ __author__ = %s
 ''' % (repr(__version__), repr(__author__)))
 
 long_description = from_file('README.rst')
-
 
 setup(
     name=__name__,
@@ -61,7 +60,6 @@ setup(
         'docutils>=0.14',
     ],
     extras_require={
-        'docs': from_file('docs/requirements.txt').split('\n'),
         'test': [
             "pytest==4.2.0",
             "pycodestyle==2.5.0",
