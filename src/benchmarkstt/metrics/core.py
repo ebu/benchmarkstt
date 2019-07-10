@@ -4,6 +4,7 @@ from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
 from collections import namedtuple
+from benchmarkstt.modules import LoadObjectProxy
 
 logger = logging.getLogger(__name__)
 
@@ -110,3 +111,11 @@ class DiffCounts(Base):
     def compare(self, ref: Schema, hyp: Schema):
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
+
+
+class ExternalMetric(LoadObjectProxy, Base):
+    """
+    Automatically loads an external metric class.
+
+    :param name: The name of the metric to load (eg. mymodule.metrics.MyOwnMetricClass)
+    """
