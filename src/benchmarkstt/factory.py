@@ -5,6 +5,7 @@ from benchmarkstt.docblock import format_docs
 from collections import namedtuple
 from typing import Dict
 from benchmarkstt.registry import Registry
+from benchmarkstt.modules import load_object
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +49,7 @@ class Factory(Registry):
         :rtype: class
         """
         name = self.normalize_class_name(item)
+
         if name not in self._registry:
             raise ImportError("Could not find class '%s', available: %s" % (name, ', '.join(self._registry.keys())))
 
@@ -109,6 +111,11 @@ class Factory(Registry):
             if not self.is_valid(cls):
                 continue
             self.register(cls, clsname)
+
+    def register_classname(self, name, alias=None):
+        if alias is None:
+            alias = name
+        self.register(load_object(name), alias)
 
     def register(self, cls, alias=None):
         """

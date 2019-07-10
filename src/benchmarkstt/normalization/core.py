@@ -9,6 +9,7 @@ from unidecode import unidecode
 from benchmarkstt import normalization
 from benchmarkstt import config, DEFAULT_ENCODING
 from contextlib import contextmanager
+from benchmarkstt.modules import load_object
 
 
 file_types = (str,)
@@ -265,6 +266,19 @@ class Config(normalization.Base):
         section = 'defaults to %s' % (repr(cls._default_section),) if cls._default_section else 'no section by default'
         section_tag = '[%s]' % (cls._default_section,) if cls._default_section else ''
         cls.__doc__ = cls.doc_string.replace('{section}', section).replace('{[section]}', section_tag)
+
+
+class ExternalNormalizer(normalization.BaseWithFileSupport):
+    """
+    Automatically loads an external normalizer class.
+
+    :param name: The name of the normalizer to load (eg. mymodule.normalization.Normalizer)
+    """
+    def __init__(self, name, *args, **kwargs):
+        self._obj = load_object(name)(*args, **kwargs)
+
+    def _normalize(self, text: str) -> str:
+        return self._obj.normalize(text)
 
 
 Config.refresh_docstring()

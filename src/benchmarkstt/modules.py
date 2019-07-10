@@ -35,3 +35,34 @@ class Modules:
 
     def keys(self):
         return [key for key, value in iter(self)]
+
+
+def load_object(name, transform=None):
+    """
+    Load an object based on a string.
+    :param name: The string representation of an object
+    :param transform: Transform (callable) done on the object name for comparison, if None, will lowercase compare.
+    False for no transform.
+    """
+    module = list(name.split('.'))
+
+    if transform is None:
+        transform = str.lower
+    elif transform is False:
+        def identity(x):
+            return x
+        transform = identity
+
+    class_name = transform(module.pop())
+    module = '.'.join(module)
+    if len(module) == 0:
+        module = globals()
+    else:
+        module = import_module(module)
+
+    for found_class_name in dir(module):
+        if transform(found_class_name) != class_name:
+            continue
+        return getattr(module, found_class_name)
+
+    raise ImportError("Could not find an object for %r" % (name,))

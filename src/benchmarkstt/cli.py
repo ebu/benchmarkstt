@@ -9,6 +9,9 @@ from argparse import ArgumentError
 from contextlib import contextmanager
 import sys
 
+# allow loading of modules based on current working directory
+sys.path.insert(0, '')
+
 
 def args_help(parser):
     parser.add_argument('--help', action='help', default=argparse.SUPPRESS,
