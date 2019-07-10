@@ -7,8 +7,8 @@ import pytest
 
 
 def test_name_to_normalizer():
-    assert factory.get_class('Replace') is core.Replace
-    assert factory.get_class('replace') is core.Replace
+    assert factory['Replace'] is core.Replace
+    assert factory['replace'] is core.Replace
 
 
 def test_available_normalizers():
@@ -19,12 +19,12 @@ def test_available_normalizers():
         name = conf.name
         assert type(conf) is ClassConfig
         assert factory.is_valid(conf.cls)
-        assert factory.get_class(name.upper()) is conf.cls
+        assert factory[name.upper()] is conf.cls
 
 
 def test_not_available_normalizers():
     with pytest.raises(ImportError):
-        factory.get_class('SomeRandomUnavailableNormalizer')
+        factory['SomeRandomUnavailableNormalizer']
 
 
 def test_is_normalizer():

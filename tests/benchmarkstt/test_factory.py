@@ -18,7 +18,7 @@ class InvalidClass:
 
 def test_factory_exception():
     factory = Factory(Base, [test_factory_exception.__module__])
-    assert factory.get_class('validclass') == ValidClass
+    assert factory['validclass'] == ValidClass
     with raises(ValueError) as exc:
         factory.register(InvalidClass)
 
@@ -30,9 +30,9 @@ def test_factory():
     assert factory.is_valid(ValidClass) is True
 
     factory.register(ValidClass)
-    assert factory.get_class('validclass') == ValidClass
+    assert factory['validclass'] == ValidClass
     factory.register(ValidClass, 'alias')
-    assert factory.get_class('alias') == ValidClass
+    assert factory['alias'] == ValidClass
 
     assert type(factory.create('alias')) == ValidClass
 

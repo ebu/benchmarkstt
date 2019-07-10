@@ -47,7 +47,7 @@ class File(input.Base):
         self._file = file
 
         if type(input_type) is str:
-            input_type = input.factory.get_class(input_type)
+            input_type = input.factory[input_type]
 
         self._input_class = input_type
 

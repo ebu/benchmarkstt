@@ -4,11 +4,12 @@ from importlib import import_module
 from benchmarkstt.docblock import format_docs
 from collections import namedtuple
 from typing import Dict
+from benchmarkstt.registry import Registry
 
 logger = logging.getLogger(__name__)
 
 
-class ClassConfig(namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_args', 'required_args'])):
+class ClassConfig(namedtuple('ClassConfigTuple', ['name', 'cls', 'docs', 'optional_args', 'required_args'])):
     @property
     def docs(self):
         if self.cls.__doc__ is None:
@@ -19,28 +20,41 @@ class ClassConfig(namedtuple('ClassConfig', ['name', 'cls', 'docs', 'optional_ar
         return format_docs(docs)
 
 
-class Factory:
+class Factory(Registry):
     """
     Factory class with auto-loading of namespaces according to a base class.
     """
 
     def __init__(self, base_class, namespaces=None):
+        super().__init__()
         self.base_class = base_class
         if namespaces is None:
             self.namespaces = [base_class.__module__ + '.core']
         else:
             self.namespaces = namespaces
 
-        self._registry = {}
-
         for namespace in self.namespaces:
             self.register_namespace(namespace)
 
     def __contains__(self, item):
-        return self.normalize_class_name(item) in self._registry
+        return super().__contains__(self.normalize_class_name(item))
+
+    def __getitem__(self, item):
+        """
+        Loads the proper class based on a name
+
+        :param str name: Case-insensitive name of the class
+        :return: The class
+        :rtype: class
+        """
+        name = self.normalize_class_name(item)
+        if name not in self._registry:
+            raise ImportError("Could not find class '%s', available: %s" % (name, ', '.join(self._registry.keys())))
+
+        return super().__getitem__(name)
 
     def create(self, alias, *args, **kwargs):
-        return self.get_class(alias)(*args, **kwargs)
+        return self[alias](*args, **kwargs)
 
     @staticmethod
     def normalize_class_name(clsname):
@@ -54,20 +68,6 @@ class Factory:
         :rtype: str
         """
         return clsname.lower()
-
-    def get_class(self, name):
-        """
-        Loads the proper class based on a name
-
-        :param str name: Case-insensitive name of the class
-        :return: The class
-        :rtype: class
-        """
-        name = self.normalize_class_name(name)
-        if name not in self._registry:
-            raise ImportError("Could not find class '%s', available: %s" % (name, ', '.join(self._registry.keys())))
-
-        return self._registry[name]
 
     def is_valid(self, tocheck):
         """
@@ -129,12 +129,12 @@ class Factory:
         alias = self.normalize_class_name(alias)
         if alias in self._registry:
             raise ValueError("Conflict: alias '%s' is already registered" % (alias,))
-        self._registry[alias] = cls
+        self[alias] = cls
 
     def unregister(self, alias):
         if type(alias) is not str:
             alias = self.normalize_class_name(alias.__name__)
-        del self._registry[alias]
+        del self[alias]
 
     def __iter__(self):
         """
