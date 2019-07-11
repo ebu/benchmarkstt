@@ -13,9 +13,6 @@ Benchmarking STT
 .. image:: https://img.shields.io/azure-devops/coverage/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
 
-.. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
-    :target: https://benchmarkstt.readthedocs.io/
-    :alt: Documentation Status
 
 .. image:: docs/img/benchmarksttcli.png
 
