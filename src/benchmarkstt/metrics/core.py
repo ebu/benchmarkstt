@@ -70,12 +70,12 @@ class WER(Base):
     :param differ_class: For future use.
     
     Insertions, deletions and substitutions are 
-    identified using a diff algorithm. The Hunt–McIlroy 
-    algorithm is the one used internally by Python.
+    identified using the Hunt–McIlroy diff algorithm.  
+    This algorithm is the one used internally by Python.
     See https://docs.python.org/3/library/difflib.html
     """
 
-    #WER modes
+    #WER modes 
     MODE_STRICT = 'strict'
     MODE_HUNT = 'hunt'
 
