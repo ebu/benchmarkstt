@@ -26,7 +26,6 @@ class File(input.Base):
 
     _extension_to_class = {
         "txt": PlainText,
-        "json": None
     }
 
     def __init__(self, file, input_type=None, normalizer=None):
