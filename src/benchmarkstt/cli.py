@@ -8,6 +8,9 @@ from benchmarkstt.normalization.core import Config
 from argparse import ArgumentError
 from contextlib import contextmanager
 import sys
+from benchmarkstt.decorators import log_call
+from functools import partial
+import re
 
 
 def args_help(parser):
@@ -77,10 +80,16 @@ def action_with_arguments(action, required_args, optional_args):
     return ActionWithArguments
 
 
-class ActionWithArgumentsFormatter(argparse.HelpFormatter):
+# TODO: further augment formatter to give cleaner output
+class HelpFormatter(argparse.HelpFormatter):
     """
-    Custom formatter for argparse that allows us to properly display _ActionWithArguments and docblock documentation
+    Custom formatter for argparse that allows us to properly display _ActionWithArguments and docblock documentation,
+    as well as allowing newlines inside the description.
     """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._whitespace_matcher = re.compile(r'[\t ]+', re.ASCII)
 
     def _format_args(self, action, default_metavar):
         if isinstance(action, _ActionWithArguments):
@@ -98,6 +107,14 @@ class ActionWithArgumentsFormatter(argparse.HelpFormatter):
         text = list(itertools.chain.from_iterable(map(wrap, text)))
         return text
 
+    def _fill_text(self, text, width, indent):
+        text = self._whitespace_matcher.sub(' ', text).strip()
+        wrapper = partial(textwrap.fill,
+                          width=width,
+                          initial_indent=indent,
+                          subsequent_indent=indent)
+        return '\n'.join(map(wrapper, text.split('\n')))
+
 
 def args_complete(parser):  # pragma: no cover
     try:
@@ -106,6 +123,17 @@ def args_complete(parser):  # pragma: no cover
         argcomplete.autocomplete(parser)
     except ImportError:
         pass
+
+
+def create_parser(*args, **kwargs):
+    defaults = {
+        'add_help': False,
+        'formatter_class': HelpFormatter,
+    }
+    kwargs = {k: kwargs.get(k, v) for k, v in defaults.items()}
+    parser = argparse.ArgumentParser(*args, **kwargs)
+    parser._optionals.title = 'named arguments'
+    return parser
 
 
 @contextmanager
@@ -117,10 +145,8 @@ def main_parser_context():
             name = 'benchmarkstt'
             desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
                    'for additional tools, see ``benchmarkstt-tools --help``.'
-            parser = argparse.ArgumentParser(prog=name, add_help=False,
-                                             description=desc,
-                                             formatter_class=ActionWithArgumentsFormatter)
 
+            parser = create_parser(prog=name, description=desc)
             benchmark_cli.argparser(parser)
 
             parser.add_argument('--version', action='store_true',
@@ -182,7 +208,7 @@ def tools_parser():
         if hasattr(cli, 'Formatter'):
             kwargs['formatter_class'] = cli.Formatter
         else:
-            kwargs['formatter_class'] = ActionWithArgumentsFormatter
+            kwargs['formatter_class'] = HelpFormatter
 
         docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s.cli' % (module,))
         kwargs['description'] = textwrap.dedent(docs)
