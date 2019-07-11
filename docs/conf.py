@@ -66,7 +66,6 @@ with open('../VERSION') as f:
 version = re.sub(r'^([0-9]+\.[0-9]+).*$', r'\1', release)
 
 
-
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
