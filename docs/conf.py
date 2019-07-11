@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
@@ -39,7 +40,9 @@ with open('../VERSION') as f:
     # The full version, including alpha/beta/rc tags
     release = f.read()
 
-version = release
+# The short X.Y version
+version = re.sub(r'^([0-9]+\.[0-9]+).*$', r'\1', release)
+
 
 
 # -- General configuration ---------------------------------------------------
