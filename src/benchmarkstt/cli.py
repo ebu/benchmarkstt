@@ -8,7 +8,6 @@ from benchmarkstt.normalization.core import Config
 from argparse import ArgumentError
 from contextlib import contextmanager
 import sys
-from benchmarkstt.decorators import log_call
 from functools import partial
 import re
 
