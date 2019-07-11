@@ -36,7 +36,7 @@ Usage
 
 .. code-block:: bash
 
-    $ benchmarkstt reference.txt hypothesis.txt --diffcount
+    $ benchmarkstt reference.txt hypothesis.txt --diffcounts
 
 Return the number of word insertions, deletions, replacements and matches for the hypothesis transcript compared to the reference. 
 
