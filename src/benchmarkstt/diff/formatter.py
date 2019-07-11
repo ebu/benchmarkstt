@@ -42,15 +42,12 @@ class CLIDiffDialect(Dialect):
     def __enter__(self):
         super().__enter__()
         self._stream = StringIO()
-        self._stream.write('Color key: Unchanged ')
-        self._stream.write(self.delete_format % ('Reference',))
-        self._stream.write(' ')
-        self._stream.write(self.insert_format % ('Hypothesis',))
-        self._stream.write('\n\n')
+        self._stream.write(self.color_key)
         return self
 
     delete_format = '\033[31m%s\033[0m'
     insert_format = '\033[32m%s\033[0m'
+    color_key = 'Color key: Unchanged \033[31mReference\033[0m \033[32mHypothesis\033[0m\n\n'
 
 
 class UTF8Dialect(Dialect):

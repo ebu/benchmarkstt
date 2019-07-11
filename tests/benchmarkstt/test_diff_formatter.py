@@ -5,10 +5,12 @@ from collections import OrderedDict
 a = 'ABCDEFGHJKLMN'
 b = 'ABBCDEFHHIJKLM'
 
+cli_color_key = formatter.CLIDiffDialect.color_key
+
 
 @pytest.mark.parametrize('dialect,expected', [
     ['text', 'AB\u0359BCDEFG\u0338HH\u0359I\u0359JKLMN\u0338'],
-    ['cli', 'A\033[32mB\033[0mBCDEF\033[31mG\033[0mH\033[32mHI\033[0mJKLM\033[31mN\033[0m'],
+    ['cli', cli_color_key + 'A\033[32mB\033[0mBCDEF\033[31mG\033[0mH\033[32mHI\033[0mJKLM\033[31mN\033[0m'],
     ['html', 'A<span class="insert">B</span>BCDEF<span class="delete">G</span>'
              'H<span class="insert">HI</span>JKLM<span class="delete">N</span>'],
     ['json', '['
@@ -39,7 +41,7 @@ def test_format_diff(dialect, expected):
 
 
 def test_no_diff():
-    assert formatter.format_diff(a, a, dialect='cli') == a
+    assert formatter.format_diff(a, a, dialect='cli') == (formatter.CLIDiffDialect.color_key + a)
 
 
 def test_dialect_exceptions():
