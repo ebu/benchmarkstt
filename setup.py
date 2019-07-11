@@ -12,7 +12,7 @@ def from_file(filename):
     return result.strip()
 
 dirname = os.path.dirname(__file__)
-__version__ = from_file('VERSION').strip()
+__version__ = from_file('VERSION')
 __author__ = 'EBU'
 __name__ = 'benchmarkstt'
 
