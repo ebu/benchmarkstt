@@ -13,6 +13,9 @@ Benchmarking STT
 .. image:: https://img.shields.io/azure-devops/coverage/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
     :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
 
+.. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
+    :target: https://benchmarkstt.readthedocs.io/
+    :alt: Documentation Status
 
 .. image:: docs/img/benchmarksttcli.png
 
@@ -33,18 +36,19 @@ Usage
 
 .. code-block:: bash
 
-    $ benchmarkstt reference.txt hypothesis.txt --wer
+    $ benchmarkstt --reference reference.txt --hypothesis hypothesis.txt --diffcounts
 
+Return the number of word insertions, deletions, replacements and matches for the hypothesis transcript compared to the reference. 
 
 .. code-block:: bash
 
-    $ benchmarkstt reference.txt hypothesis.txt --wer --lowercase
+    $ benchmarkstt -r reference.txt -h hypothesis.txt --wer --lowercase
 
 Return the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate as it removes diffs that might otherwise be considered errors.
 
 .. code-block:: bash
 
-    $ benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf
+    $ benchmarkstt -r reference.txt -h hypothesis.txt --worddiffs --config conf
 
 Return a visual diff after applying all the normalization rules specified in the config file.
 
@@ -58,6 +62,6 @@ Currently the group is focussing on Speech-to-Text, but it will consider creatin
 
 For general information about this project, including the `motivations <https://github.com/ebu/benchmarkstt/wiki>`_ and `guiding principles <https://github.com/ebu/benchmarkstt/wiki/Principles>`_, please see the project `wiki <https://github.com/ebu/benchmarkstt/wiki>`_
 
-To install and start using the tool,go to the `documentation <https://ebu.github.io/benchmarkstt/>`_.
+To install and start using the tool, go to the `documentation <https://benchmarkstt.readthedocs.io>`_.
 
 

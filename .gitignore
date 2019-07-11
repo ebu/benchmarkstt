@@ -10,6 +10,8 @@ src/benchmarkstt/__meta__.py
 __pycache__
 .DS_Store
 *.egg-info/
+build/
+dist/
 
 # editor settings
 .idea
