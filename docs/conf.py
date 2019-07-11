@@ -25,10 +25,10 @@ with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') 
 
     methods = get_methods()
     for name, func in methods.items.items():
-        f.write('%s\n%s\n' % (name, '-' * len(name)))
+        f.write('\n%s\n%s\n' % (name, '-' * len(name)))
         f.write('\n')
         f.write(format_docs(func.__doc__))
-        f.write('\n')
+        f.write('\n\n')
 
 extensions = [
     'sphinx.ext.autodoc',
