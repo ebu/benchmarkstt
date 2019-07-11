@@ -3,7 +3,6 @@ from io import StringIO
 from benchmarkstt.input.core import PlainText
 from benchmarkstt.normalization.core import Config
 from benchmarkstt.normalization.logger import LogCapturer
-import logging
 
 factory = metrics.factory
 

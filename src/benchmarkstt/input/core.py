@@ -33,7 +33,9 @@ class File(input.Base):
 
     @classmethod
     def available_types(cls):
-        return {k: v.__doc__.strip() for k, v in cls._extension_to_class.items() if v is not None}
+        return {cls_config.name: cls_config.cls.__doc__.strip()
+                for cls_config in input.factory
+                if cls_config.name != 'file'}
 
     def __init__(self, file, input_type=None, normalizer=None):
         self._normalizer = normalizer
