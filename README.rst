@@ -36,19 +36,19 @@ Usage
 
 .. code-block:: bash
 
-    $ benchmarkstt reference.txt hypothesis.txt --diffcounts
+    $ benchmarkstt --reference reference.txt --hypothesis hypothesis.txt --diffcounts
 
 Return the number of word insertions, deletions, replacements and matches for the hypothesis transcript compared to the reference. 
 
 .. code-block:: bash
 
-    $ benchmarkstt reference.txt hypothesis.txt --wer --lowercase
+    $ benchmarkstt -r reference.txt -h hypothesis.txt --wer --lowercase
 
 Return the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate as it removes diffs that might otherwise be considered errors.
 
 .. code-block:: bash
 
-    $ benchmarkstt reference.txt hypothesis.txt --worddiffs --config conf
+    $ benchmarkstt -r reference.txt -h hypothesis.txt --worddiffs --config conf
 
 Return a visual diff after applying all the normalization rules specified in the config file.
 
