@@ -4,7 +4,7 @@ Default input formats
 """
 
 import benchmarkstt.segmentation.core as segmenters
-from benchmarkstt import input, DEFAULT_ENCODING
+from benchmarkstt import input, settings
 
 
 class PlainText(input.Base):
@@ -40,7 +40,7 @@ class File(input.Base):
 
             input_type = self._extension_to_class[extension]
 
-        encoding = DEFAULT_ENCODING
+        encoding = settings.default_encoding
         with open(file, encoding=encoding):
             """Just checks that file is readable..."""
 
@@ -52,7 +52,7 @@ class File(input.Base):
         self._input_class = input_type
 
     def __iter__(self):
-        encoding = DEFAULT_ENCODING
+        encoding = settings.default_encoding
         with open(self._file, encoding=encoding) as f:
             text = f.read()
 

@@ -54,4 +54,10 @@ def make_printable(char):
     return char if char != ' ' else '·'
 
 
-DEFAULT_ENCODING = getenv('DEFAULT_ENCODING', 'UTF-8')
+class _Settings:
+    @property
+    def default_encoding(self):
+        return getenv('DEFAULT_ENCODING', 'UTF-8')
+
+
+settings = _Settings()

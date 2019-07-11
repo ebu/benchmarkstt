@@ -9,7 +9,7 @@ from . import factory
 from .logger import DiffLoggingFormatter, Logger
 import logging
 from benchmarkstt.cli import args_from_factory
-from benchmarkstt import DEFAULT_ENCODING
+from benchmarkstt import settings
 
 
 def args_inputfile(parser):
@@ -90,7 +90,7 @@ def main(parser, args):
 
     composite = get_normalizer_from_args(args)
 
-    encoding = DEFAULT_ENCODING
+    encoding = settings.default_encoding
     if output_files is not None:
         # pre-open the output files before doing the grunt work
         output_files = [open(output_file, 'xt', encoding=encoding) for output_file in output_files]
