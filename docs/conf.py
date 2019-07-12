@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 from sphinx.ext.apidoc import main as sphinx_apidoc
 from benchmarkstt.api.jsonrpc import get_methods
 from benchmarkstt.docblock import format_docs
@@ -61,7 +62,8 @@ with open('../VERSION') as f:
     # The full version, including alpha/beta/rc tags
     release = f.read()
 
-version = release
+# The short X.Y version
+version = re.sub(r'^([0-9]+\.[0-9]+).*$', r'\1', release)
 
 
 # -- General configuration ---------------------------------------------------
@@ -216,4 +218,3 @@ epub_exclude_files = ['search.html']
 #
 # smartquotes_excludes = {'builders': ['man', 'text']}
 
-rst_epilog = '.. |version| replace:: %s\n' % (version,)

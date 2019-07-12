@@ -62,7 +62,8 @@ def argparser(parser: argparse.ArgumentParser):
 def get_normalizer_from_args(args):
     if args.log:
         handler = logging.StreamHandler()
-        handler.setFormatter(DiffLoggingFormatter('cli'))
+        formatter = DiffLoggingFormatter('cli', show_color_key=False)
+        handler.setFormatter(formatter)
         handler.setLevel(logging.INFO)
         Logger.logger.addHandler(handler)
 

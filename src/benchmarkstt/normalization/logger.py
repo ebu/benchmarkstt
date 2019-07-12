@@ -62,9 +62,9 @@ class DiffLoggingFormatter(logging.Formatter):
         "dict": DiffLoggingDictFormatterDialect,
     }
 
-    def __init__(self, dialect=None, diff_formatter_dialect=None, title=None):
+    def __init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs):
         self._title = title
-        self._differ = DiffFormatter(dialect)
+        self._differ = DiffFormatter(dialect, *args, **kwargs)
         strict = False
         if diff_formatter_dialect is None:
             diff_formatter_dialect = dialect
