@@ -218,4 +218,3 @@ epub_exclude_files = ['search.html']
 #
 # smartquotes_excludes = {'builders': ['man', 'text']}
 
-rst_epilog = '.. |version| replace:: %s\n' % (version,)
