@@ -37,9 +37,11 @@ def get_differ(a, b, differ_class):
 
 class WordDiffs(Base):
     """
-    Calculate the differences on a per-word basis
+    Present differences on a per-word basis
 
+    :param dialect: Presentation format. Default is 'cli'.
     :example dialect: 'html'
+    :param differ_class: For future use.
     """
 
     def __init__(self, dialect=None, differ_class=None):
