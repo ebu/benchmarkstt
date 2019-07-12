@@ -35,6 +35,10 @@ class Dialect:
 
 
 class CLIDiffDialect(Dialect):
+    def __init__(self, show_color_key=None):
+        self.show_color_key = bool(show_color_key) if show_color_key is not None else True
+        super().__init__()
+
     @staticmethod
     def preprocessor(txt):
         return make_printable(txt)
@@ -42,7 +46,8 @@ class CLIDiffDialect(Dialect):
     def __enter__(self):
         super().__enter__()
         self._stream = StringIO()
-        self._stream.write(self.color_key)
+        if self.show_color_key:
+            self._stream.write(self.color_key)
         return self
 
     delete_format = '\033[31m%s\033[0m'
@@ -148,13 +153,13 @@ class DiffFormatter:
         "list": ListDialect,
     }
 
-    def __init__(self, dialect=None):
+    def __init__(self, dialect=None, *args, **kwargs):
         if dialect is None:
             dialect = 'text'
 
         if not self.has_dialect(dialect):
             raise ValueError("Unknown diff dialect", dialect)
-        self._dialect = self.diff_dialects[dialect]()
+        self._dialect = self.diff_dialects[dialect](*args, **kwargs)
 
     def diff(self, a, b, opcodes=None, preprocessor=None):
         formats = dict(insert=None, delete=None, equal=None, replace=None)
