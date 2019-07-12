@@ -128,6 +128,7 @@ def create_parser(*args, **kwargs):
     defaults = {
         'add_help': False,
         'formatter_class': HelpFormatter,
+        'allow_abbrev': False,
     }
     kwargs = {k: kwargs.get(k, v) for k, v in defaults.items()}
     parser = argparse.ArgumentParser(*args, **kwargs)
@@ -198,7 +199,7 @@ def tools_parser():
     name = 'benchmarkstt-tools'
     desc = 'Some additional helpful tools'
     parser = argparse.ArgumentParser(prog=name, add_help=False,
-                                     description=desc)
+                                     description=desc, allow_abbrev=False)
 
     subparsers = parser.add_subparsers(dest='subcommand')
 
@@ -211,7 +212,7 @@ def tools_parser():
 
         docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s.cli' % (module,))
         kwargs['description'] = textwrap.dedent(docs)
-        subparser = subparsers.add_parser(module, add_help=False, **kwargs)
+        subparser = subparsers.add_parser(module, add_help=False, allow_abbrev=False, **kwargs)
 
         cli.argparser(subparser)
         args_common(subparser)
