@@ -11,6 +11,7 @@ def from_file(filename):
         result = f.read()
     return result.strip()
 
+
 dirname = os.path.dirname(__file__)
 __version__ = from_file('VERSION')
 __author__ = 'EBU'
