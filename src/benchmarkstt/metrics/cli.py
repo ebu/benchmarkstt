@@ -19,8 +19,8 @@ Formatter = ActionWithArgumentsFormatter
 def argparser(parser: argparse.ArgumentParser):
     # steps: input normalize[pre?] segmentation normalize[post?] compare
 
-    parser.add_argument('reference', help='File to use as reference')
-    parser.add_argument('hypothesis', help='File to use as hypothesis')
+    parser.add_argument('-r', '--reference', help='File to use as reference', required=True)
+    parser.add_argument('-h', '--hypothesis', help='File to use as hypothesis', required=True)
 
     parser.add_argument('-rt', '--reference-type', default='infer',
                         help='Type of reference file')

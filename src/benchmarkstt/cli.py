@@ -148,7 +148,7 @@ def determine_log_level():
 
 def main():
     determine_log_level()
-    # import done here to avoid circular references
+    # import done here to avoid circular dependencies
     import benchmarkstt.benchmark.cli as benchmark_cli
     with main_parser_context() as parser:
         args_complete(parser)
