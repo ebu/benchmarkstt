@@ -7,6 +7,7 @@ from io import StringIO
 import shlex
 from benchmarkstt.normalization import Base as NormalizationBase
 from benchmarkstt.normalization import factory as NormalizationFactory
+from benchmarkstt.diff.formatter import CLIDiffDialect
 from benchmarkstt.__meta__ import __version__
 
 
@@ -31,14 +32,14 @@ a_vs_b_result = '''wer
 worddiffs
 =========
 
-·TEST·my·data·should·be\033[31m·one\033[0m\033[32m·ONE\033[0m·difference
+%s·TEST·my·data·should·be\033[31m·one\033[0m\033[32m·ONE\033[0m·difference
 
 diffcounts
 ==========
 
 OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
 
-'''
+''' % (CLIDiffDialect.color_key,)
 
 
 @pytest.mark.parametrize('argv,result', [

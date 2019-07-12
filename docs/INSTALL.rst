@@ -31,7 +31,7 @@ This is the easiest and preferred way of installing ``benchmarkstt``.
    .. parsed-literal::
 
       $ benchmarkstt --version
-      benchmarkstt: |version|
+      benchmarkstt: |release|
       $ echo IT WORKS! | benchmarkstt-tools normalization --lowercase
       it works!
 
