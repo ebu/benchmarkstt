@@ -1,7 +1,7 @@
 from benchmarkstt.normalization.logger import log
 import logging
 from benchmarkstt.factory import Factory
-from benchmarkstt import DEFAULT_ENCODING
+from benchmarkstt import settings
 from benchmarkstt import csv
 import os
 
@@ -83,7 +83,7 @@ class File(Base):
 
     def __init__(self, normalizer, file, encoding=None, path=None):
         if encoding is None:
-            encoding = DEFAULT_ENCODING
+            encoding = settings.default_encoding
 
         title = file
         if path is not None:
