@@ -153,7 +153,7 @@ def test_exensibility(argv, result, capsys):
     finally:
         del NormalizationFactory[MyOwnNormalizer]
 
-        
+
 @pytest.mark.parametrize('exc,argv', [
     [UnicodeDecodeError, '-r resources/test/_data/latin1.txt -h resources/test/_data/latin1.b.txt --wer'],
 ])
