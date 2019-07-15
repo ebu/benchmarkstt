@@ -19,11 +19,12 @@ def argparser(parser: argparse.ArgumentParser):
     parser.add_argument('-r', '--reference', help='File to use as reference', required=True)
     parser.add_argument('-h', '--hypothesis', help='File to use as hypothesis', required=True)
 
-    types = OrderedDict(infer='Automatically infers type from the filename extension',
+    types = OrderedDict(infer=' '.join([core.File.__doc__.strip(),
+                                        'Automatically infer file type from the filename extension.']),
                         argument='Read the argument and treat as plain text (without reading from file)',
                         **core.File.available_types())
     types_help = ['Available types:']
-    types_help.extend([' -  %r: %s' % (k, v) for k, v in types.items()])
+    types_help.extend(['%r: %s' % (k, v) for k, v in types.items()])
     types_help = '\n'.join(types_help)
 
     subparser = parser.add_argument_group('reference and hypothesis types',
