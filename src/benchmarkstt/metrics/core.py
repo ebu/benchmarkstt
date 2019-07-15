@@ -70,7 +70,7 @@ class WER(Base):
     identified using the Hunt–McIlroy diff algorithm.
     This algorithm is the one used internally by Python.
     See https://docs.python.org/3/library/difflib.html
-    
+
     :param mode: WER variant. 'strict' is the default. 'hunt' applies 0.5 weight to insertions and deletions.
     :param differ_class: For future use.
     """
