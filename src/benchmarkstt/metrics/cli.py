@@ -6,14 +6,11 @@ from benchmarkstt.input import core
 from benchmarkstt.output import factory as output_factory
 from benchmarkstt.metrics import factory
 from benchmarkstt.cli import args_from_factory
-from benchmarkstt.cli import ActionWithArgumentsFormatter
 from benchmarkstt.normalization.logger import Logger
 import argparse
 from inspect import signature, Parameter
 import logging
-
-
-Formatter = ActionWithArgumentsFormatter
+from collections import OrderedDict
 
 
 def argparser(parser: argparse.ArgumentParser):
@@ -22,10 +19,23 @@ def argparser(parser: argparse.ArgumentParser):
     parser.add_argument('-r', '--reference', help='File to use as reference', required=True)
     parser.add_argument('-h', '--hypothesis', help='File to use as hypothesis', required=True)
 
-    parser.add_argument('-rt', '--reference-type', default='infer',
-                        help='Type of reference file')
-    parser.add_argument('-ht', '--hypothesis-type', default='infer',
-                        help='Type of hypothesis file')
+    types = OrderedDict(infer=' '.join([core.File.__doc__.strip(),
+                                        'Automatically infer file type from the filename extension.']),
+                        argument='Read the argument and treat as plain text (without reading from file)',
+                        **core.File.available_types())
+    types_help = ['Available types:']
+    types_help.extend(['%r: %s' % (k, v) for k, v in types.items()])
+    types_help = '\n'.join(types_help)
+
+    subparser = parser.add_argument_group('reference and hypothesis types',
+                                          description='You can specify which file type the --reference/-r and ' +
+                                                      '--hypothesis/-h arguments should be treated as.\n\n' +
+                                                      types_help)
+
+    subparser.add_argument('-rt', '--reference-type', default='infer',
+                           help='Type of reference file', choices=types.keys())
+    subparser.add_argument('-ht', '--hypothesis-type', default='infer',
+                           help='Type of hypothesis file', choices=types.keys())
 
     parser.add_argument('-o', '--output-format', default='restructuredtext', choices=output_factory.keys(),
                         help='Format of the outputted results')

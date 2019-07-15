@@ -7,7 +7,7 @@ import re
 import os
 from unidecode import unidecode
 from benchmarkstt import normalization
-from benchmarkstt import config, DEFAULT_ENCODING
+from benchmarkstt import config, settings
 from contextlib import contextmanager
 # from benchmarkstt.modules import LoadObjectProxy
 
@@ -210,7 +210,7 @@ class Config(normalization.Base):
 
     def __init__(self, file, section=None, encoding=None):
         if encoding is None or encoding == '':
-            encoding = DEFAULT_ENCODING
+            encoding = settings.default_encoding
 
         if section is None:
             section = self._default_section
