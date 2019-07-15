@@ -8,6 +8,9 @@ from benchmarkstt import input
 
 
 class PlainText(input.Base):
+    """
+    plain text
+    """
     def __init__(self, text, segmenter=None, normalizer=None):
         if segmenter is None:
             segmenter = segmenters.Simple
@@ -21,12 +24,20 @@ class PlainText(input.Base):
 
 class File(input.Base):
     """
-    Load the input class based on a file
+    Load from a given filename.
     """
 
     _extension_to_class = {
         "txt": PlainText,
     }
+
+    @classmethod
+    def available_types(cls):
+        return {cls_config.name: ' '.join([cls.__doc__.strip(),
+                                           'Treat file as',
+                                           cls_config.cls.__doc__.strip()])
+                for cls_config in input.factory
+                if cls_config.name != 'file'}
 
     def __init__(self, file, input_type=None, normalizer=None):
         self._normalizer = normalizer
