@@ -4,6 +4,7 @@ from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
 from collections import namedtuple
+# from benchmarkstt.modules import LoadObjectProxy
 
 logger = logging.getLogger(__name__)
 
@@ -20,10 +21,22 @@ def traversible(schema, key=None):
 def get_opcode_counts(opcodes):
     counts = OpcodeCounts(0, 0, 0, 0)._asdict()
     for tag, alo, ahi, blo, bhi in opcodes:
-        if tag in ['equal', 'replace', 'delete']:
+        if tag == 'equal':
             counts[tag] += ahi - alo
         elif tag == 'insert':
             counts[tag] += bhi - blo
+        elif tag == 'delete':
+            counts[tag] += ahi - alo
+        elif tag == 'replace':
+            counts[tag] += ahi - alo
+            if ahi - alo < bhi - blo:
+                c = bhi - blo - ahi + alo
+                counts['insert'] += c
+                counts[tag] -= c
+            elif ahi - alo > bhi - blo:
+                c = ahi - alo - bhi + blo
+                counts['delete'] += c
+                counts[tag] -= c
     return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
 
 
@@ -112,3 +125,12 @@ class DiffCounts(Base):
     def compare(self, ref: Schema, hyp: Schema):
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
+
+
+# For a future version
+# class ExternalMetric(LoadObjectProxy, Base):
+#     """
+#     Automatically loads an external metric class.
+#
+#     :param name: The name of the metric to load (eg. mymodule.metrics.MyOwnMetricClass)
+#     """

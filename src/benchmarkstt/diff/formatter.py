@@ -106,12 +106,12 @@ class ListDialect(Dialect):
             if idx >= oor:
                 kind = 'delete'
             hyp = txt2[idx] if kind != 'delete' else None
-            result = OrderedDict((('kind', kind), ('reference', ref), ('hypothesis', hyp)))
+            result = OrderedDict((('type', kind), ('reference', ref), ('hypothesis', hyp)))
             self._output.append(result)
 
         if idx < oor:
             for word_ in txt2[idx+1:]:
-                result = OrderedDict((('kind', 'insert'), ('reference', None), ('hypothesis', word_)))
+                result = OrderedDict((('type', 'insert'), ('reference', None), ('hypothesis', word_)))
                 self._output.append(result)
 
     def __enter__(self):

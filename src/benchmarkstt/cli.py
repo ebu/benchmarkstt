@@ -11,6 +11,9 @@ import sys
 from functools import partial
 import re
 
+# allow loading of modules based on current working directory
+sys.path.insert(0, '')
+
 
 def args_help(parser):
     parser.add_argument('--help', action='help', default=argparse.SUPPRESS,

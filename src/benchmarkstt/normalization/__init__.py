@@ -107,10 +107,10 @@ factory = Factory(Base, _normalizer_namespaces)
 
 class FileFactory(Factory):
     def create(self, name, file=None, encoding=None, path=None):
-        cls = super().get_class(name)
+        cls = super().__getitem__(name)
         return File(cls, file, encoding, path=path)
 
-    def get_class(self, name):
+    def __getitem__(self, item):
         raise NotImplementedError("Not supported")
 
 

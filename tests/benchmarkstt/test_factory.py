@@ -18,7 +18,7 @@ class InvalidClass:
 
 def test_factory_exception():
     factory = Factory(Base, [test_factory_exception.__module__])
-    assert factory.get_class('validclass') == ValidClass
+    assert factory['validclass'] == ValidClass
     with raises(ValueError) as exc:
         factory.register(InvalidClass)
 
@@ -27,10 +27,12 @@ def test_factory_exception():
 
 def test_factory():
     factory = Factory(Base, [])
+    assert factory.is_valid(ValidClass) is True
+
     factory.register(ValidClass)
-    assert factory.get_class('validclass') == ValidClass
-    factory.register(ValidClass, 'alias')
-    assert factory.get_class('alias') == ValidClass
+    assert factory['validclass'] == ValidClass
+    factory['alias'] = ValidClass
+    assert factory['alias'] == ValidClass
 
     assert type(factory.create('alias')) == ValidClass
 
@@ -43,6 +45,21 @@ def test_factory():
         factory.register_namespace(module_name)
 
     assert "Conflict: alias 'validclass' is already registered" in str(exc)
+
+    del factory[ValidClass]
+    assert type(factory.create('alias')) == ValidClass
+
+    with raises(ImportError) as exc:
+        factory.create('validclass')
+
+    assert "Could not find class" in str(exc)
+
+    factory.unregister('alias')
+
+    with raises(ImportError) as exc:
+        factory.create('alias')
+
+    assert "Could not find class" in str(exc)
 
 
 def test_nodoclog(caplog):

@@ -68,7 +68,7 @@ def main(parser, args, normalizer=None):
     with output_factory.create(args.output_format) as out:
         for item in args.metrics:
             metric_name = item.pop(0).replace('-', '.')
-            cls = factory.get_class(metric_name)
+            cls = factory[metric_name]
             kwargs = dict()
 
             # somewhat hacky default diff formats for metrics

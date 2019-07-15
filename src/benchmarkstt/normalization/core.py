@@ -9,6 +9,7 @@ from unidecode import unidecode
 from benchmarkstt import normalization
 from benchmarkstt import config, settings
 from contextlib import contextmanager
+# from benchmarkstt.modules import LoadObjectProxy
 
 
 file_types = (str,)
@@ -29,7 +30,7 @@ class Replace(normalization.BaseWithFileSupport):
     :example return: "Nudge wink!"
     """
 
-    def __init__(self, search: str, replace):
+    def __init__(self, search: str, replace: str):
         self._search = search
         self._replace = replace
 
@@ -265,6 +266,15 @@ class Config(normalization.Base):
         section = 'defaults to %s' % (repr(cls._default_section),) if cls._default_section else 'no section by default'
         section_tag = '[%s]' % (cls._default_section,) if cls._default_section else ''
         cls.__doc__ = cls.doc_string.replace('{section}', section).replace('{[section]}', section_tag)
+
+
+# For future versions
+# class ExternalNormalizer(LoadObjectProxy, normalization.BaseWithFileSupport):
+#     """
+#     Automatically loads an external normalizer class.
+#
+#     :param name: The name of the normalizer to load (eg. mymodule.normalization.Normalizer)
+#     """
 
 
 Config.refresh_docstring()

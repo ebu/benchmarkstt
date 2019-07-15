@@ -48,4 +48,8 @@ class Json(output.Base):
             print(',')
         self._line += 1
         print('\t', end='')
+
+        if isinstance(result, tuple) and hasattr(result, '_asdict'):
+            result = result._asdict()
+
         print(Schema.dumps(OrderedDict((('title', title), ('result', result)))), end='')
