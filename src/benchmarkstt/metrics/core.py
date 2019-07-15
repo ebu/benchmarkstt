@@ -21,10 +21,22 @@ def traversible(schema, key=None):
 def get_opcode_counts(opcodes):
     counts = OpcodeCounts(0, 0, 0, 0)._asdict()
     for tag, alo, ahi, blo, bhi in opcodes:
-        if tag in ['equal', 'replace', 'delete']:
+        if tag == 'equal':
             counts[tag] += ahi - alo
         elif tag == 'insert':
             counts[tag] += bhi - blo
+        elif tag == 'delete':
+            counts[tag] += ahi - alo
+        elif tag == 'replace':
+            counts[tag] += ahi - alo
+            if ahi - alo < bhi - blo:
+                c = bhi - blo - ahi + alo
+                counts['insert'] += c
+                counts[tag] -= c
+            elif ahi - alo > bhi - blo:
+                c = ahi - alo - bhi + blo
+                counts['delete'] += c
+                counts[tag] -= c
     return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
 
 

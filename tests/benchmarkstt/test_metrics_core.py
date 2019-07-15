@@ -9,6 +9,12 @@ import pytest
     ['Hello Test', 'Hello kind Test', (2, 0, 1, 0)],
     ['aaa aa bb', 'aaa bb', (2, 0, 0, 1)],
     ['aaa aa bb', 'aaa cc bb', (2, 1, 0, 0)],
+    ['a b c d e f g h i', 'a b c c c d f g i', (7, 0, 2, 2)],
+    ['', 'inserts 3 words', (0, 0, 3, 0)],
+    ['deletes 3 words', '', (0, 0, 0, 3)],
+    ['changes 1 word', 'changes one word', (2, 1, 0, 0)],
+    ['0 1 2 3 4', '0 1 22 2 3 4', (5, 0, 1, 0)],
+    ['0 1 2 3 4', '0 1 2 3 4', (5, 0, 0, 0)],
 ])
 def test_diffcounts(a, b, exp):
     assert DiffCounts().compare(PlainText(a), PlainText(b)) == OpcodeCounts(*exp)

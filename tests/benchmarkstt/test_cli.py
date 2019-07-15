@@ -84,7 +84,11 @@ OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
      '{"type": "equal", "reference": "OF", "hypothesis": "OF"}, '
      '{"type": "equal", "reference": "MINE", "hypothesis": "MINE"}'
      ']}\n]\n'
-     ]
+     ],
+    ['metrics -r "HELLO CRUEL WORLD OF MINE" -h "GOODBYE WORLD OF MINE" -rt argument -ht argument '
+     '--diffcounts --output-format json',
+     '[\n\t{"title": "diffcounts", "result": {"equal": 3, "replace": 1, "insert": 0, "delete": 1}}\n]\n'
+     ],
 ])
 def test_clitools(argv, result, capsys):
     commandline_tester('benchmarkstt-tools', tools, argv, result, capsys)
