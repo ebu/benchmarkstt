@@ -206,6 +206,7 @@ class Config(normalization.Base):
     :example return: "ha bravalY Turnad his tail and flad"
     """
 
+    MAIN_SECTION = object()
     _default_section = 'normalization'
 
     def __init__(self, file, section=None, encoding=None):
@@ -214,6 +215,8 @@ class Config(normalization.Base):
 
         if section is None:
             section = self._default_section
+        elif section is self.MAIN_SECTION:
+            section = None
 
         if type(file) in file_types:
             # next filenames are relative from path of the config file...
