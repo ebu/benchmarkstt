@@ -3,19 +3,21 @@ Command line tool
 
     .. argparse::
        :module: benchmarkstt.cli
-       :func: _parser_no_sub
+       :func: main_parser
        :prog: benchmarkstt
 
 
-Subcommands
------------
+Additional tools
+----------------
 
-    .. toctree::
-       :maxdepth: 1
+Some additional helpful tools are available through ``benchmarkstt-tools``, which provides these subcommands:
 
-       cli/normalization
-       cli/api
-       cli/metrics
+   .. toctree::
+      :maxdepth: 1
+
+      cli/api
+      cli/normalization
+      cli/metrics
 
 Bash completion
 ---------------
@@ -25,3 +27,5 @@ Bash completion is supported through ``argcomplete``.
     .. toctree::
 
        bash-completion
+
+.. _JSON-RPC: https://www.jsonrpc.org

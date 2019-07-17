@@ -3,31 +3,21 @@ Package benchmarkstt
 """
 
 from .__meta__ import __author__, __version__
+from functools import partial, wraps
+from os import getenv
 
 
-class DeferredStr:
+class DeferredCallback:
     """Simple helper class to defer the execution of formatting functions until it is needed"""
 
-    def __init__(self, func):
-        self._func = func
+    def __init__(self, cb, *args, **kwargs):
+        self._cb = wraps(cb)(partial(cb, *args, **kwargs))
 
     def __str__(self):
-        return self._func()
+        return self._cb()
 
     def __repr__(self):
-        return self.__str__()
-
-
-class DeferredRepr:
-    """Simple helper class to defer the execution of repr call until it is needed"""
-    def __init__(self, val):
-        self._val = val
-
-    def __str__(self):
-        return repr(self._val)
-
-    def __repr__(self):
-        return self.__str__()
+        return '<%s:%s>' % (self.__class__.__name__, repr(self._cb()))
 
 
 class DeferredList:
@@ -62,3 +52,12 @@ def make_printable(char):
         return chr(0x2400 | codepoint)
 
     return char if char != ' ' else '·'
+
+
+class _Settings:
+    @property
+    def default_encoding(self):
+        return getenv('DEFAULT_ENCODING', 'UTF-8')
+
+
+settings = _Settings()

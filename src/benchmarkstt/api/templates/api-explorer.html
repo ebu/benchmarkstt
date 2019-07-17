@@ -274,7 +274,7 @@
                       {% else %}
                         {% set example = '' %}
                       {% endif %}
-                      {% if param.name == 'text' or '\n' in example %}
+                      {% if param.name in ('text', 'hyp', 'ref') or '\n' in example %}
                       <textarea class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} rows="6" name="{{ param.name }}" id="{{ item.id }}_{{ param.name }}">{{ example }}</textarea>
                       {% else %}
                       <input class="form-input {{ param.name }}"{% if param.is_required %}required{% endif %} type="text" id="{{ item.id }}_{{ param.name }}" name="{{ param.name }}" value="{{ example }}">
@@ -383,14 +383,19 @@ $(function() {
 
           for (var i = 0, I = logs.length; i < I; i++) {
             html += '<div class="row">';
-            for (var j = 0, J = logs[i].names.length; j < J; j++) {
+            if (logs[i].title) {
+              html += '<div class="normalizer_log_title">';
+              html += logs[i].title;
+              html += '</div>';
+            }
+            for (var j = 0, J = logs[i].stack.length; j < J; j++) {
               html += '<div class="normalizer">';
-              html += logs[i].names[j];
+              html += logs[i].stack[j];
               html += '</div>';
             }
 
             html += '<div class="diffs bg-secondary text-primary">';
-            html += logs[i].message;
+            html += logs[i].diff;
             html += '</div>';
 
             html += '</div>';

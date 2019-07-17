@@ -26,6 +26,21 @@ This assumes :code:`git` and :code:`Python` 3.5 or above are already installed o
 4. You now have a local development environment where you can commit and push to your own forked repository.
 
 
+Building the documentation
+--------------------------
+
+Build the documentation locally:
+
+   .. code-block:: bash
+
+      pip install -r docs/requirements.txt
+      make docs
+
+The documentation will be created in /docs/build/html/
+
+
+
+
 Contributing
 ------------
 

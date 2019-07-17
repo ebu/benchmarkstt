@@ -1,7 +1,7 @@
 Setting up bash completion
 ==========================
 
-If you use ``bash`` as your shell, ``benchmarkstt`` can use `argcomplete <https://argcomplete.readthedocs.io>`_ for auto-completion.
+If you use ``bash`` as your shell, ``benchmarkstt`` and ``benchmarkstt-tools`` can use `argcomplete <https://argcomplete.readthedocs.io>`_ for auto-completion.
 
 For this ``argcomplete`` needs to be installed **and** enabled.
 
@@ -28,10 +28,11 @@ Alternative argcomplete configuration
    .. code-block:: bash
 
       register-python-argcomplete benchmarkstt >> ~/.bashrc
+      register-python-argcomplete benchmarkstt-tools >> ~/.bashrc
 
 2. For one-time activation of argcomplete for ``benchmarkstt`` only, use:
 
    .. code-block:: bash
 
-      eval "$(register-python-argcomplete benchmarkstt)"
+      eval "$(register-python-argcomplete benchmarkstt; register-python-argcomplete benchmarkstt-tools)"
 

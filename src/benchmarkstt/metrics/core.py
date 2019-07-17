@@ -4,6 +4,7 @@ from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
 from collections import namedtuple
+# from benchmarkstt.modules import LoadObjectProxy
 
 logger = logging.getLogger(__name__)
 
@@ -20,10 +21,22 @@ def traversible(schema, key=None):
 def get_opcode_counts(opcodes):
     counts = OpcodeCounts(0, 0, 0, 0)._asdict()
     for tag, alo, ahi, blo, bhi in opcodes:
-        if tag in ['equal', 'replace', 'delete']:
+        if tag == 'equal':
             counts[tag] += ahi - alo
         elif tag == 'insert':
             counts[tag] += bhi - blo
+        elif tag == 'delete':
+            counts[tag] += ahi - alo
+        elif tag == 'replace':
+            counts[tag] += ahi - alo
+            if ahi - alo < bhi - blo:
+                c = bhi - blo - ahi + alo
+                counts['insert'] += c
+                counts[tag] -= c
+            elif ahi - alo > bhi - blo:
+                c = ahi - alo - bhi + blo
+                counts['delete'] += c
+                counts[tag] -= c
     return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
 
 
@@ -36,13 +49,15 @@ def get_differ(a, b, differ_class):
 
 class WordDiffs(Base):
     """
-    Calculate the differences on a per-word basis
+    Present differences on a per-word basis
+
+    :param dialect: Presentation format. Default is 'cli'.
+    :example dialect: 'html'
+    :param differ_class: For future use.
     """
 
-    def __init__(self, differ_class=None, dialect=None):
+    def __init__(self, dialect=None, differ_class=None):
         self._differ_class = differ_class
-        if dialect is None:
-            dialect = 'cli'
         self._dialect = dialect
 
     def compare(self, ref: Schema, hyp: Schema):
@@ -65,11 +80,19 @@ class WER(Base):
              number of reference words
 
     See: https://en.wikipedia.org/wiki/Word_error_rate
+
+    Insertions, deletions and substitutions are
+    identified using the Hunt–McIlroy diff algorithm.
+    This algorithm is the one used internally by Python.
+    See https://docs.python.org/3/library/difflib.html
+
+    :param mode: WER variant. 'strict' is the default. 'hunt' applies 0.5 weight to insertions and deletions.
+    :param differ_class: For future use.
     """
 
-    # TODO: proper documenting of different modes
-    MODE_STRICT = 0
-    MODE_HUNT = 1
+    # WER modes
+    MODE_STRICT = 'strict'
+    MODE_HUNT = 'hunt'
 
     DEL_PENALTY = 1
     INS_PENALTY = 1
@@ -79,7 +102,7 @@ class WER(Base):
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
-        if mode is self.MODE_HUNT:
+        if mode == self.MODE_HUNT:
             self.DEL_PENALTY = self.INS_PENALTY = .5
 
     def compare(self, ref: Schema, hyp: Schema):
@@ -91,7 +114,10 @@ class WER(Base):
             counts.delete * self.DEL_PENALTY + \
             counts.insert * self.INS_PENALTY
 
-        return changes / (counts.equal + changes)
+        total_ref = counts.equal + counts.replace + counts.delete
+        if total_ref == 0:
+            return 1
+        return changes / total_ref
 
 
 class DiffCounts(Base):
@@ -107,3 +133,12 @@ class DiffCounts(Base):
     def compare(self, ref: Schema, hyp: Schema):
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
+
+
+# For a future version
+# class ExternalMetric(LoadObjectProxy, Base):
+#     """
+#     Automatically loads an external metric class.
+#
+#     :param name: The name of the metric to load (eg. mymodule.metrics.MyOwnMetricClass)
+#     """

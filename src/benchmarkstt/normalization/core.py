@@ -4,65 +4,20 @@ Some basic/simple normalization classes
 """
 
 import re
-from unidecode import unidecode
-from io import StringIO
 import os
-import inspect
-from langcodes import best_match, standardize_tag
-from benchmarkstt import csv, normalization
-from benchmarkstt.normalization import Base
-
-default_encoding = 'UTF-8'
-
-
-class LocalizedFile(Base):
-    """
-    Reads and applies normalization rules from a locale-based file, it will
-    automatically determine the "best fit" for a given locale, if one is
-    available.
-
-    :param str|class normalizer: Normalizer name (or class)
-    :param str locale: Which locale to search for
-    :param PathLike path: Location of available locale files
-    :param str encoding: The file encoding
-
-    :example text: "This is an Ex-Parakeet"
-    :example normalizer: "regexreplace"
-    :example path: "./resources/test/normalizers/regexreplace"
-    :example locale: "en"
-    :example encoding: "UTF-8"
-    :example return: "This is an Ex Parrot"
-    """
-
-    def __init__(self, normalizer, locale: str, path: str, encoding=None):
-        path = os.path.realpath(path)
-        if not os.path.isdir(path):
-            raise NotADirectoryError("Expected '%s' to be a directory" %
-                                     (str(path),))
-
-        files = {standardize_tag(file): file
-                 for file in os.listdir(path)
-                 if os.path.isfile(os.path.join(path, file))}
-
-        locale = standardize_tag(locale)
-        match = best_match(locale, files.keys())[0]
-        if match == 'und':
-            raise FileNotFoundError(
-                "Could not find a locale file for locale '%s' in '%s'" %
-                (locale, str(path)))
-
-        file = os.path.join(path, files[match])
-
-        if encoding is None:
-            encoding = default_encoding
-
-        self._normalizer = File(normalizer, file, encoding=encoding)
-
-    def _normalize(self, text: str) -> str:
-        return self._normalizer.normalize(text)
+from unidecode import unidecode
+from benchmarkstt import normalization
+from benchmarkstt import config, settings
+from contextlib import contextmanager
+# from benchmarkstt.modules import LoadObjectProxy
 
 
-class Replace(Base):
+file_types = (str,)
+if hasattr(os, 'PathLike'):
+    file_types = (str, os.PathLike)
+
+
+class Replace(normalization.BaseWithFileSupport):
     """
     Simple search replace
 
@@ -75,7 +30,7 @@ class Replace(Base):
     :example return: "Nudge wink!"
     """
 
-    def __init__(self, search: str, replace: str = ''):
+    def __init__(self, search: str, replace: str):
         self._search = search
         self._replace = replace
 
@@ -83,7 +38,7 @@ class Replace(Base):
         return text.replace(self._search, self._replace)
 
 
-class ReplaceWords(Base):
+class ReplaceWords(normalization.BaseWithFileSupport):
     """
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
@@ -111,6 +66,9 @@ class ReplaceWords(Base):
         self._replace = replace
 
     def _replacement_callback(self, matches):
+        if len(self._replace) == 0:
+            return ''
+
         if matches.group(0)[0].isupper():
             return ''.join([self._replace[0].upper(), self._replace[1:]])
 
@@ -120,48 +78,7 @@ class ReplaceWords(Base):
         return self._pattern.sub(self._replacement_callback, text)
 
 
-class File(Base):
-    """
-    Read one per line and pass it to the given normalizer
-
-    :param str|class normalizer: Normalizer name (or class)
-    :param str file: The file to read rules from
-    :param str encoding: The file encoding
-
-    :example text: "This is an Ex-Parakeet"
-    :example normalizer: "regexreplace"
-    :example file: "./resources/test/normalizers/regexreplace/en_US"
-    :example encoding: "UTF-8"
-    :example return: "This is an Ex Parrot"
-    """
-
-    def __init__(self, normalizer, file, encoding=None):
-        try:
-            if inspect.isclass(normalizer):
-                cls = normalizer
-            else:
-                cls = normalization.factory.get_class(normalizer)
-        except ValueError:
-            raise ValueError("Unknown normalizer %s" %
-                             (repr(normalizer)))
-
-        if encoding is None:
-            encoding = default_encoding
-
-        with open(file, encoding=encoding) as f:
-            self._normalizer = normalization.NormalizationComposite()
-
-            for line in csv.reader(f):
-                try:
-                    self._normalizer.add(cls(*line))
-                except TypeError as e:
-                    raise ValueError("Line %d: %s" % (line.lineno, str(e)))
-
-    def _normalize(self, text: str) -> str:
-        return self._normalizer.normalize(text)
-
-
-class RegexReplace(Base):
+class Regex(normalization.BaseWithFileSupport):
     r"""
     Simple regex replace. By default the pattern is interpreted
     case-sensitive.
@@ -197,40 +114,15 @@ class RegexReplace(Base):
     :example return: "HeHe! Hehehe!"
     """
 
-    def __init__(self, search: str, replace: str = None):
+    def __init__(self, search: str, replace: str):
         self._pattern = re.compile(search)
-        self._substitution = replace if replace is not None else ''
+        self._substitution = replace
 
     def _normalize(self, text: str) -> str:
         return self._pattern.sub(self._substitution, text)
 
 
-class AlphaNumeric(RegexReplace):
-    """
-    Simple alphanumeric filter
-
-    :example text: "He's a lumberjack, and he's okay!"
-    :example return: "Hesalumberjackandhesokay"
-    """
-
-    def __init__(self):
-        super().__init__('[^A-Za-z0-9]+')
-
-
-class AlphaNumericUnicode(RegexReplace):
-    """
-    Simple alphanumeric filter, takes into account all unicode alphanumeric
-    characters.
-
-    :example text: "Das, öder die Flipper-Wåld Gespütt!"
-    :example return: "DasöderdieFlipperWåldGespütt"
-    """
-
-    def __init__(self):
-        super().__init__(r'[^\w]+')
-
-
-class Lowercase(Base):
+class Lowercase(normalization.Base):
     """
     Lowercase the text
 
@@ -243,7 +135,7 @@ class Lowercase(Base):
         return text.lower()
 
 
-class Unidecode(Base):
+class Unidecode(normalization.Base):
     """
     Unidecode characters to ASCII form, see `Python's Unidecode package
     <https://pypi.org/project/Unidecode>`_ for more info.
@@ -256,11 +148,21 @@ class Unidecode(Base):
         return unidecode(text)
 
 
-class Config(Base):
-    r"""
-    Use config notation to define normalization rules. This notation is a
-    list of normalizers, one per line, with optional arguments (separated by a
-    space).
+class ConfigSectionNotFoundError(ValueError):
+    """
+    Raised when a requested config section was not found
+    """
+
+
+class Config(normalization.Base):
+    doc_string = r"""
+    Use config file notation to define normalization rules. This notation is a
+    list of normalizers, one per line.
+
+    Each normalizer that is based needs a file is followed by a file name of a
+    csv, and can be optionally followed by the file encoding (if different than
+    default).
+    All options are loaded in from this csv and applied to the normalizer.
 
     The normalizers can be any of the core normalizers, or you can refer to your
     own normalizer class (like you would use in a python import, eg.
@@ -278,62 +180,25 @@ class Config(Base):
 
     .. code-block:: text
 
-        Normalizer1 arg1 "arg 2"
+        {[section]}
         # This is a comment
 
-        Normalizer2
         # (Normalizer2 has no arguments)
-        Normalizer3 "This is argument 1
-        Spanning multiple lines
-        " "argument 2"
-        Normalizer4 "argument with double quote ("")"
+        lowercase
 
-    :param str config: configuration text
+        # loads regex expressions from regexrules.csv in "utf 8" encoding
+        regex regexrules.csv "utf 8"
 
-    :example text: "He bravely turned his tail and fled"
-    :example config:
+        # load another config file, [section1] and [section2]
+        config configfile.ini section1
+        config configfile.ini section2
 
-        .. code-block:: text
+        # loads replace expressions from replaces.csv in default encoding
+        replace     replaces.csv
 
-            # using a simple config file
-            Lowercase
-
-            # it even supports comments
-            # If there is a space in the argument,
-            # make sure you quote it though!
-
-            regexreplace "y t" "Y T"
-
-            # extraneous whitespaces are ignored
-            replace   e     a
-
-    :example return: "ha bravalY Turnad his tail and flad"
-    """
-
-    def __init__(self, config):
-        self._parse_config(StringIO(config))
-
-    def _parse_config(self, file):
-        self._normalizer = normalization.NormalizationComposite()
-        for line in csv.reader(file, dialect='whitespace'):
-            try:
-                normalizer = normalization.factory.get_class(line[0])
-            except ValueError:
-                raise ValueError("Unknown normalizer %s on line %d: %s" %
-                                 (repr(line[0]), line.lineno, repr(' '.join(line))))
-            self._normalizer.add(normalizer(*line[1:]))
-
-    def _normalize(self, text: str) -> str:
-        return self._normalizer.normalize(text)
-
-
-class ConfigFile(Config):
-    """
-    Load config from a file, see :py:class:`Config` for information about config
-    notation
-
-    :param typing.io.TextIO file: The file
-    :param str encoding: The file encoding
+    :param file: The config file
+    :param encoding: The file encoding
+    :param section: The subsection of the config file to use, {section}
 
     :example text: "He bravely turned his tail and fled"
     :example file: "./resources/test/normalizers/configfile.conf"
@@ -341,9 +206,78 @@ class ConfigFile(Config):
     :example return: "ha bravalY Turnad his tail and flad"
     """
 
-    def __init__(self, file, encoding=None):
-        if encoding is None:
-            encoding = default_encoding
+    MAIN_SECTION = object()
+    _default_section = 'normalization'
 
-        with open(file, encoding=encoding) as f:
-            self._parse_config(f)
+    def __init__(self, file, section=None, encoding=None):
+        if encoding is None or encoding == '':
+            encoding = settings.default_encoding
+
+        if section is None:
+            section = self._default_section
+        elif section is self.MAIN_SECTION:
+            section = None
+
+        if type(file) in file_types:
+            # next filenames are relative from path of the config file...
+            path = os.path.dirname(os.path.realpath(file))
+            title = file
+
+            with open(file, encoding=encoding) as f:
+                reader = config.reader(f)
+        else:
+            path = None
+            title = ''
+            reader = config.reader(file)
+
+        if section is not None:
+            if section not in reader:
+                raise ConfigSectionNotFoundError(section)
+
+            reader = reader[section]
+            title += '[%s]' % (section,)
+
+        self._normalizer = normalization.NormalizationComposite(title)
+
+        for line in reader:
+            try:
+                if line[0] in normalization.file_factory:
+                    normalizer = normalization.file_factory.create(*line, path=path)
+                else:
+                    normalizer = normalization.factory.create(*line)
+                self._normalizer.add(normalizer)
+            except ImportError:
+                raise ValueError("Unknown normalizer %s on line %d: %s" %
+                                 (repr(line[0]), line.lineno, repr(' '.join(line))))
+
+    def _normalize(self, text: str) -> str:
+        return self._normalizer.normalize(text)
+
+    @classmethod
+    @contextmanager
+    def default_section(cls, section):
+        prev_section = cls._default_section
+        cls._default_section = section
+        try:
+            cls.refresh_docstring()
+            yield
+        finally:
+            cls._default_section = prev_section
+
+    @classmethod
+    def refresh_docstring(cls):
+        section = 'defaults to %s' % (repr(cls._default_section),) if cls._default_section else 'no section by default'
+        section_tag = '[%s]' % (cls._default_section,) if cls._default_section else ''
+        cls.__doc__ = cls.doc_string.replace('{section}', section).replace('{[section]}', section_tag)
+
+
+# For future versions
+# class ExternalNormalizer(LoadObjectProxy, normalization.BaseWithFileSupport):
+#     """
+#     Automatically loads an external normalizer class.
+#
+#     :param name: The name of the normalizer to load (eg. mymodule.normalization.Normalizer)
+#     """
+
+
+Config.refresh_docstring()

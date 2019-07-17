@@ -1,12 +1,35 @@
 import os
 import sys
+import re
+from sphinx.ext.apidoc import main as sphinx_apidoc
+from benchmarkstt.api.jsonrpc import get_methods
+from benchmarkstt.docblock import format_docs
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
-root_dir = os.path.abspath('../benchmarkstt')
-sys.path.insert(0, root_dir)
+root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+src_dir = os.path.join(os.path.abspath(root_dir), 'src')
+docs_modules_dir = os.path.join(os.path.abspath(root_dir), 'docs/modules')
 
+sys.path.insert(0, root_dir)
+sys.path.insert(0, src_dir)
+
+# -- Auto build module docs --------------------------------------------------
+sphinx_apidoc(['-e', '-f', '-o', docs_modules_dir, src_dir])
+os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
+
+with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') as f:
+    f.write("Available JSON-RPC methods\n==========================\n\n\n")
+    f.write(".. attention::\n\n")
+    f.write("    Only supported for Python versions 3.6 and above\n\n\n")
+
+    methods = get_methods()
+    for name, func in methods.items.items():
+        f.write('\n%s\n%s\n' % (name, '-' * len(name)))
+        f.write('\n')
+        f.write(format_docs(func.__doc__))
+        f.write('\n\n')
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -34,9 +57,13 @@ copyright = '2019, EBU'
 author = 'EBU'
 
 # The short X.Y version
-version = ''
-# The full version, including alpha/beta/rc tags
-release = ''
+
+with open('../VERSION') as f:
+    # The full version, including alpha/beta/rc tags
+    release = f.read()
+
+# The short X.Y version
+version = re.sub(r'^([0-9]+\.[0-9]+).*$', r'\1', release)
 
 
 # -- General configuration ---------------------------------------------------
@@ -190,3 +217,4 @@ epub_exclude_files = ['search.html']
 # smartquotes_action = 'q'
 #
 # smartquotes_excludes = {'builders': ['man', 'text']}
+
