@@ -16,10 +16,12 @@ Make the "reference"
 
 Creating accurate verbatim transcripts for use as reference is time-consuming and expensive. As a quick and easy alternative, we will make a "reference" from a subtitles file. Subtitles are slightly edited and they include additional text like descriptions of sounds and actions, so they are not a verbatim transcription of the speech. Consequently, they are not suitable for calculating absolute WER. However, we are interested in calculating relative WER for illustration purposes only, so this use of subtitles is deemed acceptable. 
 
-	WARNING: This is a demo of work in progress. The benchmarking tool is still in development 
-	and evaluations are not done for the purpose of assessing tools. In addition, the use of 
-	subtitles as reference will skew the results so they should not be taken as an indication 
-	of overall performance or as an endorsement of a particular vendor or engine.
+.. warning::
+
+    This is a demo of work in progress. The benchmarking tool is still in development
+    and evaluations are not done for the purpose of assessing tools. In addition, the use of
+    subtitles as reference will skew the results so they should not be taken as an indication
+    of overall performance or as an endorsement of a particular vendor or engine.
 
 We will use the subtitles file for the BBC's Question Time Brexit debate. This program was chosen for its length (90 minutes) and because live debates are particularly challenging to transcribe.
 
@@ -28,11 +30,12 @@ The subtitles file includes a lot of extra text in XML tags. This text shouldn't
 
 .. code:: bash
 
-	benchmarkstt-tools normalization --in qt_subs.xml --out qt_reference.txt --regex "<[^>]+>" " "
+    benchmarkstt-tools normalization --inputfile qt_subs.xml --outputfile qt_reference.txt --regex "<[^>]+>" " "
 
-The normalization rule :code:`--regex` takes two parameters: a regular expression pattern and the replacement string. In this case all XML tags will be replaced with a space. This will result in a lot of space characters, but these are ignored by the diff algorithm later so we don't have to clean these up. :code:`--in` and :code:`--out` are the input and output files. 
+The normalization rule :code:`--regex` takes two parameters: a regular expression pattern and the replacement string. In this case all XML tags will be replaced with a space. This will result in a lot of space characters, but these are ignored by the diff algorithm later so we don't have to clean these up. :code:`--inputfile` and :code:`--outputfile` are the input and output files. 
 
-The file :code:`qt_reference.txt` has been created. You can see that the XML tags are gone, but the file still contains non-dialogue text like 'APPLAUSE'. For better results you can manually clean up the text, or run the command again with a different normalization rule (not included in this demo). But we will stop the normalization at this point. 
+The file :code:`qt_reference.txt` has been created. You can see that the XML tags are gone, but the file still contains non-dialogue text like 'APPLAUSE'.
+For better results you can manually clean up the text, or run the command again with a different normalization rule (not included in this demo). But we will stop the normalization at this point.
 
 We now have a simple text file that will be used as the reference. The next step is to get the machine-generated transcripts for benchmarking.
 
@@ -114,10 +117,10 @@ First, let's create a file for the regex normalization rules. Create a text docu
 
 .. code:: bash
 
-	# Replace XML tags with space
-	"<[^>]+>" " "
-	# Replace punctuation with space
-	"[,.-]" " "
+    # Replace XML tags with space
+    "<[^>]+>" " "
+    # Replace punctuation with space
+    "[,.-]" " "
 
 Save this file as :code:`rules.regex`.
 
@@ -126,11 +129,11 @@ Now let's create a config file that contains all the normalization rules. They m
 
 .. code:: bash 
 
-	[normalization]
-	# Load regex rules file and tell the processor it's a regex type
-	Regex rules.regex
-	# Built in rule
-	lowercase
+    [normalization]
+    # Load regex rules file and tell the processor it's a regex type
+    Regex rules.regex
+    # Built in rule
+    lowercase
 
 Save the above as :code:`config.conf`. These rules will be applied to both hypothesis and reference, in the order in which they are listed.
 
@@ -138,13 +141,13 @@ Now run :code:`benchmarkstt` with the :code:`--conf` argument. We also need to t
 
 .. code:: bash
 
-	benchmarkstt --reference qt_subs.xml -rt plaintext --hypothesis qt_kaldi_hypothesis.txt --config normalization.conf --wer
+    benchmarkstt --reference qt_subs.xml -rt plaintext --hypothesis qt_kaldi_hypothesis.txt --config normalization.conf --wer
 
 And again for the other transcript, this time using the short form:
 
 .. code:: bash
 
-	benchmarkstt -r qt_subs.xml -rt plaintext -h qt_aws_hypothesis.txt --config normalization.conf --wer
+    benchmarkstt -r qt_subs.xml -rt plaintext -h qt_aws_hypothesis.txt --config normalization.conf --wer
 
 You now have WER scores for each of the machine-generated transcripts, calculated against a subtitles reference file. As a next step, you could create additional normalization rules or compare the results of the standard WER against the Hunt variant by specifying :code:`--wer hunt`. Or you could implement your own metrics or normalizers and submit them back to this project.
 
