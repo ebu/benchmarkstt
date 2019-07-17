@@ -91,12 +91,11 @@ class File(Base):
 
         with open(file, encoding=encoding) as f:
             self._normalizer = NormalizationComposite(title=title)
-
             for line in csv.reader(f):
                 try:
                     self._normalizer.add(normalizer(*line))
                 except TypeError as e:
-                    raise ValueError("Line %d: %s" % (line.lineno, str(e)))
+                    raise ValueError("%s:%d %r(%r) %r" % (file, line.lineno, normalizer, line, e))
 
     def _normalize(self, text: str) -> str:
         return self._normalizer.normalize(text)
