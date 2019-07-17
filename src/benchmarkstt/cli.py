@@ -141,25 +141,24 @@ def create_parser(*args, **kwargs):
 
 @contextmanager
 def main_parser_context():
-    with Config.default_section('normalization'):
-        try:
-            # import done here to avoid circular references
-            import benchmarkstt.benchmark.cli as benchmark_cli
-            name = 'benchmarkstt'
-            desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
-                   'for additional tools, see ``benchmarkstt-tools --help``.'
+    try:
+        # import done here to avoid circular references
+        import benchmarkstt.benchmark.cli as benchmark_cli
+        name = 'benchmarkstt'
+        desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
+               'for additional tools, see ``benchmarkstt-tools --help``.'
 
-            parser = create_parser(prog=name, description=desc)
-            benchmark_cli.argparser(parser)
+        parser = create_parser(prog=name, description=desc)
+        benchmark_cli.argparser(parser)
 
-            parser.add_argument('--version', action='store_true',
-                                help='Output %s version number' % (name,))
+        parser.add_argument('--version', action='store_true',
+                            help='Output %s version number' % (name,))
 
-            args_common(parser)
-            args_help(parser)
-            yield parser
-        finally:
-            pass
+        args_common(parser)
+        args_help(parser)
+        yield parser
+    finally:
+        pass
 
 
 def determine_log_level():

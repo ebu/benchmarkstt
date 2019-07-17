@@ -206,7 +206,7 @@ class Config(normalization.Base):
     :example return: "ha bravalY Turnad his tail and flad"
     """
 
-    _default_section = None
+    _default_section = 'normalization'
 
     def __init__(self, file, section=None, encoding=None):
         if encoding is None or encoding == '':
