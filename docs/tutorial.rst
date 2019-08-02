@@ -1,5 +1,5 @@
-Demo: WER and normalization
-============================
+Tutorial: Word Error Rate and normalization
+===========================================
 
 In this step-by-step tutorial you will compare the Word Error Rate (WER) of two machine-generated transcripts. The WER is calculated against a less-than-perfect reference made from a human-generated subtitle file. You will also use normalization rules to improve the accuracy of the results.
 
