@@ -131,7 +131,7 @@ You can see that this time there are fewer differences between the reference and
 Do it all in one step!
 ----------------------
 
-Above, we used two commands: :code:`benchmarkstt-tools` for the normalization and :code:`benchmarkstt` for calculating the WER. But we can combine all these steps into a single command using a rules file and a config file tat references it. 
+Above, we used two commands: :code:`benchmarkstt-tools` for the normalization and :code:`benchmarkstt` for calculating the WER. But we can combine all these steps into a single command using a rules file and a config file that references it. 
 
 First, let's create a file for the regex normalization rules. Create a text document with this content:
 
