@@ -139,8 +139,25 @@ Now calculate the WER and "diff counts" for BBC-Kaldi:
 
   benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --wer --diffcounts
 
+The output should look like this:
 
-After running these two commands, you can see that the WER for both transcripts is quite high (around 30%). Let's see the actual differences between the reference and the hypotheses by adding the :code:`--worddiffs` flag:
+.. code::
+
+   wer
+   ===
+
+   0.379744
+
+   diffcounts
+   ==========
+
+   equal: 10437
+   replace: 4006
+   insert: 859
+   delete: 999
+
+After running these two commands, you can see that the WER for both transcripts is quite high (around 30%). Let's see
+the actual differences between the reference and the hypotheses by adding the :code:`--worddiffs` flag:
 
 .. code:: bash
 
