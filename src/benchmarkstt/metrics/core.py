@@ -28,15 +28,16 @@ def get_opcode_counts(opcodes):
         elif tag == 'delete':
             counts[tag] += ahi - alo
         elif tag == 'replace':
-            counts[tag] += ahi - alo
-            if ahi - alo < bhi - blo:
-                c = bhi - blo - ahi + alo
-                counts['insert'] += c
-                counts[tag] -= c
-            elif ahi - alo > bhi - blo:
-                c = ahi - alo - bhi + blo
-                counts['delete'] += c
-                counts[tag] -= c
+            ca = ahi - alo
+            cb = bhi - blo
+            if ca < cb:
+                counts['insert'] += cb - ca
+                counts['replace'] += ca
+            elif ca > cb:
+                counts['delete'] += ca - cb
+                counts['replace'] += cb
+            else:
+                counts[tag] += ahi - alo
     return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
 
 

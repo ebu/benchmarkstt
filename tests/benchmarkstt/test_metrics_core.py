@@ -15,6 +15,8 @@ import pytest
     ['changes 1 word', 'changes one word', (2, 1, 0, 0)],
     ['0 1 2 3 4', '0 1 22 2 3 4', (5, 0, 1, 0)],
     ['0 1 2 3 4', '0 1 2 3 4', (5, 0, 0, 0)],
+    ['a b c d e f', 'a b d e kfmod fgdjn idf giudfg diuf dufg idgiudgd', (4, 1, 6, 1)],
+    ['HELLO CRUEL WORLD OF MINE', 'GOODBYE WORLD OF MINE', (3, 1, 0, 1)],
 ])
 def test_diffcounts(a, b, exp):
     assert DiffCounts().compare(PlainText(a), PlainText(b)) == OpcodeCounts(*exp)
@@ -27,7 +29,8 @@ def test_diffcounts(a, b, exp):
     ['aa bb cc dd', 'aa aa bb cc dd dd', (.5, .25)],
     ['aa bb cc dd', '', (1, 0.5)],
     ['', 'aa bb cc', (1, 1)],
-    ['aa', 'bb aa cc', (2, 1)]
+    ['aa', 'bb aa cc', (2, 1)],
+    ['a b c d e f', 'a b d e kfmod fgdjn idf giudfg diuf dufg idgiudgd', (8/6, 3/4)],
 ])
 def test_wer(a, b, exp):
     wer_strict, wer_hunt = exp
