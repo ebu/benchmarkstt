@@ -37,7 +37,10 @@ worddiffs
 diffcounts
 ==========
 
-OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
+equal: 6
+replace: 1
+insert: 0
+delete: 0
 
 ''' % (CLIDiffDialect.color_key,)
 
