@@ -157,12 +157,16 @@ The output should look like this:
    delete: 999
 
 After running these two commands, you can see that the WER for both transcripts is quite high (around 30%). Let's see
-the actual differences between the reference and the hypotheses by adding the :code:`--worddiffs` flag:
+the actual differences between the reference and the hypotheses by using the :code:`--worddiffs` flag:
 
 .. code:: bash
 
-  benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --wer --diffcounts --worddiffs
+  benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --worddiffs
 
+The output should look somewhat like this:
+
+.. image:: docs/img/demo-worddiffs.png
+    :alt: Example command line output
 
 Normalize
 ---------

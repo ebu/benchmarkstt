@@ -18,7 +18,7 @@ Benchmarking STT
     :alt: Documentation Status
 
 .. image:: docs/img/benchmarksttcli.png
-
+    :alt: Example command line output
 
 About
 ------
