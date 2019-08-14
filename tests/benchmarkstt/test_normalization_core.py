@@ -62,7 +62,7 @@ def test_regex():
     assert normalizer.normalize('Tis but a scratch.') == \
         "Tis but a scratch (his arm's off)."
     assert core.Regex('ha', 'he').normalize('HA! Hahaha!') == 'HA! Hahehe!'
-    assert core.Regex('(?i)(h)a', r'\1e').normalize('HAHA! Hahaha!') == \
+    assert core.Regex('(?i)(h)a', '\\1e').normalize('HAHA! Hahaha!') == \
         'HeHe! Hehehe!'
     assert core.Regex('(?msi)new.line', 'newline').normalize("New\nline") == \
         'newline'

@@ -110,7 +110,7 @@ class Regex(normalization.BaseWithFileSupport):
 
     :example text: "HAHA! Hahaha!"
     :example search: '(?i)(h)a'
-    :example replace: r'\1e'
+    :example replace: '\\1e'
     :example return: "HeHe! Hehehe!"
     """
 
