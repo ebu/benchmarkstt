@@ -126,6 +126,7 @@ The output should look like this:
    | delete: 999
 
 After running these two commands, you can see that the WER for both transcripts is quite high (around 35%). Let's see the actual differences between the reference and the hypotheses by using the ``--worddiffs`` flag::
+
   benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --worddiffs
 
 The output should look like this (example output is truncated):
