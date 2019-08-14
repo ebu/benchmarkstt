@@ -119,7 +119,7 @@ pygments_style = None
 html_static_path = ['_static']
 
 html_css_files = [
-    '_static/theme_overrides.css',
+    'theme_overrides.css',
 ]
 
 # Custom sidebar templates, must be a dictionary that maps document names
