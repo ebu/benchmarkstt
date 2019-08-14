@@ -1,3 +1,6 @@
+.. role:: diffinsert
+.. role:: diffdelete
+
 ========
 Tutorial
 ========
@@ -163,10 +166,17 @@ the actual differences between the reference and the hypotheses by using the :co
 
   benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --worddiffs
 
-The output should look somewhat like this:
+The output should look somewhat like this (example output is truncated):
 
-.. image:: docs/img/demo-worddiffs.png
-    :alt: Example command line output
+.. container:: terminal
+
+   | worddiffs
+   | =========
+   |
+   | Color key: Unchanged \ :diffdelete:`​Reference​`\  \ :diffinsert:`​Hypothesis​`\
+   |
+   | \ :diffdelete:`​​·​BBC​·​2017​·​Tonight,​`\ \ :diffinsert:`​​·​tonight​`\ ​·​the\ :diffdelete:`​​·​Prime​·​Minister,​·​Theresa​·​May,​`\ \ :diffinsert:`​​·​prime​·​minister​·​theresa​·​may​`\ ​·​the​·​leader​·​of​·​the\ :diffdelete:`​​·​Conservative​·​Party,​`\ \ :diffinsert:`​​·​conservative​·​party​`\ ​·​and​·​the​·​leader​·​of\ :diffdelete:`​​·​Labour​·​Party,​·​Jeremy​·​Corbyn,​`\ \ :diffinsert:`​​·​the​·​labour​·​party​·​jeremy​·​corbyn​`\ ​·​face​·​the\ :diffdelete:`​​·​voters.​·​Welcome​·​to​·​Question​·​Time.​·​So,​`\ \ :diffinsert:`​​·​voters​·​welcome​·​so​`\ ​·​over​·​the​·​next\ :diffdelete:`​​·​90​·​minutes,​`\ \ :diffinsert:`​​·​ninety​·​minutes​`\ ​·​the​·​leaders​·​of​·​the​·​two​·​larger​·​parties​·​are​·​going​·​to​·​be​·​quizzed​·​by​·​our​·​audience​·​here​·​in\ :diffdelete:`​​·​York.​·​Now,​`\ \ :diffinsert:`​​·​york​·​now​`\ ​·​this​·​audience​·​is​·​made​·​up​·​like​·​this\ :diffdelete:`​​·​-​`\ ​·​just\ :diffdelete:`​​·​a​·​third​`\ ​·​say​·​they​·​intend​·​to​·​vote\ :diffdelete:`​​·​Conservative​·​next​·​week.​·​The​`\ \ :diffinsert:`​​·​conserve​·​it​·​the​`\ ​·​same\ :diffdelete:`​​·​number​`\ \ :diffinsert:`​​·​numbers​`\ ​·​say​·​they're​·​going​·​to​·​vote\ :diffdelete:`​​·​Labour,​`\ \ :diffinsert:`​​·​labour​`\ ​·​and​·​the​·​rest​·​either​·​support​·​other\ :diffdelete:`​​·​parties,​`\ \ :diffinsert:`​​·​parties​`\ ​·​or​·​have​·​yet​·​to​·​make​·​up​·​their\ :diffdelete:`​​·​minds.​·​As​·​ever,​`\ \ :diffinsert:`​​·​minds​·​and​·​as​·​ever​`\ ​·​you​·​can​·​comment​·​on\ :diffdelete:`​​·​all​·​of​·​this​·​from​·​home​`\ ​·​either​·​on\ :diffdelete:`​​·​Twitter​·​-​`\ \ :diffinsert:`​​·​twitter​`\ ​·​our​·​hashtag​·​is\ :diffdelete:`​​·​#BBCQT​·​-​·​we're​`\ \ :diffinsert:`​​·​bbc​·​two​·​were​`\ ​·​also​·​on\ :diffdelete:`​​·​Facebook,​`\ \ :diffinsert:`​​·​facebook​`\ ​·​as\ :diffdelete:`​​·​usual,​`\ \ :diffinsert:`​​·​usual​`\ ​·​and​·​our​·​text​·​number​·​is\ :diffdelete:`​​·​83981.​·​Push​`\ \ :diffinsert:`​​·​a​·​three​·​nine​·​eight​·​one​·​push​`\ ​·​the​·​red​·​button​·​on​·​your​·​remote​·​to​·​see​·​what​·​others​·​are\ :diffdelete:`​​·​saying.​·​The​`\ \ :diffinsert:`​​·​saying​·​and​·​their​`\ ​·​leaders\ :diffdelete:`​​·​-​`\ ​·​this​·​is​·​important\ :diffdelete:`​​·​-​`\ ​·​don't​·​know​·​the​·​questions​·​that​·​are​·​going​·​to​·​be​·​put​·​to​·​them\ :diffdelete:`​​·​tonight.​·​So,​`\ \ :diffinsert:`​​·​tonight​·​so​`\ ​·​first​·​to​·​face​·​our\ :diffdelete:`​​·​audience,​`\ \ :diffinsert:`​​·​audience​`\ ​·​please​·​welcome​·​the​·​leader​·​of​·​the\ :diffdelete:`​​·​Conservative​·​Party,​`\ \ :diffinsert:`​​·​conservative​·​party​`\ ​·​the\
+   | ...
 
 Normalize
 ---------
@@ -176,11 +186,11 @@ You can see that a lot of the differences are due to capitalization and punctuat
 
 .. code:: bash   
 
-  benchmarkstt-tools normalization -i qt_reference.txt -o qt_reference_normalized.txt --lowercase --regex "[,.-]" " "
+   benchmarkstt-tools normalization -i qt_reference.txt -o qt_reference_normalized.txt --lowercase --regex "[,.-]" " "
 
-  benchmarkstt-tools normalization -i qt_kaldi_hypothesis.txt -o qt_kaldi_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
+   benchmarkstt-tools normalization -i qt_kaldi_hypothesis.txt -o qt_kaldi_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
 
-  benchmarkstt-tools normalization -i qt_aws_hypothesis.txt -o qt_aws_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
+   benchmarkstt-tools normalization -i qt_aws_hypothesis.txt -o qt_aws_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
 
 We now have normalized versions of the reference and two hypothesis files. 
 
@@ -192,9 +202,32 @@ Let's run the :code:`benchmarkstt` command again, this time calculating WER base
 
 .. code:: bash
 
-  benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_kaldi_hypothesis_normalized.txt --wer --diffcounts --worddiff
+   benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_kaldi_hypothesis_normalized.txt --wer --diffcounts --worddiff
 
-  benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_aws_hypothesis_normalized.txt --wer --diffcounts --worddiff
+The output should look somewhat like this (example output is truncated):
+
+.. container:: terminal
+
+   | wer
+   | ===
+   |
+   | 0.196279
+   |
+   | diffcounts
+   | ==========
+   |
+   | equal: 13229
+   | replace: 1284
+   | insert: 789
+   | delete: 965
+   |
+   | worddiffs
+   | =========
+   |
+   | Color key: Unchanged :diffdelete:`Reference` :diffinsert:`Hypothesis`
+   | \ :diffdelete:`​​·​bbc​·​2017​`\ ​·​tonight​·​the​·​prime​·​minister​·​theresa​·​may​·​the​·​leader​·​of​·​the​·​conservative​·​party​·​and​·​the​·​leader​·​of\ :diffinsert:`​​·​the​`\ ​·​labour​·​party​·​jeremy​·​corbyn​·​face​·​the​·​voters​·​welcome\ :diffdelete:`​​·​to​·​question​·​time​`\ ​·​so​·​over​·​the​·​next\ :diffdelete:`​​·​90​`\ \ :diffinsert:`​​·​ninety​`\ ​·​minutes​·​the​·​leaders​·​of​·​the​·​two​·​larger​·​parties​·​are​·​going​·​to​·​be​·​quizzed​·​by​·​our​·​audience​·​here​·​in​·​york​·​now​·​this​·​audience​·​is​·​made​·​up​·​like​·​this​·​just\ :diffdelete:`​​·​a​·​third​`\ ​·​say​·​they​·​intend​·​to​·​vote\ :diffdelete:`​​·​conservative​·​next​·​week​`\ \ :diffinsert:`​​·​conserve​·​it​`\ ​·​the​·​same\ :diffdelete:`​​·​number​`\ \ :diffinsert:`​​·​numbers​`\ ​·​say​·​they're​·​going​·​to​·​vote​·​labour​·​and​·​the​·​rest​·​either​·​support​·​other​·​parties​·​or​·​have​·​yet​·​to​·​make​·​up​·​their​·​minds\ :diffinsert:`​​·​and​`\ ​·​as​·​ever​·​you​·​can​·​comment​·​on\ :diffdelete:`​​·​all​·​of​·​this​·​from​·​home​`\ ​·​either​·​on​·​twitter​·​our​·​hashtag​·​is\ :diffdelete:`​​·​#bbcqt​·​we're​`\ \ :diffinsert:`​​·​bbc​·​two​·​were​`\ ​·​also​·​on​·​facebook​·​as​·​usual​·​and​·​our​·​text​·​number​·​is\ :diffdelete:`​​·​83981​`\ \ :diffinsert:`​​·​a​·​three​·​nine​·​eight​·​one​`\ ​·​push​·​the​·​red​·​button​·​on​·​your​·​remote​·​to​·​see​·​what​·​others​·​are​·​saying\ :diffdelete:`​​·​the​`\ \ :diffinsert:`​​·​and​·​their​`\ ​·​leaders​·​this​·​is​·​important​·​don't​·​know​·​the​·​questions​·​that​·​are​·​going​·​to​·​be​·​put​·​to​·​them​·​tonight​·​so​·​first​·​to​·​face​·​our​·​audience​·​please​·​welcome​·​the​·​leader​·​of​·​the​·​conservative​·​party
+   | ...
+
 
 You can see that this time there are fewer differences between the reference and hypothesis. Accordingly, the WER is much lower for both hypotheses. The transcript with the lower WER is closer to the reference made from subtitles. 
 

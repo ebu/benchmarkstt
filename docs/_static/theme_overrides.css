@@ -5,3 +5,33 @@ table.docutils.option-list td:nth-child(2) {
 .rst-content table.docutils td {
     vertical-align: top;
 }
+
+.container.terminal {
+   border: 2px solid gray;
+   margin: 14px 0 14px 0;
+   background-color: black;
+}
+
+.container.terminal .line-block {
+   margin-top: 14px;
+   margin-bottom: 14px;
+}
+
+.container.terminal p, .container.terminal div.line {
+   font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",Courier,monospace;
+   font-size: 12px;
+   line-height: 1.4;
+   color: white;
+   padding: 0 12px;
+   margin-bottom: 0px;
+   width: auto;
+   overflow-wrap: break-word;
+}
+
+.diffdelete {
+   color: red;
+}
+
+.diffinsert {
+   color: green;
+}
