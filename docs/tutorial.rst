@@ -121,20 +121,20 @@ Calculate WER for AWS Transcribe:
 
 The output should look like this:
 
-.. code::
+.. container:: terminal
 
-   wer
-   ===
-
-   0.336614
-
-   diffcounts
-   ==========
-
-   equal: 10919
-   replace: 2750
-   insert: 675
-   delete: 1773
+   | wer
+   | ===
+   |
+   | 0.336614
+   |
+   | diffcounts
+   | ==========
+   |
+   | equal: 10919
+   | replace: 2750
+   | insert: 675
+   | delete: 1773
 
 Now calculate the WER and "diff counts" for BBC-Kaldi:
 
@@ -144,20 +144,20 @@ Now calculate the WER and "diff counts" for BBC-Kaldi:
 
 The output should look like this:
 
-.. code::
+.. container:: terminal
 
-   wer
-   ===
-
-   0.379744
-
-   diffcounts
-   ==========
-
-   equal: 10437
-   replace: 4006
-   insert: 859
-   delete: 999
+   | wer
+   | ===
+   |
+   | 0.379744
+   |
+   | diffcounts
+   | ==========
+   |
+   | equal: 10437
+   | replace: 4006
+   | insert: 859
+   | delete: 999
 
 After running these two commands, you can see that the WER for both transcripts is quite high (around 30%). Let's see
 the actual differences between the reference and the hypotheses by using the :code:`--worddiffs` flag:
@@ -225,6 +225,7 @@ The output should look somewhat like this (example output is truncated):
    | =========
    |
    | Color key: Unchanged :diffdelete:`Reference` :diffinsert:`Hypothesis`
+   |
    | \ :diffdelete:`​​·​bbc​·​2017​`\ ​·​tonight​·​the​·​prime​·​minister​·​theresa​·​may​·​the​·​leader​·​of​·​the​·​conservative​·​party​·​and​·​the​·​leader​·​of\ :diffinsert:`​​·​the​`\ ​·​labour​·​party​·​jeremy​·​corbyn​·​face​·​the​·​voters​·​welcome\ :diffdelete:`​​·​to​·​question​·​time​`\ ​·​so​·​over​·​the​·​next\ :diffdelete:`​​·​90​`\ \ :diffinsert:`​​·​ninety​`\ ​·​minutes​·​the​·​leaders​·​of​·​the​·​two​·​larger​·​parties​·​are​·​going​·​to​·​be​·​quizzed​·​by​·​our​·​audience​·​here​·​in​·​york​·​now​·​this​·​audience​·​is​·​made​·​up​·​like​·​this​·​just\ :diffdelete:`​​·​a​·​third​`\ ​·​say​·​they​·​intend​·​to​·​vote\ :diffdelete:`​​·​conservative​·​next​·​week​`\ \ :diffinsert:`​​·​conserve​·​it​`\ ​·​the​·​same\ :diffdelete:`​​·​number​`\ \ :diffinsert:`​​·​numbers​`\ ​·​say​·​they're​·​going​·​to​·​vote​·​labour​·​and​·​the​·​rest​·​either​·​support​·​other​·​parties​·​or​·​have​·​yet​·​to​·​make​·​up​·​their​·​minds\ :diffinsert:`​​·​and​`\ ​·​as​·​ever​·​you​·​can​·​comment​·​on\ :diffdelete:`​​·​all​·​of​·​this​·​from​·​home​`\ ​·​either​·​on​·​twitter​·​our​·​hashtag​·​is\ :diffdelete:`​​·​#bbcqt​·​we're​`\ \ :diffinsert:`​​·​bbc​·​two​·​were​`\ ​·​also​·​on​·​facebook​·​as​·​usual​·​and​·​our​·​text​·​number​·​is\ :diffdelete:`​​·​83981​`\ \ :diffinsert:`​​·​a​·​three​·​nine​·​eight​·​one​`\ ​·​push​·​the​·​red​·​button​·​on​·​your​·​remote​·​to​·​see​·​what​·​others​·​are​·​saying\ :diffdelete:`​​·​the​`\ \ :diffinsert:`​​·​and​·​their​`\ ​·​leaders​·​this​·​is​·​important​·​don't​·​know​·​the​·​questions​·​that​·​are​·​going​·​to​·​be​·​put​·​to​·​them​·​tonight​·​so​·​first​·​to​·​face​·​our​·​audience​·​please​·​welcome​·​the​·​leader​·​of​·​the​·​conservative​·​party
    | ...
 
