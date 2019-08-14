@@ -1,7 +1,7 @@
 Code of Conduct
 ===============
 
-:code:`Status: Draft`
+``Status: Draft``
 
 We are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic.
 

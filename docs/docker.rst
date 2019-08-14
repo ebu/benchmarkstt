@@ -22,13 +22,13 @@ Build the image
 Run the image
 -------------
 
-You can change port for the api, just change the :code:`1234` to the port you want to bind to.
+You can change port for the api, just change the ``1234`` to the port you want to bind to.
 
    .. code-block:: bash
 
       docker run --name benchmarkstt -p 1234:8080 --rm benchmarkstt:latest
 
-The json-rpc api is then automatically available at: :code:`http://localhost:1234/api`
+The json-rpc api is then automatically available at: ``http://localhost:1234/api``
 
 While the docker image is running you can use the CLI application like this (see :doc:`usage` for
 more information about which commands are available):

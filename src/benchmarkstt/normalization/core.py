@@ -93,7 +93,7 @@ class Regex(normalization.BaseWithFileSupport):
      +------------------+-------------+
      | search           | replace     |
      +==================+=============+
-     | :code:`(?i)(h)a` | :code:`\1e` |
+     | ``(?i)(h)a``     | ``\1e``     |
      +------------------+-------------+
 
 
@@ -105,7 +105,7 @@ class Regex(normalization.BaseWithFileSupport):
      +------------------------+------------------+
      | search                 | replace          |
      +========================+==================+
-     | :code:`(?msi)new.line` | :code:`newline`  |
+     | ``(?msi)new.line``     | ``newline``      |
      +------------------------+------------------+
 
     :example text: "HAHA! Hahaha!"
@@ -174,7 +174,7 @@ class Config(normalization.Base):
       - If an argument contains a space, newline or double quote, it MUST be
         wrapped in double quotes.
       - A double quote itself is represented in this quoted argument as two
-        double quotes: `""`.
+        double quotes: ``""``.
 
     The normalization rules are applied top-to-bottom and follow this format:
 

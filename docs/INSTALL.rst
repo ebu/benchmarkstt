@@ -18,7 +18,7 @@ This is the easiest and preferred way of installing ``benchmarkstt``.
     - `Installing Python 3 on Windows <https://docs.python-guide.org/starting/install3/win/>`_
     - `Installing Python 3 on Linux <https://docs.python-guide.org/starting/install3/linux/>`_
 
-2. Install the package using :code:`pip`, this will also install all requirements
+2. Install the package using ``pip``, this will also install all requirements
 
    .. code-block:: bash
 
@@ -36,7 +36,7 @@ This is the easiest and preferred way of installing ``benchmarkstt``.
       it works!
 
 
-   Use the :code:`--help` option to get all available options.
+   Use the ``--help`` option to get all available options.
 
    .. code-block:: bash
 

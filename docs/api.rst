@@ -13,7 +13,7 @@ You can launch a server to make the api available via:
 
     - :doc:`cli/api` (for debugging and local use only)
     - :doc:`docker`
-    - gunicorn, by running :code:`gunicorn -b :8080 benchmarkstt.api.gunicorn`
+    - gunicorn, by running ``gunicorn -b :8080 benchmarkstt.api.gunicorn``
 
 
 Usage
