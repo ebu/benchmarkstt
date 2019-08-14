@@ -216,3 +216,4 @@ smartquotes = False
 #
 # smartquotes_excludes = {'builders': ['man', 'text']}
 
+highlight_language = 'none'

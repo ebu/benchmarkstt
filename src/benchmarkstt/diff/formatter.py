@@ -35,13 +35,12 @@ class Dialect:
 
 
 class CLIDiffDialect(Dialect):
-    def __init__(self, show_color_key=None, add_zero_width_space=None):
+    def __init__(self, show_color_key=None):
         self.show_color_key = bool(show_color_key) if show_color_key is not None else True
 
         self.color_key = 'Color key: Unchanged %s %s\n\n' % (
             self.delete_format % 'Reference',
             self.insert_format % 'Hypothesis')
-        self.add_zero_width_space = bool(add_zero_width_space)
 
         super().__init__()
 
