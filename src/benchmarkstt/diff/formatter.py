@@ -86,8 +86,8 @@ class RestructuredTextDialect(CLIDiffDialect):
     def preprocessor(txt):
         return CLIDiffDialect.preprocessor(txt).replace('·', '\u200B·\u200B').replace('`', r'\`')
 
-    delete_format = '\\ :diffdelete:`\u200B%s\u200B`\\ '
-    insert_format = '\\ :diffinsert:`\u200B%s\u200B`\\ '
+    delete_format = '\\ :diffdelete:`%s`\\ '
+    insert_format = '\\ :diffinsert:`%s`\\ '
 
 
 class ListDialect(Dialect):

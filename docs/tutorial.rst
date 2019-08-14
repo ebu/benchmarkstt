@@ -166,7 +166,7 @@ the actual differences between the reference and the hypotheses by using the :co
 
   benchmarkstt --reference qt_reference.txt --hypothesis qt_kaldi_hypothesis.txt --worddiffs
 
-The output should look somewhat like this (example output is truncated):
+The output should look like this (example output is truncated):
 
 .. container:: terminal
 
@@ -204,7 +204,7 @@ Let's run the :code:`benchmarkstt` command again, this time calculating WER base
 
    benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_kaldi_hypothesis_normalized.txt --wer --diffcounts --worddiff
 
-The output should look somewhat like this (example output is truncated):
+The output should look like this (example output is truncated):
 
 .. container:: terminal
 

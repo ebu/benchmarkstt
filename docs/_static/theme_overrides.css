@@ -47,6 +47,7 @@ table.docutils.option-list td:nth-child(2) {
    margin-bottom: 0px;
    width: auto;
    overflow-wrap: break-word;
+   word-break: break-all;
 }
 
 .diffdelete {
