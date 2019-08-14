@@ -8,31 +8,22 @@ For this ``argcomplete`` needs to be installed **and** enabled.
 Installing argcomplete
 ----------------------
 
-1. Install argcomplete using:
-
-   .. code-block:: bash
+1. Install argcomplete using::
 
       pip install argcomplete
 
-2. For global activation of all argcomplete enabled python applications, run:
-
-   .. code-block:: bash
+2. For global activation of all argcomplete enabled python applications, run::
 
       activate-global-python-argcomplete
 
 Alternative argcomplete configuration
 -------------------------------------
 
-1. For permanent (but not global) ``benchmarkstt`` activation, use:
-
-   .. code-block:: bash
+1. For permanent (but not global) ``benchmarkstt`` activation, use::
 
       register-python-argcomplete benchmarkstt >> ~/.bashrc
       register-python-argcomplete benchmarkstt-tools >> ~/.bashrc
 
-2. For one-time activation of argcomplete for ``benchmarkstt`` only, use:
-
-   .. code-block:: bash
+2. For one-time activation of argcomplete for ``benchmarkstt`` only, use::
 
       eval "$(register-python-argcomplete benchmarkstt; register-python-argcomplete benchmarkstt-tools)"
-

@@ -37,6 +37,11 @@ class Dialect:
 class CLIDiffDialect(Dialect):
     def __init__(self, show_color_key=None):
         self.show_color_key = bool(show_color_key) if show_color_key is not None else True
+
+        self.color_key = 'Color key: Unchanged %s %s\n\n' % (
+            self.delete_format % 'Reference',
+            self.insert_format % 'Hypothesis')
+
         super().__init__()
 
     @staticmethod
@@ -52,7 +57,6 @@ class CLIDiffDialect(Dialect):
 
     delete_format = '\033[31m%s\033[0m'
     insert_format = '\033[32m%s\033[0m'
-    color_key = 'Color key: Unchanged \033[31mReference\033[0m \033[32mHypothesis\033[0m\n\n'
 
 
 class UTF8Dialect(Dialect):
@@ -74,6 +78,15 @@ class HTMLDiffDialect(Dialect):
 
     delete_format = '<span class="delete">%s</span>'
     insert_format = '<span class="insert">%s</span>'
+
+
+class RestructuredTextDialect(CLIDiffDialect):
+    @staticmethod
+    def preprocessor(txt):
+        return CLIDiffDialect.preprocessor(txt).replace('·', '\u200B·\u200B').replace('`', r'\`')
+
+    delete_format = '\\ :diffdelete:`%s`\\ '
+    insert_format = '\\ :diffinsert:`%s`\\ '
 
 
 class ListDialect(Dialect):
@@ -151,6 +164,7 @@ class DiffFormatter:
         "text": UTF8Dialect,
         "json": JSONDiffDialect,
         "list": ListDialect,
+        "rst": RestructuredTextDialect,
     }
 
     def __init__(self, dialect=None, *args, **kwargs):

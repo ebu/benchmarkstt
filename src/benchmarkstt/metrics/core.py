@@ -72,9 +72,7 @@ class WordDiffs(Base):
 
 class WER(Base):
     """
-    Word Error Rate, basically defined as:
-
-    .. code-block:: text
+    Word Error Rate, basically defined as::
 
         insertions + deletions + substitions
         ------------------------------------

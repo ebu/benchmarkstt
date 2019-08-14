@@ -3,28 +3,34 @@ from benchmarkstt.schema import Schema
 from collections import OrderedDict
 
 
-class ReStructuredText(output.Base):
+class SimpleTextBase(output.Base):
+    def print(self, result):
+        if hasattr(result, '_asdict'):
+            result = result._asdict()
+
+        if type(result) is float:
+            print("%.6f" % (result,))
+        elif type(result) is dict or type(result) is OrderedDict:
+            for k, v in result.items():
+                print("%s: %r" % (k, v))
+        else:
+            print(result)
+
+
+class ReStructuredText(SimpleTextBase):
     def result(self, title, result):
         print(title)
         print('=' * len(title))
         print()
-
-        if type(result) is float:
-            print("%.6f" % (result,))
-        else:
-            print(result)
+        self.print(result)
         print()
 
 
-class MarkDown(output.Base):
+class MarkDown(SimpleTextBase):
     def result(self, title, result):
         print('# %s' % (title,))
         print()
-
-        if type(result) is float:
-            print("%.6f" % (result,))
-        else:
-            print(result)
+        self.print(result)
         print()
 
 

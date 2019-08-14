@@ -21,8 +21,8 @@ class Replace(normalization.BaseWithFileSupport):
     """
     Simple search replace
 
-    :param str search: Text to search for
-    :param str replace: Text to replace with
+    :param search: Text to search for
+    :param replace: Text to replace with
 
     :example text: "Nudge nudge!"
     :example search: "nudge"
@@ -43,8 +43,8 @@ class ReplaceWords(normalization.BaseWithFileSupport):
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
 
-    :param str search: Word to search for
-    :param str replace: Replace with
+    :param search: Word to search for
+    :param replace: Replace with
 
     :example text: "She has a heart of formica"
     :example search: "a"
@@ -93,7 +93,7 @@ class Regex(normalization.BaseWithFileSupport):
      +------------------+-------------+
      | search           | replace     |
      +==================+=============+
-     | :code:`(?i)(h)a` | :code:`\1e` |
+     | ``(?i)(h)a``     | ``\1e``     |
      +------------------+-------------+
 
 
@@ -105,12 +105,12 @@ class Regex(normalization.BaseWithFileSupport):
      +------------------------+------------------+
      | search                 | replace          |
      +========================+==================+
-     | :code:`(?msi)new.line` | :code:`newline`  |
+     | ``(?msi)new.line``     | ``newline``      |
      +------------------------+------------------+
 
     :example text: "HAHA! Hahaha!"
     :example search: '(?i)(h)a'
-    :example replace: r'\1e'
+    :example replace: '\\1e'
     :example return: "HeHe! Hehehe!"
     """
 
@@ -174,11 +174,9 @@ class Config(normalization.Base):
       - If an argument contains a space, newline or double quote, it MUST be
         wrapped in double quotes.
       - A double quote itself is represented in this quoted argument as two
-        double quotes: `""`.
+        double quotes: ``""``.
 
-    The normalization rules are applied top-to-bottom and follow this format:
-
-    .. code-block:: text
+    The normalization rules are applied top-to-bottom and follow this format::
 
         {[section]}
         # This is a comment

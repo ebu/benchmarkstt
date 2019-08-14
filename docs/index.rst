@@ -6,6 +6,7 @@
 
    LICENSE
    INSTALL
+   tutorial
    usage
    development
    modules/benchmarkstt

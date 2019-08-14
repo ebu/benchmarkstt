@@ -96,7 +96,7 @@ class MagicMethods:
         """
         Load all possible callbacks for a given module
 
-        :param str name:
+        :param name:
         :param Module module:
         """
         factory = module.factory
@@ -122,8 +122,8 @@ class MagicMethods:
     def register(self, name, callback):
         """
         Register a callback as an api call
-        :param str name:
-        :param callable callback:
+        :param name:
+        :param callback:
         """
         self.methods.add(**{name: callback})
 

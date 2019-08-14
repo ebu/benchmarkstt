@@ -44,7 +44,7 @@ class Factory(Registry):
         """
         Loads the proper class based on a name
 
-        :param str name: Case-insensitive name of the class
+        :param name: Case-insensitive name of the class
         :return: The class
         :rtype: class
         """
@@ -70,7 +70,7 @@ class Factory(Registry):
         this means lowercasing the class name, but may be overrided by a child
         class.
 
-        :param str clsname: The class name
+        :param clsname: The class name
         :return: The normalized class name
         :rtype: str
         """
@@ -80,7 +80,7 @@ class Factory(Registry):
         """
         Checks that tocheck is a valid class extending base_class
 
-        :param class tocheck: The class to check
+        :param tocheck: The class to check
         :rtype: bool
         """
 

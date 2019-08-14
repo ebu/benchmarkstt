@@ -5,7 +5,7 @@ from collections import OrderedDict
 a = 'ABCDEFGHJKLMN'
 b = 'ABBCDEFHHIJKLM'
 
-cli_color_key = formatter.CLIDiffDialect.color_key
+cli_color_key = formatter.CLIDiffDialect().color_key
 
 
 @pytest.mark.parametrize('dialect,expected', [
@@ -41,7 +41,7 @@ def test_format_diff(dialect, expected):
 
 
 def test_no_diff():
-    assert formatter.format_diff(a, a, dialect='cli') == (formatter.CLIDiffDialect.color_key + a)
+    assert formatter.format_diff(a, a, dialect='cli') == (cli_color_key + a)
 
 
 def test_dialect_exceptions():

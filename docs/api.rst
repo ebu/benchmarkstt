@@ -13,7 +13,7 @@ You can launch a server to make the api available via:
 
     - :doc:`cli/api` (for debugging and local use only)
     - :doc:`docker`
-    - gunicorn, by running :code:`gunicorn -b :8080 benchmarkstt.api.gunicorn`
+    - gunicorn, by running ``gunicorn -b :8080 benchmarkstt.api.gunicorn``
 
 
 Usage
@@ -21,9 +21,7 @@ Usage
 
 All requests must be HTTP POST requests, with the content containing valid JSON_.
 
-Using curl, for example:
-
-.. code-block:: none
+Using curl, for example::
 
     curl -X POST \
       http://localhost:8080/api \

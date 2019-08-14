@@ -6,10 +6,12 @@ import os
 from io import StringIO
 import shlex
 from benchmarkstt.normalization import Base as NormalizationBase
-from benchmarkstt.normalization import factory as NormalizationFactory
+from benchmarkstt.normalization import factory as normalization_factory
 from benchmarkstt.diff.formatter import CLIDiffDialect
 from benchmarkstt.__meta__ import __version__
 
+
+cli_color_key = CLIDiffDialect().color_key
 
 candide_lowercase = """
 "there is a concatenation of events in this best of all possible worlds:
@@ -37,9 +39,12 @@ worddiffs
 diffcounts
 ==========
 
-OpcodeCounts(equal=6, replace=1, insert=0, delete=0)
+equal: 6
+replace: 1
+insert: 0
+delete: 0
 
-''' % (CLIDiffDialect.color_key,)
+''' % (cli_color_key,)
 
 
 @pytest.mark.parametrize('argv,result', [
@@ -147,11 +152,11 @@ def test_exensibility(argv, result, capsys):
         def _normalize(self, text: str) -> str:
             return text.upper()
 
-    NormalizationFactory.register(MyOwnNormalizer)
+    normalization_factory.register(MyOwnNormalizer)
     try:
         commandline_tester('benchmarkstt', main, argv, result, capsys)
     finally:
-        del NormalizationFactory[MyOwnNormalizer]
+        del normalization_factory[MyOwnNormalizer]
 
 
 @pytest.mark.parametrize('exc,argv', [

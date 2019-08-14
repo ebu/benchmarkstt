@@ -18,7 +18,7 @@ Benchmarking STT
     :alt: Documentation Status
 
 .. image:: docs/img/benchmarksttcli.png
-
+    :alt: Example command line output
 
 About
 ------
@@ -31,26 +31,20 @@ Because of the wide range of languages, algorithms and audio characteristics, no
 
 
 
-Usage
-------
+Usage examples
+--------------
 
-.. code-block:: bash
+Returns the number of word insertions, deletions, replacements and matches for the hypothesis transcript compared to the reference::
 
-    $ benchmarkstt --reference reference.txt --hypothesis hypothesis.txt --diffcounts
+    benchmarkstt --reference reference.txt --hypothesis hypothesis.txt --diffcounts
 
-Return the number of word insertions, deletions, replacements and matches for the hypothesis transcript compared to the reference. 
+Returns the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate as it removes diffs that might otherwise be considered errors::
 
-.. code-block:: bash
+    benchmarkstt -r reference.txt -h hypothesis.txt --wer --lowercase
 
-    $ benchmarkstt -r reference.txt -h hypothesis.txt --wer --lowercase
+Returns a visual diff after applying all the normalization rules specified in the config file::
 
-Return the Word Error Rate after lowercasing both reference and hypothesis. This normlization improves the accuracy of the Word Error Rate as it removes diffs that might otherwise be considered errors.
-
-.. code-block:: bash
-
-    $ benchmarkstt -r reference.txt -h hypothesis.txt --worddiffs --config conf
-
-Return a visual diff after applying all the normalization rules specified in the config file.
+    benchmarkstt -r reference.txt -h hypothesis.txt --worddiffs --config conf
 
 
 Further information

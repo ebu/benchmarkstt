@@ -71,8 +71,8 @@ class File(Base):
     Read one per line and pass it to the given normalizer
 
     :param str|class normalizer: Normalizer name (or class)
-    :param str file: The file to read rules from
-    :param str encoding: The file encoding
+    :param file: The file to read rules from
+    :param encoding: The file encoding
 
     :example text: "This is an Ex-Parakeet"
     :example normalizer: "regex"

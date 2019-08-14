@@ -12,28 +12,21 @@ Build the image
 
 2. Unzip the file
 
-3. Inside the benchmarkstt folder run:
-
-   .. code-block:: bash
+3. Inside the benchmarkstt folder run::
 
       docker build -t benchmarkstt:latest .
-
 
 Run the image
 -------------
 
-You can change port for the api, just change the :code:`1234` to the port you want to bind to.
-
-   .. code-block:: bash
+You can change port for the api, just change the ``1234`` to the port you want to bind to::
 
       docker run --name benchmarkstt -p 1234:8080 --rm benchmarkstt:latest
 
-The json-rpc api is then automatically available at: :code:`http://localhost:1234/api`
+The json-rpc api is then automatically available at: ``http://localhost:1234/api``
 
 While the docker image is running you can use the CLI application like this (see :doc:`usage` for
-more information about which commands are available):
-
-   .. code-block:: bash
+more information about which commands are available)::
 
       docker exec -it benchmarkstt benchmarkstt --version
       docker exec -it benchmarkstt benchmarkstt --help
@@ -43,9 +36,7 @@ more information about which commands are available):
 Stopping the image
 ------------------
 
-You can stop the docker image running by:
-
-   .. code-block:: bash
+You can stop the docker image running by running::
 
       docker stop benchmarkstt
 

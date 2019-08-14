@@ -39,7 +39,7 @@ def make_printable(char):
     """
     Return printable representation of ascii/utf-8 control characters
 
-    :param str char:
+    :param char:
     :return str:
     """
     if not len(char):

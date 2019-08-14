@@ -8,7 +8,7 @@ factory = normalization.factory
 
 def callback(cls, text: str, return_logs: bool = None, *args, **kwargs):
     """
-    :param str text: The text to normalize
+    :param text: The text to normalize
     :param bool return_logs: Return normalization logs
     """
     try:
