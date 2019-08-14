@@ -43,7 +43,7 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
     """
     Create the Flask app
 
-    :param str entrypoint: The HTTP path on which the api will be served
+    :param entrypoint: The HTTP path on which the api will be served
     :param bool with_explorer: Whether to also serve the JSON-RPC API explorer
     :return:
     """

@@ -56,7 +56,7 @@ def test_parse():
             " "argument 2"
             Normalizer4 "argument with double quote ("")"
 
-        :param str config: configuration text
+        :param config: configuration text
 
         :example text: "He bravely turned his tail and fled"
         :example config:

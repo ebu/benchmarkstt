@@ -21,8 +21,8 @@ class Replace(normalization.BaseWithFileSupport):
     """
     Simple search replace
 
-    :param str search: Text to search for
-    :param str replace: Text to replace with
+    :param search: Text to search for
+    :param replace: Text to replace with
 
     :example text: "Nudge nudge!"
     :example search: "nudge"
@@ -43,8 +43,8 @@ class ReplaceWords(normalization.BaseWithFileSupport):
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
 
-    :param str search: Word to search for
-    :param str replace: Replace with
+    :param search: Word to search for
+    :param replace: Replace with
 
     :example text: "She has a heart of formica"
     :example search: "a"
