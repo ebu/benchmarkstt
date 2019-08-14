@@ -10,7 +10,7 @@ Installing argcomplete
 
 1. Install argcomplete using::
 
-      pip install argcomplete
+      python3 -m pip install argcomplete
 
 2. For global activation of all argcomplete enabled python applications, run::
 

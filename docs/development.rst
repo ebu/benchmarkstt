@@ -17,7 +17,7 @@ This assumes ``git`` and ``Python`` 3.5 or above are already installed on your s
 3. Install the package using ``pip``, this will also install all requirements. This does an "editable" install, i.e.
    it creates a symbolic link to the source code::
 
-      pip install -e .
+      python3 -m pip install -e .
 
 4. You now have a local development environment where you can commit and push to your own forked repository.
 
@@ -27,7 +27,7 @@ Building the documentation
 
 Build the documentation locally::
 
-      pip install -r docs/requirements.txt
+      python3 -m pip install -r docs/requirements.txt
       make docs
 
 The documentation will be created in /docs/build/html/

@@ -20,7 +20,7 @@ This is the easiest and preferred way of installing ``benchmarkstt``.
 
 2. Install the package using ``pip``, this will also install all requirements::
 
-      pip install benchmarkstt
+      python3 -m pip install benchmarkstt
 
 3. Test and use
 
@@ -45,9 +45,9 @@ This is the easiest and preferred way of installing ``benchmarkstt``.
 Removing benchmarkstt
 ---------------------
 
-   .. code-block:: bash
+BenchmarkSTT can be easily uninstalled using::
 
-      pip uninstall benchmarkstt
+      python3 -m pip uninstall benchmarkstt
 
 
 Docker
