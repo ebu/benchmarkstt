@@ -211,7 +211,7 @@ epub_exclude_files = ['search.html']
 # # -- Extension configuration -------------------------------------------------
 
 
-# smartquotes = False
+smartquotes = False
 # smartquotes_action = 'q'
 #
 # smartquotes_excludes = {'builders': ['man', 'text']}

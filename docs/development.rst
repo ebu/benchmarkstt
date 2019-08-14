@@ -9,17 +9,13 @@ This assumes ``git`` and ``Python`` 3.5 or above are already installed on your s
 1. Fork the `repository source code <https://github.com/EBU/benchmarkstt.git>`_ from github to your own account.
 
 2. Clone the repository from github to your local development environment (replace ``[YOURUSERNAME]`` with your
-   github username).
-
-   .. code-block:: bash
+   github username)::
 
       git clone https://github.com/[YOURUSERNAME]/benchmarkstt.git
       cd benchmarkstt
 
 3. Install the package using ``pip``, this will also install all requirements. This does an "editable" install, i.e.
-   it creates a symbolic link to the source code.
-
-   .. code-block:: bash
+   it creates a symbolic link to the source code::
 
       pip install -e .
 
@@ -29,16 +25,12 @@ This assumes ``git`` and ``Python`` 3.5 or above are already installed on your s
 Building the documentation
 --------------------------
 
-Build the documentation locally:
-
-   .. code-block:: bash
+Build the documentation locally::
 
       pip install -r docs/requirements.txt
       make docs
 
 The documentation will be created in /docs/build/html/
-
-
 
 
 Contributing

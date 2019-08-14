@@ -21,9 +21,7 @@ Usage
 
 All requests must be HTTP POST requests, with the content containing valid JSON_.
 
-Using curl, for example:
-
-.. code-block:: none
+Using curl, for example::
 
     curl -X POST \
       http://localhost:8080/api \

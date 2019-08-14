@@ -176,9 +176,7 @@ class Config(normalization.Base):
       - A double quote itself is represented in this quoted argument as two
         double quotes: ``""``.
 
-    The normalization rules are applied top-to-bottom and follow this format:
-
-    .. code-block:: text
+    The normalization rules are applied top-to-bottom and follow this format::
 
         {[section]}
         # This is a comment
