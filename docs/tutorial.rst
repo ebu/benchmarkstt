@@ -48,7 +48,7 @@ reference and hypotheses, we want to run the tool on plain text only. To strip o
 
 .. code:: bash
 
-   benchmarkstt-tools normalization --inputfile qt_subs.xml --outputfile qt_reference.txt --regex "<[^>]+>" " "
+   benchmarkstt-tools normalization --inputfile qt_subs.xml --outputfile qt_reference.txt --regex "</?[?!\[\]a-zA-Z][^>]*>" " "
 
 The normalization rule :code:`--regex` takes two parameters: a regular expression pattern and the replacement string.
 In this case all XML tags will be replaced with a space. This will result in a lot of space characters, but these are
@@ -181,8 +181,11 @@ The output should look like this (example output is truncated):
 Normalize
 ---------
 
-You can see that a lot of the differences are due to capitalization and punctuation. Because we are only interested in the correct identification of words, these types of differences should not count as errors. To get a more accurate WER, we will remove punctuation marks and convert all letters to lowercase. We will do this for the reference and both hypothesis files by using the :code:`benchmarkstt-tools normalization` subcommand again, with two rules: the built-in :code:`--lowercase`  rule and the :code:`--regex` rule:
-
+You can see that a lot of the differences are due to capitalization and punctuation. Because we are only interested in
+the correct identification of words, these types of differences should not count as errors. To get a more accurate WER,
+we will remove punctuation marks and convert all letters to lowercase. We will do this for the reference and both
+hypothesis files by using the :code:`benchmarkstt-tools normalization` subcommand again, with two rules: the built-in
+:code:`--lowercase`  rule and the :code:`--regex` rule:
 
 .. code:: bash   
 
@@ -192,8 +195,7 @@ You can see that a lot of the differences are due to capitalization and punctuat
 
    benchmarkstt-tools normalization -i qt_aws_hypothesis.txt -o qt_aws_hypothesis_normalized.txt --lowercase --regex "[,.-]" " "
 
-We now have normalized versions of the reference and two hypothesis files. 
-
+We now have normalized versions of the reference and two hypothesis files.
 
 Benchmark again
 ---------------
@@ -230,27 +232,32 @@ The output should look like this (example output is truncated):
    | ...
 
 
-You can see that this time there are fewer differences between the reference and hypothesis. Accordingly, the WER is much lower for both hypotheses. The transcript with the lower WER is closer to the reference made from subtitles. 
+You can see that this time there are fewer differences between the reference and hypothesis. Accordingly, the WER is
+much lower for both hypotheses. The transcript with the lower WER is closer to the reference made from subtitles.
 
 
 Do it all in one step!
 ----------------------
 
-Above, we used two commands: :code:`benchmarkstt-tools` for the normalization and :code:`benchmarkstt` for calculating the WER. But we can combine all these steps into a single command using a rules file and a config file that references it. 
+Above, we used two commands: :code:`benchmarkstt-tools` for the normalization and :code:`benchmarkstt` for calculating
+the WER. But we can combine all these steps into a single command using a rules file and a config file that references
+it.
 
 First, let's create a file for the regex normalization rules. Create a text document with this content:
 
 .. code:: bash
 
    # Replace XML tags with a space
-   "<[^>]+>"," "
+   "</?[?!\[\]a-zA-Z][^>]*>"," "
    # Replace punctuation with a space
    "[,.-]"," "
 
 Save this file as :code:`rules.regex`.
 
 
-Now let's create a config file that contains all the normalization rules. They must be listed under the :code:`[normalization]` section (in this release, there is only one implemented section). The section references the regex rules file we created above, and also includes one of the built-in rules. 
+Now let's create a config file that contains all the normalization rules. They must be listed under the
+:code:`[normalization]` section (in this release, there is only one implemented section). The section references the
+regex rules file we created above, and also includes one of the built-in rules.
 
 .. code:: bash 
 
@@ -260,20 +267,42 @@ Now let's create a config file that contains all the normalization rules. They m
    # Built in rule
    lowercase
 
-Save the above as :code:`config.conf`. These rules will be applied to both hypothesis and reference, in the order in which they are listed.
+Save the above as :code:`config.conf`. These rules will be applied to both hypothesis and reference, in the order in
+which they are listed.
 
-Now run :code:`benchmarkstt` with the :code:`--conf` argument. We also need to tell the tool to treat the XML as plain text, otherwise it will look for an ``xml`` processor and fail. We do this with the 'reference type' argument :code:`-rt`:
-
-.. code:: bash
-
-   benchmarkstt --reference qt_subs.xml -rt plaintext --hypothesis qt_kaldi_hypothesis.txt --config normalization.conf --wer
-
-And again for the other transcript, this time using the short form for arguments:
+Now run :code:`benchmarkstt` with the :code:`--conf` argument. We also need to tell the tool to treat the XML as plain
+text, otherwise it will look for an ``xml`` processor and fail. We do this with the `reference type` argument
+:code:`--reference-type`:
 
 .. code:: bash
 
-   benchmarkstt -r qt_subs.xml -rt plaintext -h qt_aws_hypothesis.txt --config normalization.conf --wer
+   benchmarkstt --reference qt_subs.xml --reference-type plaintext --hypothesis qt_kaldi_hypothesis.txt --config config.conf --wer
 
-You now have WER scores for each of the machine-generated transcripts, calculated against a subtitles reference file. As a next step, you could create additional normalization rules or compare the results of the standard WER against the Hunt variant by specifying :code:`--wer hunt`. Or you could implement your own metrics or normalizers and submit them back to this project.
+Output:
 
+.. container:: terminal
 
+   | wer
+   | ===
+   |
+   | 0.196279
+
+And we do the same for the AWS transcript, this time using the short form for arguments:
+
+.. code:: bash
+
+   benchmarkstt -r qt_subs.xml -rt plaintext -h qt_aws_hypothesis.txt --config config.conf --wer
+
+Output:
+
+.. container:: terminal
+
+   | wer
+   | ===
+   |
+   | 0.239889
+
+You now have WER scores for each of the machine-generated transcripts, calculated against a subtitles reference file.
+As a next step, you could create additional normalization rules or compare the results of the standard WER against the
+Hunt variant by specifying :code:`--wer hunt`.
+Or you could implement your own metrics or normalizers and submit them back to this project.
