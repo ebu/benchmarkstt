@@ -159,7 +159,7 @@ Benchmark again
 
 Let's run the ``benchmarkstt`` command again, this time calculating WER based on the normalized files::
 
-   benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_kaldi_hypothesis_normalized.txt --wer --diffcounts --worddiff
+   benchmarkstt --reference qt_reference_normalized.txt --hypothesis qt_kaldi_hypothesis_normalized.txt --wer --diffcounts --worddiffs
 
 The output should look like this (example output is truncated):
 
