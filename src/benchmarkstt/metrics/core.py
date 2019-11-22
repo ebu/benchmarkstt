@@ -5,6 +5,7 @@ from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Base
 from collections import namedtuple
 # from benchmarkstt.modules import LoadObjectProxy
+import editdistance
 
 logger = logging.getLogger(__name__)
 
@@ -118,6 +119,31 @@ class WER(Base):
             return 1
         return changes / total_ref
 
+
+class Levenshtein(Base):
+    """
+    Word Error Rate, basically defined as::
+
+        insertions + deletions + substitions
+        ------------------------------------
+             number of reference words
+
+    See: https://en.wikipedia.org/wiki/Levenshtein_distance
+
+    Calculates minimum edit distance using the Levenshtein 
+    distance. This implementation uses the Editdistance, c++
+    implementation by Hiroyuki Tanaka:
+    https://github.com/aflc/editdistance
+    
+    """
+
+    def compare(self, ref: Schema, hyp: Schema):
+        ref_list = [i['item'] for i in ref]
+        total_ref = len(ref_list)
+        if total_ref == 0:
+            return 1
+        return editdistance.eval(ref_list, [i['item'] for i in hyp]) / total_ref
+        
 
 class DiffCounts(Base):
     """
