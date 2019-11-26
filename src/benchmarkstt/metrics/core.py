@@ -81,24 +81,37 @@ class WER(Base):
 
     See: https://en.wikipedia.org/wiki/Word_error_rate
 
+    Mode: 'levenshtein' 
+    See: https://en.wikipedia.org/wiki/Levenshtein_distance
+    Calculates minimum edit distance using the Levenshtein 
+    distance. This implementation uses the Editdistance, c++
+    implementation by Hiroyuki Tanaka:
+    https://github.com/aflc/editdistance
+
+    Mode: 'strict' or 'hunt'
     Insertions, deletions and substitutions are
     identified using the Hunt–McIlroy diff algorithm.
     This algorithm is the one used internally by Python.
     See https://docs.python.org/3/library/difflib.html
 
-    :param mode: WER variant. 'strict' is the default. 'hunt' applies 0.5 weight to insertions and deletions.
+    :param mode: WER variant. 'strict' is the default. 'hunt' applies 0.5 weight to insertions and deletions. 'levenshtein' is the minimum edit distance.
     :param differ_class: For future use.
     """
 
     # WER modes
     MODE_STRICT = 'strict'
     MODE_HUNT = 'hunt'
+    MODE_LEVENSHTEIN = 'levenshtein'
 
     DEL_PENALTY = 1
     INS_PENALTY = 1
     SUB_PENALTY = 1
 
     def __init__(self, mode=None, differ_class=None):
+        self._mode = mode
+        if mode == self.MODE_LEVENSHTEIN:
+            return
+
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
@@ -106,6 +119,13 @@ class WER(Base):
             self.DEL_PENALTY = self.INS_PENALTY = .5
 
     def compare(self, ref: Schema, hyp: Schema):
+        if self._mode == self.MODE_LEVENSHTEIN:
+            ref_list = [i['item'] for i in ref]
+            total_ref = len(ref_list)
+            if total_ref == 0:
+                return 1
+            return editdistance.eval(ref_list, [i['item'] for i in hyp]) / total_ref
+
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
 
         counts = get_opcode_counts(diffs.get_opcodes())
@@ -119,31 +139,6 @@ class WER(Base):
             return 1
         return changes / total_ref
 
-
-class Levenshtein(Base):
-    """
-    Word Error Rate, basically defined as::
-
-        insertions + deletions + substitions
-        ------------------------------------
-             number of reference words
-
-    See: https://en.wikipedia.org/wiki/Levenshtein_distance
-
-    Calculates minimum edit distance using the Levenshtein 
-    distance. This implementation uses the Editdistance, c++
-    implementation by Hiroyuki Tanaka:
-    https://github.com/aflc/editdistance
-    
-    """
-
-    def compare(self, ref: Schema, hyp: Schema):
-        ref_list = [i['item'] for i in ref]
-        total_ref = len(ref_list)
-        if total_ref == 0:
-            return 1
-        return editdistance.eval(ref_list, [i['item'] for i in hyp]) / total_ref
-        
 
 class DiffCounts(Base):
     """
