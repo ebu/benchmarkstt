@@ -65,7 +65,8 @@ setup(
         'test': [
             "pytest==4.2.0",
             "pycodestyle==2.5.0",
-            "pytest-cov==2.5.1"
+            "pytest-cov==2.5.1",
+            "attrs==19.1.0"
         ]
     },
     platforms='any',

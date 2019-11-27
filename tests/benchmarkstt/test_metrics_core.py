@@ -31,6 +31,7 @@ def test_diffcounts(a, b, exp):
     ['', 'aa bb cc', (1, 1, 1)],
     ['aa', 'bb aa cc', (2, 1, 2)],
     ['a b c d e f', 'a b d e kfmod fgdjn idf giudfg diuf dufg idgiudgd', (8/6, 3/4, 8/6)],
+    ['a b c d e f g h i j', 'a b e d c f g h i j', (.4, .2, .2)],
 ])
 def test_wer(a, b, exp):
     wer_strict, wer_hunt, wer_levenshtein = exp
