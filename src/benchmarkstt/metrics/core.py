@@ -81,20 +81,22 @@ class WER(Base):
 
     See: https://en.wikipedia.org/wiki/Word_error_rate
 
-    Mode: 'levenshtein' 
-    See: https://en.wikipedia.org/wiki/Levenshtein_distance
-    Calculates minimum edit distance using the Levenshtein 
-    distance. This implementation uses the Editdistance, c++
-    implementation by Hiroyuki Tanaka:
-    https://github.com/aflc/editdistance
+    Calculates the WER using one of two algorithms:
 
-    Mode: 'strict' or 'hunt'
-    Insertions, deletions and substitutions are
-    identified using the Hunt–McIlroy diff algorithm.
-    This algorithm is the one used internally by Python.
+    [Mode: 'strict' or 'hunt'] Insertions, deletions and
+    substitutions are identified using the Hunt–McIlroy
+    diff algorithm. The 'hunt' mode applies 0.5 weight to
+    insertions and deletions. This algorithm is the one
+    used internally by Python.
     See https://docs.python.org/3/library/difflib.html
 
-    :param mode: WER variant. 'strict' is the default. 'hunt' applies 0.5 weight to insertions and deletions. 'levenshtein' is the minimum edit distance.
+    [Mode: 'levenshtein'] The Levenshtein distance is the
+    minimum edit distance. This implementation uses the
+    Editdistance, c++ implementation by Hiroyuki Tanaka:
+    https://github.com/aflc/editdistance.
+    See: https://en.wikipedia.org/wiki/Levenshtein_distance
+
+    :param mode: 'strict' (default), 'hunt' or 'levenshtein'.
     :param differ_class: For future use.
     """
 
