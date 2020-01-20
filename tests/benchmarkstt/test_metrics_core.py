@@ -23,7 +23,7 @@ def test_diffcounts(a, b, exp):
 
 
 @pytest.mark.parametrize('a,b,exp', [
-    # (strict_wer, hunt_wer)
+    # (wer_strict, wer_hunt, wer_levenshtein)
     ['aa bb cc dd', 'aa bb cc dd', (0, 0, 0)],
     ['aa bb cc dd', 'aa bb ee dd', (.25, .25, .25)],
     ['aa bb cc dd', 'aa aa bb cc dd dd', (.5, .25, .5)],
