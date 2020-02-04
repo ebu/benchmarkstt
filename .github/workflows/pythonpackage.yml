@@ -51,11 +51,6 @@ jobs:
         pip install -e ".[test]"
     - name: Check code coverage
       run: pytest tests --cov=src --cov-report xml --cov-fail-under 90
-    - name: Publish coverage
-      uses: PublishCodeCoverageResults@1
-      with:
-        codeCoverageTool: Cobertura
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
         
   lint:
     runs-on: ubuntu-latest
