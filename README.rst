@@ -4,14 +4,9 @@ Benchmarking STT
 .. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
     :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
 
-.. image:: https://img.shields.io/azure-devops/build/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
-    :target: https://dev.azure.com/danielthepope/benchmarkstt/_build/latest?definitionId=4&branchName=master
-
-.. image:: https://img.shields.io/azure-devops/tests/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
-    :target: https://dev.azure.com/danielthepope/benchmarkstt/_build/latest?definitionId=4&branchName=master
-
-.. image:: https://img.shields.io/azure-devops/coverage/danielthepope/benchmarkstt/4/master.svg?logo=azure-devops
-    :target: https://dev.azure.com/danielthepope/benchmarkstt/_build
+.. image:: https://img.shields.io/github/workflow/status/ebu/benchmarkstt/Python%20package
+    :alt: GitHub Workflow Status (branch)
+    :target: https://github.com/ebu/benchmarkstt/actions
 
 .. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
     :target: https://benchmarkstt.readthedocs.io/
