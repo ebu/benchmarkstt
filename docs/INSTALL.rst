@@ -18,6 +18,9 @@ This is the easiest and preferred way of installing ``benchmarkstt``.
     - `Installing Python 3 on Windows <https://docs.python-guide.org/starting/install3/win/>`_
     - `Installing Python 3 on Linux <https://docs.python-guide.org/starting/install3/linux/>`_
 
+.. warning::
+  Some dependent packages require python-dev to be installed. On Debian-based systems this can be done using e.g. ``apt-get install python3.7-dev`` for Python 3.7, Red Hat-based systems would use e.g. ``yum install python3.7-devel``.
+
 2. Install the package using ``pip``, this will also install all requirements::
 
       python3 -m pip install benchmarkstt
