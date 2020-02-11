@@ -23,17 +23,19 @@ def test_diffcounts(a, b, exp):
 
 
 @pytest.mark.parametrize('a,b,exp', [
-    # (strict_wer, hunt_wer)
-    ['aa bb cc dd', 'aa bb cc dd', (0, 0)],
-    ['aa bb cc dd', 'aa bb ee dd', (.25, .25)],
-    ['aa bb cc dd', 'aa aa bb cc dd dd', (.5, .25)],
-    ['aa bb cc dd', '', (1, 0.5)],
-    ['', 'aa bb cc', (1, 1)],
-    ['aa', 'bb aa cc', (2, 1)],
-    ['a b c d e f', 'a b d e kfmod fgdjn idf giudfg diuf dufg idgiudgd', (8/6, 3/4)],
+    # (wer_strict, wer_hunt, wer_levenshtein)
+    ['aa bb cc dd', 'aa bb cc dd', (0, 0, 0)],
+    ['aa bb cc dd', 'aa bb ee dd', (.25, .25, .25)],
+    ['aa bb cc dd', 'aa aa bb cc dd dd', (.5, .25, .5)],
+    ['aa bb cc dd', '', (1, 0.5, 1)],
+    ['', 'aa bb cc', (1, 1, 1)],
+    ['aa', 'bb aa cc', (2, 1, 2)],
+    ['a b c d e f', 'a b d e kfmod fgdjn idf giudfg diuf dufg idgiudgd', (8/6, 3/4, 8/6)],
+    ['a b c d e f g h i j', 'a b e d c f g h i j', (.4, .2, .2)],
 ])
 def test_wer(a, b, exp):
-    wer_strict, wer_hunt = exp
+    wer_strict, wer_hunt, wer_levenshtein = exp
 
     assert WER(mode=WER.MODE_STRICT).compare(PlainText(a), PlainText(b)) == wer_strict
     assert WER(mode=WER.MODE_HUNT).compare(PlainText(a), PlainText(b)) == wer_hunt
+    assert WER(mode=WER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == wer_levenshtein
