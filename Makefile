@@ -2,9 +2,12 @@
 
 test:
 	python -m pytest src --doctest-modules -vvv
-	python -m pytest --cov=src --cov-report html:htmlcov tests -vvv
+	PYTHONPATH="./src/" python -m pytest --cov=./src --cov-report html:htmlcov ./tests -vvv
 	python -m pycodestyle tests
 	python -m pycodestyle src
+
+testcoverage:
+	PYTHONPATH="./src/" python -m pytest --cov=./src tests/
 
 docs:
 	cd docs/ && make clean html
