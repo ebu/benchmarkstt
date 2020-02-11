@@ -62,7 +62,7 @@ jobs:
 
     - script: |
         python -m pip install --upgrade pip setuptools wheel && pip install -e ".[test]"
-        pytest tests --cov=src --cov-report xml --cov-fail-under 90
+        PYTHONPATH="./src/" pytest tests --cov=src --cov-report xml --cov-fail-under 90
       displayName: 'Check code coverage'
 
     - task: PublishCodeCoverageResults@1
