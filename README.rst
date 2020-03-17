@@ -1,5 +1,5 @@
-Benchmarking STT
-================
+BenchmarkSTT
+============
 
 .. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
     :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
