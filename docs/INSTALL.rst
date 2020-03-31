@@ -44,6 +44,9 @@ This is the easiest and preferred way of installing ``benchmarkstt``.
 
    See :doc:`usage` for more information on how to use.
 
+From the repository
+-------------------
+For building the documentation locally and working with a development copy see :doc:`development`
 
 Removing benchmarkstt
 ---------------------
