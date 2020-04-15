@@ -90,11 +90,12 @@ class WER(Base):
     used internally by Python.
     See https://docs.python.org/3/library/difflib.html
 
-    [Mode: 'levenshtein'] The Levenshtein distance is the
-    minimum edit distance. This implementation uses the
-    Editdistance, c++ implementation by Hiroyuki Tanaka:
-    https://github.com/aflc/editdistance.
-    See: https://en.wikipedia.org/wiki/Levenshtein_distance
+    [Mode: 'levenshtein'] In the context of WER, Levenshtein
+    distance is the minimum edit distance computed at the
+    word level. This implementation uses the Editdistance
+    c++ implementation by Hiroyuki Tanaka:
+    https://github.com/aflc/editdistance. See:
+    https://en.wikipedia.org/wiki/Levenshtein_distance
 
     :param mode: 'strict' (default), 'hunt' or 'levenshtein'.
     :param differ_class: For future use.

@@ -27,8 +27,7 @@ Creating accurate verbatim transcripts for use as reference is time-consuming an
 
 .. warning::
 
-   This is a demo of work in progress. The benchmarking tool is still in development
-   and evaluations are not done for the purpose of assessing tools. In addition, the use of
+   Evaluations in this tutorial are not done for the purpose of assessing tools. The use of
    subtitles as reference will skew the results so they should not be taken as an indication
    of overall performance or as an endorsement of a particular vendor or engine.
 
@@ -243,6 +242,11 @@ Output:
 
 You now have WER scores for each of the machine-generated transcripts, calculated against a subtitles reference file.
 
-As a next step, you could create additional normalization rules or compare the results of the standard WER against the Hunt variant by specifying ``--wer hunt``.
+As a next step, you could add more normalization rules or implement your own metrics or normalizer classes and submit them back to this project.
 
-Or you could implement your own metrics or normalizers and submit them back to this project.
+Word Error Rate variants
+------------------------
+
+In this tutorial we used the WER parameter with the mode argument omitted, defaulting to ``strict`` WER variant. This variant uses Python's built-in diff algorithm in the calculation of the WER, which is stricter and results in a slightly higher WER than the commonly used Levenshtein Distance algorithm (see more detail `here <https://github.com/ebu/benchmarkstt/issues/113>`_). 
+
+If you use BenchmarkSTT to compare different engines then this is not a problem since the relative ranking will not be affected. However, for better compatibility with other benchmarking tools, a WER variant that uses the Levenshtein edit distance algorithm is provided. To use it, specify ``--wer levenshtein``.
