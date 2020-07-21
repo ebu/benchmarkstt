@@ -8,7 +8,7 @@ from pathlib import Path
 from contextlib import nullcontext
 
 
-class UMLBlock:
+class PlantUMLBlock:
     start_block = "\n%s%s {\n"
     end_block = "\n%s}\n\n"
 
@@ -31,7 +31,7 @@ class UMLBlock:
         return "\t" * self._uml.level
 
 
-class Namespace(UMLBlock):
+class Namespace(PlantUMLBlock):
     def __init__(self, uml, name):
         block_text = "namespace %s" % (name,)
         super().__init__(uml, block_text)
@@ -41,7 +41,7 @@ class Namespace(UMLBlock):
         return self
 
 
-class Module(UMLBlock):
+class Module(PlantUMLBlock):
     def __init__(self, uml, module):
         self._module = module
         super().__init__(uml)
@@ -55,7 +55,7 @@ class Module(UMLBlock):
         return self
 
 
-class Klass(UMLBlock):
+class Klass(PlantUMLBlock):
     def __init__(self, uml, name, klass):
         self._name = name
         self._klass = klass
@@ -84,13 +84,16 @@ class Klass(UMLBlock):
         super().__exit__(exc_type, exc_val, exc_tb)
 
 
-class UML:
+class PlantUML:
     def __init__(self, filter=None):
         self.classes_done = set()
         self._buffer = ""
         self._relations = []
         self.level = 0
         self._filter = filter
+
+    def direction(self, which):
+        self += "%s%s direction\n" % ("\t" * self.level, which)
 
     def generate(self, orig_module):
         def filterProtected(v):
@@ -188,7 +191,7 @@ class UML:
 
 
 if __name__ == '__main__':
-    # generate basic UML schemas for benchmarkstt
+    # generate basic PlantUML schemas for benchmarkstt
     file_tpl = './docs/_static/uml/%s.%s'
     files = {}
     extensions = ('plantuml', 'svg')
@@ -218,7 +221,8 @@ if __name__ == '__main__':
         return True
 
     def generate(name, filter):
-        uml = UML(filter=filter)
+        uml = PlantUML(filter=filter)
+        uml.direction("left to right")
         files = {
                     extension: file_tpl % (name, extension) for extension in extensions
                 }
