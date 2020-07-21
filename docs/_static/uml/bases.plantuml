@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 
 		class benchmarkstt.normalization.core.Config {
 			+__init__(self, file, section=None, encoding=None)

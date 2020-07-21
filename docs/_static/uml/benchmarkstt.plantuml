@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 
 		class benchmarkstt.docblock.Docblock {
 			+__getnewargs__(self)
@@ -95,11 +96,12 @@
 		}
 
 
-		class benchmarkstt.uml.UML {
+		class benchmarkstt.uml.PlantUML {
 			+__add__(self, x)
 			+__init__(self, filter=None)
 			+__str__(self)
 			+cls_name(cls)
+			+direction(self, which)
 			+entity(self, entity, conf=None)
 			+filtered(self, cls)
 			+generate(self, orig_module)
@@ -114,7 +116,7 @@
 		}
 
 
-		class benchmarkstt.uml.UMLBlock {
+		class benchmarkstt.uml.PlantUMLBlock {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, uml, block_text=None)
@@ -690,9 +692,9 @@
 		}
 
 
-benchmarkstt.uml.Klass --|> benchmarkstt.uml.UMLBlock
-benchmarkstt.uml.Module --|> benchmarkstt.uml.UMLBlock
-benchmarkstt.uml.Namespace --|> benchmarkstt.uml.UMLBlock
+benchmarkstt.uml.Klass --|> benchmarkstt.uml.PlantUMLBlock
+benchmarkstt.uml.Module --|> benchmarkstt.uml.PlantUMLBlock
+benchmarkstt.uml.Namespace --|> benchmarkstt.uml.PlantUMLBlock
 benchmarkstt.factory.ClassConfig --|> benchmarkstt.factory.ClassConfigTuple
 benchmarkstt.factory.Factory --|> benchmarkstt.registry.Registry
 benchmarkstt.normalization.core.Config --|> benchmarkstt.normalization.Base
