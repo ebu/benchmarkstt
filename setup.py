@@ -11,6 +11,10 @@ def from_file(filename):
         result = f.read()
     return result.strip()
 
+def filter_requirements(line):
+    return not line.startswith('-e')
+
+docs_require = list(filter(filter_requirements, from_file('docs/requirements.txt').split('\n')))
 
 dirname = os.path.dirname(__file__)
 __version__ = from_file('VERSION')
@@ -68,8 +72,9 @@ setup(
             "pytest==4.2.0",
             "pycodestyle==2.5.0",
             "pytest-cov==2.5.1",
-            "attrs==19.1.0"
-        ]
+            "attrs==19.1.0",
+        ],
+        'docs': docs_require,
     },
     platforms='any',
     entry_points={

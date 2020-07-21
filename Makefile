@@ -7,10 +7,9 @@ env:
 	echo "Using $(shell exec $(PYTHON) --version): $(PYTHON)"
 	$(PYTHON) -m ensurepip
 
-test: env
+test: env lint
 	$(PYTHON) -m pytest src --doctest-modules -vvv
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src --cov-report html:htmlcov ./tests -vvv
-	make lint
 
 lint:
 	$(PYTHON) -m pycodestyle tests
@@ -19,10 +18,10 @@ lint:
 testcoverage: env
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src tests/
 
-docs:
+docs: setupdocs
 	cd docs/ && make clean html
 
-setupdocs: env setuptools
+setupdocs: env
 	$(PYTHON) -m pip install -r docs/requirements.txt
 
 dev: env setuptools
