@@ -1,14 +1,16 @@
 .PHONY: docs test clean pypi env
 
-PYTHON:=$(shell test -e env/bin/activate && echo "env/bin/python" || echo "python3")
+PYTHON=$(shell test -e env/bin/activate && echo "env/bin/python" || echo "python3")
 
 env:
+	test -e env/bin/activate && source env/bin/activate
 	echo "Using $(shell exec $(PYTHON) --version): $(PYTHON)"
 	$(PYTHON) -m ensurepip
 
-test: env lint
+test: env
 	$(PYTHON) -m pytest src --doctest-modules -vvv
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src --cov-report html:htmlcov ./tests -vvv
+	make lint
 
 lint:
 	$(PYTHON) -m pycodestyle tests
@@ -17,14 +19,17 @@ lint:
 testcoverage: env
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src tests/
 
-docs: setupdocs clean
-	cd docs/ && make html
+docs:
+	cd docs/ && make clean html
 
-setupdocs: env
+setupdocs: env setuptools
 	$(PYTHON) -m pip install -r docs/requirements.txt
 
 dev: env setuptools
 	$(PYTHON) -m pip install -e '.[test]'
+
+uml: env
+	PYTHONPATH="./src/" $(PYTHON) src/benchmarkstt/uml.py
 
 clean:
 	cd docs/ && make clean
@@ -36,4 +41,3 @@ pypi: env setuptools test
 	$(PYTHON) setup.py sdist bdist_wheel
 	$(PYTHON) -m pip install --user --upgrade twine
 	$(PYTHON) -m twine upload dist/*
-
