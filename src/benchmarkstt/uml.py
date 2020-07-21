@@ -9,8 +9,8 @@ from contextlib import nullcontext
 
 
 class PlantUMLBlock:
-    start_block = "\n%s%s {\n"
-    end_block = "\n%s}\n\n"
+    start_block = "%s {"
+    end_block = "}"
 
     def __init__(self, uml, block_text=None):
         self._uml = uml
@@ -19,16 +19,13 @@ class PlantUMLBlock:
     def __enter__(self):
         self._uml.level += 1
         if self._block_text:
-            self._uml += self.start_block % (self._level(), self._block_text)
+            self._uml.add(self.start_block, self._block_text)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self._block_text:
-            self._uml += self.end_block % (self._level(),)
+            self._uml.add(self.end_block,)
         self._uml.level -= 1
-
-    def _level(self):
-        return "\t" * self._uml.level
 
 
 class Namespace(PlantUMLBlock):
@@ -64,7 +61,7 @@ class Klass(PlantUMLBlock):
 
     def method(self, required_args, optional_args):
         args = required_args + list(map(lambda x: '[%s]' % x, optional_args))
-        self._uml += "%s+__init__(%s)\n" % (self._level(), ",".join(args))
+        self._uml.add("+__init__(%s)", ",".join(args))
 
     def __enter__(self):
         super().__enter__()
@@ -76,7 +73,7 @@ class Klass(PlantUMLBlock):
                 continue
 
             signature = inspect.signature(getattr(self._klass, k))
-            self._uml += "%s\t+%s%s\n" % (self._level(), k, signature)
+            self._uml.add("\t+%s%s", k, signature)
 
         return self
 
@@ -86,14 +83,23 @@ class Klass(PlantUMLBlock):
 
 class PlantUML:
     def __init__(self, filter=None):
+        self.parent_arrow = '--up--|>'
         self.classes_done = set()
         self._buffer = ""
         self._relations = []
         self.level = 0
         self._filter = filter
 
+    def add(self, what, *args):
+        self += "\t" * self.level
+        self += what % tuple(args) if len(args) else what
+        self += "\n"
+
+    def title(self, title):
+        self.add("title %r", title)
+
     def direction(self, which):
-        self += "%s%s direction\n" % ("\t" * self.level, which)
+        self.add("%s direction", which)
 
     def generate(self, orig_module):
         def filterProtected(v):
@@ -162,7 +168,7 @@ class PlantUML:
             return
         for parent_cls in cls.__bases__:
             if not self.filtered(parent_cls):
-                self.relation(cls, '--|>', parent_cls)
+                self.relation(cls, self.parent_arrow, parent_cls)
 
     def relation(self, a, arrow, b):
         self._relations.append(" ".join((self.cls_name(a), arrow, self.cls_name(b))))
@@ -220,9 +226,11 @@ if __name__ == '__main__':
 
         return True
 
-    def generate(name, filter):
+    def generate(name, title, filter, direction=None):
         uml = PlantUML(filter=filter)
-        uml.direction("left to right")
+        if direction:
+            uml.direction(direction)
+        uml.title(title)
         files = {
                     extension: file_tpl % (name, extension) for extension in extensions
                 }
@@ -233,5 +241,5 @@ if __name__ == '__main__':
         with open(files['svg'], 'wb') as f:
             f.write(uml.render(benchmarkstt))
 
-    generate('benchmarkstt', benchmarksttFilter)
-    generate('bases', benchmarksttBasesFilter)
+    generate('benchmarkstt', "BenchmarkSTT Structure", benchmarksttFilter, "left to right")
+    generate('core', "Core BenchmarkSTT Structure", benchmarksttBasesFilter)
