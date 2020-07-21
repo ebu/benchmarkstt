@@ -149,6 +149,14 @@
 		}
 
 
+		class benchmarkstt.normalization.core.Config {
+			+__init__(self, file, section=None, encoding=None)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
 		class benchmarkstt.cli.HelpFormatter {
 			+__init__(self, *args, **kwargs)
 			+add_argument(self, action)
@@ -317,14 +325,6 @@
 
 
 		class benchmarkstt.schema.SchemaJSONError {
-
-		}
-
-
-		class benchmarkstt.normalization.core.Config {
-			+__init__(self, file, section=None, encoding=None)
-			+__repr__(self)
-			+normalize(cls, text)
 
 		}
 
@@ -695,6 +695,7 @@ benchmarkstt.uml.Module --|> benchmarkstt.uml.UMLBlock
 benchmarkstt.uml.Namespace --|> benchmarkstt.uml.UMLBlock
 benchmarkstt.factory.ClassConfig --|> benchmarkstt.factory.ClassConfigTuple
 benchmarkstt.factory.Factory --|> benchmarkstt.registry.Registry
+benchmarkstt.normalization.core.Config --|> benchmarkstt.normalization.Base
 benchmarkstt.csv.DefaultDialect --|> benchmarkstt.csv.Dialect
 benchmarkstt.csv.UnallowedQuoteError --|> benchmarkstt.csv.CSVParserError
 benchmarkstt.csv.UnclosedQuoteError --|> benchmarkstt.csv.CSVParserError
@@ -702,7 +703,6 @@ benchmarkstt.csv.WhitespaceDialect --|> benchmarkstt.csv.DefaultDialect
 benchmarkstt.modules.LoadObjectProxy --|> benchmarkstt.modules.Proxy
 benchmarkstt.schema.SchemaInvalidItemError --|> benchmarkstt.schema.SchemaError
 benchmarkstt.schema.SchemaJSONError --|> benchmarkstt.schema.SchemaError
-benchmarkstt.normalization.core.Config --|> benchmarkstt.normalization.Base
 benchmarkstt.input.core.PlainText --|> benchmarkstt.input.Base
 benchmarkstt.metrics.core.DiffCounts --|> benchmarkstt.metrics.Base
 benchmarkstt.diff.core.RatcliffObershelp --|> benchmarkstt.diff.Base

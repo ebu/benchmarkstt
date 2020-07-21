@@ -1,0 +1,200 @@
+@startuml
+
+		class benchmarkstt.normalization.core.Config {
+			+__init__(self, file, section=None, encoding=None)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.input.core.PlainText {
+			+__init__(self, text, segmenter=None, normalizer=None)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.metrics.Base {
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.metrics.core.DiffCounts {
+			+__init__(self, differ_class=None)
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.diff.core.RatcliffObershelp {
+			+__init__(self, a, b, *args, **kwargs)
+			+find_longest_match(self, alo, ahi, blo, bhi)
+			+get_grouped_opcodes(self, n=3)
+			+get_matching_blocks(self)
+			+get_opcodes(self)
+			+quick_ratio(self)
+			+ratio(self)
+			+real_quick_ratio(self)
+			+set_seq1(self, a)
+			+set_seq2(self, b)
+			+set_seqs(self, a, b)
+
+		}
+
+
+		class benchmarkstt.metrics.core.WER {
+			+__init__(self, mode=None, differ_class=None)
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.metrics.core.WordDiffs {
+			+__init__(self, dialect=None, differ_class=None)
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.normalization.Base {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.BaseWithFileSupport {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.File {
+			+__init__(self, normalizer, file, encoding=None, path=None)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.NormalizationComposite {
+			+__init__(self, title=None)
+			+__repr__(self)
+			+add(self, normalizer)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.core.Lowercase {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.core.Unidecode {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.input.Base {
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.input.core.File {
+			+__init__(self, file, input_type=None, normalizer=None)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.segmentation.Base {
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.segmentation.core.Simple {
+			+__init__(self, text: str, pattern='[\\n\\t\\s]+', normalizer=None)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.output.Base {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.Json {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.MarkDown {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.ReStructuredText {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.SimpleTextBase {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.diff.Base {
+			+__init__(self, a='', b='')
+			+get_opcodes(self)
+
+		}
+
+
+benchmarkstt.normalization.core.Config --|> benchmarkstt.normalization.Base
+benchmarkstt.input.core.PlainText --|> benchmarkstt.input.Base
+benchmarkstt.metrics.core.DiffCounts --|> benchmarkstt.metrics.Base
+benchmarkstt.diff.core.RatcliffObershelp --|> benchmarkstt.diff.Base
+benchmarkstt.metrics.core.WER --|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.WordDiffs --|> benchmarkstt.metrics.Base
+benchmarkstt.normalization.BaseWithFileSupport --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.File --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.NormalizationComposite --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Lowercase --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Unidecode --|> benchmarkstt.normalization.Base
+benchmarkstt.input.core.File --|> benchmarkstt.input.Base
+benchmarkstt.segmentation.core.Simple --|> benchmarkstt.segmentation.Base
+benchmarkstt.output.core.Json --|> benchmarkstt.output.Base
+benchmarkstt.output.core.MarkDown --|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.ReStructuredText --|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.SimpleTextBase --|> benchmarkstt.output.Base
+@enduml

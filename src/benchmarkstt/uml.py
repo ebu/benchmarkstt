@@ -1,3 +1,5 @@
+# pragma: no cover
+
 import inspect
 import pkgutil
 import os
@@ -187,17 +189,45 @@ class UML:
 
 if __name__ == '__main__':
     # generate basic UML schemas for benchmarkstt
-    uml_file = './docs/_static/uml/benchmarkstt.plantuml'
-    svg_file = './docs/_static/uml/benchmarkstt.svg'
+    file_tpl = './docs/_static/uml/%s.%s'
+    files = {}
+    extensions = ('plantuml', 'svg')
+    for extension in extensions:
+        files[extension] = file_tpl % ('benchmarkstt', extension)
 
     def benchmarksttFilter(cls):
-        return not (cls.__name__.startswith('benchmarkstt.') or
-                    (hasattr(cls, '__module__') and cls.__module__.startswith('benchmarkstt.')))
+        if cls.__name__.startswith('benchmarkstt.'):
+            return False
 
-    uml = UML(filter=benchmarksttFilter)
+        if hasattr(cls, '__module__') and cls.__module__.startswith('benchmarkstt.'):
+            return False
 
-    import benchmarkstt
-    with open(uml_file, 'w') as f:
-        f.write(uml.generate(benchmarkstt))
-    with open(svg_file, 'wb') as f:
-        f.write(uml.render(benchmarkstt))
+        return True
+
+    def benchmarksttBasesFilter(cls):
+        if benchmarksttFilter(cls):
+            return True
+
+        if cls.__name__.endswith('Base'):
+            return False
+
+        for c in cls.__bases__:
+            if c.__name__.endswith('Base'):
+                return False
+
+        return True
+
+    def generate(name, filter):
+        uml = UML(filter=filter)
+        files = {
+                    extension: file_tpl % (name, extension) for extension in extensions
+                }
+
+        import benchmarkstt
+        with open(files['plantuml'], 'w') as f:
+            f.write(uml.generate(benchmarkstt))
+        with open(files['svg'], 'wb') as f:
+            f.write(uml.render(benchmarkstt))
+
+    generate('benchmarkstt', benchmarksttFilter)
+    generate('bases', benchmarksttBasesFilter)
