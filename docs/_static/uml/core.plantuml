@@ -60,6 +60,21 @@ title 'Core BenchmarkSTT Structure'
 			+__repr__(self)
 			+normalize(cls, text)
 		}
+		class benchmarkstt.normalization.core.Regex {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.core.Replace {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.core.ReplaceWords {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
 		class benchmarkstt.normalization.core.Unidecode {
 			+__repr__(self)
 			+normalize(cls, text)
@@ -122,6 +137,9 @@ benchmarkstt.normalization.BaseWithFileSupport --up--|> benchmarkstt.normalizati
 benchmarkstt.normalization.File --up--|> benchmarkstt.normalization.Base
 benchmarkstt.normalization.NormalizationComposite --up--|> benchmarkstt.normalization.Base
 benchmarkstt.normalization.core.Lowercase --up--|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Regex --up--|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Replace --up--|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.ReplaceWords --up--|> benchmarkstt.normalization.BaseWithFileSupport
 benchmarkstt.normalization.core.Unidecode --up--|> benchmarkstt.normalization.Base
 benchmarkstt.input.core.File --up--|> benchmarkstt.input.Base
 benchmarkstt.segmentation.core.Simple --up--|> benchmarkstt.segmentation.Base

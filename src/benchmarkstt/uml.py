@@ -223,6 +223,9 @@ if __name__ == '__main__':
         for c in cls.__bases__:
             if c.__name__.endswith('Base'):
                 return False
+            for c2 in c.__bases__:
+                if c2.__name__.endswith('Base'):
+                    return False
 
         return True
 
