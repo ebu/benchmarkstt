@@ -1,0 +1,732 @@
+@startuml
+
+		class benchmarkstt.docblock.Docblock {
+			+__getnewargs__(self)
+			+__new__(_cls, docs, params, result, result_type)
+			+__repr__(self)
+
+		}
+
+
+		class benchmarkstt.docblock.DocblockParam {
+			+__getnewargs__(self)
+			+__new__(_cls, name, type, value)
+			+__repr__(self)
+
+		}
+
+
+		class benchmarkstt.docblock.HTML5Writer {
+			+__init__(self)
+			+apply_template(self)
+			+assemble_parts(self)
+			+get_transforms(self)
+			+interpolation_dict(self)
+			+supports(self, format)
+			+translate(self)
+			+write(self, document, destination)
+
+		}
+
+
+		class benchmarkstt.docblock.Param {
+			+__getnewargs__(self)
+			+__new__(_cls, name, type, type_doc, is_required, description, examples)
+			+__repr__(self)
+
+		}
+
+
+		class benchmarkstt.docblock.TextWriter {
+			+__init__(self)
+			+assemble_parts(self)
+			+get_transforms(self)
+			+supports(self, format)
+			+translate(self)
+			+write(self, document, destination)
+
+		}
+
+
+		class benchmarkstt.config.SectionConfigReader {
+			+__contains__(self, item)
+			+__getitem__(self, k)
+			+__init__(self, config)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.registry.Registry {
+			+__contains__(self, item)
+			+__delitem__(self, key)
+			+__getitem__(self, item)
+			+__init__(self)
+			+__setitem__(self, key, value)
+			+keys(self)
+			+register(self, key, value)
+			+unregister(self, key)
+
+		}
+
+
+		class benchmarkstt.uml.Klass {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, uml, name, klass)
+			+method(self, required_args, optional_args)
+
+		}
+
+
+		class benchmarkstt.uml.Module {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, uml, module)
+
+		}
+
+
+		class benchmarkstt.uml.Namespace {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, uml, name)
+
+		}
+
+
+		class benchmarkstt.uml.UML {
+			+__add__(self, x)
+			+__init__(self, filter=None)
+			+__str__(self)
+			+cls_name(cls)
+			+entity(self, entity, conf=None)
+			+filtered(self, cls)
+			+generate(self, orig_module)
+			+klass(self, name, klass)
+			+module(self, module)
+			+namespace(self, name)
+			+parent_relations(self, cls)
+			+relation(self, a, arrow, b)
+			+render(self, orig_module, format='svg')
+			+skip(self, cls)
+
+		}
+
+
+		class benchmarkstt.uml.UMLBlock {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, uml, block_text=None)
+
+		}
+
+
+		class benchmarkstt.factory.ClassConfig {
+			+__getnewargs__(self)
+			+__new__(_cls, name, cls, docs, optional_args, required_args)
+			+__repr__(self)
+
+		}
+
+
+		class benchmarkstt.factory.Factory {
+			+__contains__(self, item)
+			+__delitem__(self, key)
+			+__getitem__(self, item)
+			+__init__(self, base_class, namespaces=None)
+			+__iter__(self)
+			+__setitem__(self, key, value)
+			+create(self, alias, *args, **kwargs)
+			+is_valid(self, tocheck)
+			+keys(self)
+			+normalize_class_name(clsname)
+			+register(self, cls, alias=None)
+			+register_classname(self, name, alias=None)
+			+register_namespace(self, namespace)
+			+unregister(self, key)
+
+		}
+
+
+		class benchmarkstt.cli.HelpFormatter {
+			+__init__(self, *args, **kwargs)
+			+add_argument(self, action)
+			+add_arguments(self, actions)
+			+add_text(self, text)
+			+add_usage(self, usage, actions, groups, prefix=None)
+			+end_section(self)
+			+format_help(self)
+			+start_section(self, heading)
+
+		}
+
+
+		class benchmarkstt.modules.Modules {
+			+__getattr__(self, name)
+			+__getitem__(self, key)
+			+__init__(self, sub_module=None)
+			+__iter__(self)
+			+keys(self)
+
+		}
+
+
+		class benchmarkstt.cli._ActionWithArguments {
+
+		}
+
+
+		class benchmarkstt.csv.CSVParserError {
+			+__init__(self, message, line, char, index)
+
+		}
+
+
+		class benchmarkstt.csv.DefaultDialect {
+
+		}
+
+
+		class benchmarkstt.csv.Dialect {
+
+		}
+
+
+		class benchmarkstt.csv.InvalidDialectError {
+
+		}
+
+
+		class benchmarkstt.csv.Line {
+
+		}
+
+
+		class benchmarkstt.csv.Reader {
+			+__init__(self, file: <class 'TextIO'>, dialect: benchmarkstt.csv.Dialect, debug=None)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.csv.UnallowedQuoteError {
+			+__init__(self, message, line, char, index)
+
+		}
+
+
+		class benchmarkstt.csv.UnclosedQuoteError {
+			+__init__(self, message, line, char, index)
+
+		}
+
+
+		class benchmarkstt.csv.UnknownDialectError {
+
+		}
+
+
+		class benchmarkstt.csv.WhitespaceDialect {
+
+		}
+
+
+		class benchmarkstt.modules.LoadObjectProxy {
+			+__getattribute__(self, item)
+			+__init__(self, name, *args, **kwargs)
+
+		}
+
+
+		class benchmarkstt.modules.Proxy {
+			+__getattribute__(self, item)
+			+__init__(self, instance)
+
+		}
+
+
+		class benchmarkstt.schema.Item {
+			+__contains__(self, key)
+			+__eq__(self, other)
+			+__getitem__(self, k)
+			+__init__(self, *args, **kwargs)
+			+__iter__(self)
+			+__len__(self) -> int
+			+__ne__(self, other)
+			+__repr__(self)
+			+get(self, key, default=None)
+			+items(self)
+			+json(self, **kwargs)
+			+keys(self)
+			+values(self)
+
+		}
+
+
+		class benchmarkstt.schema.JSONDecoder {
+			+__init__(self, *args, **kwargs)
+			+decode(self, *args, **kwargs)
+			+object_hook(obj)
+			+raw_decode(self, s, idx=0)
+
+		}
+
+
+		class benchmarkstt.schema.JSONEncoder {
+			+__init__(self, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, sort_keys=False, indent=None, separators=None, default=None)
+			+default(self, o)
+			+encode(self, obj)
+			+iterencode(self, o, _one_shot=False)
+
+		}
+
+
+		class benchmarkstt.schema.Meta {
+
+		}
+
+
+		class benchmarkstt.schema.Schema {
+			+__eq__(self, other)
+			+__getitem__(self, item)
+			+__init__(self, data=None)
+			+__iter__(self)
+			+__len__(self)
+			+__ne__(self, other)
+			+__repr__(self)
+			+append(self, obj: Union[benchmarkstt.schema.Item, dict])
+			+dump(cls, *args, **kwargs)
+			+dumps(cls, *args, **kwargs)
+			+extend(self, iterable)
+			+json(self, **kwargs)
+			+load(*args, **kwargs)
+			+loads(*args, **kwargs)
+
+		}
+
+
+		class benchmarkstt.schema.SchemaError {
+
+		}
+
+
+		class benchmarkstt.schema.SchemaInvalidItemError {
+
+		}
+
+
+		class benchmarkstt.schema.SchemaJSONError {
+
+		}
+
+
+		class benchmarkstt.normalization.core.Config {
+			+__init__(self, file, section=None, encoding=None)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.logger.LogCapturer {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, *args, **kwargs)
+
+		}
+
+
+		class benchmarkstt.input.core.PlainText {
+			+__init__(self, text, segmenter=None, normalizer=None)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.metrics.Base {
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.metrics.core.DiffCounts {
+			+__init__(self, differ_class=None)
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.metrics.core.OpcodeCounts {
+			+__getnewargs__(self)
+			+__new__(_cls, equal, replace, insert, delete)
+			+__repr__(self)
+
+		}
+
+
+		class benchmarkstt.diff.core.RatcliffObershelp {
+			+__init__(self, a, b, *args, **kwargs)
+			+find_longest_match(self, alo, ahi, blo, bhi)
+			+get_grouped_opcodes(self, n=3)
+			+get_matching_blocks(self)
+			+get_opcodes(self)
+			+quick_ratio(self)
+			+ratio(self)
+			+real_quick_ratio(self)
+			+set_seq1(self, a)
+			+set_seq2(self, b)
+			+set_seqs(self, a, b)
+
+		}
+
+
+		class benchmarkstt.metrics.core.WER {
+			+__init__(self, mode=None, differ_class=None)
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.metrics.core.WordDiffs {
+			+__init__(self, dialect=None, differ_class=None)
+			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+
+		}
+
+
+		class benchmarkstt.normalization.logger.Logger {
+
+		}
+
+
+		class benchmarkstt.normalization.Base {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.BaseWithFileSupport {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.File {
+			+__init__(self, normalizer, file, encoding=None, path=None)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.FileFactory {
+			+__contains__(self, item)
+			+__delitem__(self, key)
+			+__getitem__(self, item)
+			+__init__(self, base_class, namespaces=None)
+			+__iter__(self)
+			+__setitem__(self, key, value)
+			+create(self, name, file=None, encoding=None, path=None)
+			+is_valid(self, tocheck)
+			+keys(self)
+			+normalize_class_name(clsname)
+			+register(self, cls, alias=None)
+			+register_classname(self, name, alias=None)
+			+register_namespace(self, namespace)
+			+unregister(self, key)
+
+		}
+
+
+		class benchmarkstt.normalization.NormalizationComposite {
+			+__init__(self, title=None)
+			+__repr__(self)
+			+add(self, normalizer)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.core.ConfigSectionNotFoundError {
+
+		}
+
+
+		class benchmarkstt.normalization.core.Lowercase {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.core.Regex {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.core.Replace {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.core.ReplaceWords {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.core.Unidecode {
+			+__repr__(self)
+			+normalize(cls, text)
+
+		}
+
+
+		class benchmarkstt.normalization.logger.DiffLoggingFormatter {
+			+__init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
+			+format(self, record)
+			+formatException(self, ei)
+			+formatMessage(self, record)
+			+formatStack(self, stack_info)
+			+formatTime(self, record, datefmt=None)
+			+usesTime(self)
+
+		}
+
+
+		class benchmarkstt.input.Base {
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.input.core.File {
+			+__init__(self, file, input_type=None, normalizer=None)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.segmentation.Base {
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.segmentation.core.Simple {
+			+__init__(self, text: str, pattern='[\\n\\t\\s]+', normalizer=None)
+			+__iter__(self)
+
+		}
+
+
+		class benchmarkstt.output.Base {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.Json {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.MarkDown {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.ReStructuredText {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.output.core.SimpleTextBase {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.CLIDiffDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, show_color_key=None)
+			+output(self)
+			+preprocessor(txt)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.Dialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+output(self)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.DiffFormatter {
+			+__init__(self, dialect=None, *args, **kwargs)
+			+diff(self, a, b, opcodes=None, preprocessor=None)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.HTMLDiffDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+output(self)
+			+preprocessor(txt)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.JSONDiffDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+equal_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+			+replace_format(self, a, b)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.ListDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+equal_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+			+replace_format(self, a, b)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.RestructuredTextDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, show_color_key=None)
+			+output(self)
+			+preprocessor(txt)
+
+		}
+
+
+		class benchmarkstt.diff.formatter.UTF8Dialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+
+		}
+
+
+		class benchmarkstt.diff.Base {
+			+__init__(self, a='', b='')
+			+get_opcodes(self)
+
+		}
+
+
+		class benchmarkstt.api.jsonrpc.DefaultMethods {
+			+help(methods)
+			+version()
+
+		}
+
+
+		class benchmarkstt.api.jsonrpc.MagicMethods {
+			+__init__(self)
+			+is_safe_path(path)
+			+load(self, name, module)
+			+register(self, name, callback)
+			+serve(self, config, callback)
+
+		}
+
+
+		class benchmarkstt.api.jsonrpc.SecurityError {
+
+		}
+
+
+benchmarkstt.uml.Klass --|> benchmarkstt.uml.UMLBlock
+benchmarkstt.uml.Module --|> benchmarkstt.uml.UMLBlock
+benchmarkstt.uml.Namespace --|> benchmarkstt.uml.UMLBlock
+benchmarkstt.factory.ClassConfig --|> benchmarkstt.factory.ClassConfigTuple
+benchmarkstt.factory.Factory --|> benchmarkstt.registry.Registry
+benchmarkstt.csv.DefaultDialect --|> benchmarkstt.csv.Dialect
+benchmarkstt.csv.UnallowedQuoteError --|> benchmarkstt.csv.CSVParserError
+benchmarkstt.csv.UnclosedQuoteError --|> benchmarkstt.csv.CSVParserError
+benchmarkstt.csv.WhitespaceDialect --|> benchmarkstt.csv.DefaultDialect
+benchmarkstt.modules.LoadObjectProxy --|> benchmarkstt.modules.Proxy
+benchmarkstt.schema.SchemaInvalidItemError --|> benchmarkstt.schema.SchemaError
+benchmarkstt.schema.SchemaJSONError --|> benchmarkstt.schema.SchemaError
+benchmarkstt.normalization.core.Config --|> benchmarkstt.normalization.Base
+benchmarkstt.input.core.PlainText --|> benchmarkstt.input.Base
+benchmarkstt.metrics.core.DiffCounts --|> benchmarkstt.metrics.Base
+benchmarkstt.diff.core.RatcliffObershelp --|> benchmarkstt.diff.Base
+benchmarkstt.metrics.core.WER --|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.WordDiffs --|> benchmarkstt.metrics.Base
+benchmarkstt.normalization.BaseWithFileSupport --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.File --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.FileFactory --|> benchmarkstt.factory.Factory
+benchmarkstt.normalization.NormalizationComposite --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Lowercase --|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Regex --|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Replace --|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.ReplaceWords --|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Unidecode --|> benchmarkstt.normalization.Base
+benchmarkstt.input.core.File --|> benchmarkstt.input.Base
+benchmarkstt.segmentation.core.Simple --|> benchmarkstt.segmentation.Base
+benchmarkstt.output.core.Json --|> benchmarkstt.output.Base
+benchmarkstt.output.core.MarkDown --|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.ReStructuredText --|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.SimpleTextBase --|> benchmarkstt.output.Base
+benchmarkstt.diff.formatter.CLIDiffDialect --|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.HTMLDiffDialect --|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.JSONDiffDialect --|> benchmarkstt.diff.formatter.ListDialect
+benchmarkstt.diff.formatter.ListDialect --|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.RestructuredTextDialect --|> benchmarkstt.diff.formatter.CLIDiffDialect
+benchmarkstt.diff.formatter.UTF8Dialect --|> benchmarkstt.diff.formatter.Dialect
+@enduml
