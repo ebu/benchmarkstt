@@ -1,0 +1,17 @@
+@startuml
+title 'Input'
+		class benchmarkstt.input.core.PlainText {
+			+__init__(self, text, segmenter=None, normalizer=None)
+			+__iter__(self)
+		}
+		class benchmarkstt.input.Base {
+			+__iter__(self)
+		}
+		class benchmarkstt.input.core.File {
+			+__init__(self, file, input_type=None, normalizer=None)
+			+__iter__(self)
+		}
+
+benchmarkstt.input.core.PlainText --up--|> benchmarkstt.input.Base
+benchmarkstt.input.core.File --up--|> benchmarkstt.input.Base
+@enduml

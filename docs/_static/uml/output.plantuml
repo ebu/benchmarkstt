@@ -1,0 +1,37 @@
+@startuml
+title 'Output'
+		class benchmarkstt.output.Base {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+result(self, title, result)
+		}
+		class benchmarkstt.output.core.Json {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+result(self, title, result)
+		}
+		class benchmarkstt.output.core.MarkDown {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+		}
+		class benchmarkstt.output.core.ReStructuredText {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+		}
+		class benchmarkstt.output.core.SimpleTextBase {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+print(self, result)
+			+result(self, title, result)
+		}
+
+benchmarkstt.output.core.Json --up--|> benchmarkstt.output.Base
+benchmarkstt.output.core.MarkDown --up--|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.ReStructuredText --up--|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.SimpleTextBase --up--|> benchmarkstt.output.Base
+@enduml

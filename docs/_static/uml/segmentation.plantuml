@@ -1,0 +1,12 @@
+@startuml
+title 'Segmentation'
+		class benchmarkstt.segmentation.Base {
+			+__iter__(self)
+		}
+		class benchmarkstt.segmentation.core.Simple {
+			+__init__(self, text: str, pattern='[\\n\\t\\s]+', normalizer=None)
+			+__iter__(self)
+		}
+
+benchmarkstt.segmentation.core.Simple --up--|> benchmarkstt.segmentation.Base
+@enduml
