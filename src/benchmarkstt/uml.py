@@ -1,5 +1,3 @@
-# pragma: no cover
-
 import inspect
 import pkgutil
 import os
