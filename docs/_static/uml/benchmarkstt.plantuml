@@ -1,6 +1,6 @@
 @startuml
 left to right direction
-title 'BenchmarkSTT Structure'
+title 'Benchmarkstt'
 		class benchmarkstt.docblock.Docblock {
 			+__getnewargs__(self)
 			+__new__(_cls, docs, params, result, result_type)

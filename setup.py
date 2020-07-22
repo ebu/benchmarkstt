@@ -64,7 +64,6 @@ setup(
         'gunicorn>=19.9.0',
         'docutils>=0.14',
         'editdistance>=0.5.3',
-        'plantweb>=1.2.1',
     ],
     extras_require={
         'test': [

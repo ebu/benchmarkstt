@@ -1,0 +1,94 @@
+@startuml
+title 'Normalization'
+		class benchmarkstt.normalization.core.Config {
+			+__init__(self, file, section=None, encoding=None)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.logger.LogCapturer {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, *args, **kwargs)
+		}
+		class benchmarkstt.normalization.logger.Logger {
+		}
+		class benchmarkstt.normalization.Base {
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.BaseWithFileSupport {
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.File {
+			+__init__(self, normalizer, file, encoding=None, path=None)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.FileFactory {
+			+__contains__(self, item)
+			+__delitem__(self, key)
+			+__getitem__(self, item)
+			+__init__(self, base_class, namespaces=None)
+			+__iter__(self)
+			+__setitem__(self, key, value)
+			+create(self, name, file=None, encoding=None, path=None)
+			+is_valid(self, tocheck)
+			+keys(self)
+			+normalize_class_name(clsname)
+			+register(self, cls, alias=None)
+			+register_classname(self, name, alias=None)
+			+register_namespace(self, namespace)
+			+unregister(self, key)
+		}
+		class benchmarkstt.normalization.NormalizationComposite {
+			+__init__(self, title=None)
+			+__repr__(self)
+			+add(self, normalizer)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.core.ConfigSectionNotFoundError {
+		}
+		class benchmarkstt.normalization.core.Lowercase {
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.core.Regex {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.core.Replace {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.core.ReplaceWords {
+			+__init__(self, search: str, replace: str)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.core.Unidecode {
+			+__repr__(self)
+			+normalize(cls, text)
+		}
+		class benchmarkstt.normalization.logger.DiffLoggingFormatter {
+			+__init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
+			+format(self, record)
+			+formatException(self, ei)
+			+formatMessage(self, record)
+			+formatStack(self, stack_info)
+			+formatTime(self, record, datefmt=None)
+			+usesTime(self)
+		}
+
+benchmarkstt.normalization.core.Config --up--|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.BaseWithFileSupport --up--|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.File --up--|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.NormalizationComposite --up--|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Lowercase --up--|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Regex --up--|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Replace --up--|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.ReplaceWords --up--|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Unidecode --up--|> benchmarkstt.normalization.Base
+@enduml

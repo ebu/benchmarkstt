@@ -17,7 +17,7 @@ lint:
 testcoverage: env
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src tests/
 
-docs: setupdocs
+docs: setupdocs uml
 	cd docs/ && make clean html
 
 setupdocs: env

@@ -204,32 +204,21 @@ if __name__ == '__main__':
     for extension in extensions:
         files[extension] = file_tpl % ('benchmarkstt', extension)
 
-    def benchmarksttFilter(cls):
-        if cls.__name__.startswith('benchmarkstt.'):
-            return False
+    def benchmarksttFilterFor(name):
+        module_name = 'benchmarkstt.%s' % (name,)
 
-        if hasattr(cls, '__module__') and cls.__module__.startswith('benchmarkstt.'):
-            return False
-
-        return True
-
-    def benchmarksttBasesFilter(cls):
-        if benchmarksttFilter(cls):
-            return True
-
-        if cls.__name__.endswith('Base'):
-            return False
-
-        for c in cls.__bases__:
-            if c.__name__.endswith('Base'):
+        def benchmarksttFilter(cls):
+            if cls.__name__.startswith(module_name):
                 return False
-            for c2 in c.__bases__:
-                if c2.__name__.endswith('Base'):
-                    return False
 
-        return True
+            if hasattr(cls, '__module__') and cls.__module__.startswith(module_name):
+                return False
 
-    def generate(name, title, filter, direction=None):
+            return True
+        return benchmarksttFilter
+
+    def generate(name, module, filter, direction=None):
+        title = name.capitalize()
         uml = PlantUML(filter=filter)
         if direction:
             uml.direction(direction)
@@ -238,11 +227,18 @@ if __name__ == '__main__':
                     extension: file_tpl % (name, extension) for extension in extensions
                 }
 
-        import benchmarkstt
         with open(files['plantuml'], 'w') as f:
-            f.write(uml.generate(benchmarkstt))
+            f.write(uml.generate(module))
         with open(files['svg'], 'wb') as f:
-            f.write(uml.render(benchmarkstt))
+            f.write(uml.render(module))
 
-    generate('benchmarkstt', "BenchmarkSTT Structure", benchmarksttFilter, "left to right")
-    generate('core', "Core BenchmarkSTT Structure", benchmarksttBasesFilter)
+    import benchmarkstt
+    modules = [name for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)]) if ispkg]
+
+    for name in modules:
+        print("Generating UML for %s" % (name,))
+        module = __import__("benchmarkstt.%s" % (name,))
+        generate(name, module, benchmarksttFilterFor(name))
+
+    print("Generating UML for complete package\n")
+    generate('benchmarkstt', benchmarkstt, benchmarksttFilterFor(''), "left to right")

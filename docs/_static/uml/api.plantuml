@@ -1,0 +1,18 @@
+@startuml
+title 'Api'
+		class benchmarkstt.api.jsonrpc.DefaultMethods {
+			+help(methods)
+			+version()
+		}
+		class benchmarkstt.api.jsonrpc.MagicMethods {
+			+__init__(self)
+			+is_safe_path(path)
+			+load(self, name, module)
+			+register(self, name, callback)
+			+serve(self, config, callback)
+		}
+		class benchmarkstt.api.jsonrpc.SecurityError {
+		}
+
+
+@enduml

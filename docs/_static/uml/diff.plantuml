@@ -1,0 +1,90 @@
+@startuml
+title 'Diff'
+		class benchmarkstt.diff.core.RatcliffObershelp {
+			+__init__(self, a, b, *args, **kwargs)
+			+find_longest_match(self, alo, ahi, blo, bhi)
+			+get_grouped_opcodes(self, n=3)
+			+get_matching_blocks(self)
+			+get_opcodes(self)
+			+quick_ratio(self)
+			+ratio(self)
+			+real_quick_ratio(self)
+			+set_seq1(self, a)
+			+set_seq2(self, b)
+			+set_seqs(self, a, b)
+		}
+		class benchmarkstt.diff.formatter.CLIDiffDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, show_color_key=None)
+			+output(self)
+			+preprocessor(txt)
+		}
+		class benchmarkstt.diff.formatter.Dialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+output(self)
+		}
+		class benchmarkstt.diff.formatter.DiffFormatter {
+			+__init__(self, dialect=None, *args, **kwargs)
+			+diff(self, a, b, opcodes=None, preprocessor=None)
+		}
+		class benchmarkstt.diff.formatter.HTMLDiffDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+output(self)
+			+preprocessor(txt)
+		}
+		class benchmarkstt.diff.formatter.JSONDiffDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+equal_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+			+replace_format(self, a, b)
+		}
+		class benchmarkstt.diff.formatter.ListDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+equal_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+			+replace_format(self, a, b)
+		}
+		class benchmarkstt.diff.formatter.RestructuredTextDialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self, show_color_key=None)
+			+output(self)
+			+preprocessor(txt)
+		}
+		class benchmarkstt.diff.formatter.UTF8Dialect {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+		}
+		class benchmarkstt.diff.Base {
+			+__init__(self, a='', b='')
+			+get_opcodes(self)
+		}
+
+benchmarkstt.diff.core.RatcliffObershelp --up--|> benchmarkstt.diff.Base
+benchmarkstt.diff.formatter.CLIDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.HTMLDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.JSONDiffDialect --up--|> benchmarkstt.diff.formatter.ListDialect
+benchmarkstt.diff.formatter.ListDialect --up--|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.RestructuredTextDialect --up--|> benchmarkstt.diff.formatter.CLIDiffDialect
+benchmarkstt.diff.formatter.UTF8Dialect --up--|> benchmarkstt.diff.formatter.Dialect
+@enduml

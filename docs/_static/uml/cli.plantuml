@@ -1,0 +1,17 @@
+@startuml
+title 'BenchmarkSTT Structure: cli'
+		class benchmarkstt.cli.HelpFormatter {
+			+__init__(self, *args, **kwargs)
+			+add_argument(self, action)
+			+add_arguments(self, actions)
+			+add_text(self, text)
+			+add_usage(self, usage, actions, groups, prefix=None)
+			+end_section(self)
+			+format_help(self)
+			+start_section(self, heading)
+		}
+		class benchmarkstt.cli._ActionWithArguments {
+		}
+
+
+@enduml
