@@ -1,5 +1,5 @@
 @startuml
-title 'Input'
+title Input
 		class benchmarkstt.input.core.PlainText {
 			+__init__(self, text, segmenter=None, normalizer=None)
 			+__iter__(self)

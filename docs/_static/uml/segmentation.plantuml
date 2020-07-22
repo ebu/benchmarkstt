@@ -1,5 +1,5 @@
 @startuml
-title 'Segmentation'
+title Segmentation
 		class benchmarkstt.segmentation.Base {
 			+__iter__(self)
 		}

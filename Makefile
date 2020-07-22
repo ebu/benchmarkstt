@@ -1,6 +1,7 @@
 .PHONY: docs test clean pypi env
 
-PYTHON=$(shell test -e env/bin/activate && echo "env/bin/python" || echo "python3")
+PYTHON:=$(shell test -e env/bin/activate && echo "env/bin/python" || echo "python3")
+PLANTUML:=$(or $(shell which plantuml),"java -jar plantuml.jar")
 
 env:
 	test -e env/bin/activate && source env/bin/activate
@@ -40,3 +41,4 @@ pypi: env setuptools test
 	$(PYTHON) setup.py sdist bdist_wheel
 	$(PYTHON) -m pip install --user --upgrade twine
 	$(PYTHON) -m twine upload dist/*
+

@@ -1,9 +1,77 @@
 import inspect
 import pkgutil
 import os
+import subprocess
 
 from pathlib import Path
 from contextlib import nullcontext
+
+
+class PlantUMLWebRenderer:
+    def __init__(self, format=None):
+        if format is None:
+            format = 'svg'
+        self._format = format
+
+    def render(self, data):
+        from plantweb.render import render
+        return render(
+            data,
+            engine='plantuml',
+            format=self._format,
+            cacheopts={
+                'use_cache': False
+            }
+        )[0]
+
+
+class PlantUMLRenderer:
+    """
+    Note: requires PlantUML from https://plantuml.com/download
+    """
+
+    DEFAULT_COMMAND = os.environ.get("PLANTUML", "java -jar plantuml.jar").split(' ')
+    DEFAULT_FORMAT = 'png'
+    DEFAULT_TIMEOUT = 10
+
+    def __init__(self, format=None, command=None, timeout=10):
+        if command is None:
+            command = self.DEFAULT_COMMAND
+        if timeout is None:
+            timeout = self.DEFAULT_TIMEOUT
+        if format is None:
+            format = self.DEFAULT_FORMAT
+
+        self._process = None
+        self._command = command
+        self._timeout = timeout
+        self._format = format
+
+    def __process(self, *args):
+        return subprocess.Popen(
+                [*self._command, "-p", "-t%s" % (self._format), *args],
+                stdout = subprocess.PIPE,
+                stdin = subprocess.PIPE)
+
+    def render(self, data):
+        proc = self.__process()
+        out = None
+
+        if type(data) is str:
+            data = data.encode()
+
+        try:
+            out, errs = proc.communicate(data, timeout=10)
+        except subprocess.TimeoutExpired as e:
+            proc.kill()
+            self._process = None
+            raise e
+
+        return out
+
+
+# alternatively use PlantUMLWebRenderer or PlantUMLRenderer
+Renderer = PlantUMLWebRenderer
 
 
 class PlantUMLBlock:
@@ -94,7 +162,7 @@ class PlantUML:
         self += "\n"
 
     def title(self, title):
-        self.add("title %r", title)
+        self.add("title %s", title)
 
     def direction(self, which):
         self.add("%s direction", which)
@@ -131,17 +199,6 @@ class PlantUML:
     @staticmethod
     def cls_name(cls):
         return '.'.join((cls.__module__, cls.__name__))
-
-    def render(self, orig_module, format='svg'):
-        from plantweb.render import render
-        return render(
-            self.generate(orig_module),
-            engine='plantuml',
-            format=format,
-            cacheopts={
-                'use_cache': False
-            }
-        )[0]
 
     def skip(self, cls):
         if self.filtered(cls):
@@ -198,7 +255,7 @@ if __name__ == '__main__':
     # generate basic PlantUML schemas for benchmarkstt
     file_tpl = './docs/_static/uml/%s.%s'
     files = {}
-    extensions = ('plantuml', 'svg')
+    extensions = ('plantuml', 'svg', 'png')
     for extension in extensions:
         files[extension] = file_tpl % ('benchmarkstt', extension)
 
@@ -215,6 +272,8 @@ if __name__ == '__main__':
             return True
         return benchmarksttFilter
 
+    plant_extensions = ('svg', 'png')
+    renderers = { ext: Renderer(format=ext) for ext in plant_extensions }
     def generate(name, module, filter, direction=None):
         title = name.capitalize()
         uml = PlantUML(filter=filter)
@@ -227,11 +286,13 @@ if __name__ == '__main__':
 
         with open(files['plantuml'], 'w') as f:
             f.write(uml.generate(module))
-        with open(files['svg'], 'wb') as f:
-            f.write(uml.render(module))
+
+        for ext in plant_extensions:
+            with open(files[ext], 'wb') as f:
+                f.write(renderers[ext].render(uml.generate(module)))
 
     import benchmarkstt
-    modules = [name for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)]) if ispkg]
+    modules = [name for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)]) if ispkg and name != 'benchmark']
 
     for name in modules:
         print("Generating UML for %s" % (name,))

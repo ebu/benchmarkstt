@@ -1,5 +1,5 @@
 @startuml
-title 'Normalization'
+title Normalization
 		class benchmarkstt.normalization.core.Config {
 			+__init__(self, file, section=None, encoding=None)
 			+__repr__(self)

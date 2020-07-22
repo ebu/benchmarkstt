@@ -1,5 +1,5 @@
 @startuml
-title 'Output'
+title Output
 		class benchmarkstt.output.Base {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)

@@ -1,5 +1,5 @@
 @startuml
-title 'Api'
+title Api
 		class benchmarkstt.api.jsonrpc.DefaultMethods {
 			+help(methods)
 			+version()

@@ -1,5 +1,5 @@
 @startuml
-title 'Diff'
+title Diff
 		class benchmarkstt.diff.core.RatcliffObershelp {
 			+__init__(self, a, b, *args, **kwargs)
 			+find_longest_match(self, alo, ahi, blo, bhi)

@@ -1,6 +1,6 @@
 @startuml
 left to right direction
-title 'Benchmarkstt'
+title Benchmarkstt
 		class benchmarkstt.docblock.Docblock {
 			+__getnewargs__(self)
 			+__new__(_cls, docs, params, result, result_type)
@@ -81,7 +81,6 @@ title 'Benchmarkstt'
 			+namespace(self, name)
 			+parent_relations(self, cls)
 			+relation(self, a, arrow, b)
-			+render(self, orig_module, format='svg')
 			+skip(self, cls)
 			+title(self, title)
 		}
@@ -89,6 +88,14 @@ title 'Benchmarkstt'
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, uml, block_text=None)
+		}
+		class benchmarkstt.uml.PlantUMLRenderer {
+			+__init__(self, format=None, command=None, timeout=10)
+			+render(self, data)
+		}
+		class benchmarkstt.uml.PlantUMLWebRenderer {
+			+__init__(self, format=None)
+			+render(self, data)
 		}
 		class benchmarkstt.factory.ClassConfig {
 			+__getnewargs__(self)
