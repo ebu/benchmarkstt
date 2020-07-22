@@ -1,5 +1,5 @@
 @startuml
-title 'Metrics'
+title Metrics
 		class benchmarkstt.metrics.Base {
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
