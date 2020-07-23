@@ -48,10 +48,8 @@ class PlantUMLRenderer:
         self._format = format
 
     def __process(self, *args):
-        return subprocess.Popen(
-                [*self._command, "-p", "-t%s" % (self._format), *args],
-                stdout = subprocess.PIPE,
-                stdin = subprocess.PIPE)
+        command = [*self._command, "-p", "-t%s" % (self._format), *args]
+        return subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 
     def render(self, data):
         proc = self.__process()
@@ -273,7 +271,8 @@ if __name__ == '__main__':
         return benchmarksttFilter
 
     plant_extensions = ('svg', 'png')
-    renderers = { ext: Renderer(format=ext) for ext in plant_extensions }
+    renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
+
     def generate(name, module, filter, direction=None):
         title = name.capitalize()
         uml = PlantUML(filter=filter)
@@ -292,7 +291,9 @@ if __name__ == '__main__':
                 f.write(renderers[ext].render(uml.generate(module)))
 
     import benchmarkstt
-    modules = [name for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)]) if ispkg and name != 'benchmark']
+    modules = [name
+               for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)])
+               if ispkg and name != 'benchmark']
 
     for name in modules:
         print("Generating UML for %s" % (name,))
