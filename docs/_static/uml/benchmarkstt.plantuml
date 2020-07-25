@@ -3,6 +3,8 @@
 left to right direction
 title benchmarkstt
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.docblock {
 
 	class benchmarkstt.docblock.Docblock [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.Docblock]] {
@@ -122,12 +124,14 @@ package benchmarkstt.uml {
 		+direction(self, which)
 		+filtered(self, cls)
 		+generate(self, orig_module)
+		+includeurl(self, url)
 		+klass(self, klass)
 		+link(self, page, hash_, is_field_or_method=None)
 		+namespace(self, name)
 		+package(self, module)
 		+parent_relations(self, cls)
 		+relation(self, a, arrow, b)
+		+skinparam(self, value)
 		+skip(self, cls)
 		+title(self, title)
 	}
@@ -142,7 +146,7 @@ package benchmarkstt.uml {
 
 	class benchmarkstt.uml.PlantUMLJarRenderer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.PlantUMLJarRenderer]] {
 		-_PlantUMLJarRenderer__process(self, *args)
-		+__init__(self, format=None, command=None, timeout=30)
+		+__init__(self, format=None, command=None, timeout=None)
 		+render(self, data)
 	}
 
@@ -911,44 +915,44 @@ package benchmarkstt.api.gunicorn {
 }
 
 
-benchmarkstt.uml.Namespace --up--|> benchmarkstt.uml.PlantUMLBlock
-benchmarkstt.factory.ClassConfig --up--|> benchmarkstt.factory.ClassConfigTuple
-benchmarkstt.factory.Factory --up--|> benchmarkstt.registry.Registry
-benchmarkstt.csv.DefaultDialect --up--|> benchmarkstt.csv.Dialect
-benchmarkstt.csv.UnallowedQuoteError --up--|> benchmarkstt.csv.CSVParserError
-benchmarkstt.csv.UnclosedQuoteError --up--|> benchmarkstt.csv.CSVParserError
-benchmarkstt.csv.WhitespaceDialect --up--|> benchmarkstt.csv.DefaultDialect
-benchmarkstt.modules.LoadObjectProxy --up--|> benchmarkstt.modules.Proxy
-benchmarkstt.schema.SchemaInvalidItemError --up--|> benchmarkstt.schema.SchemaError
-benchmarkstt.schema.SchemaJSONError --up--|> benchmarkstt.schema.SchemaError
-benchmarkstt.metrics.core.DiffCounts --up--|> benchmarkstt.metrics.Base
-benchmarkstt.diff.core.RatcliffObershelp --up--|> benchmarkstt.diff.Base
-benchmarkstt.metrics.core.WER --up--|> benchmarkstt.metrics.Base
-benchmarkstt.metrics.core.WordDiffs --up--|> benchmarkstt.metrics.Base
-benchmarkstt.normalization.BaseWithFileSupport --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.File --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.FileFactory --up--|> benchmarkstt.factory.Factory
-benchmarkstt.normalization.NormalizationComposite --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Config --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Lowercase --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Regex --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.Replace --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.ReplaceWords --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.Unidecode --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect --up--|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
-benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect --up--|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
-benchmarkstt.input.core.File --up--|> benchmarkstt.input.Base
-benchmarkstt.input.core.PlainText --up--|> benchmarkstt.input.Base
-benchmarkstt.segmentation.core.Simple --up--|> benchmarkstt.segmentation.Base
-benchmarkstt.output.core.Json --up--|> benchmarkstt.output.Base
-benchmarkstt.output.core.MarkDown --up--|> benchmarkstt.output.core.SimpleTextBase
-benchmarkstt.output.core.ReStructuredText --up--|> benchmarkstt.output.core.SimpleTextBase
-benchmarkstt.output.core.SimpleTextBase --up--|> benchmarkstt.output.Base
-benchmarkstt.diff.formatter.CLIDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
-benchmarkstt.diff.formatter.HTMLDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
-benchmarkstt.diff.formatter.JSONDiffDialect --up--|> benchmarkstt.diff.formatter.ListDialect
-benchmarkstt.diff.formatter.ListDialect --up--|> benchmarkstt.diff.formatter.Dialect
-benchmarkstt.diff.formatter.RestructuredTextDialect --up--|> benchmarkstt.diff.formatter.CLIDiffDialect
-benchmarkstt.diff.formatter.UTF8Dialect --up--|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.uml.Namespace -up-|> benchmarkstt.uml.PlantUMLBlock
+benchmarkstt.factory.ClassConfig -up-|> benchmarkstt.factory.ClassConfigTuple
+benchmarkstt.factory.Factory -up-|> benchmarkstt.registry.Registry
+benchmarkstt.csv.DefaultDialect -up-|> benchmarkstt.csv.Dialect
+benchmarkstt.csv.UnallowedQuoteError -up-|> benchmarkstt.csv.CSVParserError
+benchmarkstt.csv.UnclosedQuoteError -up-|> benchmarkstt.csv.CSVParserError
+benchmarkstt.csv.WhitespaceDialect -up-|> benchmarkstt.csv.DefaultDialect
+benchmarkstt.modules.LoadObjectProxy -up-|> benchmarkstt.modules.Proxy
+benchmarkstt.schema.SchemaInvalidItemError -up-|> benchmarkstt.schema.SchemaError
+benchmarkstt.schema.SchemaJSONError -up-|> benchmarkstt.schema.SchemaError
+benchmarkstt.metrics.core.DiffCounts -up-|> benchmarkstt.metrics.Base
+benchmarkstt.diff.core.RatcliffObershelp -up-|> benchmarkstt.diff.Base
+benchmarkstt.metrics.core.WER -up-|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.WordDiffs -up-|> benchmarkstt.metrics.Base
+benchmarkstt.normalization.BaseWithFileSupport -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.File -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.FileFactory -up-|> benchmarkstt.factory.Factory
+benchmarkstt.normalization.NormalizationComposite -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Config -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Lowercase -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Regex -up-|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Replace -up-|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.ReplaceWords -up-|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Unidecode -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect -up-|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
+benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect -up-|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
+benchmarkstt.input.core.File -up-|> benchmarkstt.input.Base
+benchmarkstt.input.core.PlainText -up-|> benchmarkstt.input.Base
+benchmarkstt.segmentation.core.Simple -up-|> benchmarkstt.segmentation.Base
+benchmarkstt.output.core.Json -up-|> benchmarkstt.output.Base
+benchmarkstt.output.core.MarkDown -up-|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.ReStructuredText -up-|> benchmarkstt.output.core.SimpleTextBase
+benchmarkstt.output.core.SimpleTextBase -up-|> benchmarkstt.output.Base
+benchmarkstt.diff.formatter.CLIDiffDialect -up-|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.HTMLDiffDialect -up-|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.JSONDiffDialect -up-|> benchmarkstt.diff.formatter.ListDialect
+benchmarkstt.diff.formatter.ListDialect -up-|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.RestructuredTextDialect -up-|> benchmarkstt.diff.formatter.CLIDiffDialect
+benchmarkstt.diff.formatter.UTF8Dialect -up-|> benchmarkstt.diff.formatter.Dialect
 
 @enduml

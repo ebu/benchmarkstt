@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="420px" preserveAspectRatio="none" style="width:745px;height:420px;" version="1.1" viewBox="0 0 745 420" width="745px" zoomAndPan="magnify"><defs><filter height="300%" id="f10oz5jip63egf" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="171" x="278" y="17.4023">benchmarkstt.input</text><!--MD5=[94de2ef9dde389aecb44d7f232eba8a2]
-cluster benchmarkstt.input--><polygon fill="#FFFFFF" filter="url(#f10oz5jip63egf)" points="326,27.1992,472,27.1992,479,49.6875,482,49.6875,482,139.1992,326,139.1992,326,27.1992" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="326" x2="479" y1="49.6875" y2="49.6875"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="140" x="330" y="42.7344">benchmarkstt.input</text><!--MD5=[5c7a64d73ca244446f0e70026cf5d0bf]
-cluster benchmarkstt.input.core--><polygon fill="#FFFFFF" filter="url(#f10oz5jip63egf)" points="16,270.1992,195,270.1992,202,292.6875,723,292.6875,723,408.1992,16,408.1992,16,270.1992" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="16" x2="202" y1="292.6875" y2="292.6875"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="173" x="20" y="285.7344">benchmarkstt.input.core</text><!--MD5=[d1e904a0c11302288bad0868539b156c]
-class benchmarkstt.input.Base--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:type="simple"><rect fill="#FEFECE" filter="url(#f10oz5jip63egf)" height="60.9551" id="benchmarkstt.input.Base" style="stroke: #A80036; stroke-width: 1.5;" width="95" x="356.5" y="62.1992"/><ellipse cx="387.7" cy="78.1992" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M390.1731,84.3423 Q389.5921,84.6411 388.9529,84.7905 Q388.3138,84.9399 387.6082,84.9399 Q385.1014,84.9399 383.7815,83.2881 Q382.4617,81.6362 382.4617,78.5151 Q382.4617,75.3857 383.7815,73.7339 Q385.1014,72.082 387.6082,72.082 Q388.3138,72.082 388.9612,72.2314 Q389.6087,72.3809 390.1731,72.6797 L390.1731,75.4023 Q389.5423,74.8213 388.9488,74.5515 Q388.3553,74.2817 387.7244,74.2817 Q386.3797,74.2817 385.6949,75.3484 Q385.0101,76.415 385.0101,78.5151 Q385.0101,80.6069 385.6949,81.6736 Q386.3797,82.7402 387.7244,82.7402 Q388.3553,82.7402 388.9488,82.4705 Q389.5423,82.2007 390.1731,81.6196 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="27" x="405.3" y="82.7344">Base</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="357.5" x2="450.5" y1="94.1992" y2="94.1992"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="357.5" x2="450.5" y1="102.1992" y2="102.1992"/><ellipse cx="367.5" cy="113.1992" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="69" x="376.5" y="116.834">__iter__(self)</text></a><!--MD5=[4843f7accda627844ca340f5d1efa37d]
-class benchmarkstt.input.core.File--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:type="simple"><rect fill="#FEFECE" filter="url(#f10oz5jip63egf)" height="86.8652" id="benchmarkstt.input.core.File" style="stroke: #A80036; stroke-width: 1.5;" width="317" x="32.5" y="305.1992"/><ellipse cx="177.25" cy="321.1992" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M179.7231,327.3423 Q179.1421,327.6411 178.5029,327.7905 Q177.8638,327.9399 177.1582,327.9399 Q174.6514,327.9399 173.3315,326.2881 Q172.0117,324.6362 172.0117,321.5151 Q172.0117,318.3857 173.3315,316.7339 Q174.6514,315.082 177.1582,315.082 Q177.8638,315.082 178.5112,315.2314 Q179.1587,315.3809 179.7231,315.6797 L179.7231,318.4023 Q179.0923,317.8213 178.4988,317.5515 Q177.9053,317.2817 177.2744,317.2817 Q175.9297,317.2817 175.2449,318.3484 Q174.5601,319.415 174.5601,321.5151 Q174.5601,323.6069 175.2449,324.6736 Q175.9297,325.7402 177.2744,325.7402 Q177.9053,325.7402 178.4988,325.4705 Q179.0923,325.2007 179.7231,324.6196 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="19" x="197.75" y="325.7344">File</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="33.5" x2="348.5" y1="337.1992" y2="337.1992"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="33.5" x2="348.5" y1="345.1992" y2="345.1992"/><ellipse cx="43.5" cy="356.1992" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="291" x="52.5" y="359.834">__init__(self, file, input_type=None, normalizer=None)</text><ellipse cx="43.5" cy="369.1543" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="69" x="52.5" y="372.7891">__iter__(self)</text><ellipse cx="43.5" cy="382.1094" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="89" x="52.5" y="385.7441">available_types()</text></a><!--MD5=[3edd34d35203ceb4dd4fa63a3b0c665d]
-class benchmarkstt.input.core.PlainText--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:type="simple"><rect fill="#FEFECE" filter="url(#f10oz5jip63egf)" height="73.9102" id="benchmarkstt.input.core.PlainText" style="stroke: #A80036; stroke-width: 1.5;" width="322" x="385" y="311.6992"/><ellipse cx="515.25" cy="327.6992" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M517.7231,333.8423 Q517.1421,334.1411 516.5029,334.2905 Q515.8638,334.4399 515.1582,334.4399 Q512.6514,334.4399 511.3315,332.7881 Q510.0117,331.1362 510.0117,328.0151 Q510.0117,324.8857 511.3315,323.2339 Q512.6514,321.582 515.1582,321.582 Q515.8638,321.582 516.5112,321.7314 Q517.1587,321.8809 517.7231,322.1797 L517.7231,324.9023 Q517.0923,324.3213 516.4988,324.0515 Q515.9053,323.7817 515.2744,323.7817 Q513.9297,323.7817 513.2449,324.8484 Q512.5601,325.915 512.5601,328.0151 Q512.5601,330.1069 513.2449,331.1736 Q513.9297,332.2402 515.2744,332.2402 Q515.9053,332.2402 516.4988,331.9705 Q517.0923,331.7007 517.7231,331.1196 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="53" x="535.75" y="332.2344">PlainText</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="386" x2="706" y1="343.6992" y2="343.6992"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="386" x2="706" y1="351.6992" y2="351.6992"/><ellipse cx="396" cy="362.6992" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="296" x="405" y="366.334">__init__(self, text, segmenter=None, normalizer=None)</text><ellipse cx="396" cy="375.6543" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="69" x="405" y="379.2891">__iter__(self)</text></a><!--MD5=[065a416e4c33abf0dffdc83d6e1bf045]
-reverse link benchmarkstt.input.Base to benchmarkstt.input.core.File--><path d="M366.18,138.7992 C326.71,185.8692 265.3,259.0892 226.66,305.1692 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.File" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="none" points="360.93,134.1592,379.15,123.3292,371.66,143.1592,360.93,134.1592" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[3d607d7f67fd018830fa1d9f070f3dcc]
-reverse link benchmarkstt.input.Base to benchmarkstt.input.core.PlainText--><path d="M430.5,141.1092 C458.07,190.4092 500.62,266.5292 525.65,311.3092 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.PlainText" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="none" points="424.22,144.2092,420.57,123.3292,436.44,137.3792,424.22,144.2092" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[933c5512eb0b42f0eea465712ac60b96]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="304px" preserveAspectRatio="none" style="width:667px;height:304px;" version="1.1" viewBox="0 0 667 304" width="667px" zoomAndPan="magnify"><defs><filter height="300%" id="fgbd3ikrqri58" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="Helvetica" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="152" x="248.5" y="13.8604">benchmarkstt.input</text><!--MD5=[94de2ef9dde389aecb44d7f232eba8a2]
+cluster benchmarkstt.input--><rect fill="#FFFFFF" filter="url(#fgbd3ikrqri58)" height="108" style="stroke: #000000; stroke-width: 1.5;" width="150" x="255" y="25"/><path d="M399,26 L399,32 L389,42 L255,42 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="Helvetica" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="134" x="258" y="36.7803">benchmarkstt.input</text><!--MD5=[5c7a64d73ca244446f0e70026cf5d0bf]
+cluster benchmarkstt.input.core--><rect fill="#FFFFFF" filter="url(#fgbd3ikrqri58)" height="130" style="stroke: #000000; stroke-width: 1.5;" width="643" x="7" y="157"/><path d="M185,158 L185,164 L175,174 L7,174 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="Helvetica" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="168" x="10" y="168.7803">benchmarkstt.input.core</text><!--MD5=[d1e904a0c11302288bad0868539b156c]
+class benchmarkstt.input.Base--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fgbd3ikrqri58)" height="59" id="benchmarkstt.input.Base" style="stroke: #000000; stroke-width: 1.0;" width="90" x="285" y="58"/><ellipse cx="313.5" cy="74" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M315.9731,80.1431 Q315.3921,80.4419 314.7529,80.5913 Q314.1138,80.7407 313.4082,80.7407 Q310.9014,80.7407 309.5815,79.0889 Q308.2617,77.437 308.2617,74.3159 Q308.2617,71.1865 309.5815,69.5347 Q310.9014,67.8828 313.4082,67.8828 Q314.1138,67.8828 314.7612,68.0322 Q315.4087,68.1816 315.9731,68.4805 L315.9731,71.2031 Q315.3423,70.6221 314.7488,70.3523 Q314.1553,70.0825 313.5244,70.0825 Q312.1797,70.0825 311.4949,71.1492 Q310.8101,72.2158 310.8101,74.3159 Q310.8101,76.4077 311.4949,77.4744 Q312.1797,78.541 313.5244,78.541 Q314.1553,78.541 314.7488,78.2712 Q315.3423,78.0015 315.9731,77.4204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="28" x="330.5" y="77.2402">Base</text><line style="stroke: #000000; stroke-width: 1.0;" x1="286" x2="374" y1="90" y2="90"/><line style="stroke: #000000; stroke-width: 1.0;" x1="286" x2="374" y1="98" y2="98"/><ellipse cx="296" cy="109" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="64" x="305" y="110.4702">__iter__(self)</text></a><!--MD5=[4843f7accda627844ca340f5d1efa37d]
+class benchmarkstt.input.core.File--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fgbd3ikrqri58)" height="81" id="benchmarkstt.input.core.File" style="stroke: #000000; stroke-width: 1.0;" width="284" x="350" y="190"/><ellipse cx="477.75" cy="206" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M480.2231,212.1431 Q479.6421,212.4419 479.0029,212.5913 Q478.3638,212.7407 477.6582,212.7407 Q475.1514,212.7407 473.8315,211.0889 Q472.5117,209.437 472.5117,206.3159 Q472.5117,203.1865 473.8315,201.5347 Q475.1514,199.8828 477.6582,199.8828 Q478.3638,199.8828 479.0112,200.0322 Q479.6587,200.1816 480.2231,200.4805 L480.2231,203.2031 Q479.5923,202.6221 478.9988,202.3523 Q478.4053,202.0825 477.7744,202.0825 Q476.4297,202.0825 475.7449,203.1492 Q475.0601,204.2158 475.0601,206.3159 Q475.0601,208.4077 475.7449,209.4744 Q476.4297,210.541 477.7744,210.541 Q478.4053,210.541 478.9988,210.2712 Q479.5923,210.0015 480.2231,209.4204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="20" x="498.25" y="209.2402">File</text><line style="stroke: #000000; stroke-width: 1.0;" x1="351" x2="633" y1="222" y2="222"/><line style="stroke: #000000; stroke-width: 1.0;" x1="351" x2="633" y1="230" y2="230"/><ellipse cx="361" cy="241" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="258" x="370" y="242.4702">__init__(self, file, input_type=None, normalizer=None)</text><ellipse cx="361" cy="252" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="64" x="370" y="253.4702">__iter__(self)</text><ellipse cx="361" cy="263" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="83" x="370" y="264.4702">available_types()</text></a><!--MD5=[3edd34d35203ceb4dd4fa63a3b0c665d]
+class benchmarkstt.input.core.PlainText--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fgbd3ikrqri58)" height="70" id="benchmarkstt.input.core.PlainText" style="stroke: #000000; stroke-width: 1.0;" width="291" x="23.5" y="195.5"/><ellipse cx="139.25" cy="211.5" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M141.7231,217.6431 Q141.1421,217.9419 140.5029,218.0913 Q139.8638,218.2407 139.1582,218.2407 Q136.6514,218.2407 135.3315,216.5889 Q134.0117,214.937 134.0117,211.8159 Q134.0117,208.6865 135.3315,207.0347 Q136.6514,205.3828 139.1582,205.3828 Q139.8638,205.3828 140.5112,205.5322 Q141.1587,205.6816 141.7231,205.9805 L141.7231,208.7031 Q141.0923,208.1221 140.4988,207.8523 Q139.9053,207.5825 139.2744,207.5825 Q137.9297,207.5825 137.2449,208.6492 Q136.5601,209.7158 136.5601,211.8159 Q136.5601,213.9077 137.2449,214.9744 Q137.9297,216.041 139.2744,216.041 Q139.9053,216.041 140.4988,215.7712 Q141.0923,215.5015 141.7231,214.9204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="51" x="159.75" y="214.7402">PlainText</text><line style="stroke: #000000; stroke-width: 1.0;" x1="24.5" x2="313.5" y1="227.5" y2="227.5"/><line style="stroke: #000000; stroke-width: 1.0;" x1="24.5" x2="313.5" y1="235.5" y2="235.5"/><ellipse cx="34.5" cy="246.5" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="265" x="43.5" y="247.9702">__init__(self, text, segmenter=None, normalizer=None)</text><ellipse cx="34.5" cy="257.5" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="64" x="43.5" y="258.9702">__iter__(self)</text></a><!--MD5=[065a416e4c33abf0dffdc83d6e1bf045]
+reverse link benchmarkstt.input.Base to benchmarkstt.input.core.File--><path d="M378.09,130.36 C399.7,149.16 425.07,171.24 446.38,189.79 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.File" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="373.27,135.44,362.78,117.03,382.46,124.88,373.27,135.44" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[3d607d7f67fd018830fa1d9f070f3dcc]
+reverse link benchmarkstt.input.Base to benchmarkstt.input.core.PlainText--><path d="M282.27,130.3 C258.62,151.01 230.41,175.71 208.07,195.29 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.PlainText" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="277.76,124.94,297.42,117.03,286.99,135.48,277.76,124.94" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[303626187ed0d24a8a04df16198569f4]
 @startuml
 
 title benchmarkstt.input
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.input {
 
 	class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
@@ -36,8 +38,120 @@ package benchmarkstt.input.core {
 }
 
 
-benchmarkstt.input.core.File - -up- -|> benchmarkstt.input.Base
-benchmarkstt.input.core.PlainText - -up- -|> benchmarkstt.input.Base
+benchmarkstt.input.core.File -up-|> benchmarkstt.input.Base
+benchmarkstt.input.core.PlainText -up-|> benchmarkstt.input.Base
+
+@enduml
+
+@startuml
+
+title benchmarkstt.input
+
+skinparam packageStyle Frame
+
+skinparam defaultFontName  Helvetica
+skinparam sequenceMessageAlign center
+skinparam monochrome true
+
+skinparam activity {
+	ArrowColor Black
+	BackgroundColor White
+	BorderColor Black
+	BorderThickness 1
+}
+
+skinparam actor {
+	BackgroundColor White
+	BorderColor Black
+}
+
+skinparam usecase {
+	ArrowColor Black
+	BackgroundColor White
+	BorderColor Black
+	BorderThickness 1
+}
+
+skinparam class {
+	ArrowColor Black
+	BackgroundColor White
+	BorderColor Black
+	BorderThickness 1
+}
+
+
+skinparam object {
+	ArrowColor Black
+	BackgroundColor White
+	BorderColor Black
+}
+
+skinparam package {
+	BackgroundColor White
+	BorderColor Black
+}
+
+
+skinparam component {
+	BackgroundColor White
+	InterfaceBackgroundColor White
+	BorderColor Black
+	InterfaceBorderColor Black
+}
+
+skinparam note {
+	BackgroundColor White
+	BorderColor Black
+}
+
+skinparam state {
+	ArrowColor Black
+	BackgroundColor White
+	BorderColor Black
+}
+
+skinparam sequence {
+	ArrowColor Black
+	BackgroundColor White
+	ParticipantBackgroundColor White
+	BorderColor Black
+	LifeLineBorderColor Black
+	ParticipantBorderColor Black
+	BoxLineColor Black
+}
+
+skinparam interface {
+	BackgroundColor White
+	BorderColor Black
+}
+package benchmarkstt.input {
+
+	class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
+		+__iter__(self)
+	}
+
+
+}
+
+package benchmarkstt.input.core {
+
+	class benchmarkstt.input.core.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] {
+		+__init__(self, file, input_type=None, normalizer=None)
+		+__iter__(self)
+		{static} +available_types()
+	}
+
+
+	class benchmarkstt.input.core.PlainText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText]] {
+		+__init__(self, text, segmenter=None, normalizer=None)
+		+__iter__(self)
+	}
+
+}
+
+
+benchmarkstt.input.core.File -up-|> benchmarkstt.input.Base
+benchmarkstt.input.core.PlainText -up-|> benchmarkstt.input.Base
 
 @enduml
 

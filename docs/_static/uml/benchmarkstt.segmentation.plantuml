@@ -2,6 +2,8 @@
 
 title benchmarkstt.segmentation
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.segmentation {
 
 	class benchmarkstt.segmentation.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
@@ -23,6 +25,6 @@ package benchmarkstt.segmentation.core {
 }
 
 
-benchmarkstt.segmentation.core.Simple --up--|> benchmarkstt.segmentation.Base
+benchmarkstt.segmentation.core.Simple -up-|> benchmarkstt.segmentation.Base
 
 @enduml

@@ -2,6 +2,8 @@
 
 title benchmarkstt.api
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.api {
 }
 

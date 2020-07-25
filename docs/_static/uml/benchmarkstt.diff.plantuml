@@ -2,6 +2,8 @@
 
 title benchmarkstt.diff
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.diff.formatter {
 
 	class benchmarkstt.diff.formatter.CLIDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] {
@@ -121,12 +123,12 @@ package benchmarkstt.diff.core {
 }
 
 
-benchmarkstt.diff.formatter.CLIDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
-benchmarkstt.diff.formatter.HTMLDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
-benchmarkstt.diff.formatter.JSONDiffDialect --up--|> benchmarkstt.diff.formatter.ListDialect
-benchmarkstt.diff.formatter.ListDialect --up--|> benchmarkstt.diff.formatter.Dialect
-benchmarkstt.diff.formatter.RestructuredTextDialect --up--|> benchmarkstt.diff.formatter.CLIDiffDialect
-benchmarkstt.diff.formatter.UTF8Dialect --up--|> benchmarkstt.diff.formatter.Dialect
-benchmarkstt.diff.core.RatcliffObershelp --up--|> benchmarkstt.diff.Base
+benchmarkstt.diff.formatter.CLIDiffDialect -up-|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.HTMLDiffDialect -up-|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.JSONDiffDialect -up-|> benchmarkstt.diff.formatter.ListDialect
+benchmarkstt.diff.formatter.ListDialect -up-|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.formatter.RestructuredTextDialect -up-|> benchmarkstt.diff.formatter.CLIDiffDialect
+benchmarkstt.diff.formatter.UTF8Dialect -up-|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.core.RatcliffObershelp -up-|> benchmarkstt.diff.Base
 
 @enduml

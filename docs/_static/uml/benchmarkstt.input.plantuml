@@ -2,6 +2,8 @@
 
 title benchmarkstt.input
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.input {
 
 	class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
@@ -28,7 +30,7 @@ package benchmarkstt.input.core {
 }
 
 
-benchmarkstt.input.core.File --up--|> benchmarkstt.input.Base
-benchmarkstt.input.core.PlainText --up--|> benchmarkstt.input.Base
+benchmarkstt.input.core.File -up-|> benchmarkstt.input.Base
+benchmarkstt.input.core.PlainText -up-|> benchmarkstt.input.Base
 
 @enduml
