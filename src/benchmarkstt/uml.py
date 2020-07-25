@@ -34,7 +34,7 @@ class PlantUMLJarRenderer:
     DEFAULT_FORMAT = 'png'
     DEFAULT_TIMEOUT = 10
 
-    def __init__(self, format=None, command=None, timeout=10):
+    def __init__(self, format=None, command=None, timeout=30):
         if command is None:
             command = self.DEFAULT_COMMAND
         if timeout is None:
@@ -53,23 +53,17 @@ class PlantUMLJarRenderer:
 
     def render(self, data):
         proc = self.__process()
-        out = None
 
         if type(data) is str:
             data = data.encode()
 
         try:
             out, errs = proc.communicate(data, timeout=10)
+            return out
         except subprocess.TimeoutExpired as e:
             proc.kill()
             self._process = None
             raise e
-
-        return out
-
-
-# alternatively use PlantUMLWebRenderer or PlantUMLJarRenderer
-Renderer = PlantUMLWebRenderer
 
 
 class PlantUMLBlock:
@@ -244,9 +238,6 @@ class PlantUML:
             return nullcontext()
         return Klass(self, name, klass)
 
-    def entity(self, entity, conf=None):
-        return Entity(self, entity, conf)
-
     def __str__(self):
         return "\n".join(
             (
@@ -260,13 +251,14 @@ class PlantUML:
 
 if __name__ == '__main__':
     # generate basic PlantUML schemas for benchmarkstt
-    file_tpl = './docs/_static/uml/%s.%s'
-    files = {}
-    extensions = ('plantuml', 'svg', 'png')
-    link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.{module}.html#{hash}"
 
-    for extension in extensions:
-        files[extension] = file_tpl % ('benchmarkstt', extension)
+    # alternatively use PlantUMLWebRenderer or PlantUMLJarRenderer
+    Renderer = PlantUMLJarRenderer
+
+    file_tpl = './docs/_static/uml/%s.%s'
+    plant_extensions = ('svg',)
+    extensions = ('plantuml',) + plant_extensions  # , 'png')
+    link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.{module}.html#{hash}"
 
     def benchmarksttFilterFor(name):
         module_name = 'benchmarkstt.%s' % (name,)
@@ -281,12 +273,11 @@ if __name__ == '__main__':
             return True
         return benchmarksttFilter
 
-    plant_extensions = ('svg', 'png')
     renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
 
-    def generate(name, module, filter, direction=None):
+    def generate(name, package, filter_, direction=None):
         title = name.capitalize()
-        uml = PlantUML(filter=filter, link_tpl=link_tpl)
+        uml = PlantUML(filter=filter_, link_tpl=link_tpl)
         if direction:
             uml.direction(direction)
         uml.title(title)
@@ -294,7 +285,7 @@ if __name__ == '__main__':
                     extension: file_tpl % (name, extension) for extension in extensions
                 }
 
-        generated = uml.generate(module)
+        generated = uml.generate(package)
         with open(files['plantuml'], 'w') as f:
             f.write(generated)
 
@@ -303,15 +294,15 @@ if __name__ == '__main__':
                 f.write(renderers[ext].render(generated))
 
     import benchmarkstt
-    modules = [name
-               for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)])
-               if ispkg and name != 'benchmark']
+    packages = [name
+                for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)])
+                if ispkg and name != 'benchmark']
 
-    for name in modules:
+    for name in packages:
         print("Generating UML for %s" % (name,))
-        module = __import__("benchmarkstt.%s" % (name,))
-        generate(name, module, benchmarksttFilterFor(name))
+        package = __import__("benchmarkstt.%s" % (name,))
+        generate(name, package, benchmarksttFilterFor(name))
 
-    renderers = {ext: PlantUMLJarRenderer(format=ext) for ext in plant_extensions}
+    renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
     print("Generating UML for complete package\n")
     generate('benchmarkstt', benchmarkstt, benchmarksttFilterFor(''), "left to right")
