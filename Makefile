@@ -6,6 +6,7 @@ PLANTUML:=$(or $(shell which plantuml),"java -jar plantuml.jar")
 env:
 	test -e env/bin/activate && source env/bin/activate
 	echo "Using $(shell exec $(PYTHON) --version): $(PYTHON)"
+	$(PYTHON) -m ensurepip
 
 test: env lint
 	$(PYTHON) -m pytest src --doctest-modules -vvv

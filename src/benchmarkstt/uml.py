@@ -79,15 +79,15 @@ class PlantUMLBlock:
         self._block_text = block_text
 
     def __enter__(self):
-        self._uml.level += 1
         if self._block_text:
             self._uml.add(self.start_block, self._block_text)
+        self._uml.level += 1
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self._uml.level -= 1
         if self._block_text:
             self._uml.add(self.end_block,)
-        self._uml.level -= 1
 
 
 class Namespace(PlantUMLBlock):
@@ -95,41 +95,47 @@ class Namespace(PlantUMLBlock):
         block_text = "namespace %s" % (name,)
         super().__init__(uml, block_text)
 
-    def __enter__(self):
-        super().__enter__()
-        return self
 
-
-class Module(PlantUMLBlock):
+class Module:
     def __init__(self, uml, module):
         self._module = module
-        super().__init__(uml)
-
-    def __enter__(self):
-        super().__enter__()
 
         for name, cls in inspect.getmembers(self._module, predicate=inspect.isclass):
-            with self._uml.klass(cls):
-                pass
-        return self
+            uml.klass(cls)
 
 
-class Klass(PlantUMLBlock):
-    def __init__(self, uml, klass):
+class Klass:
+    def __init__(self, uml, klass, **kwargs):
+        self._uml = uml
         self._klass = klass
+        self._options = kwargs
+
         logger.debug("Class: %s\tModule: %s" % (klass.__name__, klass.__module__))
+        uml.parent_relations(self._klass)
+        self.start()
+        self.methods()
+        self.stop()
 
-        link = uml.link(klass.__module__, klass.__module__ + '.' + klass.__name__)
-        super().__init__(uml, "class %s.%s %s" % (klass.__module__, klass.__name__, link))
-        self._uml.parent_relations(self._klass)
+    def start(self):
+        self._uml.add()
+        link = self._uml.link(
+            self._klass.__module__,
+            self._klass.__module__ + '.' + self._klass.__name__
+        )
+        self._uml.add('class %s.%s %s {' % (self._klass.__module__, self._klass.__name__, link))
 
-    def __enter__(self):
-        super().__enter__()
-
+    def methods(self):
         todos = inspect.getmembers(self._klass, predicate=inspect.isfunction)
         todos.sort()
+
         for k, func in todos:
-            if k.startswith('_') and not k.startswith('__'):
+            if self._options.get('skip_protected') and (k.startswith('_') and not k.startswith('__')):
+                continue
+
+            if self._options.get('skip_magic') and k.startswith('__') and k.endswith('__'):
+                continue
+
+            if k in self._options.get('skip', []):
                 continue
 
             signature = inspect.signature(getattr(self._klass, k))
@@ -137,13 +143,13 @@ class Klass(PlantUMLBlock):
 
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        super().__exit__(exc_type, exc_val, exc_tb)
+    def stop(self):
+        self._uml.add('}')
 
 
 class PlantUML:
     def __init__(self, filter=None, link_tpl=None):
-        self.parent_arrow = '--up--|>'
+        self.parent_arrow = '----|>'
         self.classes_done = set()
         self._buffer = ""
         self._relations = []
@@ -155,19 +161,23 @@ class PlantUML:
         if self._link_tpl is None:
             return ''
 
-        level = 3 if is_field_or_method else 2
+        tpl = '[[[%s]]]' if is_field_or_method else '[[%s]]'
         link = self._link_tpl.format(page=page, hash=hash_)
         if not link:
             return ''
-        return ("[" * level) + link + ("]" * level)
+        return tpl % (link,)
 
-    def add(self, what, *args):
+    def add(self, what=None, *args):
+        if what is None:
+            self += "\n"
+            return
         self += "\t" * self.level
         self += what % tuple(args) if len(args) else what
         self += "\n"
 
     def title(self, title):
         self.add("title %s", title)
+        self.add()
 
     def direction(self, which):
         self.add("%s direction", which)
@@ -186,18 +196,18 @@ class PlantUML:
 
         path = str(os.path.dirname(os.path.realpath(orig_module.__file__)))
 
+        logger.info("generate path: %s", path)
+
         modules = {}
         for f in Path(path).rglob("*.py"):
             module = list(filter(filterProtected, str(f)[len(path)+1:-3].split(os.path.sep)))
-            if len(module) == 0:
-                continue
-            module_name = '%s.%s' % (orig_module.__name__, '.'.join(module),)
-            __import__(module_name)
+            logger.info("%s => %s", f, module)
+            module_name = '%s.%s' % (orig_module.__name__, '.'.join(module),) if len(module) else orig_module.__name__
+            import_module(module_name)
             modules[module_name] = get_module(module)
 
         for module in modules.values():
-            with self.module(module):
-                pass
+            self.module(module)
 
         return str(self)
 
@@ -254,6 +264,14 @@ class PlantUML:
 if __name__ == '__main__':
     # generate basic PlantUML schemas for benchmarkstt
     import sys
+
+    # support colored logs if installed
+    try:
+        import coloredlogs
+        coloredlogs.install(level=logging.DEBUG)
+    except ImportError:
+        pass
+
     args = sys.argv[1:]
 
     logLevel = logging.INFO
@@ -277,7 +295,7 @@ if __name__ == '__main__':
 
     file_tpl = './docs/_static/uml/%s.%s'
     plant_extensions = ('svg',)
-    extensions = ('plantuml',) + plant_extensions  # , 'png')
+    extensions = ('plantuml',) + plant_extensions
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter_for(name):
@@ -302,7 +320,7 @@ if __name__ == '__main__':
 
         return fil  # benchmarkstt_filter
 
-    renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
+    svg_renderer = Renderer(format='svg')
 
     def generate(package, filter_, direction=None):
         name = package.__name__
@@ -319,9 +337,8 @@ if __name__ == '__main__':
         with open(files['plantuml'], 'w') as f:
             f.write(generated)
 
-        for ext in plant_extensions:
-            with open(files[ext], 'wb') as f:
-                f.write(renderers[ext].render(generated))
+        with open(files['svg'], 'wb') as f:
+            f.write(svg_renderer.render(generated))
 
     import benchmarkstt
     packages = [name
@@ -330,15 +347,14 @@ if __name__ == '__main__':
 
     for name in packages:
         if len(args) and name not in args:
-            logger.info("SKIPPED Generating UML for %s" % (name,))
+            logger.info("SKIPPED Generating UML for %s", name)
             continue
         full_name = "benchmarkstt.%s" % (name,)
-        logger.info("Generating UML for %s" % (name,))
+        logger.info("Generating UML for %s", name)
         package = import_module(full_name)
         generate(package, benchmarkstt_filter_for(name))
 
     if len(args) == 0 or 'benchmarkstt' in args:
-        renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
         logger.info("Generating UML for complete package")
         generate(benchmarkstt, benchmarkstt_filter_for(''), "left to right")
     else:

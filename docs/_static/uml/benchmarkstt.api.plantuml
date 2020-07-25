@@ -1,18 +1,22 @@
 @startuml
 title Benchmarkstt.api
-		class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
-			+help(methods)
-			+version()
-		}
-		class benchmarkstt.api.jsonrpc.MagicMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
-			+__init__(self)
-			+is_safe_path(path)
-			+load(self, name, module)
-			+register(self, name, callback)
-			+serve(self, config, callback)
-		}
-		class benchmarkstt.api.jsonrpc.SecurityError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
-		}
+
+
+class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
+	+help(methods)
+	+version()
+}
+
+class benchmarkstt.api.jsonrpc.MagicMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
+	+__init__(self)
+	+is_safe_path(path)
+	+load(self, name, module)
+	+register(self, name, callback)
+	+serve(self, config, callback)
+}
+
+class benchmarkstt.api.jsonrpc.SecurityError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
+}
 
 
 @enduml

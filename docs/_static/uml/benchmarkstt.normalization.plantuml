@@ -1,63 +1,121 @@
 @startuml
 title Benchmarkstt.normalization
-		class benchmarkstt.normalization.logger.LogCapturer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.LogCapturer]] {
-			+__enter__(self)
-			+__exit__(self, exc_type, exc_val, exc_tb)
-			+__init__(self, *args, **kwargs)
-		}
-		class benchmarkstt.normalization.logger.DiffLoggingFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
-			+__init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
-			+format(self, record)
-			+formatException(self, ei)
-			+formatMessage(self, record)
-			+formatStack(self, stack_info)
-			+formatTime(self, record, datefmt=None)
-			+usesTime(self)
-		}
-		class benchmarkstt.normalization.logger.Logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.Logger]] {
-		}
-		class benchmarkstt.normalization.NormalizationComposite [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.NormalizationComposite]] {
-			+__init__(self, title=None)
-			+__repr__(self)
-			+add(self, normalizer)
-			+normalize(cls, text)
-		}
-		class benchmarkstt.normalization.core.Config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Config]] {
-			+__init__(self, file, section=None, encoding=None)
-			+__repr__(self)
-			+normalize(cls, text)
-		}
-		class benchmarkstt.normalization.core.ConfigSectionNotFoundError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ConfigSectionNotFoundError]] {
-		}
-		class benchmarkstt.normalization.core.Lowercase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Lowercase]] {
-			+__repr__(self)
-			+normalize(cls, text)
-		}
-		class benchmarkstt.normalization.core.Regex [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Regex]] {
-			+__init__(self, search: str, replace: str)
-			+__repr__(self)
-			+normalize(cls, text)
-		}
-		class benchmarkstt.normalization.core.Replace [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Replace]] {
-			+__init__(self, search: str, replace: str)
-			+__repr__(self)
-			+normalize(cls, text)
-		}
-		class benchmarkstt.normalization.core.ReplaceWords [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ReplaceWords]] {
-			+__init__(self, search: str, replace: str)
-			+__repr__(self)
-			+normalize(cls, text)
-		}
-		class benchmarkstt.normalization.core.Unidecode [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Unidecode]] {
-			+__repr__(self)
-			+normalize(cls, text)
-		}
 
-benchmarkstt.normalization.NormalizationComposite --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Config --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Lowercase --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Regex --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.Replace --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.ReplaceWords --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.Unidecode --up--|> benchmarkstt.normalization.Base
+
+class benchmarkstt.normalization.logger.LogCapturer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.LogCapturer]] {
+	+__enter__(self)
+	+__exit__(self, exc_type, exc_val, exc_tb)
+	+__init__(self, *args, **kwargs)
+}
+
+class benchmarkstt.normalization.logger.DiffLoggingFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
+	+__init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
+	+format(self, record)
+	+formatException(self, ei)
+	+formatMessage(self, record)
+	+formatStack(self, stack_info)
+	+formatTime(self, record, datefmt=None)
+	+usesTime(self)
+}
+
+class benchmarkstt.normalization.logger.Logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.Logger]] {
+}
+
+class benchmarkstt.normalization.NormalizationComposite [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.NormalizationComposite]] {
+	+__init__(self, title=None)
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+add(self, normalizer)
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.Base]] {
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.BaseWithFileSupport [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.BaseWithFileSupport]] {
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.File]] {
+	+__init__(self, normalizer, file, encoding=None, path=None)
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.FileFactory [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] {
+	+__contains__(self, item)
+	+__delitem__(self, key)
+	+__getitem__(self, item)
+	+__init__(self, base_class, namespaces=None)
+	+__iter__(self)
+	+__setitem__(self, key, value)
+	+create(self, name, file=None, encoding=None, path=None)
+	+is_valid(self, tocheck)
+	+keys(self)
+	+normalize_class_name(clsname)
+	+register(self, cls, alias=None)
+	+register_classname(self, name, alias=None)
+	+register_namespace(self, namespace)
+	+unregister(self, key)
+}
+
+class benchmarkstt.normalization.core.Config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Config]] {
+	+__init__(self, file, section=None, encoding=None)
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.core.ConfigSectionNotFoundError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ConfigSectionNotFoundError]] {
+}
+
+class benchmarkstt.normalization.core.Lowercase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Lowercase]] {
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.core.Regex [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Regex]] {
+	+__init__(self, search: str, replace: str)
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.core.Replace [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Replace]] {
+	+__init__(self, search: str, replace: str)
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.core.ReplaceWords [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ReplaceWords]] {
+	+__init__(self, search: str, replace: str)
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+_replacement_callback(self, matches)
+	+normalize(cls, text)
+}
+
+class benchmarkstt.normalization.core.Unidecode [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Unidecode]] {
+	+__repr__(self)
+	+_normalize(self, text: str) -> str
+	+normalize(cls, text)
+}
+
+benchmarkstt.normalization.NormalizationComposite ----|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.BaseWithFileSupport ----|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.File ----|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Config ----|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Lowercase ----|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Regex ----|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Replace ----|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.ReplaceWords ----|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Unidecode ----|> benchmarkstt.normalization.Base
 @enduml
