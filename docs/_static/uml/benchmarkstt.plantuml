@@ -72,7 +72,6 @@ title Benchmarkstt
 			+add(self, what, *args)
 			+cls_name(cls)
 			+direction(self, which)
-			+entity(self, entity, conf=None)
 			+filtered(self, cls)
 			+generate(self, orig_module)
 			+klass(self, name, klass)
@@ -90,7 +89,7 @@ title Benchmarkstt
 			+__init__(self, uml, block_text=None)
 		}
 		class benchmarkstt.uml.PlantUMLJarRenderer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.PlantUMLJarRenderer]] {
-			+__init__(self, format=None, command=None, timeout=10)
+			+__init__(self, format=None, command=None, timeout=30)
 			+render(self, data)
 		}
 		class benchmarkstt.uml.PlantUMLWebRenderer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.PlantUMLWebRenderer]] {
