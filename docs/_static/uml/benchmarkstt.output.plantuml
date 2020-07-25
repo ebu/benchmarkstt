@@ -1,24 +1,24 @@
 @startuml
 title Benchmarkstt.output
-		class benchmarkstt.output.core.Json [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.core.Json]] {
+		class benchmarkstt.output.core.Json [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.Json]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
 			+result(self, title, result)
 		}
-		class benchmarkstt.output.core.MarkDown [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.core.MarkDown]] {
+		class benchmarkstt.output.core.MarkDown [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.MarkDown]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+print(self, result)
 			+result(self, title, result)
 		}
-		class benchmarkstt.output.core.ReStructuredText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.core.ReStructuredText]] {
+		class benchmarkstt.output.core.ReStructuredText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.ReStructuredText]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+print(self, result)
 			+result(self, title, result)
 		}
-		class benchmarkstt.output.core.SimpleTextBase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.core.SimpleTextBase]] {
+		class benchmarkstt.output.core.SimpleTextBase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.SimpleTextBase]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+print(self, result)
