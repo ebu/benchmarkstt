@@ -25,7 +25,7 @@ class PlantUMLWebRenderer:
         )[0]
 
 
-class PlantUMLRenderer:
+class PlantUMLJarRenderer:
     """
     Note: requires PlantUML from https://plantuml.com/download
     """
@@ -68,7 +68,7 @@ class PlantUMLRenderer:
         return out
 
 
-# alternatively use PlantUMLWebRenderer or PlantUMLRenderer
+# alternatively use PlantUMLWebRenderer or PlantUMLJarRenderer
 Renderer = PlantUMLWebRenderer
 
 
@@ -120,12 +120,10 @@ class Klass(PlantUMLBlock):
     def __init__(self, uml, name, klass):
         self._name = name
         self._klass = klass
-        super().__init__(uml, "class %s" % (name,))
-        self._uml.parent_relations(self._klass)
 
-    def method(self, required_args, optional_args):
-        args = required_args + list(map(lambda x: '[%s]' % x, optional_args))
-        self._uml.add("+__init__(%s)", ",".join(args))
+        link = uml.link(klass.__module__, name)
+        super().__init__(uml, "class %s %s" % (name, link))
+        self._uml.parent_relations(self._klass)
 
     def __enter__(self):
         super().__enter__()
@@ -145,14 +143,27 @@ class Klass(PlantUMLBlock):
         super().__exit__(exc_type, exc_val, exc_tb)
 
 
+
+
 class PlantUML:
-    def __init__(self, filter=None):
+    def __init__(self, filter=None, link_tpl=None):
         self.parent_arrow = '--up--|>'
         self.classes_done = set()
         self._buffer = ""
         self._relations = []
         self.level = 0
         self._filter = filter
+        self._link_tpl = link_tpl
+
+    def link(self, module, hash_, is_field_or_method=None):
+        if self._link_tpl is None:
+            return ''
+
+        level = 3 if is_field_or_method else 2
+        link = self._link_tpl.format(module=name, hash=hash_)
+        if link:
+            return ("[" * level) + link + ("]" * level)
+        return ''
 
     def add(self, what, *args):
         self += "\t" * self.level
@@ -254,6 +265,8 @@ if __name__ == '__main__':
     file_tpl = './docs/_static/uml/%s.%s'
     files = {}
     extensions = ('plantuml', 'svg', 'png')
+    link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.{module}.html#{hash}"
+
     for extension in extensions:
         files[extension] = file_tpl % ('benchmarkstt', extension)
 
@@ -275,7 +288,7 @@ if __name__ == '__main__':
 
     def generate(name, module, filter, direction=None):
         title = name.capitalize()
-        uml = PlantUML(filter=filter)
+        uml = PlantUML(filter=filter, link_tpl=link_tpl)
         if direction:
             uml.direction(direction)
         uml.title(title)
@@ -283,12 +296,13 @@ if __name__ == '__main__':
                     extension: file_tpl % (name, extension) for extension in extensions
                 }
 
+        generated = uml.generate(module)
         with open(files['plantuml'], 'w') as f:
-            f.write(uml.generate(module))
+            f.write(generated)
 
         for ext in plant_extensions:
             with open(files[ext], 'wb') as f:
-                f.write(renderers[ext].render(uml.generate(module)))
+                f.write(renderers[ext].render(generated))
 
     import benchmarkstt
     modules = [name
@@ -300,5 +314,6 @@ if __name__ == '__main__':
         module = __import__("benchmarkstt.%s" % (name,))
         generate(name, module, benchmarksttFilterFor(name))
 
+    renderers = {ext: PlantUMLJarRenderer(format=ext) for ext in plant_extensions}
     print("Generating UML for complete package\n")
     generate('benchmarkstt', benchmarkstt, benchmarksttFilterFor(''), "left to right")

@@ -1,6 +1,6 @@
 @startuml
 title Diff
-		class benchmarkstt.diff.core.RatcliffObershelp {
+		class benchmarkstt.diff.core.RatcliffObershelp [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.core.RatcliffObershelp]] {
 			+__init__(self, a, b, *args, **kwargs)
 			+find_longest_match(self, alo, ahi, blo, bhi)
 			+get_grouped_opcodes(self, n=3)
@@ -13,42 +13,31 @@ title Diff
 			+set_seq2(self, b)
 			+set_seqs(self, a, b)
 		}
-		class benchmarkstt.diff.formatter.CLIDiffDialect {
+		class benchmarkstt.diff.formatter.CLIDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.CLIDiffDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, show_color_key=None)
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.formatter.Dialect {
+		class benchmarkstt.diff.formatter.Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.Dialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
 			+output(self)
 		}
-		class benchmarkstt.diff.formatter.DiffFormatter {
+		class benchmarkstt.diff.formatter.DiffFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.DiffFormatter]] {
 			+__init__(self, dialect=None, *args, **kwargs)
 			+diff(self, a, b, opcodes=None, preprocessor=None)
 		}
-		class benchmarkstt.diff.formatter.HTMLDiffDialect {
+		class benchmarkstt.diff.formatter.HTMLDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.HTMLDiffDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.formatter.JSONDiffDialect {
-			+__enter__(self)
-			+__exit__(self, exc_type, exc_val, exc_tb)
-			+__init__(self)
-			+delete_format(self, txt)
-			+equal_format(self, txt)
-			+insert_format(self, txt)
-			+output(self)
-			+preprocessor(txt)
-			+replace_format(self, a, b)
-		}
-		class benchmarkstt.diff.formatter.ListDialect {
+		class benchmarkstt.diff.formatter.JSONDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.JSONDiffDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
@@ -59,14 +48,25 @@ title Diff
 			+preprocessor(txt)
 			+replace_format(self, a, b)
 		}
-		class benchmarkstt.diff.formatter.RestructuredTextDialect {
+		class benchmarkstt.diff.formatter.ListDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.ListDialect]] {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+equal_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+			+replace_format(self, a, b)
+		}
+		class benchmarkstt.diff.formatter.RestructuredTextDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.RestructuredTextDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, show_color_key=None)
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.formatter.UTF8Dialect {
+		class benchmarkstt.diff.formatter.UTF8Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.UTF8Dialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
@@ -75,7 +75,7 @@ title Diff
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.Base {
+		class benchmarkstt.diff.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
 			+__init__(self, a='', b='')
 			+get_opcodes(self)
 		}
