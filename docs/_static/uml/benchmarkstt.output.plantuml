@@ -1,10 +1,5 @@
 @startuml
-title Output
-		class benchmarkstt.output.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.Base]] {
-			+__enter__(self)
-			+__exit__(self, exc_type, exc_val, exc_tb)
-			+result(self, title, result)
-		}
+title Benchmarkstt.output
 		class benchmarkstt.output.core.Json [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.core.Json]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)

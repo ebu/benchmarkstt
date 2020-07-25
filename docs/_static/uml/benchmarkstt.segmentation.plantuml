@@ -1,5 +1,5 @@
 @startuml
-title Segmentation
+title Benchmarkstt.segmentation
 		class benchmarkstt.segmentation.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
 			+__iter__(self)
 		}

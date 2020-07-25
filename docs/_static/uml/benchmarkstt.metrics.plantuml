@@ -1,5 +1,5 @@
 @startuml
-title Metrics
+title Benchmarkstt.metrics
 		class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}

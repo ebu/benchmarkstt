@@ -2,6 +2,7 @@ import inspect
 import pkgutil
 import os
 import subprocess
+from importlib import import_module
 
 from pathlib import Path
 from contextlib import nullcontext
@@ -251,6 +252,14 @@ class PlantUML:
 
 if __name__ == '__main__':
     # generate basic PlantUML schemas for benchmarkstt
+    import sys
+    args = sys.argv[1:]
+
+    if '--help' in args:
+        print("Usage: %s [filter1 [filter2 [...]]]" % (sys.argv[0],))
+        print()
+        print("     filterN Names of the uml packages we wish to generate (all if no arguments are present)")
+        exit()
 
     # alternatively use PlantUMLWebRenderer or PlantUMLJarRenderer
     Renderer = PlantUMLJarRenderer
@@ -260,10 +269,13 @@ if __name__ == '__main__':
     extensions = ('plantuml',) + plant_extensions  # , 'png')
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.{module}.html#{hash}"
 
-    def benchmarksttFilterFor(name):
+    def benchmarkstt_filter_for(name):
         module_name = 'benchmarkstt.%s' % (name,)
 
-        def benchmarksttFilter(cls):
+        def benchmarkstt_filter(cls):
+            if cls.__name__.startswith('benchmarkstt.'):
+                return False
+
             if cls.__name__.startswith(module_name):
                 return False
 
@@ -271,11 +283,12 @@ if __name__ == '__main__':
                 return False
 
             return True
-        return benchmarksttFilter
+        return benchmarkstt_filter
 
     renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
 
-    def generate(name, package, filter_, direction=None):
+    def generate(package, filter_, direction=None):
+        name = package.__name__
         title = name.capitalize()
         uml = PlantUML(filter=filter_, link_tpl=link_tpl)
         if direction:
@@ -299,10 +312,18 @@ if __name__ == '__main__':
                 if ispkg and name != 'benchmark']
 
     for name in packages:
+        if len(args) and name not in args:
+            print("SKIPPED Generating UML for %s" % (name,))
+            continue
+        full_name = "benchmarkstt.%s" % (name,)
         print("Generating UML for %s" % (name,))
-        package = __import__("benchmarkstt.%s" % (name,))
-        generate(name, package, benchmarksttFilterFor(name))
+        package = import_module(full_name)
+        generate(package, benchmarkstt_filter_for(name))
 
-    renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
-    print("Generating UML for complete package\n")
-    generate('benchmarkstt', benchmarkstt, benchmarksttFilterFor(''), "left to right")
+    if len(args) == 0 or 'benchmarkstt' in args:
+        renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
+        print("Generating UML for complete package\n")
+        generate(benchmarkstt, benchmarkstt_filter_for(''), "left to right")
+    else:
+        print("SKIPPED Generating UML for complete package\n")
+
