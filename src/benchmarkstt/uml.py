@@ -31,7 +31,7 @@ class PlantUMLWebRenderer:
 
 class PlantUMLJarRenderer:
     """
-    Note: requires PlantUML from https://plantuml.com/download
+    Note: requires PlantUML's `plantuml.jar` from https://plantuml.com/download
     """
 
     DEFAULT_COMMAND = os.environ.get("PLANTUML", "java -jar plantuml.jar").split(' ')
@@ -88,6 +88,7 @@ class PlantUMLBlock:
         self._uml.level -= 1
         if self._block_text:
             self._uml.add(self.end_block,)
+        self._uml.add()
 
 
 class Namespace(PlantUMLBlock):
@@ -96,12 +97,17 @@ class Namespace(PlantUMLBlock):
         super().__init__(uml, block_text)
 
 
-class Module:
+class Package:
     def __init__(self, uml, module):
-        self._module = module
+        if not inspect.ismodule(module):
+            raise Exception(module)
+            logger.warning("%r is not a module", module)
+            return
 
-        for name, cls in inspect.getmembers(self._module, predicate=inspect.isclass):
-            uml.klass(cls)
+        with PlantUMLBlock(uml, "package %s" % (module.__name__,)):
+            for name, cls in inspect.getmembers(module, predicate=inspect.isclass):
+                uml.klass(cls)
+                uml.add()
 
 
 class Klass:
@@ -110,7 +116,6 @@ class Klass:
         self._klass = klass
         self._options = kwargs
 
-        logger.debug("Class: %s\tModule: %s" % (klass.__name__, klass.__module__))
         uml.parent_relations(self._klass)
         self.start()
         self.methods()
@@ -123,33 +128,52 @@ class Klass:
             self._klass.__module__ + '.' + self._klass.__name__
         )
         self._uml.add('class %s.%s %s {' % (self._klass.__module__, self._klass.__name__, link))
+        self._uml.level += 1
 
     def methods(self):
-        todos = inspect.getmembers(self._klass, predicate=inspect.isfunction)
-        todos.sort()
+        members = inspect.getmembers(self._klass)
+        members.sort()
 
-        for k, func in todos:
+        def should_skip(k):
             if self._options.get('skip_protected') and (k.startswith('_') and not k.startswith('__')):
-                continue
+                return True
 
             if self._options.get('skip_magic') and k.startswith('__') and k.endswith('__'):
-                continue
+                return True
 
             if k in self._options.get('skip', []):
-                continue
+                return True
 
-            signature = inspect.signature(getattr(self._klass, k))
-            self._uml.add("\t+%s%s", k, signature)
+            return False
+
+        for k, member in members:
+            if should_skip(k):
+                continue
+            kind = '-' if k.startswith('_') and not k.startswith('__') else '+'
+
+            fmt = '%s%s%s'
+            extra = ''
+
+            if inspect.ismethod(member):
+                fmt = '{static} ' + fmt
+                extra = inspect.signature(getattr(self._klass, k))
+            elif inspect.isfunction(member):
+                extra = inspect.signature(getattr(self._klass, k))
+            else:
+                logger.info('UNKNOWN TYPE skip: %s %s', k, member)
+                continue
+            self._uml.add(fmt, kind, k, extra)
 
         return self
 
     def stop(self):
+        self._uml.level -= 1
         self._uml.add('}')
 
 
 class PlantUML:
     def __init__(self, filter=None, link_tpl=None):
-        self.parent_arrow = '----|>'
+        self.parent_arrow = '--up--|>'
         self.classes_done = set()
         self._buffer = ""
         self._relations = []
@@ -169,11 +193,11 @@ class PlantUML:
 
     def add(self, what=None, *args):
         if what is None:
-            self += "\n"
+            self._buffer += "\n"
             return
-        self += "\t" * self.level
-        self += what % tuple(args) if len(args) else what
-        self += "\n"
+        self._buffer += "\t" * self.level
+        self._buffer += what % tuple(args) if len(args) else what
+        self._buffer += "\n"
 
     def title(self, title):
         self.add("title %s", title)
@@ -183,31 +207,16 @@ class PlantUML:
         self.add("%s direction", which)
 
     def generate(self, orig_module):
-        def filterProtected(v):
-            return not v.startswith('__')
-
-        def get_module(module, ctx=orig_module):
-            try:
-                current = module.pop(0)
-            except IndexError:
-                return ctx
-            ctx = getattr(ctx, current)
-            return get_module(module, ctx) if len(module) else ctx
+        def filter_protected(v):
+            return not v.startswith('_')
 
         path = str(os.path.dirname(os.path.realpath(orig_module.__file__)))
 
-        logger.info("generate path: %s", path)
-
-        modules = {}
         for f in Path(path).rglob("*.py"):
-            module = list(filter(filterProtected, str(f)[len(path)+1:-3].split(os.path.sep)))
-            logger.info("%s => %s", f, module)
+            module = list(filter(filter_protected, str(f)[len(path)+1:-3].split(os.path.sep)))
             module_name = '%s.%s' % (orig_module.__name__, '.'.join(module),) if len(module) else orig_module.__name__
-            import_module(module_name)
-            modules[module_name] = get_module(module)
-
-        for module in modules.values():
-            self.module(module)
+            module = import_module(module_name)
+            self.package(module)
 
         return str(self)
 
@@ -226,12 +235,8 @@ class PlantUML:
     def filtered(self, cls):
         return False if self._filter is None else self._filter(cls)
 
-    def __add__(self, x):
-        self._buffer += str(x)
-        return self
-
-    def module(self, module):
-        return Module(self, module)
+    def package(self, module):
+        return Package(self, module)
 
     def parent_relations(self, cls):
         for parent_cls in cls.__bases__:
@@ -253,10 +258,10 @@ class PlantUML:
     def __str__(self):
         return "\n".join(
             (
-                "@startuml",
+                "@startuml\n",
                 self._buffer,
                 "\n".join(self._relations),
-                "@enduml",
+                "\n@enduml",
             )
         )
 
@@ -286,7 +291,7 @@ if __name__ == '__main__':
         print()
         print("\t--verbose\tOutput all debug info")
         print("\t--help\tShow this usage message")
-        print("\tfilterN\tNames of the uml packages we wish to generate (all if no arguments are present)")
+        print("\tfilterN\tNames of the packages for which we wish to generate UML (all if no arguments are present)")
         print()
         exit()
 
@@ -294,8 +299,7 @@ if __name__ == '__main__':
     Renderer = PlantUMLJarRenderer
 
     file_tpl = './docs/_static/uml/%s.%s'
-    plant_extensions = ('svg',)
-    extensions = ('plantuml',) + plant_extensions
+    extensions = ('plantuml', 'svg')
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter_for(name):
@@ -324,20 +328,17 @@ if __name__ == '__main__':
 
     def generate(package, filter_, direction=None):
         name = package.__name__
-        title = name.capitalize()
+        title = name
         uml = PlantUML(filter=filter_, link_tpl=link_tpl)
         if direction:
             uml.direction(direction)
         uml.title(title)
-        files = {
-                    extension: file_tpl % (name, extension) for extension in extensions
-                }
 
         generated = uml.generate(package)
-        with open(files['plantuml'], 'w') as f:
+        with open(file_tpl % (name, 'plantuml'), 'w') as f:
             f.write(generated)
 
-        with open(files['svg'], 'wb') as f:
+        with open(file_tpl % (name, 'svg'), 'wb') as f:
             f.write(svg_renderer.render(generated))
 
     import benchmarkstt

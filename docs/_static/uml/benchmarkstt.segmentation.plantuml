@@ -1,14 +1,18 @@
 @startuml
-title Benchmarkstt.segmentation
+title benchmarkstt.segmentation
 
+package benchmarkstt.segmentation {
 
-class benchmarkstt.segmentation.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
+	class benchmarkstt.segmentation.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
 	+__iter__(self)
+	}
 }
+package benchmarkstt.segmentation.core {
 
-class benchmarkstt.segmentation.core.Simple [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] {
+	class benchmarkstt.segmentation.core.Simple [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] {
 	+__init__(self, text: str, pattern='[\\n\\t\\s]+', normalizer=None)
 	+__iter__(self)
+	}
 }
 
 benchmarkstt.segmentation.core.Simple ----|> benchmarkstt.segmentation.Base
