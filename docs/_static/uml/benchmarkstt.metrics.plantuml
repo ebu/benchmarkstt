@@ -1,40 +1,66 @@
 @startuml
+
 title benchmarkstt.metrics
 
 package benchmarkstt.metrics {
 
 	class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
-	+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
+
+
+
 }
+
+package benchmarkstt.metrics {
+
+
+
+}
+
+package benchmarkstt.metrics {
+
+
+
+}
+
 package benchmarkstt.metrics.core {
 
+
 	class benchmarkstt.metrics.core.DiffCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.DiffCounts]] {
-	+__init__(self, differ_class=None)
-	+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		+__init__(self, differ_class=None)
+		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
+
 
 	class benchmarkstt.metrics.core.OpcodeCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.OpcodeCounts]] {
-	+__getnewargs__(self)
-	+__new__(_cls, equal, replace, insert, delete)
-	+__repr__(self)
-	-_asdict(self)
-	{static} -_make(iterable)
-	-_replace(self, /, **kwds)
+		+__getnewargs__(self)
+		+__new__(_cls, equal, replace, insert, delete)
+		+__repr__(self)
+		-_asdict(self)
+		{static} -_make(iterable)
+		-_replace(self, /, **kwds)
 	}
+
+
+
 
 	class benchmarkstt.metrics.core.WER [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WER]] {
-	+__init__(self, mode=None, differ_class=None)
-	+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		+__init__(self, mode=None, differ_class=None)
+		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
+
 
 	class benchmarkstt.metrics.core.WordDiffs [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WordDiffs]] {
-	+__init__(self, dialect=None, differ_class=None)
-	+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		+__init__(self, dialect=None, differ_class=None)
+		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
+
 }
 
-benchmarkstt.metrics.core.DiffCounts ----|> benchmarkstt.metrics.Base
-benchmarkstt.metrics.core.WER ----|> benchmarkstt.metrics.Base
-benchmarkstt.metrics.core.WordDiffs ----|> benchmarkstt.metrics.Base
+
+benchmarkstt.metrics.core.DiffCounts --up--|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.WER --up--|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.WordDiffs --up--|> benchmarkstt.metrics.Base
+
 @enduml
