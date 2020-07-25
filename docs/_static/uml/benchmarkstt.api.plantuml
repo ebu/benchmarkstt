@@ -1,5 +1,5 @@
 @startuml
-title Api
+title Benchmarkstt.api
 		class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
 			+help(methods)
 			+version()

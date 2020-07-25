@@ -1,18 +1,5 @@
 @startuml
-title Diff
-		class benchmarkstt.diff.core.RatcliffObershelp [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.core.RatcliffObershelp]] {
-			+__init__(self, a, b, *args, **kwargs)
-			+find_longest_match(self, alo, ahi, blo, bhi)
-			+get_grouped_opcodes(self, n=3)
-			+get_matching_blocks(self)
-			+get_opcodes(self)
-			+quick_ratio(self)
-			+ratio(self)
-			+real_quick_ratio(self)
-			+set_seq1(self, a)
-			+set_seq2(self, b)
-			+set_seqs(self, a, b)
-		}
+title Benchmarkstt.diff
 		class benchmarkstt.diff.formatter.CLIDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.formatter.CLIDiffDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
@@ -79,12 +66,25 @@ title Diff
 			+__init__(self, a='', b='')
 			+get_opcodes(self)
 		}
+		class benchmarkstt.diff.core.RatcliffObershelp [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.core.RatcliffObershelp]] {
+			+__init__(self, a, b, *args, **kwargs)
+			+find_longest_match(self, alo, ahi, blo, bhi)
+			+get_grouped_opcodes(self, n=3)
+			+get_matching_blocks(self)
+			+get_opcodes(self)
+			+quick_ratio(self)
+			+ratio(self)
+			+real_quick_ratio(self)
+			+set_seq1(self, a)
+			+set_seq2(self, b)
+			+set_seqs(self, a, b)
+		}
 
-benchmarkstt.diff.core.RatcliffObershelp --up--|> benchmarkstt.diff.Base
 benchmarkstt.diff.formatter.CLIDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
 benchmarkstt.diff.formatter.HTMLDiffDialect --up--|> benchmarkstt.diff.formatter.Dialect
 benchmarkstt.diff.formatter.JSONDiffDialect --up--|> benchmarkstt.diff.formatter.ListDialect
 benchmarkstt.diff.formatter.ListDialect --up--|> benchmarkstt.diff.formatter.Dialect
 benchmarkstt.diff.formatter.RestructuredTextDialect --up--|> benchmarkstt.diff.formatter.CLIDiffDialect
 benchmarkstt.diff.formatter.UTF8Dialect --up--|> benchmarkstt.diff.formatter.Dialect
+benchmarkstt.diff.core.RatcliffObershelp --up--|> benchmarkstt.diff.Base
 @enduml
