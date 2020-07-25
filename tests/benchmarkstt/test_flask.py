@@ -73,7 +73,7 @@ benchmarklogs = [
 
 @pytest.fixture
 def client():
-    from benchmarkstt.api.cli import create_app
+    from benchmarkstt.api._cli import create_app
     app = create_app()
     client = app.test_client()
     yield client

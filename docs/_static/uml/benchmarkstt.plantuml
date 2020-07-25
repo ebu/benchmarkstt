@@ -118,11 +118,6 @@ title Benchmarkstt
 			+register_namespace(self, namespace)
 			+unregister(self, key)
 		}
-		class benchmarkstt.normalization.core.Config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Config]] {
-			+__init__(self, file, section=None, encoding=None)
-			+__repr__(self)
-			+normalize(cls, text)
-		}
 		class benchmarkstt.cli.HelpFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.cli.HelpFormatter]] {
 			+__init__(self, *args, **kwargs)
 			+add_argument(self, action)
@@ -226,6 +221,11 @@ title Benchmarkstt
 		}
 		class benchmarkstt.schema.SchemaJSONError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.SchemaJSONError]] {
 		}
+		class benchmarkstt.normalization.core.Config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Config]] {
+			+__init__(self, file, section=None, encoding=None)
+			+__repr__(self)
+			+normalize(cls, text)
+		}
 		class benchmarkstt.normalization.logger.LogCapturer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.LogCapturer]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
@@ -234,6 +234,8 @@ title Benchmarkstt
 		class benchmarkstt.input.core.PlainText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.input.core.PlainText]] {
 			+__init__(self, text, segmenter=None, normalizer=None)
 			+__iter__(self)
+		}
+		class benchmarkstt.normalization.logger.Logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.Logger]] {
 		}
 		class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.metrics.Base]] {
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
@@ -268,7 +270,20 @@ title Benchmarkstt
 			+__init__(self, dialect=None, differ_class=None)
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.normalization.logger.Logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.Logger]] {
+		class benchmarkstt.normalization.logger.DiffLoggingFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
+			+__init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
+			+format(self, record)
+			+formatException(self, ei)
+			+formatMessage(self, record)
+			+formatStack(self, stack_info)
+			+formatTime(self, record, datefmt=None)
+			+usesTime(self)
+		}
+		class benchmarkstt.normalization.NormalizationComposite [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.NormalizationComposite]] {
+			+__init__(self, title=None)
+			+__repr__(self)
+			+add(self, normalizer)
+			+normalize(cls, text)
 		}
 		class benchmarkstt.normalization.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.Base]] {
 			+__repr__(self)
@@ -299,12 +314,6 @@ title Benchmarkstt
 			+register_namespace(self, namespace)
 			+unregister(self, key)
 		}
-		class benchmarkstt.normalization.NormalizationComposite [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.NormalizationComposite]] {
-			+__init__(self, title=None)
-			+__repr__(self)
-			+add(self, normalizer)
-			+normalize(cls, text)
-		}
 		class benchmarkstt.normalization.core.ConfigSectionNotFoundError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.ConfigSectionNotFoundError]] {
 		}
 		class benchmarkstt.normalization.core.Lowercase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Lowercase]] {
@@ -329,15 +338,6 @@ title Benchmarkstt
 		class benchmarkstt.normalization.core.Unidecode [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Unidecode]] {
 			+__repr__(self)
 			+normalize(cls, text)
-		}
-		class benchmarkstt.normalization.logger.DiffLoggingFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
-			+__init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
-			+format(self, record)
-			+formatException(self, ei)
-			+formatMessage(self, record)
-			+formatStack(self, stack_info)
-			+formatTime(self, record, datefmt=None)
-			+usesTime(self)
 		}
 		class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.input.Base]] {
 			+__iter__(self)
@@ -467,7 +467,6 @@ benchmarkstt.uml.Module --up--|> benchmarkstt.uml.PlantUMLBlock
 benchmarkstt.uml.Namespace --up--|> benchmarkstt.uml.PlantUMLBlock
 benchmarkstt.factory.ClassConfig --up--|> benchmarkstt.factory.ClassConfigTuple
 benchmarkstt.factory.Factory --up--|> benchmarkstt.registry.Registry
-benchmarkstt.normalization.core.Config --up--|> benchmarkstt.normalization.Base
 benchmarkstt.csv.DefaultDialect --up--|> benchmarkstt.csv.Dialect
 benchmarkstt.csv.UnallowedQuoteError --up--|> benchmarkstt.csv.CSVParserError
 benchmarkstt.csv.UnclosedQuoteError --up--|> benchmarkstt.csv.CSVParserError
@@ -475,15 +474,16 @@ benchmarkstt.csv.WhitespaceDialect --up--|> benchmarkstt.csv.DefaultDialect
 benchmarkstt.modules.LoadObjectProxy --up--|> benchmarkstt.modules.Proxy
 benchmarkstt.schema.SchemaInvalidItemError --up--|> benchmarkstt.schema.SchemaError
 benchmarkstt.schema.SchemaJSONError --up--|> benchmarkstt.schema.SchemaError
+benchmarkstt.normalization.core.Config --up--|> benchmarkstt.normalization.Base
 benchmarkstt.input.core.PlainText --up--|> benchmarkstt.input.Base
 benchmarkstt.metrics.core.DiffCounts --up--|> benchmarkstt.metrics.Base
 benchmarkstt.diff.core.RatcliffObershelp --up--|> benchmarkstt.diff.Base
 benchmarkstt.metrics.core.WER --up--|> benchmarkstt.metrics.Base
 benchmarkstt.metrics.core.WordDiffs --up--|> benchmarkstt.metrics.Base
+benchmarkstt.normalization.NormalizationComposite --up--|> benchmarkstt.normalization.Base
 benchmarkstt.normalization.BaseWithFileSupport --up--|> benchmarkstt.normalization.Base
 benchmarkstt.normalization.File --up--|> benchmarkstt.normalization.Base
 benchmarkstt.normalization.FileFactory --up--|> benchmarkstt.factory.Factory
-benchmarkstt.normalization.NormalizationComposite --up--|> benchmarkstt.normalization.Base
 benchmarkstt.normalization.core.Lowercase --up--|> benchmarkstt.normalization.Base
 benchmarkstt.normalization.core.Regex --up--|> benchmarkstt.normalization.BaseWithFileSupport
 benchmarkstt.normalization.core.Replace --up--|> benchmarkstt.normalization.BaseWithFileSupport

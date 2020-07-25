@@ -10,7 +10,7 @@ if sys.version_info >= (3, 6):
 
 class Modules:
     def __init__(self, sub_module=None):
-        self._postfix = '' if sub_module is None else '.' + sub_module
+        self._postfix = '' if sub_module is None else '._' + sub_module
 
     def __iter__(self):
         for module in _modules:

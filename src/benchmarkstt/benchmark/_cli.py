@@ -2,8 +2,8 @@
 Do a complete flow of input -> normalization -> segmentation -> metrics
 """
 
-import benchmarkstt.metrics.cli as metrics_cli
-from benchmarkstt.normalization.cli import args_logs, args_normalizers, get_normalizer_from_args
+import benchmarkstt.metrics._cli as metrics_cli
+from benchmarkstt.normalization._cli import args_logs, args_normalizers, get_normalizer_from_args
 import argparse
 
 # hidden: don't add this as a subcommand to benchmarkstt-tools
