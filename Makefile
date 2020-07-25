@@ -32,6 +32,7 @@ uml: env
 
 clean:
 	cd docs/ && make clean
+	find . -name '*.pyc' -delete
 
 setuptools: env
 	$(PYTHON) -m pip install --upgrade setuptools wheel

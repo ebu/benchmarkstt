@@ -4,7 +4,6 @@ import textwrap
 import itertools
 from benchmarkstt.modules import Modules
 from benchmarkstt import __meta__
-from benchmarkstt.normalization.core import Config
 from argparse import ArgumentError
 from contextlib import contextmanager
 import sys
@@ -143,7 +142,7 @@ def create_parser(*args, **kwargs):
 def main_parser_context():
     try:
         # import done here to avoid circular references
-        import benchmarkstt.benchmark.cli as benchmark_cli
+        import benchmarkstt.benchmark._cli as benchmark_cli
         name = 'benchmarkstt'
         desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
                'for additional tools, see ``benchmarkstt-tools --help``.'
@@ -177,7 +176,7 @@ def determine_log_level():
 def main():
     determine_log_level()
     # import done here to avoid circular dependencies
-    import benchmarkstt.benchmark.cli as benchmark_cli
+    import benchmarkstt.benchmark._cli as benchmark_cli
     with main_parser_context() as parser:
         args_complete(parser)
 
@@ -211,7 +210,7 @@ def tools_parser():
         else:
             kwargs['formatter_class'] = HelpFormatter
 
-        docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s.cli' % (module,))
+        docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s._cli' % (module,))
         kwargs['description'] = textwrap.dedent(docs)
         subparser = subparsers.add_parser(module, add_help=False, allow_abbrev=False, **kwargs)
 

@@ -143,8 +143,6 @@ class Klass(PlantUMLBlock):
         super().__exit__(exc_type, exc_val, exc_tb)
 
 
-
-
 class PlantUML:
     def __init__(self, filter=None, link_tpl=None):
         self.parent_arrow = '--up--|>'
