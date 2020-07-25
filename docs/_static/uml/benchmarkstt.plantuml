@@ -1,17 +1,17 @@
 @startuml
 left to right direction
 title Benchmarkstt
-		class benchmarkstt.docblock.Docblock [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.docblock.Docblock]] {
+		class benchmarkstt.docblock.Docblock [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.Docblock]] {
 			+__getnewargs__(self)
 			+__new__(_cls, docs, params, result, result_type)
 			+__repr__(self)
 		}
-		class benchmarkstt.docblock.DocblockParam [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.docblock.DocblockParam]] {
+		class benchmarkstt.docblock.DocblockParam [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.DocblockParam]] {
 			+__getnewargs__(self)
 			+__new__(_cls, name, type, value)
 			+__repr__(self)
 		}
-		class benchmarkstt.docblock.HTML5Writer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.docblock.HTML5Writer]] {
+		class benchmarkstt.docblock.HTML5Writer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.HTML5Writer]] {
 			+__init__(self)
 			+apply_template(self)
 			+assemble_parts(self)
@@ -21,12 +21,12 @@ title Benchmarkstt
 			+translate(self)
 			+write(self, document, destination)
 		}
-		class benchmarkstt.docblock.Param [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.docblock.Param]] {
+		class benchmarkstt.docblock.Param [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.Param]] {
 			+__getnewargs__(self)
 			+__new__(_cls, name, type, type_doc, is_required, description, examples)
 			+__repr__(self)
 		}
-		class benchmarkstt.docblock.TextWriter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.docblock.TextWriter]] {
+		class benchmarkstt.docblock.TextWriter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.TextWriter]] {
 			+__init__(self)
 			+assemble_parts(self)
 			+get_transforms(self)
@@ -34,13 +34,13 @@ title Benchmarkstt
 			+translate(self)
 			+write(self, document, destination)
 		}
-		class benchmarkstt.config.SectionConfigReader [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.config.SectionConfigReader]] {
+		class benchmarkstt.config.SectionConfigReader [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.config.html#benchmarkstt.config.SectionConfigReader]] {
 			+__contains__(self, item)
 			+__getitem__(self, k)
 			+__init__(self, config)
 			+__iter__(self)
 		}
-		class benchmarkstt.registry.Registry [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.registry.Registry]] {
+		class benchmarkstt.registry.Registry [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.registry.html#benchmarkstt.registry.Registry]] {
 			+__contains__(self, item)
 			+__delitem__(self, key)
 			+__getitem__(self, item)
@@ -50,22 +50,22 @@ title Benchmarkstt
 			+register(self, key, value)
 			+unregister(self, key)
 		}
-		class benchmarkstt.uml.Klass [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.Klass]] {
+		class benchmarkstt.uml.Klass [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.Klass]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
-			+__init__(self, uml, name, klass)
+			+__init__(self, uml, klass)
 		}
-		class benchmarkstt.uml.Module [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.Module]] {
+		class benchmarkstt.uml.Module [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.Module]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, uml, module)
 		}
-		class benchmarkstt.uml.Namespace [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.Namespace]] {
+		class benchmarkstt.uml.Namespace [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.Namespace]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, uml, name)
 		}
-		class benchmarkstt.uml.PlantUML [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.PlantUML]] {
+		class benchmarkstt.uml.PlantUML [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.PlantUML]] {
 			+__add__(self, x)
 			+__init__(self, filter=None, link_tpl=None)
 			+__str__(self)
@@ -74,8 +74,8 @@ title Benchmarkstt
 			+direction(self, which)
 			+filtered(self, cls)
 			+generate(self, orig_module)
-			+klass(self, name, klass)
-			+link(self, module, hash_, is_field_or_method=None)
+			+klass(self, klass)
+			+link(self, page, hash_, is_field_or_method=None)
 			+module(self, module)
 			+namespace(self, name)
 			+parent_relations(self, cls)
@@ -83,25 +83,25 @@ title Benchmarkstt
 			+skip(self, cls)
 			+title(self, title)
 		}
-		class benchmarkstt.uml.PlantUMLBlock [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.PlantUMLBlock]] {
+		class benchmarkstt.uml.PlantUMLBlock [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.PlantUMLBlock]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, uml, block_text=None)
 		}
-		class benchmarkstt.uml.PlantUMLJarRenderer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.PlantUMLJarRenderer]] {
+		class benchmarkstt.uml.PlantUMLJarRenderer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.PlantUMLJarRenderer]] {
 			+__init__(self, format=None, command=None, timeout=30)
 			+render(self, data)
 		}
-		class benchmarkstt.uml.PlantUMLWebRenderer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.uml.PlantUMLWebRenderer]] {
+		class benchmarkstt.uml.PlantUMLWebRenderer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.uml.html#benchmarkstt.uml.PlantUMLWebRenderer]] {
 			+__init__(self, format=None)
 			+render(self, data)
 		}
-		class benchmarkstt.factory.ClassConfig [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.factory.ClassConfig]] {
+		class benchmarkstt.factory.ClassConfig [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.ClassConfig]] {
 			+__getnewargs__(self)
 			+__new__(_cls, name, cls, docs, optional_args, required_args)
 			+__repr__(self)
 		}
-		class benchmarkstt.factory.Factory [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.factory.Factory]] {
+		class benchmarkstt.factory.Factory [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.Factory]] {
 			+__contains__(self, item)
 			+__delitem__(self, key)
 			+__getitem__(self, item)
@@ -117,7 +117,7 @@ title Benchmarkstt
 			+register_namespace(self, namespace)
 			+unregister(self, key)
 		}
-		class benchmarkstt.cli.HelpFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.cli.HelpFormatter]] {
+		class benchmarkstt.cli.HelpFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.cli.html#benchmarkstt.cli.HelpFormatter]] {
 			+__init__(self, *args, **kwargs)
 			+add_argument(self, action)
 			+add_arguments(self, actions)
@@ -127,49 +127,49 @@ title Benchmarkstt
 			+format_help(self)
 			+start_section(self, heading)
 		}
-		class benchmarkstt.modules.Modules [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.modules.Modules]] {
+		class benchmarkstt.modules.Modules [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.modules.html#benchmarkstt.modules.Modules]] {
 			+__getattr__(self, name)
 			+__getitem__(self, key)
 			+__init__(self, sub_module=None)
 			+__iter__(self)
 			+keys(self)
 		}
-		class benchmarkstt.cli._ActionWithArguments [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.cli._ActionWithArguments]] {
+		class benchmarkstt.cli._ActionWithArguments [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.cli.html#benchmarkstt.cli._ActionWithArguments]] {
 		}
-		class benchmarkstt.csv.CSVParserError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.CSVParserError]] {
+		class benchmarkstt.csv.CSVParserError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.CSVParserError]] {
 			+__init__(self, message, line, char, index)
 		}
-		class benchmarkstt.csv.DefaultDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.DefaultDialect]] {
+		class benchmarkstt.csv.DefaultDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.DefaultDialect]] {
 		}
-		class benchmarkstt.csv.Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.Dialect]] {
+		class benchmarkstt.csv.Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.Dialect]] {
 		}
-		class benchmarkstt.csv.InvalidDialectError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.InvalidDialectError]] {
+		class benchmarkstt.csv.InvalidDialectError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.InvalidDialectError]] {
 		}
-		class benchmarkstt.csv.Line [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.Line]] {
+		class benchmarkstt.csv.Line [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.Line]] {
 		}
-		class benchmarkstt.csv.Reader [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.Reader]] {
+		class benchmarkstt.csv.Reader [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.Reader]] {
 			+__init__(self, file: <class 'TextIO'>, dialect: benchmarkstt.csv.Dialect, debug=None)
 			+__iter__(self)
 		}
-		class benchmarkstt.csv.UnallowedQuoteError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.UnallowedQuoteError]] {
+		class benchmarkstt.csv.UnallowedQuoteError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.UnallowedQuoteError]] {
 			+__init__(self, message, line, char, index)
 		}
-		class benchmarkstt.csv.UnclosedQuoteError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.UnclosedQuoteError]] {
+		class benchmarkstt.csv.UnclosedQuoteError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.UnclosedQuoteError]] {
 			+__init__(self, message, line, char, index)
 		}
-		class benchmarkstt.csv.UnknownDialectError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.UnknownDialectError]] {
+		class benchmarkstt.csv.UnknownDialectError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.UnknownDialectError]] {
 		}
-		class benchmarkstt.csv.WhitespaceDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.csv.WhitespaceDialect]] {
+		class benchmarkstt.csv.WhitespaceDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.WhitespaceDialect]] {
 		}
-		class benchmarkstt.modules.LoadObjectProxy [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.modules.LoadObjectProxy]] {
+		class benchmarkstt.modules.LoadObjectProxy [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.modules.html#benchmarkstt.modules.LoadObjectProxy]] {
 			+__getattribute__(self, item)
 			+__init__(self, name, *args, **kwargs)
 		}
-		class benchmarkstt.modules.Proxy [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.modules.Proxy]] {
+		class benchmarkstt.modules.Proxy [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.modules.html#benchmarkstt.modules.Proxy]] {
 			+__getattribute__(self, item)
 			+__init__(self, instance)
 		}
-		class benchmarkstt.schema.Item [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.Item]] {
+		class benchmarkstt.schema.Item [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Item]] {
 			+__contains__(self, key)
 			+__eq__(self, other)
 			+__getitem__(self, k)
@@ -184,21 +184,21 @@ title Benchmarkstt
 			+keys(self)
 			+values(self)
 		}
-		class benchmarkstt.schema.JSONDecoder [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.JSONDecoder]] {
+		class benchmarkstt.schema.JSONDecoder [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.JSONDecoder]] {
 			+__init__(self, *args, **kwargs)
 			+decode(self, *args, **kwargs)
 			+object_hook(obj)
 			+raw_decode(self, s, idx=0)
 		}
-		class benchmarkstt.schema.JSONEncoder [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.JSONEncoder]] {
+		class benchmarkstt.schema.JSONEncoder [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.JSONEncoder]] {
 			+__init__(self, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, sort_keys=False, indent=None, separators=None, default=None)
 			+default(self, o)
 			+encode(self, obj)
 			+iterencode(self, o, _one_shot=False)
 		}
-		class benchmarkstt.schema.Meta [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.Meta]] {
+		class benchmarkstt.schema.Meta [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Meta]] {
 		}
-		class benchmarkstt.schema.Schema [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.Schema]] {
+		class benchmarkstt.schema.Schema [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Schema]] {
 			+__eq__(self, other)
 			+__getitem__(self, item)
 			+__init__(self, data=None)
@@ -214,41 +214,41 @@ title Benchmarkstt
 			+load(*args, **kwargs)
 			+loads(*args, **kwargs)
 		}
-		class benchmarkstt.schema.SchemaError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.SchemaError]] {
+		class benchmarkstt.schema.SchemaError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.SchemaError]] {
 		}
-		class benchmarkstt.schema.SchemaInvalidItemError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.SchemaInvalidItemError]] {
+		class benchmarkstt.schema.SchemaInvalidItemError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.SchemaInvalidItemError]] {
 		}
-		class benchmarkstt.schema.SchemaJSONError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.schema.SchemaJSONError]] {
+		class benchmarkstt.schema.SchemaJSONError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.SchemaJSONError]] {
 		}
-		class benchmarkstt.normalization.core.Config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Config]] {
+		class benchmarkstt.normalization.core.Config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Config]] {
 			+__init__(self, file, section=None, encoding=None)
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.logger.LogCapturer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.LogCapturer]] {
+		class benchmarkstt.normalization.logger.LogCapturer [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.LogCapturer]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, *args, **kwargs)
 		}
-		class benchmarkstt.input.core.PlainText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.input.core.PlainText]] {
+		class benchmarkstt.input.core.PlainText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText]] {
 			+__init__(self, text, segmenter=None, normalizer=None)
 			+__iter__(self)
 		}
-		class benchmarkstt.normalization.logger.Logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.Logger]] {
+		class benchmarkstt.normalization.logger.Logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.Logger]] {
 		}
-		class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.metrics.Base]] {
+		class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.metrics.core.DiffCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.metrics.core.DiffCounts]] {
+		class benchmarkstt.metrics.core.DiffCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.DiffCounts]] {
 			+__init__(self, differ_class=None)
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.metrics.core.OpcodeCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.metrics.core.OpcodeCounts]] {
+		class benchmarkstt.metrics.core.OpcodeCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.OpcodeCounts]] {
 			+__getnewargs__(self)
 			+__new__(_cls, equal, replace, insert, delete)
 			+__repr__(self)
 		}
-		class benchmarkstt.diff.core.RatcliffObershelp [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.core.RatcliffObershelp]] {
+		class benchmarkstt.diff.core.RatcliffObershelp [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] {
 			+__init__(self, a, b, *args, **kwargs)
 			+find_longest_match(self, alo, ahi, blo, bhi)
 			+get_grouped_opcodes(self, n=3)
@@ -261,15 +261,15 @@ title Benchmarkstt
 			+set_seq2(self, b)
 			+set_seqs(self, a, b)
 		}
-		class benchmarkstt.metrics.core.WER [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.metrics.core.WER]] {
+		class benchmarkstt.metrics.core.WER [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WER]] {
 			+__init__(self, mode=None, differ_class=None)
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.metrics.core.WordDiffs [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.metrics.core.WordDiffs]] {
+		class benchmarkstt.metrics.core.WordDiffs [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WordDiffs]] {
 			+__init__(self, dialect=None, differ_class=None)
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.normalization.logger.DiffLoggingFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
+		class benchmarkstt.normalization.logger.DiffLoggingFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
 			+__init__(self, dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
 			+format(self, record)
 			+formatException(self, ei)
@@ -278,26 +278,26 @@ title Benchmarkstt
 			+formatTime(self, record, datefmt=None)
 			+usesTime(self)
 		}
-		class benchmarkstt.normalization.NormalizationComposite [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.NormalizationComposite]] {
+		class benchmarkstt.normalization.NormalizationComposite [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.NormalizationComposite]] {
 			+__init__(self, title=None)
 			+__repr__(self)
 			+add(self, normalizer)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.Base]] {
+		class benchmarkstt.normalization.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.Base]] {
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.BaseWithFileSupport [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.BaseWithFileSupport]] {
+		class benchmarkstt.normalization.BaseWithFileSupport [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.BaseWithFileSupport]] {
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.File]] {
+		class benchmarkstt.normalization.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.File]] {
 			+__init__(self, normalizer, file, encoding=None, path=None)
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.FileFactory [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.FileFactory]] {
+		class benchmarkstt.normalization.FileFactory [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] {
 			+__contains__(self, item)
 			+__delitem__(self, key)
 			+__getitem__(self, item)
@@ -313,110 +313,99 @@ title Benchmarkstt
 			+register_namespace(self, namespace)
 			+unregister(self, key)
 		}
-		class benchmarkstt.normalization.core.ConfigSectionNotFoundError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.ConfigSectionNotFoundError]] {
+		class benchmarkstt.normalization.core.ConfigSectionNotFoundError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ConfigSectionNotFoundError]] {
 		}
-		class benchmarkstt.normalization.core.Lowercase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Lowercase]] {
+		class benchmarkstt.normalization.core.Lowercase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Lowercase]] {
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.core.Regex [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Regex]] {
+		class benchmarkstt.normalization.core.Regex [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Regex]] {
 			+__init__(self, search: str, replace: str)
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.core.Replace [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Replace]] {
+		class benchmarkstt.normalization.core.Replace [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Replace]] {
 			+__init__(self, search: str, replace: str)
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.core.ReplaceWords [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.ReplaceWords]] {
+		class benchmarkstt.normalization.core.ReplaceWords [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ReplaceWords]] {
 			+__init__(self, search: str, replace: str)
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.normalization.core.Unidecode [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.normalization.core.Unidecode]] {
+		class benchmarkstt.normalization.core.Unidecode [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Unidecode]] {
 			+__repr__(self)
 			+normalize(cls, text)
 		}
-		class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.input.Base]] {
+		class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
 			+__iter__(self)
 		}
-		class benchmarkstt.input.core.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.input.core.File]] {
+		class benchmarkstt.input.core.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] {
 			+__init__(self, file, input_type=None, normalizer=None)
 			+__iter__(self)
 		}
 		class benchmarkstt.segmentation.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
 			+__iter__(self)
 		}
-		class benchmarkstt.segmentation.core.Simple [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.core.Simple]] {
+		class benchmarkstt.segmentation.core.Simple [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] {
 			+__init__(self, text: str, pattern='[\\n\\t\\s]+', normalizer=None)
 			+__iter__(self)
 		}
-		class benchmarkstt.output.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.output.Base]] {
+		class benchmarkstt.output.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.Base]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+result(self, title, result)
 		}
-		class benchmarkstt.output.core.Json [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.output.core.Json]] {
+		class benchmarkstt.output.core.Json [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.Json]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
 			+result(self, title, result)
 		}
-		class benchmarkstt.output.core.MarkDown [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.output.core.MarkDown]] {
+		class benchmarkstt.output.core.MarkDown [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.MarkDown]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+print(self, result)
 			+result(self, title, result)
 		}
-		class benchmarkstt.output.core.ReStructuredText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.output.core.ReStructuredText]] {
+		class benchmarkstt.output.core.ReStructuredText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.ReStructuredText]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+print(self, result)
 			+result(self, title, result)
 		}
-		class benchmarkstt.output.core.SimpleTextBase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.output.core.SimpleTextBase]] {
+		class benchmarkstt.output.core.SimpleTextBase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.SimpleTextBase]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+print(self, result)
 			+result(self, title, result)
 		}
-		class benchmarkstt.diff.formatter.CLIDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.CLIDiffDialect]] {
+		class benchmarkstt.diff.formatter.CLIDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, show_color_key=None)
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.formatter.Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.Dialect]] {
+		class benchmarkstt.diff.formatter.Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.Dialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
 			+output(self)
 		}
-		class benchmarkstt.diff.formatter.DiffFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.DiffFormatter]] {
+		class benchmarkstt.diff.formatter.DiffFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.DiffFormatter]] {
 			+__init__(self, dialect=None, *args, **kwargs)
 			+diff(self, a, b, opcodes=None, preprocessor=None)
 		}
-		class benchmarkstt.diff.formatter.HTMLDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.HTMLDiffDialect]] {
+		class benchmarkstt.diff.formatter.HTMLDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.HTMLDiffDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.formatter.JSONDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.JSONDiffDialect]] {
-			+__enter__(self)
-			+__exit__(self, exc_type, exc_val, exc_tb)
-			+__init__(self)
-			+delete_format(self, txt)
-			+equal_format(self, txt)
-			+insert_format(self, txt)
-			+output(self)
-			+preprocessor(txt)
-			+replace_format(self, a, b)
-		}
-		class benchmarkstt.diff.formatter.ListDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.ListDialect]] {
+		class benchmarkstt.diff.formatter.JSONDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.JSONDiffDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
@@ -427,14 +416,25 @@ title Benchmarkstt
 			+preprocessor(txt)
 			+replace_format(self, a, b)
 		}
-		class benchmarkstt.diff.formatter.RestructuredTextDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.RestructuredTextDialect]] {
+		class benchmarkstt.diff.formatter.ListDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.ListDialect]] {
+			+__enter__(self)
+			+__exit__(self, exc_type, exc_val, exc_tb)
+			+__init__(self)
+			+delete_format(self, txt)
+			+equal_format(self, txt)
+			+insert_format(self, txt)
+			+output(self)
+			+preprocessor(txt)
+			+replace_format(self, a, b)
+		}
+		class benchmarkstt.diff.formatter.RestructuredTextDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.RestructuredTextDialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self, show_color_key=None)
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.formatter.UTF8Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.formatter.UTF8Dialect]] {
+		class benchmarkstt.diff.formatter.UTF8Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.UTF8Dialect]] {
 			+__enter__(self)
 			+__exit__(self, exc_type, exc_val, exc_tb)
 			+__init__(self)
@@ -443,22 +443,22 @@ title Benchmarkstt
 			+output(self)
 			+preprocessor(txt)
 		}
-		class benchmarkstt.diff.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.diff.Base]] {
+		class benchmarkstt.diff.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
 			+__init__(self, a='', b='')
 			+get_opcodes(self)
 		}
-		class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
+		class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
 			+help(methods)
 			+version()
 		}
-		class benchmarkstt.api.jsonrpc.MagicMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
+		class benchmarkstt.api.jsonrpc.MagicMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
 			+__init__(self)
 			+is_safe_path(path)
 			+load(self, name, module)
 			+register(self, name, callback)
 			+serve(self, config, callback)
 		}
-		class benchmarkstt.api.jsonrpc.SecurityError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.api.jsonrpc.SecurityError]] {
+		class benchmarkstt.api.jsonrpc.SecurityError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
 		}
 
 benchmarkstt.uml.Klass --up--|> benchmarkstt.uml.PlantUMLBlock

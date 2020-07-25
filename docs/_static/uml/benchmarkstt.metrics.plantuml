@@ -3,20 +3,20 @@ title Benchmarkstt.metrics
 		class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.metrics.core.DiffCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.core.DiffCounts]] {
+		class benchmarkstt.metrics.core.DiffCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.DiffCounts]] {
 			+__init__(self, differ_class=None)
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.metrics.core.OpcodeCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.core.OpcodeCounts]] {
+		class benchmarkstt.metrics.core.OpcodeCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.OpcodeCounts]] {
 			+__getnewargs__(self)
 			+__new__(_cls, equal, replace, insert, delete)
 			+__repr__(self)
 		}
-		class benchmarkstt.metrics.core.WER [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.core.WER]] {
+		class benchmarkstt.metrics.core.WER [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WER]] {
 			+__init__(self, mode=None, differ_class=None)
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}
-		class benchmarkstt.metrics.core.WordDiffs [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.core.WordDiffs]] {
+		class benchmarkstt.metrics.core.WordDiffs [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WordDiffs]] {
 			+__init__(self, dialect=None, differ_class=None)
 			+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 		}

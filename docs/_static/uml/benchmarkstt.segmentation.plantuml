@@ -3,7 +3,7 @@ title Benchmarkstt.segmentation
 		class benchmarkstt.segmentation.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
 			+__iter__(self)
 		}
-		class benchmarkstt.segmentation.core.Simple [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.core.Simple]] {
+		class benchmarkstt.segmentation.core.Simple [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] {
 			+__init__(self, text: str, pattern='[\\n\\t\\s]+', normalizer=None)
 			+__iter__(self)
 		}

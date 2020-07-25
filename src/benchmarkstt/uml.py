@@ -3,9 +3,12 @@ import pkgutil
 import os
 import subprocess
 from importlib import import_module
+import logging
 
 from pathlib import Path
 from contextlib import nullcontext
+
+logger = logging.getLogger(__name__)
 
 
 class PlantUMLWebRenderer:
@@ -106,18 +109,18 @@ class Module(PlantUMLBlock):
         super().__enter__()
 
         for name, cls in inspect.getmembers(self._module, predicate=inspect.isclass):
-            with self._uml.klass(self._uml.cls_name(cls), cls):
+            with self._uml.klass(cls):
                 pass
         return self
 
 
 class Klass(PlantUMLBlock):
-    def __init__(self, uml, name, klass):
-        self._name = name
+    def __init__(self, uml, klass):
         self._klass = klass
+        logger.debug("Class: %s\tModule: %s" % (klass.__name__, klass.__module__))
 
-        link = uml.link(klass.__module__, name)
-        super().__init__(uml, "class %s %s" % (name, link))
+        link = uml.link(klass.__module__, klass.__module__ + '.' + klass.__name__)
+        super().__init__(uml, "class %s.%s %s" % (klass.__module__, klass.__name__, link))
         self._uml.parent_relations(self._klass)
 
     def __enter__(self):
@@ -148,15 +151,15 @@ class PlantUML:
         self._filter = filter
         self._link_tpl = link_tpl
 
-    def link(self, module, hash_, is_field_or_method=None):
+    def link(self, page, hash_, is_field_or_method=None):
         if self._link_tpl is None:
             return ''
 
         level = 3 if is_field_or_method else 2
-        link = self._link_tpl.format(module=name, hash=hash_)
-        if link:
-            return ("[" * level) + link + ("]" * level)
-        return ''
+        link = self._link_tpl.format(page=page, hash=hash_)
+        if not link:
+            return ''
+        return ("[" * level) + link + ("]" * level)
 
     def add(self, what, *args):
         self += "\t" * self.level
@@ -221,8 +224,6 @@ class PlantUML:
         return Module(self, module)
 
     def parent_relations(self, cls):
-        if not self.skip(cls):
-            return
         for parent_cls in cls.__bases__:
             if not self.filtered(parent_cls):
                 self.relation(cls, self.parent_arrow, parent_cls)
@@ -234,10 +235,10 @@ class PlantUML:
     def namespace(self, name):
         return Namespace(self, name)
 
-    def klass(self, name, klass):
+    def klass(self, klass):
         if self.skip(klass):
             return nullcontext()
-        return Klass(self, name, klass)
+        return Klass(self, klass)
 
     def __str__(self):
         return "\n".join(
@@ -255,10 +256,20 @@ if __name__ == '__main__':
     import sys
     args = sys.argv[1:]
 
+    logLevel = logging.INFO
+
+    if '--verbose' in args:
+        logLevel = logging.DEBUG
+        del args[args.index('--verbose')]
+    logging.basicConfig(level=logLevel)
+
     if '--help' in args:
-        print("Usage: %s [filter1 [filter2 [...]]]" % (sys.argv[0],))
+        print("Usage: %s [--verbose] [--help] [filter1 [filter2 [filterN...]]]" % (sys.argv[0],))
         print()
-        print("     filterN Names of the uml packages we wish to generate (all if no arguments are present)")
+        print("\t--verbose\tOutput all debug info")
+        print("\t--help\tShow this usage message")
+        print("\tfilterN\tNames of the uml packages we wish to generate (all if no arguments are present)")
+        print()
         exit()
 
     # alternatively use PlantUMLWebRenderer or PlantUMLJarRenderer
@@ -267,7 +278,7 @@ if __name__ == '__main__':
     file_tpl = './docs/_static/uml/%s.%s'
     plant_extensions = ('svg',)
     extensions = ('plantuml',) + plant_extensions  # , 'png')
-    link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.{module}.html#{hash}"
+    link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter_for(name):
         module_name = 'benchmarkstt.%s' % (name,)
@@ -283,7 +294,13 @@ if __name__ == '__main__':
                 return False
 
             return True
-        return benchmarkstt_filter
+
+        def fil(cls):
+            filtered = benchmarkstt_filter(cls)
+            logger.debug("FILTER: %s\t%s ", "SKIPPED" if filtered else "OK", cls)
+            return filtered
+
+        return fil  # benchmarkstt_filter
 
     renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
 
@@ -313,17 +330,16 @@ if __name__ == '__main__':
 
     for name in packages:
         if len(args) and name not in args:
-            print("SKIPPED Generating UML for %s" % (name,))
+            logger.info("SKIPPED Generating UML for %s" % (name,))
             continue
         full_name = "benchmarkstt.%s" % (name,)
-        print("Generating UML for %s" % (name,))
+        logger.info("Generating UML for %s" % (name,))
         package = import_module(full_name)
         generate(package, benchmarkstt_filter_for(name))
 
     if len(args) == 0 or 'benchmarkstt' in args:
         renderers = {ext: Renderer(format=ext) for ext in plant_extensions}
-        print("Generating UML for complete package\n")
+        logger.info("Generating UML for complete package")
         generate(benchmarkstt, benchmarkstt_filter_for(''), "left to right")
     else:
-        print("SKIPPED Generating UML for complete package\n")
-
+        logger.info("SKIPPED Generating UML for complete package")
