@@ -35,10 +35,10 @@ class PlantUMLJarRenderer:
     """
 
     DEFAULT_COMMAND = os.environ.get("PLANTUML", "java -jar plantuml.jar").split(' ')
-    DEFAULT_FORMAT = 'png'
+    DEFAULT_FORMAT = 'svg'
     DEFAULT_TIMEOUT = 10
 
-    def __init__(self, format=None, command=None, timeout=30):
+    def __init__(self, format=None, command=None, timeout=None):
         if command is None:
             command = self.DEFAULT_COMMAND
         if timeout is None:
@@ -100,9 +100,7 @@ class Namespace(PlantUMLBlock):
 class Package:
     def __init__(self, uml, module):
         if not inspect.ismodule(module):
-            raise Exception(module)
-            logger.warning("%r is not a module", module)
-            return
+            raise Exception("Expected a module")
 
         with PlantUMLBlock(uml, "package %s" % (module.__name__,)):
             for name, cls in inspect.getmembers(module, predicate=inspect.isclass):
@@ -127,7 +125,7 @@ class Klass:
             self._klass.__module__,
             self._klass.__module__ + '.' + self._klass.__name__
         )
-        self._uml.add('class %s.%s %s {' % (self._klass.__module__, self._klass.__name__, link))
+        self._uml.add('class %s.%s %s {', self._klass.__module__, self._klass.__name__, link)
         self._uml.level += 1
 
     def methods(self):
@@ -160,7 +158,7 @@ class Klass:
             elif inspect.isfunction(member):
                 extra = inspect.signature(getattr(self._klass, k))
             else:
-                logger.info('UNKNOWN TYPE skip: %s %s', k, member)
+                logger.debug('UNKNOWN TYPE skip: %s %s', k, member)
                 continue
             self._uml.add(fmt, kind, k, extra)
 
@@ -173,13 +171,19 @@ class Klass:
 
 class PlantUML:
     def __init__(self, filter=None, link_tpl=None):
-        self.parent_arrow = '--up--|>'
+        self.parent_arrow = '-up-|>'
         self.classes_done = set()
         self._buffer = ""
         self._relations = []
         self.level = 0
         self._filter = filter
         self._link_tpl = link_tpl
+
+    def skinparam(self, value):
+        self.add("skinparam %s", value)
+
+    def includeurl(self, url):
+        self.add("!includeurl %s", url)
 
     def link(self, page, hash_, is_field_or_method=None):
         if self._link_tpl is None:
@@ -270,13 +274,6 @@ if __name__ == '__main__':
     # generate basic PlantUML schemas for benchmarkstt
     import sys
 
-    # support colored logs if installed
-    try:
-        import coloredlogs
-        coloredlogs.install(level=logging.DEBUG)
-    except ImportError:
-        pass
-
     args = sys.argv[1:]
 
     logLevel = logging.INFO
@@ -284,6 +281,14 @@ if __name__ == '__main__':
     if '--verbose' in args:
         logLevel = logging.DEBUG
         del args[args.index('--verbose')]
+
+    # support colored logs if installed
+    try:
+        import coloredlogs
+        coloredlogs.install(level=logLevel)
+    except ImportError:
+        pass
+
     logging.basicConfig(level=logLevel)
 
     if '--help' in args:
@@ -333,6 +338,10 @@ if __name__ == '__main__':
         if direction:
             uml.direction(direction)
         uml.title(title)
+        uml.skinparam('packageStyle Frame')
+
+        # decrease ugliness
+        uml.includeurl('https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu')
 
         generated = uml.generate(package)
         with open(file_tpl % (name, 'plantuml'), 'w') as f:
@@ -348,7 +357,7 @@ if __name__ == '__main__':
 
     for name in packages:
         if len(args) and name not in args:
-            logger.info("SKIPPED Generating UML for %s", name)
+            logger.debug("SKIPPED Generating UML for %s", name)
             continue
         full_name = "benchmarkstt.%s" % (name,)
         logger.info("Generating UML for %s", name)
@@ -359,4 +368,4 @@ if __name__ == '__main__':
         logger.info("Generating UML for complete package")
         generate(benchmarkstt, benchmarkstt_filter_for(''), "left to right")
     else:
-        logger.info("SKIPPED Generating UML for complete package")
+        logger.debug("SKIPPED Generating UML for complete package")

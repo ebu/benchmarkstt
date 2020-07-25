@@ -2,6 +2,8 @@
 
 title benchmarkstt.normalization
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.normalization {
 
 	class benchmarkstt.normalization.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.Base]] {
@@ -207,16 +209,16 @@ package benchmarkstt.normalization.logger {
 }
 
 
-benchmarkstt.normalization.BaseWithFileSupport --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.File --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.NormalizationComposite --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Config --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Lowercase --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.core.Regex --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.Replace --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.ReplaceWords --up--|> benchmarkstt.normalization.BaseWithFileSupport
-benchmarkstt.normalization.core.Unidecode --up--|> benchmarkstt.normalization.Base
-benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect --up--|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
-benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect --up--|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
+benchmarkstt.normalization.BaseWithFileSupport -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.File -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.NormalizationComposite -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Config -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Lowercase -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.core.Regex -up-|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Replace -up-|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.ReplaceWords -up-|> benchmarkstt.normalization.BaseWithFileSupport
+benchmarkstt.normalization.core.Unidecode -up-|> benchmarkstt.normalization.Base
+benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect -up-|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
+benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect -up-|> benchmarkstt.normalization.logger.DiffLoggingFormatterDialect
 
 @enduml

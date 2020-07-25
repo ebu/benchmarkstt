@@ -2,6 +2,8 @@
 
 title benchmarkstt.metrics
 
+skinparam packageStyle Frame
+!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
 package benchmarkstt.metrics {
 
 	class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
@@ -59,8 +61,8 @@ package benchmarkstt.metrics.core {
 }
 
 
-benchmarkstt.metrics.core.DiffCounts --up--|> benchmarkstt.metrics.Base
-benchmarkstt.metrics.core.WER --up--|> benchmarkstt.metrics.Base
-benchmarkstt.metrics.core.WordDiffs --up--|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.DiffCounts -up-|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.WER -up-|> benchmarkstt.metrics.Base
+benchmarkstt.metrics.core.WordDiffs -up-|> benchmarkstt.metrics.Base
 
 @enduml
