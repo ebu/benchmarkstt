@@ -7,7 +7,8 @@ skinparam packageStyle Frame
 package benchmarkstt.metrics {
 
 	class benchmarkstt.metrics.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
-		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		.. Public Methods ..
+		+compare(ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
 
 
@@ -30,32 +31,38 @@ package benchmarkstt.metrics.core {
 
 
 	class benchmarkstt.metrics.core.DiffCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.DiffCounts]] {
-		+__init__(self, differ_class=None)
-		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		.. Public Methods ..
+		+__init__(differ_class=None)
+		+compare(ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
 
 
 	class benchmarkstt.metrics.core.OpcodeCounts [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.OpcodeCounts]] {
-		+__getnewargs__(self)
+		.. Public Methods ..
+		+__getnewargs__()
 		+__new__(_cls, equal, replace, insert, delete)
-		+__repr__(self)
-		-_asdict(self)
-		{static} -_make(iterable)
-		-_replace(self, /, **kwds)
+		+__repr__()
+		.. Protected Methods ..
+		-_asdict()
+		+_replace(**kwds)
+		.. Static Methods ..
+		{static} +_make(iterable)
 	}
 
 
 
 
 	class benchmarkstt.metrics.core.WER [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WER]] {
-		+__init__(self, mode=None, differ_class=None)
-		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		.. Public Methods ..
+		+__init__(mode=None, differ_class=None)
+		+compare(ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
 
 
 	class benchmarkstt.metrics.core.WordDiffs [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.WordDiffs]] {
-		+__init__(self, dialect=None, differ_class=None)
-		+compare(self, ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
+		.. Public Methods ..
+		+__init__(dialect=None, differ_class=None)
+		+compare(ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
 
 }

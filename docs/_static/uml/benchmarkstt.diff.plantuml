@@ -7,72 +7,82 @@ skinparam packageStyle Frame
 package benchmarkstt.diff.formatter {
 
 	class benchmarkstt.diff.formatter.CLIDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self, show_color_key=None)
-		+output(self)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__(show_color_key=None)
+		+output()
 		+preprocessor(txt)
 	}
 
 
 	class benchmarkstt.diff.formatter.Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.Dialect]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self)
-		+output(self)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+output()
 	}
 
 
 	class benchmarkstt.diff.formatter.DiffFormatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.DiffFormatter]] {
-		+__init__(self, dialect=None, *args, **kwargs)
-		+diff(self, a, b, opcodes=None, preprocessor=None)
+		.. Public Methods ..
+		+__init__(dialect=None, *args, **kwargs)
+		+diff(a, b, opcodes=None, preprocessor=None)
+		.. Static Methods ..
 		{static} +has_dialect(dialect)
 	}
 
 
 	class benchmarkstt.diff.formatter.HTMLDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.HTMLDiffDialect]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self)
-		+output(self)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+output()
 		+preprocessor(txt)
 	}
 
 
 	class benchmarkstt.diff.formatter.JSONDiffDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.JSONDiffDialect]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self)
-		-_format(self, kind, txt, txt2=None)
-		+delete_format(self, txt)
-		+equal_format(self, txt)
-		+insert_format(self, txt)
-		+output(self)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+delete_format(txt)
+		+equal_format(txt)
+		+insert_format(txt)
+		+output()
 		+preprocessor(txt)
-		+replace_format(self, a, b)
+		+replace_format(a, b)
+		.. Protected Methods ..
+		-_format(kind, txt, txt2=None)
 	}
 
 
 	class benchmarkstt.diff.formatter.ListDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.ListDialect]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self)
-		-_format(self, kind, txt, txt2=None)
-		+delete_format(self, txt)
-		+equal_format(self, txt)
-		+insert_format(self, txt)
-		+output(self)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+delete_format(txt)
+		+equal_format(txt)
+		+insert_format(txt)
+		+output()
 		+preprocessor(txt)
-		+replace_format(self, a, b)
+		+replace_format(a, b)
+		.. Protected Methods ..
+		-_format(kind, txt, txt2=None)
 	}
 
 
 
 	class benchmarkstt.diff.formatter.RestructuredTextDialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.RestructuredTextDialect]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self, show_color_key=None)
-		+output(self)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__(show_color_key=None)
+		+output()
 		+preprocessor(txt)
 	}
 
@@ -80,12 +90,13 @@ package benchmarkstt.diff.formatter {
 
 
 	class benchmarkstt.diff.formatter.UTF8Dialect [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.UTF8Dialect]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self)
-		+delete_format(self, txt)
-		+insert_format(self, txt)
-		+output(self)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+delete_format(txt)
+		+insert_format(txt)
+		+output()
 		+preprocessor(txt)
 	}
 
@@ -94,8 +105,9 @@ package benchmarkstt.diff.formatter {
 package benchmarkstt.diff {
 
 	class benchmarkstt.diff.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
-		+__init__(self, a='', b='')
-		+get_opcodes(self)
+		.. Public Methods ..
+		+__init__(a='', b='')
+		+get_opcodes()
 	}
 
 
@@ -105,18 +117,20 @@ package benchmarkstt.diff.core {
 
 
 	class benchmarkstt.diff.core.RatcliffObershelp [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] {
-		-_SequenceMatcher__chain_b(self)
-		+__init__(self, a, b, *args, **kwargs)
-		+find_longest_match(self, alo, ahi, blo, bhi)
-		+get_grouped_opcodes(self, n=3)
-		+get_matching_blocks(self)
-		+get_opcodes(self)
-		+quick_ratio(self)
-		+ratio(self)
-		+real_quick_ratio(self)
-		+set_seq1(self, a)
-		+set_seq2(self, b)
-		+set_seqs(self, a, b)
+		.. Public Methods ..
+		+__init__(a, b, *args, **kwargs)
+		+find_longest_match(alo, ahi, blo, bhi)
+		+get_grouped_opcodes(n=3)
+		+get_matching_blocks()
+		+get_opcodes()
+		+quick_ratio()
+		+ratio()
+		+real_quick_ratio()
+		+set_seq1(a)
+		+set_seq2(b)
+		+set_seqs(a, b)
+		.. Protected Methods ..
+		-_SequenceMatcher__chain_b()
 	}
 
 

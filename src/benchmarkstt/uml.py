@@ -155,10 +155,22 @@ class Klass:
                 )
             )
 
+        def format_signature(sig):
+            def _filter(x):
+                return x.name not in ['self', 'cls']
+            params = filter(_filter, sig.parameters.values())
+            return str(sig.replace(parameters=params))
+
+        contents = {
+            "public": [],
+            "protected": [],
+            "static": [],
+        }
+
         for k, member in members:
             if should_skip(k):
                 continue
-            kind = '-' if is_protected(k) else '+'
+            kind = 'protected' if is_protected(k) else 'public'
 
             fmt = '%s%s%s'
             extra = ''
@@ -171,13 +183,23 @@ class Klass:
 
             if inspect.ismethod(member):
                 fmt = '{static} ' + fmt
-                extra = inspect.signature(getattr(self._klass, k))
+                extra = format_signature(inspect.signature(getattr(self._klass, k)))
+                kind = 'static'
             elif inspect.isfunction(member):
-                extra = inspect.signature(getattr(self._klass, k))
+                extra = format_signature(inspect.signature(getattr(self._klass, k)))
             else:
                 logger.debug('UNKNOWN TYPE skip: %s %s', k, member)
                 continue
-            self._uml.add(fmt, kind, k, extra)
+            contents[kind].append((fmt, k, extra))
+
+        for kind in ("public", "protected", "static"):
+            if not len(contents[kind]):
+                continue
+
+            self._uml.add(".. %s Methods ..", kind.capitalize())
+            for fmt, k, extra in contents[kind]:
+                kind = '-' if kind == 'protected' else '+'
+                self._uml.add(fmt, kind, k, extra)
 
         return self
 
