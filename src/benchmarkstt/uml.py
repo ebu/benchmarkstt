@@ -132,22 +132,33 @@ class Klass:
         members = inspect.getmembers(self._klass)
         members.sort()
 
+        def is_protected(k, _=None):
+            return k.startswith('_') and not is_magic(k)
+
+        def is_magic(k, _=None):
+            return k.startswith('__') and k.endswith('__')
+
+        def contains(k, options=None):
+            return options and k in options
+
+        skippables = {
+            'skip_protected': is_protected,
+            'skip_magic': is_magic,
+            'skip': contains,
+        }
+
         def should_skip(k):
-            if self._options.get('skip_protected') and (k.startswith('_') and not k.startswith('__')):
-                return True
-
-            if self._options.get('skip_magic') and k.startswith('__') and k.endswith('__'):
-                return True
-
-            if k in self._options.get('skip', []):
-                return True
-
-            return False
+            return any(
+                (
+                    self._options.get(option_name) and func(k, self._options.get(option_name))
+                    for option_name, func in skippables.items()
+                )
+            )
 
         for k, member in members:
             if should_skip(k):
                 continue
-            kind = '-' if k.startswith('_') and not k.startswith('__') else '+'
+            kind = '-' if is_protected(k) else '+'
 
             fmt = '%s%s%s'
             extra = ''
