@@ -7,9 +7,10 @@ skinparam packageStyle Frame
 package benchmarkstt.output {
 
 	class benchmarkstt.output.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.Base]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+result(self, title, result)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+result(title, result)
 	}
 
 
@@ -18,36 +19,40 @@ package benchmarkstt.output {
 package benchmarkstt.output.core {
 
 	class benchmarkstt.output.core.Json [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.Json]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+__init__(self)
-		+result(self, title, result)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+result(title, result)
 	}
 
 
 	class benchmarkstt.output.core.MarkDown [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.MarkDown]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+print(self, result)
-		+result(self, title, result)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+print(result)
+		+result(title, result)
 	}
 
 
 
 	class benchmarkstt.output.core.ReStructuredText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.ReStructuredText]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+print(self, result)
-		+result(self, title, result)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+print(result)
+		+result(title, result)
 	}
 
 
 
 	class benchmarkstt.output.core.SimpleTextBase [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.SimpleTextBase]] {
-		+__enter__(self)
-		+__exit__(self, exc_type, exc_val, exc_tb)
-		+print(self, result)
-		+result(self, title, result)
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+print(result)
+		+result(title, result)
 	}
 
 }

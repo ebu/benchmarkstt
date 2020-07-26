@@ -13,17 +13,19 @@ package benchmarkstt.api {
 package benchmarkstt.api.jsonrpc {
 
 	class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
+		.. Public Methods ..
 		+help(methods)
 		+version()
 	}
 
 
 	class benchmarkstt.api.jsonrpc.MagicMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
-		+__init__(self)
+		.. Public Methods ..
+		+__init__()
 		+is_safe_path(path)
-		+load(self, name, module)
-		+register(self, name, callback)
-		+serve(self, config, callback)
+		+load(name, module)
+		+register(name, callback)
+		+serve(config, callback)
 	}
 
 

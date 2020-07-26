@@ -7,7 +7,8 @@ skinparam packageStyle Frame
 package benchmarkstt.segmentation {
 
 	class benchmarkstt.segmentation.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
-		+__iter__(self)
+		.. Public Methods ..
+		+__iter__()
 	}
 
 
@@ -18,8 +19,9 @@ package benchmarkstt.segmentation.core {
 
 
 	class benchmarkstt.segmentation.core.Simple [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] {
-		+__init__(self, text: str, pattern='[\\n\\t\\s]+', normalizer=None)
-		+__iter__(self)
+		.. Public Methods ..
+		+__init__(text: str, pattern='[\\n\\t\\s]+', normalizer=None)
+		+__iter__()
 	}
 
 }
