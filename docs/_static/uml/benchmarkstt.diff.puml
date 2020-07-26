@@ -1,0 +1,143 @@
+@startuml
+
+title benchmarkstt.diff
+
+skinparam packageStyle Frame
+!define LIGHTORANGE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+package benchmarkstt.diff.formatter {
+
+	class benchmarkstt.diff.formatter.CLIDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__(show_color_key=None)
+		+output()
+		+preprocessor(txt)
+	}
+
+
+	class benchmarkstt.diff.formatter.Dialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.Dialect]] {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+output()
+	}
+
+
+	class benchmarkstt.diff.formatter.DiffFormatter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.DiffFormatter]] {
+		.. Public Methods ..
+		+__init__(dialect=None, *args, **kwargs)
+		+diff(a, b, opcodes=None, preprocessor=None)
+		.. Static Methods ..
+		{static} +has_dialect(dialect)
+	}
+
+
+	class benchmarkstt.diff.formatter.HTMLDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.HTMLDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+output()
+		+preprocessor(txt)
+	}
+
+
+	class benchmarkstt.diff.formatter.JSONDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.JSONDiffDialect]] extends benchmarkstt.diff.formatter.ListDialect {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+delete_format(txt)
+		+equal_format(txt)
+		+insert_format(txt)
+		+output()
+		+preprocessor(txt)
+		+replace_format(a, b)
+		.. Protected Methods ..
+		-_format(kind, txt, txt2=None)
+	}
+
+
+	class benchmarkstt.diff.formatter.ListDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.ListDialect]] extends benchmarkstt.diff.formatter.Dialect {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+delete_format(txt)
+		+equal_format(txt)
+		+insert_format(txt)
+		+output()
+		+preprocessor(txt)
+		+replace_format(a, b)
+		.. Protected Methods ..
+		-_format(kind, txt, txt2=None)
+	}
+
+
+
+	class benchmarkstt.diff.formatter.RestructuredTextDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.RestructuredTextDialect]] extends benchmarkstt.diff.formatter.CLIDiffDialect {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__(show_color_key=None)
+		+output()
+		+preprocessor(txt)
+	}
+
+
+
+
+	class benchmarkstt.diff.formatter.UTF8Dialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.UTF8Dialect]] extends benchmarkstt.diff.formatter.Dialect {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+delete_format(txt)
+		+insert_format(txt)
+		+output()
+		+preprocessor(txt)
+	}
+
+}
+
+package benchmarkstt.diff {
+
+	class benchmarkstt.diff.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
+		.. Public Methods ..
+		+__init__(a='', b='')
+		+get_opcodes()
+	}
+
+
+}
+
+package benchmarkstt.diff.core {
+
+
+	class benchmarkstt.diff.core.RatcliffObershelp  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] extends benchmarkstt.diff.Base {
+		.. Public Methods ..
+		+__init__(a, b, *args, **kwargs)
+		+find_longest_match(alo, ahi, blo, bhi)
+		+get_grouped_opcodes(n=3)
+		+get_matching_blocks()
+		+get_opcodes()
+		+quick_ratio()
+		+ratio()
+		+real_quick_ratio()
+		+set_seq1(a)
+		+set_seq2(b)
+		+set_seqs(a, b)
+		.. Protected Methods ..
+		-_SequenceMatcher__chain_b()
+	}
+
+
+}
+
+
+
+
+@enduml

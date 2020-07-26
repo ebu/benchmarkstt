@@ -1,0 +1,238 @@
+@startuml
+
+title benchmarkstt.normalization
+
+skinparam packageStyle Frame
+!define LIGHTORANGE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+package benchmarkstt.normalization {
+
+	class benchmarkstt.normalization.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.Base]] {
+		.. Public Methods ..
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+
+	class benchmarkstt.normalization.BaseWithFileSupport  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.BaseWithFileSupport]] extends benchmarkstt.normalization.Base {
+		.. Public Methods ..
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+
+
+	class benchmarkstt.normalization.File  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.File]] extends benchmarkstt.normalization.Base {
+		.. Public Methods ..
+		+__init__(normalizer, file, encoding=None, path=None)
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+
+	class benchmarkstt.normalization.FileFactory<extends benchmarkstt.factory.Factory>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] {
+		.. Public Methods ..
+		+__contains__(item)
+		+__delitem__(key)
+		+__getitem__(item)
+		+__init__(base_class, namespaces=None)
+		+__iter__()
+		+__setitem__(key, value)
+		+create(name, file=None, encoding=None, path=None)
+		+is_valid(tocheck)
+		+keys()
+		+normalize_class_name(clsname)
+		+register(alias=None)
+		+register_classname(name, alias=None)
+		+register_namespace(namespace)
+		+unregister(key)
+	}
+
+
+	class benchmarkstt.normalization.NormalizationComposite  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.NormalizationComposite]] extends benchmarkstt.normalization.Base {
+		.. Public Methods ..
+		+__init__(title=None)
+		+__repr__()
+		+add(normalizer)
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+}
+
+package benchmarkstt.normalization {
+
+
+
+
+
+
+}
+
+package benchmarkstt.normalization {
+
+
+
+
+
+
+}
+
+package benchmarkstt.normalization.core {
+
+	class benchmarkstt.normalization.core.Config  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Config]] extends benchmarkstt.normalization.Base {
+		.. Public Methods ..
+		+__init__(file, section=None, encoding=None)
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+		.. Static Methods ..
+		{static} +default_section(section)
+		{static} +refresh_docstring()
+	}
+
+
+	class benchmarkstt.normalization.core.ConfigSectionNotFoundError << (E,red) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ConfigSectionNotFoundError]] {
+	}
+
+
+	class benchmarkstt.normalization.core.Lowercase  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Lowercase]] extends benchmarkstt.normalization.Base {
+		.. Public Methods ..
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+
+	class benchmarkstt.normalization.core.Regex  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Regex]] extends benchmarkstt.normalization.BaseWithFileSupport {
+		.. Public Methods ..
+		+__init__(search: str, replace: str)
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+
+	class benchmarkstt.normalization.core.Replace  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Replace]] extends benchmarkstt.normalization.BaseWithFileSupport {
+		.. Public Methods ..
+		+__init__(search: str, replace: str)
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+
+	class benchmarkstt.normalization.core.ReplaceWords  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ReplaceWords]] extends benchmarkstt.normalization.BaseWithFileSupport {
+		.. Public Methods ..
+		+__init__(search: str, replace: str)
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+		-_replacement_callback(matches)
+	}
+
+
+	class benchmarkstt.normalization.core.Unidecode  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Unidecode]] extends benchmarkstt.normalization.Base {
+		.. Public Methods ..
+		+__repr__()
+		+normalize(text)
+		.. Protected Methods ..
+		-_normalize(text: str) -> str
+	}
+
+}
+
+package benchmarkstt.normalization.logger {
+
+
+	class benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect]] extends benchmarkstt.normalization.logger.DiffLoggingFormatterDialect {
+		.. Public Methods ..
+		+format(title, stack, diff)
+	}
+
+
+	class benchmarkstt.normalization.logger.DiffLoggingFormatter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
+		.. Public Methods ..
+		+__init__(dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
+		+format(record)
+		+formatException(ei)
+		+formatMessage(record)
+		+formatStack(stack_info)
+		+formatTime(record, datefmt=None)
+		+usesTime()
+		.. Static Methods ..
+		{static} +get_dialect(dialect, strict=None)
+		{static} +has_dialect(dialect)
+	}
+
+
+	class benchmarkstt.normalization.logger.DiffLoggingFormatterDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingFormatterDialect]] {
+		.. Public Methods ..
+		+format(title, stack, diff)
+	}
+
+
+	class benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect]] extends benchmarkstt.normalization.logger.DiffLoggingFormatterDialect {
+		.. Public Methods ..
+		+format(title, stack, diff)
+	}
+
+
+	class benchmarkstt.normalization.logger.ListHandler  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.ListHandler]] {
+		.. Public Methods ..
+		+__init__()
+		+__repr__()
+		+acquire()
+		+addFilter(filter)
+		+close()
+		+createLock()
+		+emit(record)
+		+filter(record)
+		+flush()
+		+format(record)
+		+get_name()
+		+handle(record)
+		+handleError(record)
+		+release()
+		+removeFilter(filter)
+		+setFormatter(fmt)
+		+setLevel(level)
+		+setStream(stream)
+		+set_name(name)
+	}
+
+
+	class benchmarkstt.normalization.logger.LogCapturer  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.LogCapturer]] {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__(*args, **kwargs)
+	}
+
+
+	class benchmarkstt.normalization.logger.NormalizedLogItem<namedtuple> << (T, yellow) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.NormalizedLogItem]] {
+		.. Fields ..
+		+stack
+		+original
+		+normalized
+	}
+
+
+}
+
+
+
+
+@enduml

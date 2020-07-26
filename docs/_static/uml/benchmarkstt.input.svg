@@ -1,20 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="333px" preserveAspectRatio="none" style="width:621px;height:333px;" version="1.1" viewBox="0 0 621 333" width="621px" zoomAndPan="magnify"><defs><filter height="300%" id="fuxc9v8fmnuh9" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="Helvetica" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="152" x="225.5" y="13.8604">benchmarkstt.input</text><!--MD5=[94de2ef9dde389aecb44d7f232eba8a2]
-cluster benchmarkstt.input--><rect fill="#FFFFFF" filter="url(#fuxc9v8fmnuh9)" height="115" style="stroke: #000000; stroke-width: 1.5;" width="150" x="232" y="25"/><path d="M376,26 L376,32 L366,42 L232,42 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="Helvetica" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="134" x="235" y="36.7803">benchmarkstt.input</text><!--MD5=[5c7a64d73ca244446f0e70026cf5d0bf]
-cluster benchmarkstt.input.core--><rect fill="#FFFFFF" filter="url(#fuxc9v8fmnuh9)" height="152" style="stroke: #000000; stroke-width: 1.5;" width="597" x="7" y="164"/><path d="M185,165 L185,171 L175,181 L7,181 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="Helvetica" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="168" x="10" y="175.7803">benchmarkstt.input.core</text><!--MD5=[d1e904a0c11302288bad0868539b156c]
-class benchmarkstt.input.Base--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fuxc9v8fmnuh9)" height="66" id="benchmarkstt.input.Base" style="stroke: #000000; stroke-width: 1.0;" width="82" x="266" y="58"/><ellipse cx="290.9" cy="74" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M293.3731,80.1431 Q292.7921,80.4419 292.1529,80.5913 Q291.5138,80.7407 290.8082,80.7407 Q288.3014,80.7407 286.9815,79.0889 Q285.6617,77.437 285.6617,74.3159 Q285.6617,71.1865 286.9815,69.5347 Q288.3014,67.8828 290.8082,67.8828 Q291.5138,67.8828 292.1612,68.0322 Q292.8087,68.1816 293.3731,68.4805 L293.3731,71.2031 Q292.7423,70.6221 292.1488,70.3523 Q291.5553,70.0825 290.9244,70.0825 Q289.5797,70.0825 288.8949,71.1492 Q288.2101,72.2158 288.2101,74.3159 Q288.2101,76.4077 288.8949,77.4744 Q289.5797,78.541 290.9244,78.541 Q291.5553,78.541 292.1488,78.2712 Q292.7423,78.0015 293.3731,77.4204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="28" x="307.1" y="77.2402">Base</text><line style="stroke: #000000; stroke-width: 1.5;" x1="267" x2="347" y1="90" y2="90"/><ellipse cx="277" cy="116" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="286" y="117.4702">__iter__()</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="267" x2="270" y1="103.5" y2="103.5"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="270" y="105.9702">Public Methods</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="344" x2="347" y1="103.5" y2="103.5"/></a><!--MD5=[4843f7accda627844ca340f5d1efa37d]
-class benchmarkstt.input.core.File--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fuxc9v8fmnuh9)" height="103" id="benchmarkstt.input.core.File" style="stroke: #000000; stroke-width: 1.0;" width="261" x="326.5" y="197"/><ellipse cx="442.75" cy="213" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M445.2231,219.1431 Q444.6421,219.4419 444.0029,219.5913 Q443.3638,219.7407 442.6582,219.7407 Q440.1514,219.7407 438.8315,218.0889 Q437.5117,216.437 437.5117,213.3159 Q437.5117,210.1865 438.8315,208.5347 Q440.1514,206.8828 442.6582,206.8828 Q443.3638,206.8828 444.0112,207.0322 Q444.6587,207.1816 445.2231,207.4805 L445.2231,210.2031 Q444.5923,209.6221 443.9988,209.3523 Q443.4053,209.0825 442.7744,209.0825 Q441.4297,209.0825 440.7449,210.1492 Q440.0601,211.2158 440.0601,213.3159 Q440.0601,215.4077 440.7449,216.4744 Q441.4297,217.541 442.7744,217.541 Q443.4053,217.541 443.9988,217.2712 Q444.5923,217.0015 445.2231,216.4204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="20" x="463.25" y="216.2402">File</text><line style="stroke: #000000; stroke-width: 1.5;" x1="327.5" x2="586.5" y1="229" y2="229"/><ellipse cx="337.5" cy="255" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="235" x="346.5" y="256.4702">__init__(file, input_type=None, normalizer=None)</text><ellipse cx="337.5" cy="266" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="346.5" y="267.4702">__iter__()</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="327.5" x2="420" y1="242.5" y2="242.5"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="420" y="244.9702">Public Methods</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="494" x2="586.5" y1="242.5" y2="242.5"/><ellipse cx="337.5" cy="292" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="83" x="346.5" y="293.4702">available_types()</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="327.5" x2="421" y1="279.5" y2="279.5"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="72" x="421" y="281.9702">Static Methods</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="493" x2="586.5" y1="279.5" y2="279.5"/></a><!--MD5=[3edd34d35203ceb4dd4fa63a3b0c665d]
-class benchmarkstt.input.core.PlainText--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fuxc9v8fmnuh9)" height="77" id="benchmarkstt.input.core.PlainText" style="stroke: #000000; stroke-width: 1.0;" width="268" x="23" y="210"/><ellipse cx="127.25" cy="226" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M129.7231,232.1431 Q129.1421,232.4419 128.5029,232.5913 Q127.8638,232.7407 127.1582,232.7407 Q124.6514,232.7407 123.3315,231.0889 Q122.0117,229.437 122.0117,226.3159 Q122.0117,223.1865 123.3315,221.5347 Q124.6514,219.8828 127.1582,219.8828 Q127.8638,219.8828 128.5112,220.0322 Q129.1587,220.1816 129.7231,220.4805 L129.7231,223.2031 Q129.0923,222.6221 128.4988,222.3523 Q127.9053,222.0825 127.2744,222.0825 Q125.9297,222.0825 125.2449,223.1492 Q124.5601,224.2158 124.5601,226.3159 Q124.5601,228.4077 125.2449,229.4744 Q125.9297,230.541 127.2744,230.541 Q127.9053,230.541 128.4988,230.2712 Q129.0923,230.0015 129.7231,229.4204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="51" x="147.75" y="229.2402">PlainText</text><line style="stroke: #000000; stroke-width: 1.5;" x1="24" x2="290" y1="242" y2="242"/><ellipse cx="34" cy="268" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="242" x="43" y="269.4702">__init__(text, segmenter=None, normalizer=None)</text><ellipse cx="34" cy="279" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="43" y="280.4702">__iter__()</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="24" x2="120" y1="255.5" y2="255.5"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="120" y="257.9702">Public Methods</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="194" x2="290" y1="255.5" y2="255.5"/></a><!--MD5=[065a416e4c33abf0dffdc83d6e1bf045]
-reverse link benchmarkstt.input.Base to benchmarkstt.input.core.File--><path d="M352.21,138.87 C369.9,157.2 390.22,178.28 408.24,196.95 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.File" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="346.93,143.47,338.08,124.22,357,133.75,346.93,143.47" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[3d607d7f67fd018830fa1d9f070f3dcc]
-reverse link benchmarkstt.input.Base to benchmarkstt.input.core.PlainText--><path d="M261.85,138.8 C239.93,161.53 213.94,188.47 193.32,209.85 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.PlainText" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="257,133.75,275.92,124.22,267.07,143.47,257,133.75" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[17c2c95ce0f2a15b36ecd0cbf9ec86cd]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="342px" preserveAspectRatio="none" style="width:675px;height:342px;" version="1.1" viewBox="0 0 675 342" width="675px" zoomAndPan="magnify"><defs><filter height="300%" id="f1we6iuxqarurm" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="171" x="243" y="17.4023">benchmarkstt.input</text><!--MD5=[94de2ef9dde389aecb44d7f232eba8a2]
+cluster benchmarkstt.input--><rect fill="#FFFFFF" filter="url(#f1we6iuxqarurm)" height="115" style="stroke: #000000; stroke-width: 1.5;" width="156" x="255" y="28.1992"/><path d="M405,29.1992 L405,37.6875 L395,47.6875 L255,47.6875 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="140" x="258" y="42.7344">benchmarkstt.input</text><!--MD5=[5c7a64d73ca244446f0e70026cf5d0bf]
+cluster benchmarkstt.input.core--><rect fill="#FFFFFF" filter="url(#f1we6iuxqarurm)" height="158" style="stroke: #000000; stroke-width: 1.5;" width="651" x="7" y="167.1992"/><path d="M190,168.1992 L190,176.6875 L180,186.6875 L7,186.6875 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="173" x="10" y="181.7344">benchmarkstt.input.core</text><!--MD5=[d1e904a0c11302288bad0868539b156c]
+class benchmarkstt.input.Base--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base" xlink:type="simple"><rect fill="#CCCCCC" filter="url(#f1we6iuxqarurm)" height="63.9102" id="benchmarkstt.input.Base" style="stroke: #AAAAAA; stroke-width: 1.5;" width="89" x="288.5" y="63.1992"/><ellipse cx="316.25" cy="76.1992" fill="#FF8800" rx="8" ry="8" style="stroke: #AAAAAA; stroke-width: 1.0;"/><path d="M316.3853,80.355 Q315.4937,80.355 314.739,80.0918 Q313.9844,79.8286 313.4419,79.3076 Q312.8994,78.7866 312.6013,78.0078 Q312.3032,77.229 312.3032,76.2085 Q312.3032,75.2578 312.5879,74.4844 Q312.8726,73.7109 313.415,73.1577 Q313.936,72.626 314.7068,72.3359 Q315.4775,72.0459 316.3906,72.0459 Q316.8955,72.0459 317.301,72.1023 Q317.7065,72.1587 318.0503,72.25 Q318.4102,72.3521 318.7029,72.4783 Q318.9956,72.6045 319.2158,72.7119 L319.2158,74.6509 L318.9795,74.6509 Q318.8291,74.522 318.6008,74.3447 Q318.3726,74.1675 318.0825,73.9956 Q317.7871,73.8237 317.4434,73.7056 Q317.0996,73.5874 316.7075,73.5874 Q316.2725,73.5874 315.8804,73.7244 Q315.4883,73.8613 315.1553,74.1782 Q314.8384,74.4844 314.6423,74.9893 Q314.4463,75.4941 314.4463,76.2139 Q314.4463,76.9658 314.6584,77.4707 Q314.8706,77.9756 315.1929,78.2656 Q315.5205,78.561 315.9233,78.6873 Q316.3262,78.8135 316.7183,78.8135 Q317.0942,78.8135 317.4622,78.7007 Q317.8301,78.5879 318.1416,78.3945 Q318.4048,78.2388 318.6304,78.0615 Q318.856,77.8843 319.001,77.7554 L319.2158,77.7554 L319.2158,79.6675 Q318.915,79.8018 318.6411,79.9199 Q318.3672,80.0381 318.0664,80.124 Q317.6743,80.2368 317.3306,80.2959 Q316.9868,80.355 316.3853,80.355 Z "/><text fill="#000000" font-family="Verdana" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="28" x="330.75" y="80.574">Base</text><line style="stroke: #AAAAAA; stroke-width: 1.5;" x1="289.5" x2="376.5" y1="89.1992" y2="89.1992"/><ellipse cx="299.5" cy="117.1543" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="50" x="305.5" y="120.7891">__iter__()</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="289.5" x2="292.5" y1="103.6768" y2="103.6768"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="81" x="292.5" y="107.334">Public Methods</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="373.5" x2="376.5" y1="103.6768" y2="103.6768"/></a><!--MD5=[4843f7accda627844ca340f5d1efa37d]
+class benchmarkstt.input.core.File--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File" xlink:type="simple"><rect fill="#CCCCCC" filter="url(#f1we6iuxqarurm)" height="106.7754" id="benchmarkstt.input.core.File" style="stroke: #AAAAAA; stroke-width: 1.5;" width="289" x="352.5" y="202.1992"/><ellipse cx="484" cy="215.1992" fill="#FF8800" rx="8" ry="8" style="stroke: #AAAAAA; stroke-width: 1.0;"/><path d="M484.1353,219.355 Q483.2437,219.355 482.489,219.0918 Q481.7344,218.8286 481.1919,218.3076 Q480.6494,217.7866 480.3513,217.0078 Q480.0532,216.229 480.0532,215.2085 Q480.0532,214.2578 480.3379,213.4844 Q480.6226,212.7109 481.165,212.1577 Q481.686,211.626 482.4568,211.3359 Q483.2275,211.0459 484.1406,211.0459 Q484.6455,211.0459 485.051,211.1023 Q485.4565,211.1587 485.8003,211.25 Q486.1602,211.3521 486.4529,211.4783 Q486.7456,211.6045 486.9658,211.7119 L486.9658,213.6509 L486.7295,213.6509 Q486.5791,213.522 486.3508,213.3447 Q486.1226,213.1675 485.8325,212.9956 Q485.5371,212.8237 485.1934,212.7056 Q484.8496,212.5874 484.4575,212.5874 Q484.0225,212.5874 483.6304,212.7244 Q483.2383,212.8613 482.9053,213.1782 Q482.5884,213.4844 482.3923,213.9893 Q482.1963,214.4941 482.1963,215.2139 Q482.1963,215.9658 482.4084,216.4707 Q482.6206,216.9756 482.9429,217.2656 Q483.2705,217.561 483.6733,217.6873 Q484.0762,217.8135 484.4683,217.8135 Q484.8442,217.8135 485.2122,217.7007 Q485.5801,217.5879 485.8916,217.3945 Q486.1548,217.2388 486.3804,217.0615 Q486.606,216.8843 486.751,216.7554 L486.9658,216.7554 L486.9658,218.6675 Q486.665,218.8018 486.3911,218.9199 Q486.1172,219.0381 485.8164,219.124 Q485.4243,219.2368 485.0806,219.2959 Q484.7368,219.355 484.1353,219.355 Z "/><text fill="#000000" font-family="Verdana" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="19" x="500" y="219.574">File</text><line style="stroke: #AAAAAA; stroke-width: 1.5;" x1="353.5" x2="640.5" y1="228.1992" y2="228.1992"/><ellipse cx="363.5" cy="256.1543" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="266" x="369.5" y="259.7891">__init__(file, input_type=None, normalizer=None)</text><ellipse cx="363.5" cy="269.1094" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="50" x="369.5" y="272.7441">__iter__()</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="353.5" x2="456.5" y1="242.6768" y2="242.6768"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="81" x="456.5" y="246.334">Public Methods</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="537.5" x2="640.5" y1="242.6768" y2="242.6768"/><ellipse cx="363.5" cy="299.0195" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="89" x="369.5" y="302.6543">available_types()</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="353.5" x2="458" y1="285.542" y2="285.542"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="78" x="458" y="289.1992">Static Methods</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="536" x2="640.5" y1="285.542" y2="285.542"/></a><!--MD5=[3edd34d35203ceb4dd4fa63a3b0c665d]
+class benchmarkstt.input.core.PlainText--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText" xlink:type="simple"><rect fill="#CCCCCC" filter="url(#f1we6iuxqarurm)" height="76.8652" id="benchmarkstt.input.core.PlainText" style="stroke: #AAAAAA; stroke-width: 1.5;" width="294" x="23" y="217.1992"/><ellipse cx="140.5" cy="230.1992" fill="#FF8800" rx="8" ry="8" style="stroke: #AAAAAA; stroke-width: 1.0;"/><path d="M140.6353,234.355 Q139.7437,234.355 138.989,234.0918 Q138.2344,233.8286 137.6919,233.3076 Q137.1494,232.7866 136.8513,232.0078 Q136.5532,231.229 136.5532,230.2085 Q136.5532,229.2578 136.8379,228.4844 Q137.1226,227.7109 137.665,227.1577 Q138.186,226.626 138.9568,226.3359 Q139.7275,226.0459 140.6406,226.0459 Q141.1455,226.0459 141.551,226.1023 Q141.9565,226.1587 142.3003,226.25 Q142.6602,226.3521 142.9529,226.4783 Q143.2456,226.6045 143.4658,226.7119 L143.4658,228.6509 L143.2295,228.6509 Q143.0791,228.522 142.8508,228.3447 Q142.6226,228.1675 142.3325,227.9956 Q142.0371,227.8237 141.6934,227.7056 Q141.3496,227.5874 140.9575,227.5874 Q140.5225,227.5874 140.1304,227.7244 Q139.7383,227.8613 139.4053,228.1782 Q139.0884,228.4844 138.8923,228.9893 Q138.6963,229.4941 138.6963,230.2139 Q138.6963,230.9658 138.9084,231.4707 Q139.1206,231.9756 139.4429,232.2656 Q139.7705,232.561 140.1733,232.6873 Q140.5762,232.8135 140.9683,232.8135 Q141.3442,232.8135 141.7122,232.7007 Q142.0801,232.5879 142.3916,232.3945 Q142.6548,232.2388 142.8804,232.0615 Q143.106,231.8843 143.251,231.7554 L143.4658,231.7554 L143.4658,233.6675 Q143.165,233.8018 142.8911,233.9199 Q142.6172,234.0381 142.3164,234.124 Q141.9243,234.2368 141.5806,234.2959 Q141.2368,234.355 140.6353,234.355 Z "/><text fill="#000000" font-family="Verdana" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="52" x="156.5" y="234.574">PlainText</text><line style="stroke: #AAAAAA; stroke-width: 1.5;" x1="24" x2="316" y1="243.1992" y2="243.1992"/><ellipse cx="34" cy="271.1543" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="271" x="40" y="274.7891">__init__(text, segmenter=None, normalizer=None)</text><ellipse cx="34" cy="284.1094" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="50" x="40" y="287.7441">__iter__()</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="24" x2="129.5" y1="257.6768" y2="257.6768"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="81" x="129.5" y="261.334">Public Methods</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="210.5" x2="316" y1="257.6768" y2="257.6768"/></a><!--MD5=[065a416e4c33abf0dffdc83d6e1bf045]
+reverse link benchmarkstt.input.Base to benchmarkstt.input.core.File--><path d="M379.9,141.5292 C399.39,160.3592 422.15,182.3592 442.39,201.9192 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.File" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="374.92,146.4492,365.4,127.5092,384.65,136.3792,374.92,146.4492" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[3d607d7f67fd018830fa1d9f070f3dcc]
+reverse link benchmarkstt.input.Base to benchmarkstt.input.core.PlainText--><path d="M286.28,141.6292 C261.73,165.4992 232,194.4192 208.74,217.0292 " fill="none" id="benchmarkstt.input.Base&lt;-benchmarkstt.input.core.PlainText" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="281.58,136.4392,300.8,127.5092,291.34,146.4792,281.58,136.4392" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[0c80c0180765f708047500273bb6004d]
 @startuml
 
 title benchmarkstt.input
 
 skinparam packageStyle Frame
-!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
+!define LIGHTORANGE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
 package benchmarkstt.input {
 
-	class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
+	class benchmarkstt.input.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
 		.. Public Methods ..
 		+__iter__()
 	}
@@ -24,7 +25,7 @@ package benchmarkstt.input {
 
 package benchmarkstt.input.core {
 
-	class benchmarkstt.input.core.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] {
+	class benchmarkstt.input.core.File  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] extends benchmarkstt.input.Base {
 		.. Public Methods ..
 		+__init__(file, input_type=None, normalizer=None)
 		+__iter__()
@@ -33,7 +34,7 @@ package benchmarkstt.input.core {
 	}
 
 
-	class benchmarkstt.input.core.PlainText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText]] {
+	class benchmarkstt.input.core.PlainText  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText]] extends benchmarkstt.input.Base {
 		.. Public Methods ..
 		+__init__(text, segmenter=None, normalizer=None)
 		+__iter__()
@@ -42,8 +43,7 @@ package benchmarkstt.input.core {
 }
 
 
-benchmarkstt.input.core.File -up-|> benchmarkstt.input.Base
-benchmarkstt.input.core.PlainText -up-|> benchmarkstt.input.Base
+
 
 @enduml
 
@@ -53,84 +53,296 @@ title benchmarkstt.input
 
 skinparam packageStyle Frame
 
-skinparam defaultFontName  Helvetica
-skinparam sequenceMessageAlign center
-skinparam monochrome true
 
-skinparam activity {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
-	BorderThickness 1
-}
 
-skinparam actor {
-	BackgroundColor White
-	BorderColor Black
-}
 
-skinparam usecase {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
-	BorderThickness 1
+
+
+
+
+
+
+skinparam stereotypeCBackgroundColor FF8800
+
+skinparam backgroundColor fff
+
+
+
+
+
+
+
+
+skinparam circledCharacter {
+  radius 8
+  fontSize 11
+  fontName Verdana
 }
 
 skinparam class {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
-	BorderThickness 1
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+
+  attributeFontColor 333
+  attributeFontSize 11
+  attributeIconSize 11
+}
+
+
+skinparam actor {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam participant {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam collections {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam SequenceBox{
+    backgroundColor e0e0e0
+  borderColor cccccc
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+
+skinparam interface {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam component {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam node {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam database {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam queue {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+
+skinparam usecase {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+}
+
+skinparam activity {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+}
+
+skinparam sequence {
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+
+  lifeLineBorderColor FF8800
+  lifeLineBackgroundColor e0e0e0
+}
+
+skinparam boundary {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam control {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam entity {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+
+skinparam state {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+  startColor FF8800
+  endColor BB6600
 }
 
 
 skinparam object {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
 }
 
-skinparam package {
-	BackgroundColor White
-	BorderColor Black
-}
-
-
-skinparam component {
-	BackgroundColor White
-	InterfaceBackgroundColor White
-	BorderColor Black
-	InterfaceBorderColor Black
-}
 
 skinparam note {
-	BackgroundColor White
-	BorderColor Black
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
 }
 
-skinparam state {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
+skinparam cloud {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
 }
 
-skinparam sequence {
-	ArrowColor Black
-	BackgroundColor White
-	ParticipantBackgroundColor White
-	BorderColor Black
-	LifeLineBorderColor Black
-	ParticipantBorderColor Black
-	BoxLineColor Black
+skinparam rectangle {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
 }
 
-skinparam interface {
-	BackgroundColor White
-	BorderColor Black
+skinparam storage {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
 }
+
 package benchmarkstt.input {
 
-	class benchmarkstt.input.Base [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
+	class benchmarkstt.input.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
 		.. Public Methods ..
 		+__iter__()
 	}
@@ -140,7 +352,7 @@ package benchmarkstt.input {
 
 package benchmarkstt.input.core {
 
-	class benchmarkstt.input.core.File [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] {
+	class benchmarkstt.input.core.File  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] extends benchmarkstt.input.Base {
 		.. Public Methods ..
 		+__init__(file, input_type=None, normalizer=None)
 		+__iter__()
@@ -149,7 +361,7 @@ package benchmarkstt.input.core {
 	}
 
 
-	class benchmarkstt.input.core.PlainText [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText]] {
+	class benchmarkstt.input.core.PlainText  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText]] extends benchmarkstt.input.Base {
 		.. Public Methods ..
 		+__init__(text, segmenter=None, normalizer=None)
 		+__iter__()
@@ -158,8 +370,7 @@ package benchmarkstt.input.core {
 }
 
 
-benchmarkstt.input.core.File -up-|> benchmarkstt.input.Base
-benchmarkstt.input.core.PlainText -up-|> benchmarkstt.input.Base
+
 
 @enduml
 

@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="309px" preserveAspectRatio="none" style="width:751px;height:309px;" version="1.1" viewBox="0 0 751 309" width="751px" zoomAndPan="magnify"><defs><filter height="300%" id="fqc8asi73db9s" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="Helvetica" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="137" x="298.25" y="13.8604">benchmarkstt.api</text><!--MD5=[be3e0801209626b11d7e8a88e82d4cf3]
-cluster benchmarkstt.api.jsonrpc--><rect fill="#FFFFFF" filter="url(#fqc8asi73db9s)" height="267" style="stroke: #000000; stroke-width: 1.5;" width="329" x="7" y="25"/><path d="M192,26 L192,32 L182,42 L7,42 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="Helvetica" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="175" x="10" y="36.7803">benchmarkstt.api.jsonrpc</text><rect fill="#FFFFFF" filter="url(#fqc8asi73db9s)" height="48" style="stroke: #000000; stroke-width: 1.5;" width="139" x="355.5" y="89"/><path d="M484.5,90 L484.5,96 L474.5,106 L355.5,106 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="Helvetica" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="119" x="358.5" y="100.7803">benchmarkstt.api</text><!--MD5=[a3634c026b9e43f971e19b80aea52223]
-class benchmarkstt.api.jsonrpc.DefaultMethods--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fqc8asi73db9s)" height="77" id="benchmarkstt.api.jsonrpc.DefaultMethods" style="stroke: #000000; stroke-width: 1.0;" width="118" x="23" y="74.5"/><ellipse cx="38" cy="90.5" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M40.4731,96.6431 Q39.8921,96.9419 39.2529,97.0913 Q38.6138,97.2407 37.9082,97.2407 Q35.4014,97.2407 34.0815,95.5889 Q32.7617,93.937 32.7617,90.8159 Q32.7617,87.6865 34.0815,86.0347 Q35.4014,84.3828 37.9082,84.3828 Q38.6138,84.3828 39.2612,84.5322 Q39.9087,84.6816 40.4731,84.9805 L40.4731,87.7031 Q39.8423,87.1221 39.2488,86.8523 Q38.6553,86.5825 38.0244,86.5825 Q36.6797,86.5825 35.9949,87.6492 Q35.3101,88.7158 35.3101,90.8159 Q35.3101,92.9077 35.9949,93.9744 Q36.6797,95.041 38.0244,95.041 Q38.6553,95.041 39.2488,94.7712 Q39.8423,94.5015 40.4731,93.9204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="86" x="52" y="93.7402">DefaultMethods</text><line style="stroke: #000000; stroke-width: 1.5;" x1="24" x2="140" y1="106.5" y2="106.5"/><ellipse cx="34" cy="132.5" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="70" x="43" y="133.9702">help(methods)</text><ellipse cx="34" cy="143.5" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="44" x="43" y="144.9702">version()</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="24" x2="45" y1="120" y2="120"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="45" y="122.4702">Public Methods</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="119" x2="140" y1="120" y2="120"/></a><!--MD5=[c8bb7040efe1fd7c5e6494e44dd85687]
-class benchmarkstt.api.jsonrpc.MagicMethods--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fqc8asi73db9s)" height="110" id="benchmarkstt.api.jsonrpc.MagicMethods" style="stroke: #000000; stroke-width: 1.0;" width="144" x="176" y="58"/><ellipse cx="205.4" cy="74" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M207.8731,80.1431 Q207.2921,80.4419 206.6529,80.5913 Q206.0138,80.7407 205.3082,80.7407 Q202.8014,80.7407 201.4815,79.0889 Q200.1617,77.437 200.1617,74.3159 Q200.1617,71.1865 201.4815,69.5347 Q202.8014,67.8828 205.3082,67.8828 Q206.0138,67.8828 206.6612,68.0322 Q207.3087,68.1816 207.8731,68.4805 L207.8731,71.2031 Q207.2423,70.6221 206.6488,70.3523 Q206.0553,70.0825 205.4244,70.0825 Q204.0797,70.0825 203.3949,71.1492 Q202.7101,72.2158 202.7101,74.3159 Q202.7101,76.4077 203.3949,77.4744 Q204.0797,78.541 205.4244,78.541 Q206.0553,78.541 206.6488,78.2712 Q207.2423,78.0015 207.8731,77.4204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="80" x="222.6" y="77.2402">MagicMethods</text><line style="stroke: #000000; stroke-width: 1.5;" x1="177" x2="319" y1="90" y2="90"/><ellipse cx="187" cy="116" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="45" x="196" y="117.4702">__init__()</text><ellipse cx="187" cy="127" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="91" x="196" y="128.4702">is_safe_path(path)</text><ellipse cx="187" cy="138" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="96" x="196" y="139.4702">load(name, module)</text><ellipse cx="187" cy="149" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="118" x="196" y="150.4702">register(name, callback)</text><ellipse cx="187" cy="160" fill="#A6A6A6" rx="3" ry="3" style="stroke: #545454; stroke-width: 1.0;"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="111" x="196" y="161.4702">serve(config, callback)</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="177" x2="211" y1="103.5" y2="103.5"/><text fill="#000000" font-family="Helvetica" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="211" y="105.9702">Public Methods</text><line style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="285" x2="319" y1="103.5" y2="103.5"/></a><!--MD5=[6470523c0351eec356b65f21af912d4f]
-class benchmarkstt.api.jsonrpc.SecurityError--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" xlink:type="simple"><rect fill="#FFFFFF" filter="url(#fqc8asi73db9s)" height="48" id="benchmarkstt.api.jsonrpc.SecurityError" style="stroke: #000000; stroke-width: 1.0;" width="103" x="30.5" y="228"/><ellipse cx="45.5" cy="244" fill="#C2C2C2" rx="11" ry="11" style="stroke: #000000; stroke-width: 1.0;"/><path d="M47.9731,250.1431 Q47.3921,250.4419 46.7529,250.5913 Q46.1138,250.7407 45.4082,250.7407 Q42.9014,250.7407 41.5815,249.0889 Q40.2617,247.437 40.2617,244.3159 Q40.2617,241.1865 41.5815,239.5347 Q42.9014,237.8828 45.4082,237.8828 Q46.1138,237.8828 46.7612,238.0322 Q47.4087,238.1816 47.9731,238.4805 L47.9731,241.2031 Q47.3423,240.6221 46.7488,240.3523 Q46.1553,240.0825 45.5244,240.0825 Q44.1797,240.0825 43.4949,241.1492 Q42.8101,242.2158 42.8101,244.3159 Q42.8101,246.4077 43.4949,247.4744 Q44.1797,248.541 45.5244,248.541 Q46.1553,248.541 46.7488,248.2712 Q47.3423,248.0015 47.9731,247.4204 Z "/><text fill="#000000" font-family="Helvetica" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="71" x="59.5" y="247.2402">SecurityError</text><line style="stroke: #000000; stroke-width: 1.0;" x1="31.5" x2="132.5" y1="260" y2="260"/><line style="stroke: #000000; stroke-width: 1.0;" x1="31.5" x2="132.5" y1="268" y2="268"/></a><rect fill="#FFFFFF" filter="url(#fqc8asi73db9s)" height="48" style="stroke: #000000; stroke-width: 1.5;" width="205" x="529.5" y="89"/><path d="M724.5,90 L724.5,96 L714.5,106 L529.5,106 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="Helvetica" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="185" x="532.5" y="100.7803">benchmarkstt.api.gunicorn</text><!--MD5=[38210c2b313ae7f3f7264e3dc5bb59b6]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="314px" preserveAspectRatio="none" style="width:764px;height:314px;" version="1.1" viewBox="0 0 764 314" width="764px" zoomAndPan="magnify"><defs><filter height="300%" id="f1anjt7yee1azi" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="152" x="297" y="17.4023">benchmarkstt.api</text><!--MD5=[be3e0801209626b11d7e8a88e82d4cf3]
+cluster benchmarkstt.api.jsonrpc--><rect fill="#FFFFFF" filter="url(#f1anjt7yee1azi)" height="269" style="stroke: #000000; stroke-width: 1.5;" width="332" x="7" y="28.1992"/><path d="M197,29.1992 L197,37.6875 L187,47.6875 L7,47.6875 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="180" x="10" y="42.7344">benchmarkstt.api.jsonrpc</text><rect fill="#FFFFFF" filter="url(#f1anjt7yee1azi)" height="52.9766" style="stroke: #000000; stroke-width: 1.5;" width="144" x="358" y="94.6992"/><path d="M492,95.6992 L492,104.1875 L482,114.1875 L358,114.1875 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="124" x="361" y="109.2344">benchmarkstt.api</text><!--MD5=[a3634c026b9e43f971e19b80aea52223]
+class benchmarkstt.api.jsonrpc.DefaultMethods--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods" xlink:type="simple"><rect fill="#CCCCCC" filter="url(#f1anjt7yee1azi)" height="76.8652" id="benchmarkstt.api.jsonrpc.DefaultMethods" style="stroke: #AAAAAA; stroke-width: 1.5;" width="113" x="23.5" y="82.6992"/><ellipse cx="35.5" cy="95.6992" fill="#FF8800" rx="8" ry="8" style="stroke: #AAAAAA; stroke-width: 1.0;"/><path d="M35.6353,99.855 Q34.7437,99.855 33.989,99.5918 Q33.2344,99.3286 32.6919,98.8076 Q32.1494,98.2866 31.8513,97.5078 Q31.5532,96.729 31.5532,95.7085 Q31.5532,94.7578 31.8379,93.9844 Q32.1226,93.2109 32.665,92.6577 Q33.186,92.126 33.9568,91.8359 Q34.7275,91.5459 35.6406,91.5459 Q36.1455,91.5459 36.551,91.6023 Q36.9565,91.6587 37.3003,91.75 Q37.6602,91.8521 37.9529,91.9783 Q38.2456,92.1045 38.4658,92.2119 L38.4658,94.1509 L38.2295,94.1509 Q38.0791,94.022 37.8508,93.8447 Q37.6226,93.6675 37.3325,93.4956 Q37.0371,93.3237 36.6934,93.2056 Q36.3496,93.0874 35.9575,93.0874 Q35.5225,93.0874 35.1304,93.2244 Q34.7383,93.3613 34.4053,93.6782 Q34.0884,93.9844 33.8923,94.4893 Q33.6963,94.9941 33.6963,95.7139 Q33.6963,96.4658 33.9084,96.9707 Q34.1206,97.4756 34.4429,97.7656 Q34.7705,98.061 35.1733,98.1873 Q35.5762,98.3135 35.9683,98.3135 Q36.3442,98.3135 36.7122,98.2007 Q37.0801,98.0879 37.3916,97.8945 Q37.6548,97.7388 37.8804,97.5615 Q38.106,97.3843 38.251,97.2554 L38.4658,97.2554 L38.4658,99.1675 Q38.165,99.3018 37.8911,99.4199 Q37.6172,99.5381 37.3164,99.624 Q36.9243,99.7368 36.5806,99.7959 Q36.2368,99.855 35.6353,99.855 Z "/><text fill="#000000" font-family="Verdana" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="87" x="46.5" y="100.074">DefaultMethods</text><line style="stroke: #AAAAAA; stroke-width: 1.5;" x1="24.5" x2="135.5" y1="108.6992" y2="108.6992"/><ellipse cx="34.5" cy="136.6543" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="78" x="40.5" y="140.2891">help(methods)</text><ellipse cx="34.5" cy="149.6094" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="48" x="40.5" y="153.2441">version()</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="24.5" x2="39.5" y1="123.1768" y2="123.1768"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="81" x="39.5" y="126.834">Public Methods</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="120.5" x2="135.5" y1="123.1768" y2="123.1768"/></a><!--MD5=[c8bb7040efe1fd7c5e6494e44dd85687]
+class benchmarkstt.api.jsonrpc.MagicMethods--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods" xlink:type="simple"><rect fill="#CCCCCC" filter="url(#f1anjt7yee1azi)" height="115.7305" id="benchmarkstt.api.jsonrpc.MagicMethods" style="stroke: #AAAAAA; stroke-width: 1.5;" width="151" x="171.5" y="63.1992"/><ellipse cx="204.2" cy="76.1992" fill="#FF8800" rx="8" ry="8" style="stroke: #AAAAAA; stroke-width: 1.0;"/><path d="M204.3353,80.355 Q203.4437,80.355 202.689,80.0918 Q201.9344,79.8286 201.3919,79.3076 Q200.8494,78.7866 200.5513,78.0078 Q200.2532,77.229 200.2532,76.2085 Q200.2532,75.2578 200.5379,74.4844 Q200.8226,73.7109 201.365,73.1577 Q201.886,72.626 202.6568,72.3359 Q203.4275,72.0459 204.3406,72.0459 Q204.8455,72.0459 205.251,72.1023 Q205.6565,72.1587 206.0003,72.25 Q206.3602,72.3521 206.6529,72.4783 Q206.9456,72.6045 207.1658,72.7119 L207.1658,74.6509 L206.9295,74.6509 Q206.7791,74.522 206.5508,74.3447 Q206.3226,74.1675 206.0325,73.9956 Q205.7371,73.8237 205.3934,73.7056 Q205.0496,73.5874 204.6575,73.5874 Q204.2225,73.5874 203.8304,73.7244 Q203.4383,73.8613 203.1053,74.1782 Q202.7884,74.4844 202.5923,74.9893 Q202.3963,75.4941 202.3963,76.2139 Q202.3963,76.9658 202.6084,77.4707 Q202.8206,77.9756 203.1429,78.2656 Q203.4705,78.561 203.8733,78.6873 Q204.2762,78.8135 204.6683,78.8135 Q205.0442,78.8135 205.4122,78.7007 Q205.7801,78.5879 206.0916,78.3945 Q206.3548,78.2388 206.5804,78.0615 Q206.806,77.8843 206.951,77.7554 L207.1658,77.7554 L207.1658,79.6675 Q206.865,79.8018 206.5911,79.9199 Q206.3172,80.0381 206.0164,80.124 Q205.6243,80.2368 205.2806,80.2959 Q204.9368,80.355 204.3353,80.355 Z "/><text fill="#000000" font-family="Verdana" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="79" x="219.8" y="80.574">MagicMethods</text><line style="stroke: #AAAAAA; stroke-width: 1.5;" x1="172.5" x2="321.5" y1="89.1992" y2="89.1992"/><ellipse cx="182.5" cy="117.1543" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="49" x="188.5" y="120.7891">__init__()</text><ellipse cx="182.5" cy="130.1094" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="99" x="188.5" y="133.7441">is_safe_path(path)</text><ellipse cx="182.5" cy="143.0645" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="106" x="188.5" y="146.6992">load(name, module)</text><ellipse cx="182.5" cy="156.0195" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="128" x="188.5" y="159.6543">register(name, callback)</text><ellipse cx="182.5" cy="168.9746" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="120" x="188.5" y="172.6094">serve(config, callback)</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="172.5" x2="206.5" y1="103.6768" y2="103.6768"/><text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="81" x="206.5" y="107.334">Public Methods</text><line style="stroke: #AAAAAA; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="287.5" x2="321.5" y1="103.6768" y2="103.6768"/></a><!--MD5=[6470523c0351eec356b65f21af912d4f]
+class benchmarkstt.api.jsonrpc.SecurityError--><a href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" target="_top" title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" xlink:actuate="onRequest" xlink:href="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" xlink:show="new" xlink:title="https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError" xlink:type="simple"><rect fill="#CCCCCC" filter="url(#f1anjt7yee1azi)" height="42" id="benchmarkstt.api.jsonrpc.SecurityError" style="stroke: #AAAAAA; stroke-width: 1.5;" width="102" x="29" y="239.1992"/><ellipse cx="41" cy="252.1992" fill="#FF0000" rx="8" ry="8" style="stroke: #AAAAAA; stroke-width: 1.0;"/><path d="M43.8052,256.1992 L38.0205,256.1992 L38.0205,248.2017 L43.8052,248.2017 L43.8052,249.7485 L40.0723,249.7485 L40.0723,251.1289 L43.5366,251.1289 L43.5366,252.6758 L40.0723,252.6758 L40.0723,254.6523 L43.8052,254.6523 Z "/><text fill="#000000" font-family="Verdana" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="76" x="52" y="256.574">SecurityError</text><line style="stroke: #AAAAAA; stroke-width: 1.5;" x1="30" x2="130" y1="265.1992" y2="265.1992"/><line style="stroke: #AAAAAA; stroke-width: 1.5;" x1="30" x2="130" y1="273.1992" y2="273.1992"/></a><rect fill="#FFFFFF" filter="url(#f1anjt7yee1azi)" height="52.9766" style="stroke: #000000; stroke-width: 1.5;" width="210" x="537" y="94.6992"/><path d="M737,95.6992 L737,104.1875 L727,114.1875 L537,114.1875 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="190" x="540" y="109.2344">benchmarkstt.api.gunicorn</text><!--MD5=[38210c2b313ae7f3f7264e3dc5bb59b6]
 link benchmarkstt.api.jsonrpc.DefaultMethods to benchmarkstt.api.jsonrpc.MagicMethods--><!--MD5=[538cb41533b0550692009be83806011f]
-link benchmarkstt.api.jsonrpc.DefaultMethods to benchmarkstt.api.jsonrpc.SecurityError--><!--MD5=[9bf490da677dff158f8a4a31a22b1306]
+link benchmarkstt.api.jsonrpc.DefaultMethods to benchmarkstt.api.jsonrpc.SecurityError--><!--MD5=[63c5bb35defda30d903cb21eab8fb292]
 @startuml
 
 title benchmarkstt.api
 
 skinparam packageStyle Frame
-!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
+!define LIGHTORANGE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
 package benchmarkstt.api {
 }
 
@@ -19,14 +20,14 @@ package benchmarkstt.api {
 
 package benchmarkstt.api.jsonrpc {
 
-	class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
+	class benchmarkstt.api.jsonrpc.DefaultMethods  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
 		.. Public Methods ..
 		+help(methods)
 		+version()
 	}
 
 
-	class benchmarkstt.api.jsonrpc.MagicMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
+	class benchmarkstt.api.jsonrpc.MagicMethods  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
 		.. Public Methods ..
 		+__init__()
 		+is_safe_path(path)
@@ -38,7 +39,7 @@ package benchmarkstt.api.jsonrpc {
 
 
 
-	class benchmarkstt.api.jsonrpc.SecurityError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
+	class benchmarkstt.api.jsonrpc.SecurityError << (E,red) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
 	}
 
 
@@ -58,81 +59,293 @@ title benchmarkstt.api
 
 skinparam packageStyle Frame
 
-skinparam defaultFontName  Helvetica
-skinparam sequenceMessageAlign center
-skinparam monochrome true
 
-skinparam activity {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
-	BorderThickness 1
-}
 
-skinparam actor {
-	BackgroundColor White
-	BorderColor Black
-}
 
-skinparam usecase {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
-	BorderThickness 1
+
+
+
+
+
+
+skinparam stereotypeCBackgroundColor FF8800
+
+skinparam backgroundColor fff
+
+
+
+
+
+
+
+
+skinparam circledCharacter {
+  radius 8
+  fontSize 11
+  fontName Verdana
 }
 
 skinparam class {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
-	BorderThickness 1
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+
+  attributeFontColor 333
+  attributeFontSize 11
+  attributeIconSize 11
+}
+
+
+skinparam actor {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam participant {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam collections {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam SequenceBox{
+    backgroundColor e0e0e0
+  borderColor cccccc
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+
+skinparam interface {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam component {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam node {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam database {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam queue {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+
+skinparam usecase {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+}
+
+skinparam activity {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+}
+
+skinparam sequence {
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+
+  lifeLineBorderColor FF8800
+  lifeLineBackgroundColor e0e0e0
+}
+
+skinparam boundary {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam control {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+skinparam entity {
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+}
+
+
+skinparam state {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
+  startColor FF8800
+  endColor BB6600
 }
 
 
 skinparam object {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
 }
 
-skinparam package {
-	BackgroundColor White
-	BorderColor Black
-}
-
-
-skinparam component {
-	BackgroundColor White
-	InterfaceBackgroundColor White
-	BorderColor Black
-	InterfaceBorderColor Black
-}
 
 skinparam note {
-	BackgroundColor White
-	BorderColor Black
+    backgroundColor FF8800
+  borderColor BB6600
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
 }
 
-skinparam state {
-	ArrowColor Black
-	BackgroundColor White
-	BorderColor Black
+skinparam cloud {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
+    arrowColor 000
+  arrowFontName Verdana
+  arrowFontColor 333
+  arrowFontSize 11
 }
 
-skinparam sequence {
-	ArrowColor Black
-	BackgroundColor White
-	ParticipantBackgroundColor White
-	BorderColor Black
-	LifeLineBorderColor Black
-	ParticipantBorderColor Black
-	BoxLineColor Black
+skinparam rectangle {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
 }
 
-skinparam interface {
-	BackgroundColor White
-	BorderColor Black
+skinparam storage {
+    backgroundColor ccc
+  borderColor aaa
+    fontColor 000
+  fontName Verdana
+  fontSize 11
+  stereotypeFontColor 333
+  stereotypeFontSize 11
 }
+
 package benchmarkstt.api {
 }
 
@@ -141,14 +354,14 @@ package benchmarkstt.api {
 
 package benchmarkstt.api.jsonrpc {
 
-	class benchmarkstt.api.jsonrpc.DefaultMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
+	class benchmarkstt.api.jsonrpc.DefaultMethods  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
 		.. Public Methods ..
 		+help(methods)
 		+version()
 	}
 
 
-	class benchmarkstt.api.jsonrpc.MagicMethods [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
+	class benchmarkstt.api.jsonrpc.MagicMethods  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
 		.. Public Methods ..
 		+__init__()
 		+is_safe_path(path)
@@ -160,7 +373,7 @@ package benchmarkstt.api.jsonrpc {
 
 
 
-	class benchmarkstt.api.jsonrpc.SecurityError [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
+	class benchmarkstt.api.jsonrpc.SecurityError << (E,red) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
 	}
 
 

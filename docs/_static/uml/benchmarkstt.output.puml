@@ -1,0 +1,64 @@
+@startuml
+
+title benchmarkstt.output
+
+skinparam packageStyle Frame
+!define LIGHTORANGE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+package benchmarkstt.output {
+
+	class benchmarkstt.output.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.Base]] {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+result(title, result)
+	}
+
+
+}
+
+package benchmarkstt.output.core {
+
+	class benchmarkstt.output.core.Json  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.Json]] extends benchmarkstt.output.Base {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+__init__()
+		+result(title, result)
+	}
+
+
+	class benchmarkstt.output.core.MarkDown  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.MarkDown]] extends benchmarkstt.output.core.SimpleTextBase {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+print(result)
+		+result(title, result)
+	}
+
+
+
+	class benchmarkstt.output.core.ReStructuredText  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.ReStructuredText]] extends benchmarkstt.output.core.SimpleTextBase {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+print(result)
+		+result(title, result)
+	}
+
+
+
+	class benchmarkstt.output.core.SimpleTextBase  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.SimpleTextBase]] extends benchmarkstt.output.Base {
+		.. Public Methods ..
+		+__enter__()
+		+__exit__(exc_type, exc_val, exc_tb)
+		+print(result)
+		+result(title, result)
+	}
+
+}
+
+
+
+
+@enduml

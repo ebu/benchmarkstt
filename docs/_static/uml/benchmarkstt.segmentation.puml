@@ -1,0 +1,33 @@
+@startuml
+
+title benchmarkstt.segmentation
+
+skinparam packageStyle Frame
+!define LIGHTORANGE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+package benchmarkstt.segmentation {
+
+	class benchmarkstt.segmentation.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
+		.. Public Methods ..
+		+__iter__()
+	}
+
+
+}
+
+package benchmarkstt.segmentation.core {
+
+
+
+	class benchmarkstt.segmentation.core.Simple  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] extends benchmarkstt.segmentation.Base {
+		.. Public Methods ..
+		+__init__(text: str, pattern='[\\n\\t\\s]+', normalizer=None)
+		+__iter__()
+	}
+
+}
+
+
+
+
+@enduml
