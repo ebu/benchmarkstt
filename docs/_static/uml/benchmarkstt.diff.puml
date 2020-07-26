@@ -3,7 +3,7 @@
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-package benchmarkstt.diff.formatter {
+package benchmarkstt.diff.formatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#]] {
 
 	class benchmarkstt.diff.formatter.CLIDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
 		.. Public Methods ..
@@ -101,7 +101,7 @@ package benchmarkstt.diff.formatter {
 
 }
 
-package benchmarkstt.diff {
+package benchmarkstt.diff [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#]] {
 
 	class benchmarkstt.diff.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
 		.. Public Methods ..
@@ -112,7 +112,7 @@ package benchmarkstt.diff {
 
 }
 
-package benchmarkstt.diff.core {
+package benchmarkstt.diff.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#]] {
 
 
 	class benchmarkstt.diff.core.RatcliffObershelp  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] extends benchmarkstt.diff.Base {

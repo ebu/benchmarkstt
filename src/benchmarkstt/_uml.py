@@ -109,7 +109,7 @@ class Package:
         if not inspect.ismodule(module):
             raise Exception("Expected a module")
 
-        with PlantUMLBlock(uml, "package %s" % (module.__name__,)):
+        with PlantUMLBlock(uml, "package %s %s" % (module.__name__, uml.link(module.__name__))):
             for name, cls in inspect.getmembers(module, predicate=inspect.isclass):
                 uml.klass(cls)
                 uml.add()
@@ -290,9 +290,12 @@ class PlantUML:
     def includeurl(self, url):
         self.add("!includeurl %s", url)
 
-    def link(self, page, hash_, is_field_or_method=None):
+    def link(self, page, hash_=None, is_field_or_method=None):
         if self._link_tpl is None:
             return ''
+
+        if hash_ is None:
+            hash_ = ''
 
         tpl = '[[[%s]]]' if is_field_or_method else '[[%s]]'
         link = self._link_tpl.format(page=page, hash=hash_)

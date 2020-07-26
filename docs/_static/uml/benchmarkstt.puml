@@ -4,7 +4,7 @@ left to right direction
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-package benchmarkstt.docblock {
+package benchmarkstt.docblock [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#]] {
 
 	class benchmarkstt.docblock.Docblock<namedtuple> << (T, yellow) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.Docblock]] {
 		.. Fields ..
@@ -47,7 +47,7 @@ package benchmarkstt.docblock {
 
 }
 
-package benchmarkstt.config {
+package benchmarkstt.config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.config.html#]] {
 
 	class benchmarkstt.config.SectionConfigReader  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.config.html#benchmarkstt.config.SectionConfigReader]] {
 		.. Public Methods ..
@@ -59,7 +59,7 @@ package benchmarkstt.config {
 
 }
 
-package benchmarkstt.registry {
+package benchmarkstt.registry [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.registry.html#]] {
 
 	class benchmarkstt.registry.Registry  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.registry.html#benchmarkstt.registry.Registry]] {
 		.. Public Methods ..
@@ -75,21 +75,21 @@ package benchmarkstt.registry {
 
 }
 
-package benchmarkstt {
+package benchmarkstt [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.html#]] {
 
 
 
 
 }
 
-package benchmarkstt {
+package benchmarkstt [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.html#]] {
 
 
 
 
 }
 
-package benchmarkstt.factory {
+package benchmarkstt.factory [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#]] {
 
 	class benchmarkstt.factory.ClassConfig  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.ClassConfig]] extends benchmarkstt.factory.ClassConfigTuple {
 	}
@@ -116,14 +116,14 @@ package benchmarkstt.factory {
 
 }
 
-package benchmarkstt {
+package benchmarkstt [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.html#]] {
 
 
 
 
 }
 
-package benchmarkstt.cli {
+package benchmarkstt.cli [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.cli.html#]] {
 
 
 	class benchmarkstt.cli.HelpFormatter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.cli.html#benchmarkstt.cli.HelpFormatter]] {
@@ -152,7 +152,7 @@ package benchmarkstt.cli {
 
 }
 
-package benchmarkstt.csv {
+package benchmarkstt.csv [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#]] {
 
 	class benchmarkstt.csv.CSVParserError << (E,red) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.csv.html#benchmarkstt.csv.CSVParserError]] {
 		.. Public Methods ..
@@ -214,7 +214,7 @@ package benchmarkstt.csv {
 
 }
 
-package benchmarkstt.modules {
+package benchmarkstt.modules [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.modules.html#]] {
 
 	class benchmarkstt.modules.LoadObjectProxy  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.modules.html#benchmarkstt.modules.LoadObjectProxy]] extends benchmarkstt.modules.Proxy {
 		.. Public Methods ..
@@ -232,7 +232,7 @@ package benchmarkstt.modules {
 
 }
 
-package benchmarkstt.schema {
+package benchmarkstt.schema [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#]] {
 
 	class benchmarkstt.schema.Item  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Item]] {
 		.. Public Methods ..
@@ -306,20 +306,20 @@ package benchmarkstt.schema {
 
 }
 
-package benchmarkstt.decorators {
+package benchmarkstt.decorators [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.decorators.html#]] {
 
 }
 
-package benchmarkstt.benchmark {
+package benchmarkstt.benchmark [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.benchmark.html#]] {
 }
 
-package benchmarkstt.benchmark {
+package benchmarkstt.benchmark [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.benchmark.html#]] {
 }
 
-package benchmarkstt.benchmark {
+package benchmarkstt.benchmark [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.benchmark.html#]] {
 }
 
-package benchmarkstt.metrics {
+package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 
 	class benchmarkstt.metrics.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
 		.. Public Methods ..
@@ -330,19 +330,19 @@ package benchmarkstt.metrics {
 
 }
 
-package benchmarkstt.metrics {
+package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 
 
 
 }
 
-package benchmarkstt.metrics {
+package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 
 
 
 }
 
-package benchmarkstt.metrics.core {
+package benchmarkstt.metrics.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#]] {
 
 
 	class benchmarkstt.metrics.core.DiffCounts  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.DiffCounts]] extends benchmarkstt.metrics.Base {
@@ -383,7 +383,7 @@ package benchmarkstt.metrics.core {
 
 }
 
-package benchmarkstt.normalization {
+package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
 
 	class benchmarkstt.normalization.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.Base]] {
 		.. Public Methods ..
@@ -445,7 +445,7 @@ package benchmarkstt.normalization {
 
 }
 
-package benchmarkstt.normalization {
+package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
 
 
 
@@ -454,7 +454,7 @@ package benchmarkstt.normalization {
 
 }
 
-package benchmarkstt.normalization {
+package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
 
 
 
@@ -463,7 +463,7 @@ package benchmarkstt.normalization {
 
 }
 
-package benchmarkstt.normalization.core {
+package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#]] {
 
 	class benchmarkstt.normalization.core.Config  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Config]] extends benchmarkstt.normalization.Base {
 		.. Public Methods ..
@@ -532,7 +532,7 @@ package benchmarkstt.normalization.core {
 
 }
 
-package benchmarkstt.normalization.logger {
+package benchmarkstt.normalization.logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#]] {
 
 	class benchmarkstt.diff.formatter.DiffFormatter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.DiffFormatter]] {
 		.. Public Methods ..
@@ -597,7 +597,7 @@ package benchmarkstt.normalization.logger {
 
 }
 
-package benchmarkstt.input {
+package benchmarkstt.input [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#]] {
 
 	class benchmarkstt.input.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
 		.. Public Methods ..
@@ -607,7 +607,7 @@ package benchmarkstt.input {
 
 }
 
-package benchmarkstt.input.core {
+package benchmarkstt.input.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#]] {
 
 	class benchmarkstt.input.core.File  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] extends benchmarkstt.input.Base {
 		.. Public Methods ..
@@ -626,7 +626,7 @@ package benchmarkstt.input.core {
 
 }
 
-package benchmarkstt.segmentation {
+package benchmarkstt.segmentation [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#]] {
 
 	class benchmarkstt.segmentation.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
 		.. Public Methods ..
@@ -636,7 +636,7 @@ package benchmarkstt.segmentation {
 
 }
 
-package benchmarkstt.segmentation.core {
+package benchmarkstt.segmentation.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#]] {
 
 
 
@@ -648,7 +648,7 @@ package benchmarkstt.segmentation.core {
 
 }
 
-package benchmarkstt.output {
+package benchmarkstt.output [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#]] {
 
 	class benchmarkstt.output.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.Base]] {
 		.. Public Methods ..
@@ -660,7 +660,7 @@ package benchmarkstt.output {
 
 }
 
-package benchmarkstt.output.core {
+package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#]] {
 
 	class benchmarkstt.output.core.Json  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.Json]] extends benchmarkstt.output.Base {
 		.. Public Methods ..
@@ -701,7 +701,7 @@ package benchmarkstt.output.core {
 
 }
 
-package benchmarkstt.diff.formatter {
+package benchmarkstt.diff.formatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#]] {
 
 	class benchmarkstt.diff.formatter.CLIDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
 		.. Public Methods ..
@@ -791,7 +791,7 @@ package benchmarkstt.diff.formatter {
 
 }
 
-package benchmarkstt.diff {
+package benchmarkstt.diff [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#]] {
 
 	class benchmarkstt.diff.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
 		.. Public Methods ..
@@ -802,19 +802,19 @@ package benchmarkstt.diff {
 
 }
 
-package benchmarkstt.diff.core {
+package benchmarkstt.diff.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#]] {
 
 
 
 }
 
-package benchmarkstt.api {
+package benchmarkstt.api [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.html#]] {
 }
 
-package benchmarkstt.api {
+package benchmarkstt.api [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.html#]] {
 }
 
-package benchmarkstt.api.jsonrpc {
+package benchmarkstt.api.jsonrpc [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#]] {
 
 	class benchmarkstt.api.jsonrpc.DefaultMethods  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
 		.. Public Methods ..
@@ -841,7 +841,7 @@ package benchmarkstt.api.jsonrpc {
 
 }
 
-package benchmarkstt.api.gunicorn {
+package benchmarkstt.api.gunicorn [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.gunicorn.html#]] {
 }
 
 

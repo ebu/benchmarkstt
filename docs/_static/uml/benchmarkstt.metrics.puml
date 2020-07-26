@@ -3,7 +3,7 @@
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-package benchmarkstt.metrics {
+package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 
 	class benchmarkstt.metrics.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
 		.. Public Methods ..
@@ -14,19 +14,19 @@ package benchmarkstt.metrics {
 
 }
 
-package benchmarkstt.metrics {
+package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 
 
 
 }
 
-package benchmarkstt.metrics {
+package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 
 
 
 }
 
-package benchmarkstt.metrics.core {
+package benchmarkstt.metrics.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#]] {
 
 
 	class benchmarkstt.metrics.core.DiffCounts  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#benchmarkstt.metrics.core.DiffCounts]] extends benchmarkstt.metrics.Base {

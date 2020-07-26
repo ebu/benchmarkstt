@@ -3,7 +3,7 @@
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-package benchmarkstt.normalization {
+package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
 
 	class benchmarkstt.normalization.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.Base]] {
 		.. Public Methods ..
@@ -65,7 +65,7 @@ package benchmarkstt.normalization {
 
 }
 
-package benchmarkstt.normalization {
+package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
 
 
 
@@ -74,7 +74,7 @@ package benchmarkstt.normalization {
 
 }
 
-package benchmarkstt.normalization {
+package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
 
 
 
@@ -83,7 +83,7 @@ package benchmarkstt.normalization {
 
 }
 
-package benchmarkstt.normalization.core {
+package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#]] {
 
 	class benchmarkstt.normalization.core.Config  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Config]] extends benchmarkstt.normalization.Base {
 		.. Public Methods ..
@@ -152,7 +152,7 @@ package benchmarkstt.normalization.core {
 
 }
 
-package benchmarkstt.normalization.logger {
+package benchmarkstt.normalization.logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#]] {
 
 
 	class benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect]] extends benchmarkstt.normalization.logger.DiffLoggingFormatterDialect {

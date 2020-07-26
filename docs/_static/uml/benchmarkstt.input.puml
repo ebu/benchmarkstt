@@ -3,7 +3,7 @@
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-package benchmarkstt.input {
+package benchmarkstt.input [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#]] {
 
 	class benchmarkstt.input.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.html#benchmarkstt.input.Base]] {
 		.. Public Methods ..
@@ -13,7 +13,7 @@ package benchmarkstt.input {
 
 }
 
-package benchmarkstt.input.core {
+package benchmarkstt.input.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#]] {
 
 	class benchmarkstt.input.core.File  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.File]] extends benchmarkstt.input.Base {
 		.. Public Methods ..
