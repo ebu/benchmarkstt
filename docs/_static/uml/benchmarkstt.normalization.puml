@@ -167,11 +167,6 @@ package benchmarkstt.normalization.logger {
 		.. Public Methods ..
 		+__init__(dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
 		+format(record)
-		+formatException(ei)
-		+formatMessage(record)
-		+formatStack(stack_info)
-		+formatTime(record, datefmt=None)
-		+usesTime()
 		.. Static Methods ..
 		{static} +get_dialect(dialect, strict=None)
 		{static} +has_dialect(dialect)
@@ -193,24 +188,8 @@ package benchmarkstt.normalization.logger {
 	class benchmarkstt.normalization.logger.ListHandler  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.ListHandler]] {
 		.. Public Methods ..
 		+__init__()
-		+__repr__()
-		+acquire()
-		+addFilter(filter)
-		+close()
-		+createLock()
 		+emit(record)
-		+filter(record)
 		+flush()
-		+format(record)
-		+get_name()
-		+handle(record)
-		+handleError(record)
-		+release()
-		+removeFilter(filter)
-		+setFormatter(fmt)
-		+setLevel(level)
-		+setStream(stream)
-		+set_name(name)
 	}
 
 
