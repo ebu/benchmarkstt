@@ -1,5 +1,12 @@
 """
-Subpackage responsible for dealing with output formats
+Responsible for dealing with output formats
+
+Structure
+.........
+
+.. image:: ../_static/uml/benchmarkstt.output.svg
+    :alt: Package Structure - Click for details
+    :target: ../_static/uml/benchmarkstt.output.svg
 """
 
 from benchmarkstt.factory import Factory

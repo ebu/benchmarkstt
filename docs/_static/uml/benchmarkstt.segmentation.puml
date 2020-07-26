@@ -1,7 +1,5 @@
 @startuml
 
-title benchmarkstt.segmentation
-
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
