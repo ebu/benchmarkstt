@@ -120,18 +120,6 @@ package benchmarkstt.diff.core {
 	class benchmarkstt.diff.core.RatcliffObershelp  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] extends benchmarkstt.diff.Base {
 		.. Public Methods ..
 		+__init__(a, b, *args, **kwargs)
-		+find_longest_match(alo, ahi, blo, bhi)
-		+get_grouped_opcodes(n=3)
-		+get_matching_blocks()
-		+get_opcodes()
-		+quick_ratio()
-		+ratio()
-		+real_quick_ratio()
-		+set_seq1(a)
-		+set_seq2(b)
-		+set_seqs(a, b)
-		.. Protected Methods ..
-		-_SequenceMatcher__chain_b()
 	}
 
 

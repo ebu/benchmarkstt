@@ -36,7 +36,7 @@ class PlantUMLJarRenderer:
 
     DEFAULT_COMMAND = os.environ.get("PLANTUML", "java -jar plantuml.jar").split(' ')
     DEFAULT_FORMAT = 'svg'
-    DEFAULT_TIMEOUT = 10
+    DEFAULT_TIMEOUT = 20
 
     def __init__(self, format=None, command=None, timeout=None):
         if command is None:
@@ -62,7 +62,7 @@ class PlantUMLJarRenderer:
             data = data.encode()
 
         try:
-            out, errs = proc.communicate(data, timeout=10)
+            out, errs = proc.communicate(data, timeout=self._timeout)
             return out
         except subprocess.TimeoutExpired as e:
             proc.kill()
@@ -195,7 +195,12 @@ class Klass:
             self._uml.add("+%s", field)
 
     def methods(self):
-        members = inspect.getmembers(self._klass, predicate=inspect.isroutine)
+        def methods_filter(member):
+            if inspect.isfunction(member) or inspect.ismethod(member):
+                return member.__module__.startswith('benchmarkstt.')
+            return False
+
+        members = inspect.getmembers(self._klass, predicate=methods_filter)
         members.sort()
 
         skippables = {
@@ -240,13 +245,9 @@ class Klass:
 
             if inspect.ismethod(member):
                 fmt = '{static} ' + fmt
-                extra = format_signature(inspect.signature(getattr(self._klass, k)))
                 kind = 'static'
-            elif inspect.isfunction(member):
-                extra = format_signature(inspect.signature(getattr(self._klass, k)))
-            else:
-                logger.debug('UNKNOWN TYPE skip: %s %s', k, member)
-                continue
+
+            extra = format_signature(inspect.signature(getattr(self._klass, k)))
             contents[kind].append((fmt, k, extra))
 
         for kind in ("public", "protected", "static"):

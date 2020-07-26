@@ -27,14 +27,7 @@ package benchmarkstt.docblock {
 
 	class benchmarkstt.docblock.HTML5Writer  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.HTML5Writer]] {
 		.. Public Methods ..
-		+__init__()
 		+apply_template()
-		+assemble_parts()
-		+get_transforms()
-		+interpolation_dict()
-		+supports(format)
-		+translate()
-		+write(document, destination)
 	}
 
 
@@ -51,12 +44,7 @@ package benchmarkstt.docblock {
 
 	class benchmarkstt.docblock.TextWriter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.TextWriter]] {
 		.. Public Methods ..
-		+__init__()
-		+assemble_parts()
-		+get_transforms()
-		+supports(format)
 		+translate()
-		+write(document, destination)
 	}
 
 }
@@ -193,15 +181,6 @@ package benchmarkstt {
 package benchmarkstt.factory {
 
 	class benchmarkstt.factory.ClassConfig  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.ClassConfig]] extends benchmarkstt.factory.ClassConfigTuple {
-		.. Public Methods ..
-		+__getnewargs__()
-		+__new__(_cls, name, docs, optional_args, required_args)
-		+__repr__()
-		.. Protected Methods ..
-		-_asdict()
-		-_replace(**kwds)
-		.. Static Methods ..
-		{static} +_make(iterable)
 	}
 
 
@@ -232,31 +211,9 @@ package benchmarkstt.cli {
 	class benchmarkstt.cli.HelpFormatter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.cli.html#benchmarkstt.cli.HelpFormatter]] {
 		.. Public Methods ..
 		+__init__(*args, **kwargs)
-		+add_argument(action)
-		+add_arguments(actions)
-		+add_text(text)
-		+add_usage(usage, actions, groups, prefix=None)
-		+end_section()
-		+format_help()
-		+start_section(heading)
 		.. Protected Methods ..
-		-_add_item(func, args)
-		-_dedent()
-		-_expand_help(action)
 		-_fill_text(text, width, indent)
-		-_format_action(action)
-		-_format_action_invocation(action)
-		-_format_actions_usage(actions, groups)
 		-_format_args(action, default_metavar)
-		-_format_text(text)
-		-_format_usage(usage, actions, groups, prefix)
-		-_get_default_metavar_for_optional(action)
-		-_get_default_metavar_for_positional(action)
-		-_get_help_string(action)
-		-_indent()
-		-_iter_indented_subactions(action)
-		-_join_parts(part_strings)
-		-_metavar_formatter(action, default_metavar)
 		-_split_lines(text, width)
 	}
 
@@ -361,7 +318,6 @@ package benchmarkstt.schema {
 
 	class benchmarkstt.schema.Item  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Item]] {
 		.. Public Methods ..
-		+__contains__(key)
 		+__eq__(other)
 		+__getitem__(k)
 		+__init__(*args, **kwargs)
@@ -369,15 +325,9 @@ package benchmarkstt.schema {
 		+__len__() -> int
 		+__ne__(other)
 		+__repr__()
-		+get(key, default=None)
-		+items()
 		+json(**kwargs)
-		+keys()
-		+values()
 		.. Protected Methods ..
 		-_asdict()
-		.. Static Methods ..
-		{static} +__subclasshook__(C)
 	}
 
 
@@ -386,16 +336,13 @@ package benchmarkstt.schema {
 		+__init__(*args, **kwargs)
 		+decode(*args, **kwargs)
 		+object_hook(obj)
-		+raw_decode(s, idx=0)
 	}
 
 
 	class benchmarkstt.schema.JSONEncoder  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.JSONEncoder]] {
 		.. Public Methods ..
-		+__init__(*, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, sort_keys=False, indent=None, separators=None, default=None)
 		+default(o)
 		+encode(obj)
-		+iterencode(o, _one_shot=False)
 	}
 
 
@@ -499,18 +446,6 @@ package benchmarkstt.metrics.core {
 	class benchmarkstt.diff.core.RatcliffObershelp  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] extends benchmarkstt.diff.Base {
 		.. Public Methods ..
 		+__init__(a, b, *args, **kwargs)
-		+find_longest_match(alo, ahi, blo, bhi)
-		+get_grouped_opcodes(n=3)
-		+get_matching_blocks()
-		+get_opcodes()
-		+quick_ratio()
-		+ratio()
-		+real_quick_ratio()
-		+set_seq1(a)
-		+set_seq2(b)
-		+set_seqs(a, b)
-		.. Protected Methods ..
-		-_SequenceMatcher__chain_b()
 	}
 
 
@@ -700,11 +635,6 @@ package benchmarkstt.normalization.logger {
 		.. Public Methods ..
 		+__init__(dialect=None, diff_formatter_dialect=None, title=None, *args, **kwargs)
 		+format(record)
-		+formatException(ei)
-		+formatMessage(record)
-		+formatStack(stack_info)
-		+formatTime(record, datefmt=None)
-		+usesTime()
 		.. Static Methods ..
 		{static} +get_dialect(dialect, strict=None)
 		{static} +has_dialect(dialect)
@@ -726,24 +656,8 @@ package benchmarkstt.normalization.logger {
 	class benchmarkstt.normalization.logger.ListHandler  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.ListHandler]] {
 		.. Public Methods ..
 		+__init__()
-		+__repr__()
-		+acquire()
-		+addFilter(filter)
-		+close()
-		+createLock()
 		+emit(record)
-		+filter(record)
 		+flush()
-		+format(record)
-		+get_name()
-		+handle(record)
-		+handleError(record)
-		+release()
-		+removeFilter(filter)
-		+setFormatter(fmt)
-		+setLevel(level)
-		+setStream(stream)
-		+set_name(name)
 	}
 
 
