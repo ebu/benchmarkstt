@@ -19,8 +19,8 @@ lint:
 testcoverage: env
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src tests/
 
-docs: setupdocs uml
-	cd docs/ && make clean html
+docs: setupdocs clean uml
+	cd docs/ && make html
 
 setupdocs: env
 	$(PYTHON) -m pip install -r docs/requirements.txt
@@ -28,12 +28,14 @@ setupdocs: env
 dev: env setuptools
 	$(PYTHON) -m pip install -e '.[test]'
 
-uml: env
+uml: env cleanuml
 	PYTHONPATH="./src/" $(PYTHON) src/benchmarkstt/_uml.py
 
 clean:
 	cd docs/ && make clean
-	find . -name '*.pyc' -delete
+
+cleanuml:
+	for e in svg puml; do for f in docs/_static/uml/*."$$e"; do [ -e "$$f" ] && rm docs/_static/uml/*."$$e"; break; done; done
 
 setuptools: env
 	$(PYTHON) -m pip install --upgrade setuptools wheel

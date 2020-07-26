@@ -1,3 +1,10 @@
+"""
+Module used to generate PlantUML class diagrams for benchmarkstt.
+
+Currently only used for documentation purposes.
+"""
+
+
 import inspect
 import pkgutil
 import os
@@ -11,18 +18,28 @@ from contextlib import nullcontext
 logger = logging.getLogger(__name__)
 
 
-PLANT_UML_ERROR_HELP = """
-PlantUML error occured. `plantuml.jar` might not be available or not in the correct path.
+PLANT_UML_ERROR_HELP = """PlantUML error: {error}
 
-PlantUMLJarRenderer requires PlantUML's `plantuml.jar`, downloadable from \
+{current} might not be available or not in the correct path.
+
+PlantUMLLocalRenderer requires PlantUML's `plantuml.jar`, downloadable from \
 https://plantuml.com/download.
 
 Place `plantuml.jar` in the current working directory, or specify the command using \
 environmental variable `PLANTUML_COMMAND`.
 
 E.g.
-PLANTUML_COMMAND="java -jar /path/to/plantuml.jar" python some_script.py
-""".strip()
+
+- Using a jar:
+
+    PLANTUML_COMMAND="java -jar /path/to/plantuml.jar" python {script}
+
+- Using an executable:
+
+    PLANTUML_COMMAND="`which plantuml`" python {script}
+
+(current PLANTUML_COMMAND={current})
+"""
 
 
 class PlantUMLWebRenderer:
@@ -43,13 +60,19 @@ class PlantUMLWebRenderer:
         )[0]
 
 
-class PlantUMLJarRendererError(Exception):
+class PlantUMLLocalRendererError(Exception):
     def __init__(self, message):
-        logger.error(PLANT_UML_ERROR_HELP)
-        super().__init__(message)
+        logger.error(
+            PLANT_UML_ERROR_HELP.format(
+                error=message,
+                script=sys.argv[0],
+                current=repr(' '.join(PlantUMLLocalRenderer.DEFAULT_COMMAND))
+            )
+        )
+        super().__init__(str(message))
 
 
-class PlantUMLJarRenderer:
+class PlantUMLLocalRenderer:
     """
     Render straight from a jar file.
     """
@@ -72,11 +95,15 @@ class PlantUMLJarRenderer:
 
     def render_files(self, *args):
         command = [*self._command, "-t%s" % (self._format,), *args]
-        proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        try:
+            proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        except (FileNotFoundError, PermissionError) as e:
+            raise PlantUMLLocalRendererError(e) from None
+
         try:
             _, err = proc.communicate(timeout=self._timeout)
             if proc.returncode:
-                raise PlantUMLJarRendererError(err.decode())
+                raise PlantUMLLocalRendererError(err.decode())
         except subprocess.TimeoutExpired as e:
             proc.kill()
             raise e
@@ -91,7 +118,7 @@ class PlantUMLJarRenderer:
         try:
             out, err = proc.communicate(data, timeout=self._timeout)
             if proc.returncode:
-                raise PlantUMLJarRendererError(err.decode())
+                raise PlantUMLLocalRendererError(err.decode())
             return out
         except subprocess.TimeoutExpired as e:
             proc.kill()
@@ -434,8 +461,8 @@ if __name__ == '__main__':
         print()
         exit()
 
-    # alternatively use PlantUMLWebRenderer or PlantUMLJarRenderer
-    Renderer = PlantUMLJarRenderer
+    # alternatively use PlantUMLWebRenderer or PlantUMLLocalRenderer
+    Renderer = PlantUMLLocalRenderer
 
     file_tpl = './docs/_static/uml/%s.%s'
     extensions = ('puml', 'svg')
