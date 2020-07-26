@@ -11,8 +11,6 @@ package benchmarkstt.output [[https://benchmarkstt.readthedocs.io/en/latest/modu
 		+__exit__(exc_type, exc_val, exc_tb)
 		+result(title, result)
 	}
-
-
 }
 
 package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#]] {
@@ -25,7 +23,6 @@ package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest
 		+result(title, result)
 	}
 
-
 	class benchmarkstt.output.core.MarkDown  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.MarkDown]] extends benchmarkstt.output.core.SimpleTextBase {
 		.. Public Methods ..
 		+__enter__()
@@ -33,8 +30,6 @@ package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest
 		+print(result)
 		+result(title, result)
 	}
-
-
 
 	class benchmarkstt.output.core.ReStructuredText  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.ReStructuredText]] extends benchmarkstt.output.core.SimpleTextBase {
 		.. Public Methods ..
@@ -44,8 +39,6 @@ package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest
 		+result(title, result)
 	}
 
-
-
 	class benchmarkstt.output.core.SimpleTextBase  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.SimpleTextBase]] extends benchmarkstt.output.Base {
 		.. Public Methods ..
 		+__enter__()
@@ -53,7 +46,6 @@ package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest
 		+print(result)
 		+result(title, result)
 	}
-
 }
 
 

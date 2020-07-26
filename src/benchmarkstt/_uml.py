@@ -112,10 +112,9 @@ class Package:
         with PlantUMLBlock(uml, "package %s %s" % (module.__name__, uml.link(module.__name__))):
             for name, cls in inspect.getmembers(module, predicate=inspect.isclass):
                 uml.klass(cls)
-                uml.add()
 
 
-class KlassTests:
+class FunctionTests:
     @classmethod
     def is_protected(cls, k, _=None):
         return k.startswith('_') and not cls.is_magic(k)
@@ -127,6 +126,12 @@ class KlassTests:
     @staticmethod
     def contains(k, options=None):
         return options and k in options
+
+
+class KlassTests:
+    @staticmethod
+    def is_exception(klass):
+        return issubclass(klass, BaseException)
 
     @staticmethod
     def is_namedtuple(klass):
@@ -174,7 +179,7 @@ class Klass:
             outside_extends = '<extends %s>' % join(bases[1])
 
         meta = ''
-        if cls.__name__.endswith('Error'):
+        if KlassTests.is_exception(self._klass):
             meta = '<< (E,red) >>'
 
         self._uml.add(
@@ -211,9 +216,9 @@ class Klass:
         members.sort()
 
         skippables = {
-            'skip_protected': KlassTests.is_protected,
-            'skip_magic': KlassTests.is_magic,
-            'skip': KlassTests.contains,
+            'skip_protected': FunctionTests.is_protected,
+            'skip_magic': FunctionTests.is_magic,
+            'skip': FunctionTests.contains,
         }
 
         def should_skip(k):
@@ -239,7 +244,7 @@ class Klass:
         for k, member in members:
             if should_skip(k):
                 continue
-            kind = 'protected' if KlassTests.is_protected(k) else 'public'
+            kind = 'protected' if FunctionTests.is_protected(k) else 'public'
 
             fmt = '%s%s%s'
             extra = ''
@@ -464,8 +469,7 @@ if __name__ == '__main__':
     import benchmarkstt
     packages = [name
                 for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)])
-                if ispkg and name != 'benchmark'
-                and not (len(args) and name not in args)]
+                if ispkg and not (len(args) and name not in args)]
 
     files = []
     for name in packages:

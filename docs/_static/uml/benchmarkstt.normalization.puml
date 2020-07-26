@@ -13,7 +13,6 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		-_normalize(text: str) -> str
 	}
 
-
 	class benchmarkstt.normalization.BaseWithFileSupport  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.BaseWithFileSupport]] extends benchmarkstt.normalization.Base {
 		.. Public Methods ..
 		+__repr__()
@@ -21,8 +20,6 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		.. Protected Methods ..
 		-_normalize(text: str) -> str
 	}
-
-
 
 	class benchmarkstt.normalization.File  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.File]] extends benchmarkstt.normalization.Base {
 		.. Public Methods ..
@@ -32,7 +29,6 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		.. Protected Methods ..
 		-_normalize(text: str) -> str
 	}
-
 
 	class benchmarkstt.normalization.FileFactory<extends benchmarkstt.factory.Factory>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] {
 		.. Public Methods ..
@@ -52,7 +48,6 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		+unregister(key)
 	}
 
-
 	class benchmarkstt.normalization.NormalizationComposite  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.NormalizationComposite]] extends benchmarkstt.normalization.Base {
 		.. Public Methods ..
 		+__init__(title=None)
@@ -62,25 +57,12 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		.. Protected Methods ..
 		-_normalize(text: str) -> str
 	}
-
 }
 
 package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
-
-
-
-
-
-
 }
 
 package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
-
-
-
-
-
-
 }
 
 package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#]] {
@@ -97,10 +79,8 @@ package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en
 		{static} +refresh_docstring()
 	}
 
-
 	class benchmarkstt.normalization.core.ConfigSectionNotFoundError << (E,red) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ConfigSectionNotFoundError]] {
 	}
-
 
 	class benchmarkstt.normalization.core.Lowercase  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Lowercase]] extends benchmarkstt.normalization.Base {
 		.. Public Methods ..
@@ -109,7 +89,6 @@ package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en
 		.. Protected Methods ..
 		-_normalize(text: str) -> str
 	}
-
 
 	class benchmarkstt.normalization.core.Regex  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Regex]] extends benchmarkstt.normalization.BaseWithFileSupport {
 		.. Public Methods ..
@@ -120,7 +99,6 @@ package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en
 		-_normalize(text: str) -> str
 	}
 
-
 	class benchmarkstt.normalization.core.Replace  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Replace]] extends benchmarkstt.normalization.BaseWithFileSupport {
 		.. Public Methods ..
 		+__init__(search: str, replace: str)
@@ -129,7 +107,6 @@ package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en
 		.. Protected Methods ..
 		-_normalize(text: str) -> str
 	}
-
 
 	class benchmarkstt.normalization.core.ReplaceWords  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.ReplaceWords]] extends benchmarkstt.normalization.BaseWithFileSupport {
 		.. Public Methods ..
@@ -141,7 +118,6 @@ package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en
 		-_replacement_callback(matches)
 	}
 
-
 	class benchmarkstt.normalization.core.Unidecode  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Unidecode]] extends benchmarkstt.normalization.Base {
 		.. Public Methods ..
 		+__repr__()
@@ -149,17 +125,14 @@ package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en
 		.. Protected Methods ..
 		-_normalize(text: str) -> str
 	}
-
 }
 
 package benchmarkstt.normalization.logger [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#]] {
-
 
 	class benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingDictFormatterDialect]] extends benchmarkstt.normalization.logger.DiffLoggingFormatterDialect {
 		.. Public Methods ..
 		+format(title, stack, diff)
 	}
-
 
 	class benchmarkstt.normalization.logger.DiffLoggingFormatter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingFormatter]] {
 		.. Public Methods ..
@@ -170,18 +143,15 @@ package benchmarkstt.normalization.logger [[https://benchmarkstt.readthedocs.io/
 		{static} +has_dialect(dialect)
 	}
 
-
 	class benchmarkstt.normalization.logger.DiffLoggingFormatterDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingFormatterDialect]] {
 		.. Public Methods ..
 		+format(title, stack, diff)
 	}
 
-
 	class benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.DiffLoggingTextFormatterDialect]] extends benchmarkstt.normalization.logger.DiffLoggingFormatterDialect {
 		.. Public Methods ..
 		+format(title, stack, diff)
 	}
-
 
 	class benchmarkstt.normalization.logger.ListHandler  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.ListHandler]] {
 		.. Public Methods ..
@@ -190,7 +160,6 @@ package benchmarkstt.normalization.logger [[https://benchmarkstt.readthedocs.io/
 		+flush()
 	}
 
-
 	class benchmarkstt.normalization.logger.LogCapturer  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.LogCapturer]] {
 		.. Public Methods ..
 		+__enter__()
@@ -198,15 +167,12 @@ package benchmarkstt.normalization.logger [[https://benchmarkstt.readthedocs.io/
 		+__init__(*args, **kwargs)
 	}
 
-
 	class benchmarkstt.normalization.logger.NormalizedLogItem<namedtuple> << (T, yellow) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.logger.html#benchmarkstt.normalization.logger.NormalizedLogItem]] {
 		.. Fields ..
 		+stack
 		+original
 		+normalized
 	}
-
-
 }
 
 

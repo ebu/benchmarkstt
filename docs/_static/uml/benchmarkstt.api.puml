@@ -17,7 +17,6 @@ package benchmarkstt.api.jsonrpc [[https://benchmarkstt.readthedocs.io/en/latest
 		+version()
 	}
 
-
 	class benchmarkstt.api.jsonrpc.MagicMethods  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.MagicMethods]] {
 		.. Public Methods ..
 		+__init__()
@@ -27,13 +26,8 @@ package benchmarkstt.api.jsonrpc [[https://benchmarkstt.readthedocs.io/en/latest
 		+serve(config, callback)
 	}
 
-
-
-
 	class benchmarkstt.api.jsonrpc.SecurityError << (E,red) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
 	}
-
-
 }
 
 package benchmarkstt.api.gunicorn [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.gunicorn.html#]] {

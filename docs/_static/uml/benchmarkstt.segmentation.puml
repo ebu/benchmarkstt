@@ -9,20 +9,15 @@ package benchmarkstt.segmentation [[https://benchmarkstt.readthedocs.io/en/lates
 		.. Public Methods ..
 		+__iter__()
 	}
-
-
 }
 
 package benchmarkstt.segmentation.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#]] {
-
-
 
 	class benchmarkstt.segmentation.core.Simple  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] extends benchmarkstt.segmentation.Base {
 		.. Public Methods ..
 		+__init__(text: str, pattern='[\\n\\t\\s]+', normalizer=None)
 		+__iter__()
 	}
-
 }
 
 
