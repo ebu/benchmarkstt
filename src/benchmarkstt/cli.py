@@ -1,3 +1,7 @@
+"""
+Module responsible for handling the command line tools.
+"""
+
 import argparse
 import logging
 import textwrap
