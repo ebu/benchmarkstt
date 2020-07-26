@@ -11,6 +11,20 @@ from contextlib import nullcontext
 logger = logging.getLogger(__name__)
 
 
+PLANT_UML_ERROR_HELP = """
+PlantUML error occured. `plantuml.jar` might not be available or not in the correct path.
+
+PlantUMLJarRenderer requires PlantUML's `plantuml.jar`, downloadable from \
+https://plantuml.com/download.
+
+Place `plantuml.jar` in the current working directory, or specify the command using \
+environmental variable `PLANTUML_COMMAND`.
+
+E.g.
+PLANTUML_COMMAND="java -jar /path/to/plantuml.jar" python some_script.py
+""".strip()
+
+
 class PlantUMLWebRenderer:
     def __init__(self, format=None):
         if format is None:
@@ -29,12 +43,18 @@ class PlantUMLWebRenderer:
         )[0]
 
 
+class PlantUMLJarRendererError(Exception):
+    def __init__(self, message):
+        logger.error(PLANT_UML_ERROR_HELP)
+        super().__init__(message)
+
+
 class PlantUMLJarRenderer:
     """
-    Note: requires PlantUML's `plantuml.jar` from https://plantuml.com/download
+    Render straight from a jar file.
     """
 
-    DEFAULT_COMMAND = os.environ.get("PLANTUML", "java -jar plantuml.jar").split(' ')
+    DEFAULT_COMMAND = os.environ.get("PLANTUML_COMMAND", "java -jar plantuml.jar").split(' ')
     DEFAULT_FORMAT = 'svg'
     DEFAULT_TIMEOUT = 20
 
@@ -50,27 +70,28 @@ class PlantUMLJarRenderer:
         self._timeout = timeout
         self._format = format
 
-    def __process(self, *args):
-        command = [*self._command, "-p", "-t%s" % (self._format,), *args]
-        return subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-
     def render_files(self, *args):
         command = [*self._command, "-t%s" % (self._format,), *args]
+        proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         try:
-            proc = subprocess.Popen(command, stderr=sys.stderr, stdout=sys.stdout)
-            proc.communicate(timeout=self._timeout)
+            _, err = proc.communicate(timeout=self._timeout)
+            if proc.returncode:
+                raise PlantUMLJarRendererError(err.decode())
         except subprocess.TimeoutExpired as e:
             proc.kill()
             raise e
 
     def render(self, data):
-        proc = self.__process()
+        command = [*self._command, "-p", "-t%s" % (self._format,), *args]
+        proc = subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 
         if type(data) is str:
             data = data.encode()
 
         try:
-            out, errs = proc.communicate(data, timeout=self._timeout)
+            out, err = proc.communicate(data, timeout=self._timeout)
+            if proc.returncode:
+                raise PlantUMLJarRendererError(err.decode())
             return out
         except subprocess.TimeoutExpired as e:
             proc.kill()
