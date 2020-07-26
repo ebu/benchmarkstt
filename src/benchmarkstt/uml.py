@@ -129,7 +129,7 @@ class Klass:
         self._uml.level += 1
 
     def methods(self):
-        members = inspect.getmembers(self._klass)
+        members = inspect.getmembers(self._klass, predicate=inspect.isroutine)
         members.sort()
 
         def is_protected(k, _=None):
@@ -162,6 +162,12 @@ class Klass:
 
             fmt = '%s%s%s'
             extra = ''
+
+            if inspect.isbuiltin(member):
+                continue
+
+            if inspect.ismethoddescriptor(member):
+                continue
 
             if inspect.ismethod(member):
                 fmt = '{static} ' + fmt
