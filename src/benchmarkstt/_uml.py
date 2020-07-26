@@ -468,27 +468,15 @@ if __name__ == '__main__':
     extensions = ('puml', 'svg')
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
+    def benchmarkstt_filter(cls):
+        return not cls.__qualname__.startswith('benchmarkstt.')
+
     def benchmarkstt_filter_for(name):
-        module_name = 'benchmarkstt.%s' % (name,)
+        def _filter(cls):
+            return benchmarkstt_filter(cls) and \
+                   not (hasattr(cls, '__module__') and cls.__module__.startswith('benchmarkstt.%s' % (name,)))
 
-        def benchmarkstt_filter(cls):
-            if cls.__name__.startswith('benchmarkstt.'):
-                return False
-
-            if cls.__name__.startswith(module_name):
-                return False
-
-            if hasattr(cls, '__module__') and cls.__module__.startswith(module_name):
-                return False
-
-            return True
-
-        def fil(cls):
-            filtered = benchmarkstt_filter(cls)
-            logger.debug("FILTER: %s\t%s ", "SKIPPED" if filtered else "OK", cls)
-            return filtered
-
-        return fil  # benchmarkstt_filter
+        return _filter
 
     svg_renderer = Renderer(format='svg')
 
