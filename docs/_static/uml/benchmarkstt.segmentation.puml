@@ -3,7 +3,7 @@
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-package benchmarkstt.segmentation {
+package benchmarkstt.segmentation [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#]] {
 
 	class benchmarkstt.segmentation.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
 		.. Public Methods ..
@@ -13,7 +13,7 @@ package benchmarkstt.segmentation {
 
 }
 
-package benchmarkstt.segmentation.core {
+package benchmarkstt.segmentation.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#]] {
 
 
 

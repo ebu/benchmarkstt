@@ -3,7 +3,7 @@
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-package benchmarkstt.output {
+package benchmarkstt.output [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#]] {
 
 	class benchmarkstt.output.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.html#benchmarkstt.output.Base]] {
 		.. Public Methods ..
@@ -15,7 +15,7 @@ package benchmarkstt.output {
 
 }
 
-package benchmarkstt.output.core {
+package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#]] {
 
 	class benchmarkstt.output.core.Json  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.output.core.html#benchmarkstt.output.core.Json]] extends benchmarkstt.output.Base {
 		.. Public Methods ..
