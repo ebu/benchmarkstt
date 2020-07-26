@@ -9,8 +9,6 @@ package benchmarkstt.input [[https://benchmarkstt.readthedocs.io/en/latest/modul
 		.. Public Methods ..
 		+__iter__()
 	}
-
-
 }
 
 package benchmarkstt.input.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#]] {
@@ -23,13 +21,11 @@ package benchmarkstt.input.core [[https://benchmarkstt.readthedocs.io/en/latest/
 		{static} +available_types()
 	}
 
-
 	class benchmarkstt.input.core.PlainText  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.input.core.html#benchmarkstt.input.core.PlainText]] extends benchmarkstt.input.Base {
 		.. Public Methods ..
 		+__init__(text, segmenter=None, normalizer=None)
 		+__iter__()
 	}
-
 }
 
 
