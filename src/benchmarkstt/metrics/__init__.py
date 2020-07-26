@@ -1,3 +1,14 @@
+"""
+Responsible for calculating metrics.
+
+Structure
+.........
+
+.. image:: ../_static/uml/benchmarkstt.metrics.svg
+    :alt: Package Structure - Click for details
+    :target: ../_static/uml/benchmarkstt.metrics.svg
+"""
+
 from benchmarkstt.schema import Schema
 from benchmarkstt.factory import Factory
 

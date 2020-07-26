@@ -1,5 +1,12 @@
 """
-Subpackage responsible for dealing with input formats and converting them to benchmarkstt native schema
+Responsible for dealing with input formats and converting them to benchmarkstt native schema
+
+Structure
+.........
+
+.. image:: ../_static/uml/benchmarkstt.input.svg
+    :alt: Package Structure - Click for details
+    :target: ../_static/uml/benchmarkstt.input.svg
 """
 
 from benchmarkstt.factory import Factory

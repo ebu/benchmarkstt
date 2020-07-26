@@ -46,14 +46,22 @@ class PlantUMLJarRenderer:
         if format is None:
             format = self.DEFAULT_FORMAT
 
-        self._process = None
         self._command = command
         self._timeout = timeout
         self._format = format
 
     def __process(self, *args):
-        command = [*self._command, "-p", "-t%s" % (self._format), *args]
+        command = [*self._command, "-p", "-t%s" % (self._format,), *args]
         return subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+
+    def render_files(self, *args):
+        command = [*self._command, "-t%s" % (self._format,), *args]
+        try:
+            proc = subprocess.Popen(command, stderr=sys.stderr, stdout=sys.stdout)
+            proc.communicate(timeout=self._timeout)
+        except subprocess.TimeoutExpired as e:
+            proc.kill()
+            raise e
 
     def render(self, data):
         proc = self.__process()
@@ -66,7 +74,6 @@ class PlantUMLJarRenderer:
             return out
         except subprocess.TimeoutExpired as e:
             proc.kill()
-            self._process = None
             raise e
 
 
@@ -431,11 +438,10 @@ if __name__ == '__main__':
 
     def generate(package, filter_, direction=None):
         name = package.__name__
-        title = name
         uml = PlantUML(filter=filter_, link_tpl=link_tpl)
         if direction:
             uml.direction(direction)
-        uml.title(title)
+        # uml.title(name)
         uml.skinparam('packageStyle Frame')
 
         # decrease ugliness
@@ -443,28 +449,31 @@ if __name__ == '__main__':
         uml.includeurl('https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml')
 
         generated = uml.generate(package)
-        with open(file_tpl % (name, 'puml'), 'w') as f:
+        file_name = file_tpl % (name, 'puml')
+        with open(file_name, 'w') as f:
             f.write(generated)
 
-        with open(file_tpl % (name, 'svg'), 'wb') as f:
-            f.write(svg_renderer.render(generated))
+        # slow version, but doesn't require a file:
+        # with open(file_tpl % (name, 'svg'), 'wb') as f:
+        #     f.write(svg_renderer.render(generated))
+        return file_name
 
     import benchmarkstt
     packages = [name
                 for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)])
-                if ispkg and name != 'benchmark']
+                if ispkg and name != 'benchmark'
+                and not (len(args) and name not in args)]
 
+    files = []
     for name in packages:
-        if len(args) and name not in args:
-            logger.debug("SKIPPED Generating UML for %s", name)
-            continue
         full_name = "benchmarkstt.%s" % (name,)
         logger.info("Generating UML for %s", name)
         package = import_module(full_name)
-        generate(package, benchmarkstt_filter_for(name))
+        files.append(generate(package, benchmarkstt_filter_for(name)))
 
     if len(args) == 0 or 'benchmarkstt' in args:
         logger.info("Generating UML for complete package")
-        generate(benchmarkstt, benchmarkstt_filter_for(''), "left to right")
-    else:
-        logger.debug("SKIPPED Generating UML for complete package")
+        files.append(generate(benchmarkstt, benchmarkstt_filter_for(''), "left to right"))
+
+    logger.info('Creating SVGs for %d PlantUML files', len(files))
+    svg_renderer.render_files(*files)

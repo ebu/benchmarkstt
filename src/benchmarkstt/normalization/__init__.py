@@ -1,3 +1,15 @@
+"""
+Responsible for normalization of text.
+
+Structure
+.........
+
+.. image:: ../_static/uml/benchmarkstt.normalization.svg
+    :alt: Package Structure - Click for details
+    :target: ../_static/uml/benchmarkstt.normalization.svg
+
+"""
+
 from benchmarkstt.normalization.logger import log
 import logging
 from benchmarkstt.factory import Factory
@@ -5,16 +17,19 @@ from benchmarkstt import settings
 from benchmarkstt import csv
 import os
 
+
 _normalizer_namespaces = (
     "benchmarkstt.normalization.core",
     ""
 )
 
-
 logger = logging.getLogger(__name__)
 
 
 class Base:
+    """
+    Abstract base class for normalization
+    """
     @log
     def normalize(self, text: str) -> str:
         """

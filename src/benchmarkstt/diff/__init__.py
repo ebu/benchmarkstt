@@ -1,3 +1,14 @@
+"""
+Responsible for calculating differences.
+
+Structure
+.........
+
+.. image:: ../_static/uml/benchmarkstt.diff.svg
+    :alt: Package Structure - Click for details
+    :target: ../_static/uml/benchmarkstt.diff.svg
+"""
+
 from benchmarkstt.factory import Factory
 
 
