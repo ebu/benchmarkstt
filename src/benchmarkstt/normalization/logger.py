@@ -8,11 +8,16 @@ NormalizedLogItem = namedtuple('NormalizedLogItem', ['stack', 'original', 'norma
 
 
 class Logger:
-    title = None
-    logger = logging.getLogger('benchmarkstt.normalize')
-    logger.setLevel(logging.INFO)
-    logger.propagate = False
-    stack = []
+    def __init__(self):
+        self.title = None
+        self.logger = logging.getLogger('benchmarkstt.normalize')
+        self.logger.setLevel(logging.INFO)
+        self.logger.propagate = False
+        self.stack = []
+
+
+# singleton
+Logger = Logger()
 
 
 class ListHandler(logging.StreamHandler):

@@ -108,43 +108,100 @@ class Package:
                 uml.add()
 
 
+class KlassTests:
+    @classmethod
+    def is_protected(cls, k, _=None):
+        return k.startswith('_') and not cls.is_magic(k)
+
+    @staticmethod
+    def is_magic(k, _=None):
+        return k.startswith('__') and k.endswith('__')
+
+    @staticmethod
+    def contains(k, options=None):
+        return options and k in options
+
+    @staticmethod
+    def is_namedtuple(klass):
+        return tuple in klass.__bases__ and hasattr(klass, '_fields')
+
+
 class Klass:
     def __init__(self, uml, klass, **kwargs):
         self._uml = uml
         self._klass = klass
         self._options = kwargs
 
-        uml.parent_relations(self._klass)
-        self.start()
-        self.methods()
+        # uml.parent_relations(self._klass)
+        if KlassTests.is_namedtuple(klass):
+            self.tuple()
+        else:
+            self.start()
+            self.methods()
         self.stop()
 
-    def start(self):
-        self._uml.add()
-        link = self._uml.link(
+    def _classlink(self):
+        return self._uml.link(
             self._klass.__module__,
             self._klass.__module__ + '.' + self._klass.__name__
         )
-        self._uml.add('class %s.%s %s {', self._klass.__module__, self._klass.__name__, link)
+
+    def start(self):
+        self._uml.add()
+
+        extends = ''
+        outside_extends = ''
+        bases = [[], []]
+
+        def join(classes):
+            return ', '.join(map(self._uml.cls_name, classes)),
+
+        for cls in self._klass.__bases__:
+            bases[self._uml.filtered(cls)].append(cls)
+
+        if len(bases[0]):
+            extends = 'extends %s ' % join(bases[0])
+
+        bases[1] = list(filter(lambda cls: cls.__module__.startswith('benchmarkstt.'), bases[1]))
+        if len(bases[1]):
+            outside_extends = '<extends %s>' % join(bases[1])
+
+        meta = ''
+        if cls.__name__.endswith('Error'):
+            meta = '<< (E,red) >>'
+
+        self._uml.add(
+            'class %s.%s%s %s %s %s{',
+            self._klass.__module__,
+            self._klass.__name__,
+            outside_extends,
+            meta,
+            self._classlink(),
+            extends
+        )
         self._uml.level += 1
+
+    def tuple(self):
+        self._uml.add()
+        self._uml.add(
+            'class %s<namedtuple> << (T, yellow) >> %s {',
+            self._uml.cls_name(self._klass),
+            self._classlink()
+        )
+        self._uml.level += 1
+        self._uml.add('.. Fields ..')
+
+        for field in self._klass._fields:
+            self._uml.add("+%s", field)
 
     def methods(self):
         members = inspect.getmembers(self._klass, predicate=inspect.isroutine)
         members.sort()
 
-        def is_protected(k, _=None):
-            return k.startswith('_') and not is_magic(k)
-
-        def is_magic(k, _=None):
-            return k.startswith('__') and k.endswith('__')
-
-        def contains(k, options=None):
-            return options and k in options
-
         skippables = {
-            'skip_protected': is_protected,
-            'skip_magic': is_magic,
-            'skip': contains,
+            'skip_protected': KlassTests.is_protected,
+            'skip_magic': KlassTests.is_magic,
+            'skip': KlassTests.contains,
         }
 
         def should_skip(k):
@@ -156,9 +213,9 @@ class Klass:
             )
 
         def format_signature(sig):
-            def _filter(x):
+            def filter_self_and_cls(x):
                 return x.name not in ['self', 'cls']
-            params = filter(_filter, sig.parameters.values())
+            params = filter(filter_self_and_cls, sig.parameters.values())
             return str(sig.replace(parameters=params))
 
         contents = {
@@ -170,7 +227,7 @@ class Klass:
         for k, member in members:
             if should_skip(k):
                 continue
-            kind = 'protected' if is_protected(k) else 'public'
+            kind = 'protected' if KlassTests.is_protected(k) else 'public'
 
             fmt = '%s%s%s'
             extra = ''
@@ -197,9 +254,10 @@ class Klass:
                 continue
 
             self._uml.add(".. %s Methods ..", kind.capitalize())
+
+            icon = '-' if kind == 'protected' else '+'
             for fmt, k, extra in contents[kind]:
-                kind = '-' if kind == 'protected' else '+'
-                self._uml.add(fmt, kind, k, extra)
+                self._uml.add(fmt, icon, k, extra)
 
         return self
 
@@ -343,7 +401,7 @@ if __name__ == '__main__':
     Renderer = PlantUMLJarRenderer
 
     file_tpl = './docs/_static/uml/%s.%s'
-    extensions = ('plantuml', 'svg')
+    extensions = ('puml', 'svg')
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter_for(name):
@@ -380,10 +438,11 @@ if __name__ == '__main__':
         uml.skinparam('packageStyle Frame')
 
         # decrease ugliness
-        uml.includeurl('https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu')
+        uml.add('!define LIGHTORANGE')
+        uml.includeurl('https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml')
 
         generated = uml.generate(package)
-        with open(file_tpl % (name, 'plantuml'), 'w') as f:
+        with open(file_tpl % (name, 'puml'), 'w') as f:
             f.write(generated)
 
         with open(file_tpl % (name, 'svg'), 'wb') as f:
