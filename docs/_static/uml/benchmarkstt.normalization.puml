@@ -27,7 +27,7 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		#_normalize(text: str) -> str
 	}
 
-	class benchmarkstt.normalization.FileFactory<extends benchmarkstt.factory.Factory> << Iterable>> <<Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] {
+	class benchmarkstt.normalization.FileFactory<extends benchmarkstt.factory.Factory> << Iterable >> << Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] {
 		.. Public Methods ..
 		+__contains__(item)
 		+__delitem__(key)

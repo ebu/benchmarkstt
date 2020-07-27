@@ -43,7 +43,7 @@ package benchmarkstt.docblock [[https://benchmarkstt.readthedocs.io/en/latest/mo
 
 package benchmarkstt.config [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.config.html#]] {
 
-	class benchmarkstt.config.SectionConfigReader << Iterable>> <<Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.config.html#benchmarkstt.config.SectionConfigReader]] {
+	class benchmarkstt.config.SectionConfigReader << Iterable >> << Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.config.html#benchmarkstt.config.SectionConfigReader]] {
 		.. Public Methods ..
 		+__contains__(item)
 		+__init__(config)
@@ -69,7 +69,7 @@ package benchmarkstt.factory [[https://benchmarkstt.readthedocs.io/en/latest/mod
 	class benchmarkstt.factory.ClassConfig   [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.ClassConfig]] extends benchmarkstt.factory.ClassConfigTuple {
 	}
 
-	class benchmarkstt.factory.Factory << Iterable>> <<Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.Factory]] extends benchmarkstt.registry.Registry {
+	class benchmarkstt.factory.Factory << Iterable >> << Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.Factory]] extends benchmarkstt.registry.Registry {
 		.. Public Methods ..
 		+__contains__(item)
 		+__delitem__(key)
@@ -97,7 +97,7 @@ package benchmarkstt.cli [[https://benchmarkstt.readthedocs.io/en/latest/modules
 		#_split_lines(text, width)
 	}
 
-	class benchmarkstt.modules.Modules << Iterable>> <<Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.modules.html#benchmarkstt.modules.Modules]] {
+	class benchmarkstt.modules.Modules << Iterable >> << Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.modules.html#benchmarkstt.modules.Modules]] {
 		.. Public Methods ..
 		+__getattr__(name)
 		+__init__(sub_module=None)
@@ -173,7 +173,7 @@ package benchmarkstt.modules [[https://benchmarkstt.readthedocs.io/en/latest/mod
 
 package benchmarkstt.schema [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#]] {
 
-	class benchmarkstt.schema.Item << Comparable>> <<Iterable>> <<Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Item]] {
+	class benchmarkstt.schema.Item << Comparable >> << Iterable >> << Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Item]] {
 		.. Public Methods ..
 		+__init__(*args, **kwargs)
 		+__len__() -> int
@@ -198,7 +198,7 @@ package benchmarkstt.schema [[https://benchmarkstt.readthedocs.io/en/latest/modu
 	class benchmarkstt.schema.Meta   [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Meta]] {
 	}
 
-	class benchmarkstt.schema.Schema << Comparable>> <<Iterable>> <<Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Schema]] {
+	class benchmarkstt.schema.Schema << Comparable >> << Iterable >> << Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.schema.html#benchmarkstt.schema.Schema]] {
 		.. Public Methods ..
 		+__init__(data=None)
 		+__len__()
@@ -291,7 +291,7 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		#_normalize(text: str) -> str
 	}
 
-	class benchmarkstt.normalization.FileFactory << Iterable>> <<Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] extends benchmarkstt.factory.Factory {
+	class benchmarkstt.normalization.FileFactory << Iterable >> << Subscriptable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#benchmarkstt.normalization.FileFactory]] extends benchmarkstt.factory.Factory {
 		.. Public Methods ..
 		+__contains__(item)
 		+__delitem__(key)
