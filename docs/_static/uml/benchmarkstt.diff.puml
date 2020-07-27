@@ -5,24 +5,20 @@ skinparam packageStyle Frame
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
 package benchmarkstt.diff.formatter [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#]] {
 
-	class benchmarkstt.diff.formatter.CLIDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
+	class benchmarkstt.diff.formatter.CLIDiffDialect << ContextManager >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.CLIDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
 		.. Public Methods ..
-		+__enter__()
-		+__exit__(exc_type, exc_val, exc_tb)
 		+__init__(show_color_key=None)
 		+output()
 		+preprocessor(txt)
 	}
 
-	class benchmarkstt.diff.formatter.Dialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.Dialect]] {
+	class benchmarkstt.diff.formatter.Dialect << ContextManager >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.Dialect]] {
 		.. Public Methods ..
-		+__enter__()
-		+__exit__(exc_type, exc_val, exc_tb)
 		+__init__()
 		+output()
 	}
 
-	class benchmarkstt.diff.formatter.DiffFormatter  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.DiffFormatter]] {
+	class benchmarkstt.diff.formatter.DiffFormatter   [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.DiffFormatter]] {
 		.. Public Methods ..
 		+__init__(dialect=None, *args, **kwargs)
 		+diff(a, b, opcodes=None, preprocessor=None)
@@ -30,19 +26,15 @@ package benchmarkstt.diff.formatter [[https://benchmarkstt.readthedocs.io/en/lat
 		{static} +has_dialect(dialect)
 	}
 
-	class benchmarkstt.diff.formatter.HTMLDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.HTMLDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
+	class benchmarkstt.diff.formatter.HTMLDiffDialect << ContextManager >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.HTMLDiffDialect]] extends benchmarkstt.diff.formatter.Dialect {
 		.. Public Methods ..
-		+__enter__()
-		+__exit__(exc_type, exc_val, exc_tb)
 		+__init__()
 		+output()
 		+preprocessor(txt)
 	}
 
-	class benchmarkstt.diff.formatter.JSONDiffDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.JSONDiffDialect]] extends benchmarkstt.diff.formatter.ListDialect {
+	class benchmarkstt.diff.formatter.JSONDiffDialect << ContextManager >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.JSONDiffDialect]] extends benchmarkstt.diff.formatter.ListDialect {
 		.. Public Methods ..
-		+__enter__()
-		+__exit__(exc_type, exc_val, exc_tb)
 		+__init__()
 		+delete_format(txt)
 		+equal_format(txt)
@@ -51,13 +43,11 @@ package benchmarkstt.diff.formatter [[https://benchmarkstt.readthedocs.io/en/lat
 		+preprocessor(txt)
 		+replace_format(a, b)
 		.. Protected Methods ..
-		-_format(kind, txt, txt2=None)
+		#_format(kind, txt, txt2=None)
 	}
 
-	class benchmarkstt.diff.formatter.ListDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.ListDialect]] extends benchmarkstt.diff.formatter.Dialect {
+	class benchmarkstt.diff.formatter.ListDialect << ContextManager >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.ListDialect]] extends benchmarkstt.diff.formatter.Dialect {
 		.. Public Methods ..
-		+__enter__()
-		+__exit__(exc_type, exc_val, exc_tb)
 		+__init__()
 		+delete_format(txt)
 		+equal_format(txt)
@@ -66,22 +56,18 @@ package benchmarkstt.diff.formatter [[https://benchmarkstt.readthedocs.io/en/lat
 		+preprocessor(txt)
 		+replace_format(a, b)
 		.. Protected Methods ..
-		-_format(kind, txt, txt2=None)
+		#_format(kind, txt, txt2=None)
 	}
 
-	class benchmarkstt.diff.formatter.RestructuredTextDialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.RestructuredTextDialect]] extends benchmarkstt.diff.formatter.CLIDiffDialect {
+	class benchmarkstt.diff.formatter.RestructuredTextDialect << ContextManager >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.RestructuredTextDialect]] extends benchmarkstt.diff.formatter.CLIDiffDialect {
 		.. Public Methods ..
-		+__enter__()
-		+__exit__(exc_type, exc_val, exc_tb)
 		+__init__(show_color_key=None)
 		+output()
 		+preprocessor(txt)
 	}
 
-	class benchmarkstt.diff.formatter.UTF8Dialect  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.UTF8Dialect]] extends benchmarkstt.diff.formatter.Dialect {
+	class benchmarkstt.diff.formatter.UTF8Dialect << ContextManager >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.formatter.html#benchmarkstt.diff.formatter.UTF8Dialect]] extends benchmarkstt.diff.formatter.Dialect {
 		.. Public Methods ..
-		+__enter__()
-		+__exit__(exc_type, exc_val, exc_tb)
 		+__init__()
 		+delete_format(txt)
 		+insert_format(txt)
@@ -92,7 +78,7 @@ package benchmarkstt.diff.formatter [[https://benchmarkstt.readthedocs.io/en/lat
 
 package benchmarkstt.diff [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#]] {
 
-	class benchmarkstt.diff.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
+	class benchmarkstt.diff.Base   [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.html#benchmarkstt.diff.Base]] {
 		.. Public Methods ..
 		+__init__(a='', b='')
 		+get_opcodes()
@@ -101,7 +87,7 @@ package benchmarkstt.diff [[https://benchmarkstt.readthedocs.io/en/latest/module
 
 package benchmarkstt.diff.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#]] {
 
-	class benchmarkstt.diff.core.RatcliffObershelp  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] extends benchmarkstt.diff.Base {
+	class benchmarkstt.diff.core.RatcliffObershelp   [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#benchmarkstt.diff.core.RatcliffObershelp]] extends benchmarkstt.diff.Base {
 		.. Public Methods ..
 		+__init__(a, b, *args, **kwargs)
 	}

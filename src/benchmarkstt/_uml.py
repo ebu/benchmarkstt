@@ -163,6 +163,23 @@ class Package:
 
 
 class FunctionTests:
+    MAGIC_DUCKS = {
+        "__iter__": "Iterable",
+        "__next__": "Iterable",
+        "__call__": "Callable",
+        "__enter__": "ContextManager",
+        "__exit__": "ContextManager",
+        "__lt__": "Comparable",
+        "__le__": "Comparable",
+        "__eq__": "Comparable",
+        "__ne__": "Comparable",
+        "__gt__": "Comparable",
+        "__ge__": "Comparable",
+        "__getitem__": "Subscriptable",
+        "__repr__": None,
+        "__str__": None,
+    }
+
     @classmethod
     def is_protected(cls, k, _=None):
         return k.startswith('_') and not cls.is_magic(k)
@@ -174,6 +191,14 @@ class FunctionTests:
     @staticmethod
     def contains(k, options=None):
         return options and k in options
+
+    @classmethod
+    def is_magic_duck(cls, k, _=None):
+        return cls.magic_to_duck(k) is not False
+
+    @classmethod
+    def magic_to_duck(cls, k, _=None):
+        return cls.MAGIC_DUCKS.get(k, False)
 
 
 class KlassTests:
@@ -195,8 +220,7 @@ class Klass:
         if KlassTests.is_namedtuple(klass):
             self.tuple()
         else:
-            self.start()
-            self.methods()
+            self.klass()
         self.stop()
 
     def _classlink(self):
@@ -205,7 +229,24 @@ class Klass:
             self._klass.__module__ + '.' + self._klass.__name__
         )
 
-    def start(self):
+    def tuple(self):
+        self._uml.add()
+        self._uml.add(
+            'class %s<namedtuple> << (T, yellow) >> %s {',
+            self._uml.cls_name(self._klass),
+            self._classlink()
+        )
+        self._uml.level += 1
+        self._uml.add('.. Fields ..')
+
+        for field in self._klass._fields:
+            self._uml.add("+%s", field)
+
+    def klass(self):
+        def methods_filter(member):
+            if inspect.isfunction(member) or inspect.ismethod(member):
+                return member.__module__.startswith('benchmarkstt.')
+            return False
         self._uml.add()
 
         extends = ''
@@ -229,38 +270,23 @@ class Klass:
         if KlassTests.is_exception(self._klass):
             meta = '<< (E,red) >>'
 
+        members = inspect.getmembers(self._klass, predicate=methods_filter)
+        members.sort()
+
+        magic_ducks = set(filter(None, map(FunctionTests.magic_to_duck, map(lambda x: x[0], members))))
+        magic_ducks = '<< {} >>'.format(">> <<".join(magic_ducks)) if magic_ducks else ''
+
         self._uml.add(
-            'class %s.%s%s %s %s %s{',
+            'class %s.%s%s %s %s %s %s{',
             self._klass.__module__,
             self._klass.__name__,
             outside_extends,
+            magic_ducks,
             meta,
             self._classlink(),
             extends
         )
         self._uml.level += 1
-
-    def tuple(self):
-        self._uml.add()
-        self._uml.add(
-            'class %s<namedtuple> << (T, yellow) >> %s {',
-            self._uml.cls_name(self._klass),
-            self._classlink()
-        )
-        self._uml.level += 1
-        self._uml.add('.. Fields ..')
-
-        for field in self._klass._fields:
-            self._uml.add("+%s", field)
-
-    def methods(self):
-        def methods_filter(member):
-            if inspect.isfunction(member) or inspect.ismethod(member):
-                return member.__module__.startswith('benchmarkstt.')
-            return False
-
-        members = inspect.getmembers(self._klass, predicate=methods_filter)
-        members.sort()
 
         skippables = {
             'skip_protected': FunctionTests.is_protected,
@@ -269,7 +295,7 @@ class Klass:
         }
 
         def should_skip(k):
-            return any(
+            return FunctionTests.is_magic_duck(k) or any(
                 (
                     self._options.get(option_name) and func(k, self._options.get(option_name))
                     for option_name, func in skippables.items()
@@ -315,7 +341,7 @@ class Klass:
 
             self._uml.add(".. %s Methods ..", kind.capitalize())
 
-            icon = '-' if kind == 'protected' else '+'
+            icon = '#' if kind == 'protected' else '+'
             for fmt, k, extra in contents[kind]:
                 self._uml.add(fmt, icon, k, extra)
 
