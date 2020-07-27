@@ -5,18 +5,15 @@ skinparam packageStyle Frame
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
 package benchmarkstt.segmentation [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#]] {
 
-	class benchmarkstt.segmentation.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
-		.. Public Methods ..
-		+__iter__()
+	class benchmarkstt.segmentation.Base << Iterable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {
 	}
 }
 
 package benchmarkstt.segmentation.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#]] {
 
-	class benchmarkstt.segmentation.core.Simple  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] extends benchmarkstt.segmentation.Base {
+	class benchmarkstt.segmentation.core.Simple << Iterable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.core.html#benchmarkstt.segmentation.core.Simple]] extends benchmarkstt.segmentation.Base {
 		.. Public Methods ..
 		+__init__(text: str, pattern='[\\n\\t\\s]+', normalizer=None)
-		+__iter__()
 	}
 }
 
