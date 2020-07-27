@@ -59,6 +59,7 @@ class _ActionWithArguments:
 def action_with_arguments(action, required_args, optional_args):
     """
     Custom argparse action to support a variable amount of arguments
+
     :param action: name of the action
     :param list required_args: required arguments
     :param list optional_args: optional arguments
