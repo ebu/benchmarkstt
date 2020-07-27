@@ -9,11 +9,10 @@ import inspect
 import pkgutil
 import os
 import subprocess
-from importlib import import_module
 import logging
 
+from importlib import import_module
 from pathlib import Path
-from contextlib import nullcontext
 
 logger = logging.getLogger(__name__)
 
@@ -43,10 +42,10 @@ E.g.
 
 
 class PlantUMLWebRenderer:
-    def __init__(self, format=None):
-        if format is None:
-            format = 'svg'
-        self._format = format
+    def __init__(self, format_=None):
+        if format_ is None:
+            format_ = 'svg'
+        self._format = format_
 
     def render(self, data):
         from plantweb.render import render
@@ -81,17 +80,17 @@ class PlantUMLLocalRenderer:
     DEFAULT_FORMAT = 'svg'
     DEFAULT_TIMEOUT = 20
 
-    def __init__(self, format=None, command=None, timeout=None):
+    def __init__(self, format_=None, command=None, timeout=None):
         if command is None:
             command = self.DEFAULT_COMMAND
         if timeout is None:
             timeout = self.DEFAULT_TIMEOUT
-        if format is None:
-            format = self.DEFAULT_FORMAT
+        if format_ is None:
+            format_ = self.DEFAULT_FORMAT
 
         self._command = command
         self._timeout = timeout
-        self._format = format
+        self._format = format_
 
     def render_files(self, *args):
         command = [*self._command, "-t%s" % (self._format,), *args]
@@ -146,12 +145,6 @@ class PlantUMLBlock:
         self._uml.add()
 
 
-class Namespace(PlantUMLBlock):
-    def __init__(self, uml, name):
-        block_text = "namespace %s" % (name,)
-        super().__init__(uml, block_text)
-
-
 class Package:
     def __init__(self, uml, module, filter_=None):
         if not inspect.ismodule(module):
@@ -199,7 +192,6 @@ class Klass:
         self._klass = klass
         self._options = kwargs
 
-        # uml.parent_relations(self._klass)
         if KlassTests.is_namedtuple(klass):
             self.tuple()
         else:
@@ -419,9 +411,6 @@ class PlantUML:
         self._relations.append(" ".join((self.cls_name(a), arrow, self.cls_name(b))))
         return self
 
-    def namespace(self, name):
-        return Namespace(self, name)
-
     def klass(self, klass):
         return Klass(self, klass)
 
@@ -482,7 +471,7 @@ if __name__ == '__main__':
 
         return _filter
 
-    svg_renderer = Renderer(format='svg')
+    svg_renderer = Renderer(format_='svg')
 
     def generate(package, filter_, direction=None):
         name = package.__name__
