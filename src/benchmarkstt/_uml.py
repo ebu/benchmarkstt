@@ -157,8 +157,15 @@ class Package:
         if not inspect.ismodule(module):
             raise Exception("Expected a module")
 
+        classes = [(name, cls)
+                   for name, cls in inspect.getmembers(module, predicate=inspect.isclass)
+                   if not uml.skip(cls)]
+
+        if not classes:
+            return
+
         with PlantUMLBlock(uml, "package %s %s" % (module.__name__, uml.link(module.__name__))):
-            for name, cls in inspect.getmembers(module, predicate=inspect.isclass):
+            for name, cls in classes:
                 uml.klass(cls)
 
 
@@ -416,8 +423,6 @@ class PlantUML:
         return Namespace(self, name)
 
     def klass(self, klass):
-        if self.skip(klass):
-            return nullcontext()
         return Klass(self, klass)
 
     def __str__(self):
@@ -453,11 +458,10 @@ if __name__ == '__main__':
     logging.basicConfig(level=logLevel)
 
     if '--help' in args:
-        print("Usage: %s [--verbose] [--help] [filter1 [filter2 [filterN...]]]" % (sys.argv[0],))
+        print("Usage: %s [--verbose] [--help]" % (sys.argv[0],))
         print()
         print("\t--verbose\tOutput all debug info")
         print("\t--help\tShow this usage message")
-        print("\tfilterN\tNames of the packages for which we wish to generate UML (all if no arguments are present)")
         print()
         exit()
 
@@ -485,7 +489,7 @@ if __name__ == '__main__':
         uml = PlantUML(filter=filter_, link_tpl=link_tpl)
         if direction:
             uml.direction(direction)
-        # uml.title(name)
+
         uml.skinparam('packageStyle Frame')
 
         # decrease ugliness
@@ -496,10 +500,6 @@ if __name__ == '__main__':
         file_name = file_tpl % (name, 'puml')
         with open(file_name, 'w') as f:
             f.write(generated)
-
-        # slow version, but doesn't require a file:
-        # with open(file_tpl % (name, 'svg'), 'wb') as f:
-        #     f.write(svg_renderer.render(generated))
         return file_name
 
     import benchmarkstt
@@ -516,7 +516,7 @@ if __name__ == '__main__':
 
     if len(args) == 0 or 'benchmarkstt' in args:
         logger.info("Generating UML for complete package")
-        files.append(generate(benchmarkstt, benchmarkstt_filter_for(''), "left to right"))
+        files.append(generate(benchmarkstt, benchmarkstt_filter_for('')))
 
     logger.info('Creating SVGs for %d PlantUML files', len(files))
     svg_renderer.render_files(*files)
