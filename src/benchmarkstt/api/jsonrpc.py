@@ -32,6 +32,7 @@ class MagicMethods:
     def is_safe_path(path):
         """
         Determines whether the file or path is within the current working directory
+
         :param str|PathLike path:
         :return: bool
         """
@@ -122,6 +123,7 @@ class MagicMethods:
     def register(self, name, callback):
         """
         Register a callback as an api call
+
         :param name:
         :param callback:
         """

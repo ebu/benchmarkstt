@@ -40,6 +40,7 @@ class Modules:
 def load_object(name, transform=None):
     """
     Load an object based on a string.
+
     :param name: The string representation of an object
     :param transform: Transform (callable) done on the object name for comparison, if None, will lowercase compare.
     False for no transform.
