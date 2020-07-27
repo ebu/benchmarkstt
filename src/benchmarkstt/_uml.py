@@ -274,7 +274,7 @@ class Klass:
         members.sort()
 
         magic_ducks = set(filter(None, map(FunctionTests.magic_to_duck, map(lambda x: x[0], members))))
-        magic_ducks = '<< {} >>'.format(">> <<".join(magic_ducks)) if magic_ducks else ''
+        magic_ducks = '<< {} >>'.format(" >> << ".join(magic_ducks)) if magic_ducks else ''
 
         self._uml.add(
             'class %s.%s%s %s %s %s %s{',
