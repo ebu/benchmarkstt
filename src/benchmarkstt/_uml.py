@@ -153,13 +153,13 @@ class Namespace(PlantUMLBlock):
 
 
 class Package:
-    def __init__(self, uml, module):
+    def __init__(self, uml, module, filter_=None):
         if not inspect.ismodule(module):
             raise Exception("Expected a module")
 
         classes = [(name, cls)
                    for name, cls in inspect.getmembers(module, predicate=inspect.isclass)
-                   if not uml.skip(cls)]
+                   if filter_ and filter_(cls)]
 
         if not classes:
             return
@@ -396,19 +396,19 @@ class PlantUML:
     def cls_name(cls):
         return '.'.join((cls.__module__, cls.__name__))
 
-    def skip(self, cls):
+    def class_filter(self, cls):
         if self.filtered(cls):
-            return True
+            return False
         if cls in self.classes_done:
-            return True
+            return False
         self.classes_done.add(cls)
-        return False
+        return True
 
     def filtered(self, cls):
         return False if self._filter is None else self._filter(cls)
 
     def package(self, module):
-        return Package(self, module)
+        return Package(self, module, filter_=self.class_filter)
 
     def parent_relations(self, cls):
         for parent_cls in cls.__bases__:
