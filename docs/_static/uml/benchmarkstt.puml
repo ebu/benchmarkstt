@@ -1,6 +1,5 @@
 @startuml
 
-left to right direction
 skinparam packageStyle Frame
 !define LIGHTORANGE
 !includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
@@ -68,12 +67,6 @@ package benchmarkstt.registry [[https://benchmarkstt.readthedocs.io/en/latest/mo
 	}
 }
 
-package benchmarkstt [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.html#]] {
-}
-
-package benchmarkstt [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.html#]] {
-}
-
 package benchmarkstt.factory [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#]] {
 
 	class benchmarkstt.factory.ClassConfig  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.factory.html#benchmarkstt.factory.ClassConfig]] extends benchmarkstt.factory.ClassConfigTuple {
@@ -96,9 +89,6 @@ package benchmarkstt.factory [[https://benchmarkstt.readthedocs.io/en/latest/mod
 		+register_namespace(namespace)
 		+unregister(key)
 	}
-}
-
-package benchmarkstt [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.html#]] {
 }
 
 package benchmarkstt.cli [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.cli.html#]] {
@@ -253,27 +243,12 @@ package benchmarkstt.schema [[https://benchmarkstt.readthedocs.io/en/latest/modu
 	}
 }
 
-package benchmarkstt.decorators [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.decorators.html#]] {
-}
-
-package benchmarkstt.benchmark [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.benchmark.html#]] {
-}
-
-package benchmarkstt.benchmark [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.benchmark.html#]] {
-}
-
 package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 
 	class benchmarkstt.metrics.Base  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#benchmarkstt.metrics.Base]] {
 		.. Public Methods ..
 		+compare(ref: benchmarkstt.schema.Schema, hyp: benchmarkstt.schema.Schema)
 	}
-}
-
-package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
-}
-
-package benchmarkstt.metrics [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.html#]] {
 }
 
 package benchmarkstt.metrics.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.metrics.core.html#]] {
@@ -364,12 +339,6 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 		.. Protected Methods ..
 		-_normalize(text: str) -> str
 	}
-}
-
-package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
-}
-
-package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
 }
 
 package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#]] {
@@ -665,15 +634,6 @@ package benchmarkstt.diff [[https://benchmarkstt.readthedocs.io/en/latest/module
 	}
 }
 
-package benchmarkstt.diff.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.diff.core.html#]] {
-}
-
-package benchmarkstt.api [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.html#]] {
-}
-
-package benchmarkstt.api [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.html#]] {
-}
-
 package benchmarkstt.api.jsonrpc [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#]] {
 
 	class benchmarkstt.api.jsonrpc.DefaultMethods  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {
@@ -693,9 +653,6 @@ package benchmarkstt.api.jsonrpc [[https://benchmarkstt.readthedocs.io/en/latest
 
 	class benchmarkstt.api.jsonrpc.SecurityError << (E,red) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.SecurityError]] {
 	}
-}
-
-package benchmarkstt.api.gunicorn [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.gunicorn.html#]] {
 }
 
 

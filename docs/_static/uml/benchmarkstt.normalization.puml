@@ -59,12 +59,6 @@ package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/late
 	}
 }
 
-package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
-}
-
-package benchmarkstt.normalization [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.html#]] {
-}
-
 package benchmarkstt.normalization.core [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#]] {
 
 	class benchmarkstt.normalization.core.Config  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.normalization.core.html#benchmarkstt.normalization.core.Config]] extends benchmarkstt.normalization.Base {

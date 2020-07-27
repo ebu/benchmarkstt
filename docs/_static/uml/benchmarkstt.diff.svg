@@ -18,7 +18,7 @@ reverse link benchmarkstt.diff.formatter.ListDialect to benchmarkstt.diff.format
 reverse link benchmarkstt.diff.formatter.Dialect to benchmarkstt.diff.formatter.ListDialect--><path d="M590.38,166.71 C593.33,180.18 596.47,194.5 599.57,208.66 " fill="none" id="benchmarkstt.diff.formatter.Dialect&lt;-benchmarkstt.diff.formatter.ListDialect" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="583.52,168.1,586.08,147.07,597.19,165.11,583.52,168.1" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[42bef6836bc68c456f75427094de6c35]
 reverse link benchmarkstt.diff.formatter.CLIDiffDialect to benchmarkstt.diff.formatter.RestructuredTextDialect--><path d="M129,385.85 C129,424.68 129,470.9 129,506.46 " fill="none" id="benchmarkstt.diff.formatter.CLIDiffDialect&lt;-benchmarkstt.diff.formatter.RestructuredTextDialect" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="122,385.73,129,365.73,136,385.73,122,385.73" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[dab5b0c4d09e39186ea8a57da41e6cde]
 reverse link benchmarkstt.diff.formatter.Dialect to benchmarkstt.diff.formatter.UTF8Dialect--><path d="M670.99,158.4 C695.09,174.49 720.72,192.07 744,209 C755.9,217.65 768.25,227 780.34,236.35 " fill="none" id="benchmarkstt.diff.formatter.Dialect&lt;-benchmarkstt.diff.formatter.UTF8Dialect" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="666.98,164.14,654.18,147.26,674.71,152.47,666.98,164.14" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[995a509b438cdc2d97b80485f82ea7f7]
-reverse link benchmarkstt.diff.Base to benchmarkstt.diff.core.RatcliffObershelp--><path d="M1119,154.19 C1119,193.34 1119,243.59 1119,275.43 " fill="none" id="benchmarkstt.diff.Base&lt;-benchmarkstt.diff.core.RatcliffObershelp" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="1112,154.04,1119,134.04,1126,154.04,1112,154.04" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[d0362f5a8c66b0d210b5193aded00724]
+reverse link benchmarkstt.diff.Base to benchmarkstt.diff.core.RatcliffObershelp--><path d="M1119,154.19 C1119,193.34 1119,243.59 1119,275.43 " fill="none" id="benchmarkstt.diff.Base&lt;-benchmarkstt.diff.core.RatcliffObershelp" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="1112,154.04,1119,134.04,1126,154.04,1112,154.04" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[fabc554869d6a6e8e39c8aea75f9147e]
 @startuml
 
 skinparam packageStyle Frame
@@ -533,7 +533,7 @@ package benchmarkstt.diff.core [[https://benchmarkstt.readthedocs.io/en/latest/m
 
 @enduml
 
-PlantUML version 1.2020.15(Sun Jun 28 13:39:45 CEST 2020)
+PlantUML version 1.2020.15(Sun Jun 28 11:39:45 UTC 2020)
 (GPL source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM
