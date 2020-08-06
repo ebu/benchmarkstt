@@ -1,9 +1,11 @@
 # Minimal makefile for Sphinx documentation
 #
 
+PYTHON       := $(shell test -e ../env/bin/activate && echo "../env/bin/python" || echo "python3")
+
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = $(PYTHON) -msphinx
 SOURCEDIR     = .
 BUILDDIR      = build
 
