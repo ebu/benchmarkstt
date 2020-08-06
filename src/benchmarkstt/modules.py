@@ -43,7 +43,7 @@ def load_object(name, transform=None):
 
     :param name: The string representation of an object
     :param transform: Transform (callable) done on the object name for comparison, if None, will lowercase compare.
-    False for no transform.
+                      False for no transform.
     """
     module = list(name.split('.'))
 
