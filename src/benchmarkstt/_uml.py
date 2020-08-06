@@ -2,6 +2,12 @@
 Module used to generate PlantUML class diagrams for benchmarkstt.
 
 Currently only used for documentation purposes.
+
+Warning:
+    Code is made to purpose, untested and unused in actual benchmarkstt.
+    As such, this code could use a cleanup and some decent architecture.
+    Currently though, meh... -MikeSmithEU
+
 """
 
 
@@ -175,7 +181,10 @@ class FunctionTests:
         "__ne__": "Comparable",
         "__gt__": "Comparable",
         "__ge__": "Comparable",
-        "__getitem__": "Subscriptable",
+        "__getitem__": "Indexable",
+        "__reversed__": "Reversible",
+        "__getattr__": "Attributes",
+        "__getattribute__": "Attributes",
         "__repr__": None,
         "__str__": None,
     }
@@ -218,7 +227,7 @@ class Klass:
         self._options = kwargs
 
         if KlassTests.is_namedtuple(klass):
-            self.tuple()
+            self.namedtuple()
         else:
             self.klass()
         self.stop()
@@ -229,7 +238,7 @@ class Klass:
             self._klass.__module__ + '.' + self._klass.__name__
         )
 
-    def tuple(self):
+    def namedtuple(self):
         self._uml.add()
         self._uml.add(
             'class %s<namedtuple> << (T, yellow) >> %s {',
@@ -273,7 +282,7 @@ class Klass:
         members = inspect.getmembers(self._klass, predicate=methods_filter)
         members.sort()
 
-        magic_ducks = set(filter(None, map(FunctionTests.magic_to_duck, map(lambda x: x[0], members))))
+        magic_ducks = sorted(set(filter(None, map(FunctionTests.magic_to_duck, map(lambda x: x[0], members)))))
         magic_ducks = '<< {} >>'.format(" >> << ".join(magic_ducks)) if magic_ducks else ''
 
         self._uml.add(

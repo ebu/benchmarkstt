@@ -9,7 +9,7 @@ class benchmarkstt.output.core.ReStructuredText--><a href="https://benchmarkstt.
 reverse link benchmarkstt.output.Base to benchmarkstt.output.core.Json--><path d="M193.02,134.44 C202.55,152.96 213.06,173.38 222.05,190.85 " fill="none" id="benchmarkstt.output.Base&lt;-benchmarkstt.output.core.Json" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="186.65,137.36,183.72,116.38,199.1,130.96,186.65,137.36" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[649e8d6b5a19579f64f6ff55d9b80603]
 reverse link benchmarkstt.output.core.SimpleTextBase to benchmarkstt.output.core.MarkDown--><path d="M85.57,298.39 C85.48,311.62 85.38,325.29 85.3,337.58 " fill="none" id="benchmarkstt.output.core.SimpleTextBase&lt;-benchmarkstt.output.core.MarkDown" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="78.57,298.17,85.71,278.22,92.57,298.27,78.57,298.17" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[0064dcd89a9c0ed1362beefa7e7418bc]
 reverse link benchmarkstt.output.core.SimpleTextBase to benchmarkstt.output.core.ReStructuredText--><path d="M147.83,291.89 C164.58,307.16 182.44,323.45 198.22,337.83 " fill="none" id="benchmarkstt.output.core.SimpleTextBase&lt;-benchmarkstt.output.core.ReStructuredText" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="142.91,296.87,132.85,278.22,152.34,286.52,142.91,296.87" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[ec4fe02a8646f37173536f5ee390896c]
-reverse link benchmarkstt.output.Base to benchmarkstt.output.core.SimpleTextBase--><path d="M136.98,134.44 C127.45,152.96 116.94,173.38 107.95,190.85 " fill="none" id="benchmarkstt.output.Base&lt;-benchmarkstt.output.core.SimpleTextBase" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="130.9,130.96,146.28,116.38,143.35,137.36,130.9,130.96" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[000740474c84d31259e5ffe71b4f01c3]
+reverse link benchmarkstt.output.Base to benchmarkstt.output.core.SimpleTextBase--><path d="M136.98,134.44 C127.45,152.96 116.94,173.38 107.95,190.85 " fill="none" id="benchmarkstt.output.Base&lt;-benchmarkstt.output.core.SimpleTextBase" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="none" points="130.9,130.96,146.28,116.38,143.35,137.36,130.9,130.96" style="stroke: #000000; stroke-width: 1.0;"/><!--MD5=[f5e12bb1abf599100182804172adb18c]
 @startuml
 
 skinparam packageStyle Frame
@@ -386,7 +386,7 @@ package benchmarkstt.output.core [[https://benchmarkstt.readthedocs.io/en/latest
 
 @enduml
 
-PlantUML version 1.2020.15(Sun Jun 28 11:39:45 UTC 2020)
+PlantUML version 1.2020.15(Sun Jun 28 13:39:45 CEST 2020)
 (GPL source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM
