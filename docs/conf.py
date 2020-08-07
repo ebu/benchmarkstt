@@ -4,6 +4,7 @@ import re
 from sphinx.ext.apidoc import main as sphinx_apidoc
 from benchmarkstt.api.jsonrpc import get_methods
 from benchmarkstt.docblock import format_docs
+from datetime import date
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
@@ -37,6 +38,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinxcontrib.plantuml',
     'sphinxarg.ext',
 ]
 
@@ -53,10 +55,8 @@ else:
 # -- Project information -----------------------------------------------------
 
 project = 'BenchmarkSTT'
-copyright = '2019, EBU'
+copyright = '2019 - %d EBU' % (date.today().year,)
 author = 'EBU'
-
-# The short X.Y version
 
 with open('../VERSION') as f:
     # The full version, including alpha/beta/rc tags
@@ -144,7 +144,7 @@ htmlhelp_basename = 'BenchmarkSTTdoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    # 'papersize': 'letterpaper',
+    'papersize': 'a4paper',
 
     # The font size ('10pt', '11pt' or '12pt').
     #
@@ -185,7 +185,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'BenchmarkSTT', 'BenchmarkSTT Documentation',
-     author, 'BenchmarkSTT', 'One line description of project.',
+     author, 'BenchmarkSTT', 'Command line tool for benchmarking Automatic Speech Recognition engines',
      'Miscellaneous'),
 ]
 
@@ -217,3 +217,8 @@ smartquotes = False
 # smartquotes_excludes = {'builders': ['man', 'text']}
 
 highlight_language = 'none'
+
+# PlantUML settings
+plantuml = os.environ.get('PLANTUML', 'plantuml')
+plantuml_output_format = 'svg_img'
+plantuml_latex_output_format = 'pdf'
