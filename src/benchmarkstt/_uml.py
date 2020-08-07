@@ -517,8 +517,8 @@ if __name__ == '__main__':
         uml.skinparam('packageStyle Frame')
 
         # decrease ugliness
-        uml.add('!define LIGHTORANGE')
-        uml.includeurl('https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml')
+        #uml.add('!define LIGHTORANGE')
+        #uml.includeurl('https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml')
 
         generated = uml.generate(package)
         file_name = file_tpl % (name, 'puml')
