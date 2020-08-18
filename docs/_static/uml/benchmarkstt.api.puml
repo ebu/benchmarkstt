@@ -1,8 +1,6 @@
 @startuml
 
 skinparam packageStyle Frame
-!define LIGHTORANGE
-!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
 package benchmarkstt.api.jsonrpc [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#]] {
 
 	class benchmarkstt.api.jsonrpc.DefaultMethods   [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.api.jsonrpc.html#benchmarkstt.api.jsonrpc.DefaultMethods]] {

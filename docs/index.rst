@@ -1,3 +1,5 @@
+.. gravizo:: _static/uml/benchmarkstt.api.puml 
+
 .. include:: ../README.rst
 
 
