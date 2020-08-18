@@ -1,30 +1,39 @@
-.PHONY: docs test clean pypi
+.PHONY: docs test clean pypi env
 
-test:
-	python -m pytest src --doctest-modules -vvv
-	PYTHONPATH="./src/" python -m pytest --cov=./src --cov-report html:htmlcov ./tests -vvv
-	python -m pycodestyle tests
-	python -m pycodestyle src
+PYTHON:=$(shell test -e env/bin/activate && echo "env/bin/python" || echo "python3")
 
-testcoverage:
-	PYTHONPATH="./src/" python -m pytest --cov=./src tests/
+env:
+	echo "Using $(shell exec $(PYTHON) --version): $(PYTHON)"
+	$(PYTHON) -m ensurepip
 
-docs:
-	cd docs/ && make clean html
+test: env lint
+	$(PYTHON) -m pytest src --doctest-modules -vvv
+	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src --cov-report html:htmlcov ./tests -vvv
 
-setupdocs: setuptools
-	python -m pip install -r docs/requirements.txt
+lint:
+	$(PYTHON) -m pycodestyle tests
+	$(PYTHON) -m pycodestyle src
 
-dev: setuptools
-	python -m pip install '.[test]'
+testcoverage: env
+	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src tests/
+
+docs: setupdocs clean
+	cd docs/ && make html
+
+setupdocs: env
+	$(PYTHON) -m pip install -r docs/requirements.txt
+
+dev: env setuptools
+	$(PYTHON) -m pip install -e '.[test]'
 
 clean:
 	cd docs/ && make clean
 
-setuptools:
-	python -m pip install --upgrade setuptools wheel
+setuptools: env
+	$(PYTHON) -m pip install --upgrade setuptools wheel
 
-pypi: setuptools test
-	python setup.py sdist bdist_wheel
-	python -m pip install --user --upgrade twine
-	python -m twine upload dist/*
+pypi: env setuptools test
+	$(PYTHON) setup.py sdist bdist_wheel
+	$(PYTHON) -m pip install --user --upgrade twine
+	$(PYTHON) -m twine upload dist/*
+
