@@ -1,7 +1,6 @@
 .PHONY: docs test clean pypi env
 
 PYTHON:=$(shell test -e env/bin/activate && echo "env/bin/python" || echo "python3")
-PLANTUML:=$(or $(shell which plantuml),"java -jar plantuml.jar")
 
 env:
 	echo "Using $(shell exec $(PYTHON) --version): $(PYTHON)"
