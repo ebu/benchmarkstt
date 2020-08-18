@@ -4,7 +4,6 @@ PYTHON:=$(shell test -e env/bin/activate && echo "env/bin/python" || echo "pytho
 PLANTUML:=$(or $(shell which plantuml),"java -jar plantuml.jar")
 
 env:
-	test -e env/bin/activate && source env/bin/activate
 	echo "Using $(shell exec $(PYTHON) --version): $(PYTHON)"
 	$(PYTHON) -m ensurepip
 
