@@ -1,8 +1,6 @@
 @startuml
 
 skinparam packageStyle Frame
-!define LIGHTORANGE
-!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
 package benchmarkstt.segmentation [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#]] {
 
 	class benchmarkstt.segmentation.Base << Iterable >>  [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.segmentation.html#benchmarkstt.segmentation.Base]] {

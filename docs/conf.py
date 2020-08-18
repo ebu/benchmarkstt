@@ -38,6 +38,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinxarg.ext',
+    'sphinxcontrib.gravizo',
 ]
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'

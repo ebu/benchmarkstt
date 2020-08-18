@@ -1,8 +1,6 @@
 @startuml
 
 skinparam packageStyle Frame
-!define LIGHTORANGE
-!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
 package benchmarkstt.docblock [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#]] {
 
 	class benchmarkstt.docblock.Docblock<namedtuple> << (T, yellow) >> [[https://benchmarkstt.readthedocs.io/en/latest/modules/benchmarkstt.docblock.html#benchmarkstt.docblock.Docblock]] {
