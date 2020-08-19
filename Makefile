@@ -17,7 +17,7 @@ lint:
 testcoverage: env
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src tests/
 
-docs: setupdocs clean uml
+docs: setupdocs clean
 	cd docs/ && make html
 
 setupdocs: env
@@ -26,15 +26,8 @@ setupdocs: env
 dev: env setuptools
 	$(PYTHON) -m pip install -e '.[test]'
 
-uml: env
-	mkdir -p docs/_static/autogen
-	PYTHONPATH="./src/" $(PYTHON) src/benchmarkstt/_uml.py
-
-clean: cleanautogen
+clean:
 	cd docs/ && make clean
-
-cleanautogen:
-	test -e docs/_static/autogen && rm -rf docs/static/autogen || true
 
 setuptools: env
 	$(PYTHON) -m pip install --upgrade setuptools wheel

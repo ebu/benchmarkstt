@@ -15,11 +15,13 @@ import inspect
 import pkgutil
 import os
 import logging
+import sys
+
 
 from importlib import import_module
 from pathlib import Path
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('benchmarksttdocs.uml')
 
 
 class PlantUMLBlock:
@@ -352,36 +354,12 @@ class PlantUML:
         )
 
 
-if __name__ == '__main__':
-    # generate basic PlantUML schemas for benchmarkstt
-    import sys
+def generate():
+    """
+    Generates basic PlantUML schemas for benchmarkstt
+    """
 
-    args = sys.argv[1:]
-
-    logLevel = logging.INFO
-
-    if '--verbose' in args:
-        logLevel = logging.DEBUG
-        del args[args.index('--verbose')]
-
-    # support colored logs if installed
-    try:
-        import coloredlogs
-        coloredlogs.install(level=logLevel)
-    except ImportError:
-        pass
-
-    logging.basicConfig(level=logLevel)
-
-    if '--help' in args:
-        print("Usage: %s [--verbose] [--help]" % (sys.argv[0],))
-        print()
-        print("\t--verbose\tOutput all debug info")
-        print("\t--help\tShow this usage message")
-        print()
-        exit()
-
-    file_tpl = './docs/_static/autogen/%s.%s'
+    file_tpl = './_static/autogen/%s.%s'
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter(cls):
@@ -402,10 +380,6 @@ if __name__ == '__main__':
 
         uml.skinparam('packageStyle Frame')
 
-        # decrease ugliness
-        # uml.add('!define LIGHTORANGE')
-        # uml.includeurl('https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml')
-
         generated = uml.generate(package)
         file_name = file_tpl % (name, 'puml')
         with open(file_name, 'w') as f:
@@ -415,15 +389,9 @@ if __name__ == '__main__':
     import benchmarkstt
     packages = [name
                 for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)])
-                if ispkg and not (len(args) and name not in args)]
+                if ispkg]
 
     files = []
-    for name in packages:
-        full_name = "benchmarkstt.%s" % (name,)
-        logger.info("Generating UML for %s", name)
-        package = import_module(full_name)
-        files.append(generate(package, benchmarkstt_filter_for(name)))
 
-    if len(args) == 0 or 'benchmarkstt' in args:
-        logger.info("Generating UML for complete package")
-        files.append(generate(benchmarkstt, benchmarkstt_filter_for('')))
+    logger.info("Generating UML for complete package")
+    files.append(generate(benchmarkstt, benchmarkstt_filter_for('')))

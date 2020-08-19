@@ -4,6 +4,7 @@ import re
 from sphinx.ext.apidoc import main as sphinx_apidoc
 from benchmarkstt.api.jsonrpc import get_methods
 from benchmarkstt.docblock import format_docs
+from ext import uml
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
@@ -30,6 +31,8 @@ with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') 
         f.write('\n')
         f.write(format_docs(func.__doc__))
         f.write('\n\n')
+
+uml.generate()
 
 extensions = [
     'sphinx.ext.autodoc',
