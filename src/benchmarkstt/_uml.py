@@ -22,114 +22,6 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-
-PLANT_UML_ERROR_HELP = """PlantUML error: {error}
-
-{current} might not be available or not in the correct path.
-
-PlantUMLLocalRenderer requires PlantUML's `plantuml.jar`, downloadable from \
-https://plantuml.com/download.
-
-Place `plantuml.jar` in the current working directory, or specify the command using \
-environmental variable `PLANTUML_COMMAND`.
-
-E.g.
-
-- Using a jar:
-
-    PLANTUML_COMMAND="java -jar /path/to/plantuml.jar" python {script}
-
-- Using an executable:
-
-    PLANTUML_COMMAND="`which plantuml`" python {script}
-
-(current PLANTUML_COMMAND={current})
-"""
-
-
-class PlantUMLWebRenderer:
-    def __init__(self, format_=None):
-        if format_ is None:
-            format_ = 'svg'
-        self._format = format_
-
-    def render(self, data):
-        from plantweb.render import render
-        return render(
-            data,
-            engine='plantuml',
-            format=self._format,
-            cacheopts={
-                'use_cache': False
-            }
-        )[0]
-
-
-class PlantUMLLocalRendererError(Exception):
-    def __init__(self, message):
-        logger.error(
-            PLANT_UML_ERROR_HELP.format(
-                error=message,
-                script=sys.argv[0],
-                current=repr(' '.join(PlantUMLLocalRenderer.DEFAULT_COMMAND))
-            )
-        )
-        super().__init__(str(message))
-
-
-class PlantUMLLocalRenderer:
-    """
-    Render straight from a jar file.
-    """
-
-    DEFAULT_COMMAND = os.environ.get("PLANTUML_COMMAND", "java -jar plantuml.jar").split(' ')
-    DEFAULT_FORMAT = 'svg'
-    DEFAULT_TIMEOUT = 20
-
-    def __init__(self, format_=None, command=None, timeout=None):
-        if command is None:
-            command = self.DEFAULT_COMMAND
-        if timeout is None:
-            timeout = self.DEFAULT_TIMEOUT
-        if format_ is None:
-            format_ = self.DEFAULT_FORMAT
-
-        self._command = command
-        self._timeout = timeout
-        self._format = format_
-
-    def render_files(self, *args):
-        command = [*self._command, "-t%s" % (self._format,), *args]
-        try:
-            proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-        except (FileNotFoundError, PermissionError) as e:
-            raise PlantUMLLocalRendererError(e) from None
-
-        try:
-            _, err = proc.communicate(timeout=self._timeout)
-            if proc.returncode:
-                raise PlantUMLLocalRendererError(err.decode())
-        except subprocess.TimeoutExpired as e:
-            proc.kill()
-            raise e
-
-    def render(self, data):
-        command = [*self._command, "-p", "-t%s" % (self._format,), *args]
-        proc = subprocess.Popen(command, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-
-        if type(data) is str:
-            data = data.encode()
-
-        try:
-            out, err = proc.communicate(data, timeout=self._timeout)
-            if proc.returncode:
-                raise PlantUMLLocalRendererError(err.decode())
-            return out
-        except subprocess.TimeoutExpired as e:
-            proc.kill()
-            raise e
-
-
 class PlantUMLBlock:
     start_block = "%s {"
     end_block = "}"
@@ -489,9 +381,6 @@ if __name__ == '__main__':
         print()
         exit()
 
-    # alternatively use PlantUMLWebRenderer or PlantUMLLocalRenderer
-    Renderer = PlantUMLLocalRenderer
-
     file_tpl = './docs/_static/uml/%s.%s'
     extensions = ('puml', 'svg')
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
@@ -505,8 +394,6 @@ if __name__ == '__main__':
                    not (hasattr(cls, '__module__') and cls.__module__.startswith('benchmarkstt.%s' % (name,)))
 
         return _filter
-
-    svg_renderer = Renderer(format_='svg')
 
     def generate(package, filter_, direction=None):
         name = package.__name__
@@ -541,6 +428,3 @@ if __name__ == '__main__':
     if len(args) == 0 or 'benchmarkstt' in args:
         logger.info("Generating UML for complete package")
         files.append(generate(benchmarkstt, benchmarkstt_filter_for('')))
-
-    # logger.info('Creating SVGs for %d PlantUML files', len(files))
-    # svg_renderer.render_files(*files)

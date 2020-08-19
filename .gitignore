@@ -2,6 +2,7 @@
 docs/build/
 docs/modules/*.rst
 docs/api-methods.rst
+docs/_static/uml/__tmp__.*
 
 # is auto generated:
 src/benchmarkstt/__meta__.py

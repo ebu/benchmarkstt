@@ -33,7 +33,7 @@ clean:
 	cd docs/ && make clean
 
 cleanuml:
-	for e in svg puml; do for f in docs/_static/uml/*."$$e"; do [ -e "$$f" ] && rm docs/_static/uml/*."$$e"; break; done; done
+	for f in docs/_static/uml/__tmp__.*.puml; do [ -e "$$f" ] && rm "docs/_static/uml/$$f"; break; done
 
 setuptools: env
 	$(PYTHON) -m pip install --upgrade setuptools wheel
