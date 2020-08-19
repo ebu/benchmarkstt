@@ -1,5 +1,3 @@
-.. gravizo:: _static/uml/benchmarkstt.api.puml 
-
 .. include:: ../README.rst
 
 
@@ -19,5 +17,4 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-
 

@@ -26,10 +26,10 @@ setupdocs: env
 dev: env setuptools
 	$(PYTHON) -m pip install -e '.[test]'
 
-uml: env cleanuml
+uml: env
 	PYTHONPATH="./src/" $(PYTHON) src/benchmarkstt/_uml.py
 
-clean:
+clean: cleanuml
 	cd docs/ && make clean
 
 cleanuml:
