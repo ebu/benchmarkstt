@@ -354,12 +354,12 @@ class PlantUML:
         )
 
 
-def generate():
+def generate(package_dir, output_dir='./_static/autogen/'):
     """
     Generates basic PlantUML schemas for benchmarkstt
     """
 
-    file_tpl = './_static/autogen/%s.%s'
+    file_tpl = os.path.join(output_dir, '%s.%s')
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter(cls):
@@ -388,10 +388,14 @@ def generate():
 
     import benchmarkstt
     packages = [name
-                for _, name, ispkg in pkgutil.iter_modules([os.path.dirname(__file__)])
+                for _, name, ispkg in pkgutil.iter_modules([package_dir])
                 if ispkg]
 
-    files = []
+    for name in packages:
+        full_name = "benchmarkstt.%s" % (name,)
+        logger.info("Generating UML for %s", name)
+        package = import_module(full_name)
+        generate(package, benchmarkstt_filter_for(name))
 
     logger.info("Generating UML for complete package")
-    files.append(generate(benchmarkstt, benchmarkstt_filter_for('')))
+    generate(benchmarkstt, benchmarkstt_filter_for(''))

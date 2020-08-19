@@ -36,7 +36,8 @@ with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') 
         f.write('\n\n')
 
 # -- Auto build UML diagrams -------------------------------------------------
-uml.generate()
+uml_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '_static/autogen')
+uml.generate(os.path.join(src_dir, 'benchmarkstt'), uml_dir)
 
 extensions = [
     'sphinx.ext.autodoc',
