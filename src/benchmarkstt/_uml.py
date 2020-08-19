@@ -14,13 +14,13 @@ Warning:
 import inspect
 import pkgutil
 import os
-import subprocess
 import logging
 
 from importlib import import_module
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
+
 
 class PlantUMLBlock:
     start_block = "%s {"
@@ -381,8 +381,7 @@ if __name__ == '__main__':
         print()
         exit()
 
-    file_tpl = './docs/_static/uml/%s.%s'
-    extensions = ('puml', 'svg')
+    file_tpl = './docs/_static/uml/__tmp__.%s.%s'
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter(cls):
