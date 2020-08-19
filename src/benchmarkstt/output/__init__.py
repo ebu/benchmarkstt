@@ -4,9 +4,7 @@ Responsible for dealing with output formats
 Structure
 .........
 
-.. image:: ../_static/uml/benchmarkstt.output.svg
-    :alt: Package Structure - Click for details
-    :target: ../_static/uml/benchmarkstt.output.svg
+.. gravizo:: ../_static/autogen/benchmarkstt.output.puml
 """
 
 from benchmarkstt.factory import Factory

@@ -4,9 +4,7 @@ Responsible for normalization of text.
 Structure
 .........
 
-.. image:: ../_static/uml/benchmarkstt.normalization.svg
-    :alt: Package Structure - Click for details
-    :target: ../_static/uml/benchmarkstt.normalization.svg
+.. gravizo:: ../_static/autogen/benchmarkstt.normalization.puml
 
 """
 

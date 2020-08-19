@@ -4,9 +4,7 @@ Responsible for calculating differences.
 Structure
 .........
 
-.. image:: ../_static/uml/benchmarkstt.diff.svg
-    :alt: Package Structure - Click for details
-    :target: ../_static/uml/benchmarkstt.diff.svg
+.. gravizo:: ../_static/autogen/benchmarkstt.diff.puml
 """
 
 from benchmarkstt.factory import Factory
