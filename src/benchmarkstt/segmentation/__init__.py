@@ -4,9 +4,7 @@ Responsible for segmenting text.
 Structure
 .........
 
-.. image:: ../_static/uml/benchmarkstt.segmentation.svg
-    :alt: Package Structure - Click for details
-    :target: ../_static/uml/benchmarkstt.segmentation.svg
+.. gravizo:: ../_static/autogen/benchmarkstt.segmentation.puml
 """
 
 from benchmarkstt.factory import Factory

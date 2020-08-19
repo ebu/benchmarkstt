@@ -4,9 +4,7 @@ Responsible for dealing with input formats and converting them to benchmarkstt n
 Structure
 .........
 
-.. image:: ../_static/uml/benchmarkstt.input.svg
-    :alt: Package Structure - Click for details
-    :target: ../_static/uml/benchmarkstt.input.svg
+.. gravizo:: ../_static/autogen/benchmarkstt.input.puml
 """
 
 from benchmarkstt.factory import Factory

@@ -4,9 +4,7 @@ Responsible for calculating metrics.
 Structure
 .........
 
-.. image:: ../_static/uml/benchmarkstt.metrics.svg
-    :alt: Package Structure - Click for details
-    :target: ../_static/uml/benchmarkstt.metrics.svg
+.. gravizo:: ../_static/autogen/benchmarkstt.metrics.puml
 """
 
 from benchmarkstt.schema import Schema

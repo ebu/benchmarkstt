@@ -27,13 +27,14 @@ dev: env setuptools
 	$(PYTHON) -m pip install -e '.[test]'
 
 uml: env
+	mkdir -p docs/_static/autogen
 	PYTHONPATH="./src/" $(PYTHON) src/benchmarkstt/_uml.py
 
-clean: cleanuml
+clean: cleanautogen
 	cd docs/ && make clean
 
-cleanuml:
-	for f in docs/_static/uml/__tmp__.*.puml; do [ -e "$$f" ] && rm "docs/_static/uml/$$f"; break; done
+cleanautogen:
+	test -e docs/_static/autogen && rm -rf docs/static/autogen || true
 
 setuptools: env
 	$(PYTHON) -m pip install --upgrade setuptools wheel

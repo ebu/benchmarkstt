@@ -381,7 +381,7 @@ if __name__ == '__main__':
         print()
         exit()
 
-    file_tpl = './docs/_static/uml/__tmp__.%s.%s'
+    file_tpl = './docs/_static/autogen/%s.%s'
     link_tpl = "https://benchmarkstt.readthedocs.io/en/latest/modules/{page}.html#{hash}"
 
     def benchmarkstt_filter(cls):

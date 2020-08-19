@@ -5,7 +5,5 @@ Responsible for providing a JSON-RPC api.
 Structure
 .........
 
-.. image:: ../_static/uml/benchmarkstt.api.svg
-    :alt: Package Structure - Click for details
-    :target: ../_static/uml/benchmarkstt.api.svg
+.. gravizo:: ../_static/autogen/benchmarkstt.api.puml
 """
