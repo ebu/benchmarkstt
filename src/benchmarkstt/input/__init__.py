@@ -1,10 +1,10 @@
 """
 Responsible for dealing with input formats and converting them to benchmarkstt native schema
 
-Structure
-.........
+.. Structure
+.. .........
 
-.. gravizo:: ../_static/autogen/benchmarkstt.input.puml
+.. .. autoclasstree:: benchmarkstt.input.core benchmarkstt.input
 """
 
 from benchmarkstt.factory import Factory

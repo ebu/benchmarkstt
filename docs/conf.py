@@ -9,9 +9,10 @@ from benchmarkstt.docblock import format_docs
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
 root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-src_dir = os.path.join(os.path.abspath(root_dir), 'src')
+src_dir = os.path.join(os.path.abspath(root_dir), 'src', 'benchmarkstt')
 ext_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ext')
-docs_modules_dir = os.path.join(os.path.abspath(root_dir), 'docs/modules')
+docs_modules_dir = os.path.join(os.path.abspath(root_dir), 'docs', 'modules')
+tpl_dir = os.path.join(os.path.abspath(root_dir), 'docs', 'templates')
 
 sys.path.insert(0, root_dir)
 sys.path.insert(0, src_dir)
@@ -20,9 +21,11 @@ sys.path.insert(0, ext_dir)
 import uml
 
 # -- Auto build module docs --------------------------------------------------
-sphinx_apidoc(['-e', '-f', '-o', docs_modules_dir, src_dir])
+sphinx_apidoc(['-e', '-f', '-t', tpl_dir, '-o', docs_modules_dir, os.path.join(src_dir)])
 os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
+
+# -- Auto build api docs -----------------------------------------------------
 with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') as f:
     f.write("Available JSON-RPC methods\n==========================\n\n\n")
     f.write(".. attention::\n\n")
@@ -47,6 +50,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinxarg.ext',
     'sphinxcontrib.gravizo',
+    'sphinxcontrib.mermaid',
 ]
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'

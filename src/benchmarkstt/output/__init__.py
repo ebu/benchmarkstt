@@ -1,10 +1,10 @@
 """
 Responsible for dealing with output formats
 
-Structure
-.........
+.. Structure
+.. .........
 
-.. gravizo:: ../_static/autogen/benchmarkstt.output.puml
+.. .. autoclasstree:: benchmarkstt.output.core benchmarkstt.output
 """
 
 from benchmarkstt.factory import Factory

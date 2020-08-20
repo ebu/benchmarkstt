@@ -1,10 +1,11 @@
 """
 Responsible for calculating metrics.
 
-Structure
-.........
+.. Structure
+.. .........
 
-.. gravizo:: ../_static/autogen/benchmarkstt.metrics.puml
+.. .. autoclasstree:: benchmarkstt.metrics.core benchmarkstt.metrics
+
 """
 
 from benchmarkstt.schema import Schema

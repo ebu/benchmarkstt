@@ -1,11 +1,6 @@
 """
 Responsible for normalization of text.
 
-Structure
-.........
-
-.. gravizo:: ../_static/autogen/benchmarkstt.normalization.puml
-
 """
 
 from benchmarkstt.normalization.logger import log
