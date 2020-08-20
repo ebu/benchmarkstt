@@ -1,0 +1,15 @@
+{%- if show_headings %}
+{{- [basename, "module"] | join(' ') | e | heading }}
+
+{% endif -%}
+
+
+Structure
+---------
+
+.. autoclasstree:: {{qualname}} {{qualname.rsplit('.', 1)[0]}}
+
+.. automodule:: {{ qualname }}
+{%- for option in automodule_options %}
+   :{{ option }}:
+{%- endfor %}
