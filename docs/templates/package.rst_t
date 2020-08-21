@@ -19,28 +19,34 @@
 {{- [pkgname, "package"] | join(" ") | e | heading }}
 {% endif %}
 
-{% if not is_namespace and submodules %}
-
-{% for submodule in submodules %}
-
-{% if ('.core' in submodule) %}
-
-Structure
----------
-
-.. autoclasstree:: {{submodule}} {{pkgname}}
-
-{% endif %}
-
-{% endfor %}
-{% endif %}
-
 
 {%- if subpackages %}
 Subpackages
 -----------
 
 {{ toctree(subpackages) }}
+{% endif %}
+
+
+{% if not is_namespace and submodules %}
+{% for submodule in submodules %}
+{% if ('.core' in submodule) %}
+
+Core Structure
+--------------
+
+.. autoclasstree:: {{submodule}} {{pkgname}}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+{%- if not is_namespace %}
+Module contents
+---------------
+
+{{ automodule(pkgname, automodule_options) }}
 {% endif %}
 
 {%- if submodules %}
@@ -57,10 +63,3 @@ Submodules
 {% endfor %}
 {%- endif %}
 {%- endif %}
-
-{%- if not is_namespace %}
-Module contents
----------------
-
-{{ automodule(pkgname, automodule_options) }}
-{% endif %}

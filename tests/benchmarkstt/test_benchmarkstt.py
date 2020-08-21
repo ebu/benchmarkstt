@@ -1,4 +1,5 @@
-from benchmarkstt import DeferredCallback, make_printable
+from benchmarkstt import make_printable
+from benchmarkstt.deferred import DeferredCallback
 import pytest
 
 

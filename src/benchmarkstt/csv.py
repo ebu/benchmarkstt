@@ -5,7 +5,8 @@ Module providing a custom CSV file parser with support for whitespace trimming, 
 import typing
 import sys
 from functools import partial
-from benchmarkstt import DeferredList, make_printable
+from benchmarkstt.deferred import DeferredList
+from benchmarkstt import make_printable
 
 
 class InvalidDialectError(ValueError):

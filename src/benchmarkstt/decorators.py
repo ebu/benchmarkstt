@@ -1,5 +1,5 @@
 import logging
-from benchmarkstt import DeferredCallback
+from benchmarkstt.deferred import DeferredCallback
 
 
 def log_call(logger: logging.Logger, log_level=None, result=None):
