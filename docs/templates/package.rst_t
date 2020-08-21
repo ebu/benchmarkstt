@@ -21,11 +21,9 @@
 
 {% if not is_namespace and submodules %}
 
-.. autoclasstree:: {{pkgname}} {{pkgname.rsplit('.', 1)[0]}}
-
 {% for submodule in submodules %}
 
-{% if (".core" in submodule) %}
+{% if ('.core' in submodule) %}
 
 Structure
 ---------
