@@ -6,8 +6,6 @@ from .__meta__ import __author__, __version__
 from functools import partial, wraps
 from os import getenv
 
-__import__('pkg_resources').declare_namespace(__name__)
-
 
 class DeferredCallback:
     """Simple helper class to defer the execution of formatting functions until it is needed"""
