@@ -6,7 +6,7 @@ from benchmarkstt.input import core
 from benchmarkstt.output import factory as output_factory
 from benchmarkstt.metrics import factory
 from benchmarkstt.cli import args_from_factory
-from benchmarkstt.normalization.logger import Logger
+from benchmarkstt.normalization.logger import normalization_logger
 import argparse
 from inspect import signature, Parameter
 import logging
@@ -55,12 +55,12 @@ def file_to_iterable(file, type_, normalizer=None):
 
 def main(parser, args, normalizer=None):
     logging.getLogger()
-    prev_title = Logger.title
-    Logger.title = 'Reference'
+    prev_title = normalization_logger.title
+    normalization_logger.title = 'Reference'
     ref = list(file_to_iterable(args.reference, args.reference_type, normalizer=normalizer))
-    Logger.title = 'Hypothesis'
+    normalization_logger.title = 'Hypothesis'
     hyp = list(file_to_iterable(args.hypothesis, args.hypothesis_type, normalizer=normalizer))
-    Logger.title = prev_title
+    normalization_logger.title = prev_title
 
     if 'metrics' not in args or not len(args.metrics):
         parser.error("need at least one metric")

@@ -1,10 +1,10 @@
 """
 Responsible for calculating differences.
 
-Structure
-.........
+.. Structure
+.. .........
 
-.. gravizo:: ../_static/autogen/benchmarkstt.diff.puml
+.. .. autoclasstree:: benchmarkstt.diff.core benchmarkstt.diff
 """
 
 from benchmarkstt.factory import Factory

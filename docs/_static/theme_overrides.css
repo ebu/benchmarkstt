@@ -57,3 +57,7 @@ table.docutils.option-list td:nth-child(2) {
 .diffinsert {
    color: green;
 }
+
+svg {
+  max-width: 100%;
+}

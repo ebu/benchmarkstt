@@ -4,26 +4,36 @@ import re
 from sphinx.ext.apidoc import main as sphinx_apidoc
 from benchmarkstt.api.jsonrpc import get_methods
 from benchmarkstt.docblock import format_docs
+from sphinxcontrib import autoclassdiag
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
 root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-src_dir = os.path.join(os.path.abspath(root_dir), 'src')
+src_dir = os.path.join(os.path.abspath(root_dir), 'src', 'benchmarkstt')
 ext_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ext')
-docs_modules_dir = os.path.join(os.path.abspath(root_dir), 'docs/modules')
+docs_modules_dir = os.path.join(os.path.abspath(root_dir), 'docs', 'modules')
+tpl_dir = os.path.join(os.path.abspath(root_dir), 'docs', 'templates')
 
 sys.path.insert(0, root_dir)
 sys.path.insert(0, src_dir)
 sys.path.insert(0, ext_dir)
 
-import uml
+#  from benchmarkstt.normalization import logger
 
 # -- Auto build module docs --------------------------------------------------
-sphinx_apidoc(['-e', '-f', '-o', docs_modules_dir, src_dir])
+sphinx_apidoc(['-e', '-f', '-t', tpl_dir, '-o', docs_modules_dir, src_dir])
 os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
-with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') as f:
+# -- Auto build api docs -----------------------------------------------------
+def cls_name(cls):
+    if cls.__module__.startswith('benchmarkstt.'):
+        return '.'.join([cls.__module__[13:], cls.__name__])
+    return 'object'
+
+autoclassdiag.__dict__["class_name"] = cls_name
+
+with open(os.path.join(os.path.abspath(root_dir), 'docs', 'api-methods.rst'), 'w') as f:
     f.write("Available JSON-RPC methods\n==========================\n\n\n")
     f.write(".. attention::\n\n")
     f.write("    Only supported for Python versions 3.6 and above\n\n\n")
@@ -36,8 +46,9 @@ with open(os.path.join(os.path.abspath(root_dir), 'docs/api-methods.rst'), 'w') 
         f.write('\n\n')
 
 # -- Auto build UML diagrams -------------------------------------------------
-uml_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '_static/autogen')
-uml.generate(os.path.join(src_dir, 'benchmarkstt'), uml_dir)
+import uml
+uml_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '_static', 'autogen')
+uml.generate(src_dir, uml_dir)
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -47,6 +58,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinxarg.ext',
     'sphinxcontrib.gravizo',
+    'sphinxcontrib.mermaid',
 ]
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'

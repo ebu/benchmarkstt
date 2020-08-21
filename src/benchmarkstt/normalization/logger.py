@@ -16,8 +16,7 @@ class Logger:
         self.stack = []
 
 
-# singleton
-Logger = Logger()
+normalization_logger = Logger()
 
 
 class ListHandler(logging.StreamHandler):
@@ -49,8 +48,8 @@ class DiffLoggingTextFormatterDialect(DiffLoggingFormatterDialect):
         args = []
         if title is not None:
             args.append(title)
-        elif Logger.title is not None:
-            args.append(Logger.title)
+        elif normalization_logger.title is not None:
+            args.append(normalization_logger.title)
         args.append('/'.join(stack))
         args.append(diff)
         return ': '.join(args)
@@ -110,15 +109,15 @@ def log(func):
     """
 
     def _(cls, text):
-        Logger.stack.append(repr(cls))
+        normalization_logger.stack.append(repr(cls))
 
         result = func(cls, text)
-        logger_ = Logger.logger
+        logger_ = normalization_logger.logger
 
         if text != result:
-            logger_.info(NormalizedLogItem(list(Logger.stack), text, result))
+            logger_.info(NormalizedLogItem(list(normalization_logger.stack), text, result))
 
-        Logger.stack.pop()
+        normalization_logger.stack.pop()
         return result
     return _
 
@@ -131,7 +130,7 @@ class LogCapturer:
     def __enter__(self):
         self.handler = ListHandler()
         self.handler.setFormatter(DiffLoggingFormatter(*self.formatter_args[0], **self.formatter_args[1]))
-        Logger.logger.addHandler(self.handler)
+        normalization_logger.logger.addHandler(self.handler)
         return self
 
     @property
@@ -140,5 +139,5 @@ class LogCapturer:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.handler.flush()
-        Logger.logger.removeHandler(self.handler)
+        normalization_logger.logger.removeHandler(self.handler)
         self.handler = None

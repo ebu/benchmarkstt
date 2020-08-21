@@ -1,10 +1,10 @@
 """
 Responsible for segmenting text.
 
-Structure
-.........
+.. Structure
+.. .........
 
-.. gravizo:: ../_static/autogen/benchmarkstt.segmentation.puml
+.. .. autoclasstree:: benchmarkstt.segmentation.core benchmarkstt.segmentation
 """
 
 from benchmarkstt.factory import Factory
