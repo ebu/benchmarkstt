@@ -2,8 +2,8 @@ Subcommand metrics
 ==================
 
 .. argparse::
-   :module: benchmarkstt.cli
-   :func: tools_parser
+   :module: benchmarkstt.cli.tools
+   :func: argparser
    :prog: benchmarkstt-tools
    :path: metrics
 

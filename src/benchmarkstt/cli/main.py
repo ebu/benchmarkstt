@@ -14,20 +14,20 @@ def parser_context():
         desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
                'for additional tools, see ``benchmarkstt-tools --help``.'
 
-        parser = create_parser(prog=name, description=desc)
-        benchmark_cli.argparser(parser)
+        argparser = create_parser(prog=name, description=desc)
+        benchmark_cli.argparser(argparser)
 
-        parser.add_argument('--version', action='store_true',
-                            help='Output %s version number' % (name,))
+        argparser.add_argument('--version', action='store_true',
+                               help='Output %s version number' % (name,))
 
-        args_common(parser)
-        args_help(parser)
-        yield parser
+        args_common(argparser)
+        args_help(argparser)
+        yield argparser
     finally:
         pass
 
 
-def main_parser():
+def argparser():
     with parser_context() as parser:
         return parser
 

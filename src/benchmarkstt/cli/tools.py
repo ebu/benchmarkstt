@@ -3,7 +3,7 @@ from benchmarkstt.cli import create_parser, args_help, args_common, HelpFormatte
 from benchmarkstt.modules import Modules
 
 
-def tools_parser():
+def argparser():
     name = 'benchmarkstt-tools'
     desc = 'Some additional helpful tools'
     parser = create_parser(prog=name, description=desc)
@@ -31,7 +31,7 @@ def tools_parser():
 
 def run():
     determine_log_level()
-    parser = tools_parser()
+    parser = argparser()
     args_complete(parser)
 
     args = parser.parse_args()
