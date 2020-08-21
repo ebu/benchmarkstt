@@ -3,10 +3,10 @@ Apply normalization to given input
 """
 
 import sys
-from . import NormalizationComposite
+from benchmarkstt.normalization import NormalizationComposite
 import argparse
-from . import factory
-from .logger import DiffLoggingFormatter, normalization_logger
+from benchmarkstt.normalization import factory
+from benchmarkstt.normalization.logger import DiffLoggingFormatter, normalization_logger
 import logging
 from benchmarkstt.cli import args_from_factory
 from benchmarkstt import settings
@@ -79,7 +79,7 @@ def get_normalizer_from_args(args):
     return composite
 
 
-def main(parser, args):
+def run(parser, args):
     input_files = [f[0] for f in args.inputfile] if args.inputfile else None
     output_files = [f[0] for f in args.outputfile] if args.outputfile else None
 

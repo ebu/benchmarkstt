@@ -6,10 +6,7 @@ import argparse
 import logging
 import textwrap
 import itertools
-from benchmarkstt.modules import Modules
-from benchmarkstt import __meta__
 from argparse import ArgumentError
-from contextlib import contextmanager
 import sys
 from functools import partial
 import re
@@ -143,28 +140,6 @@ def create_parser(*args, **kwargs):
     return parser
 
 
-@contextmanager
-def main_parser_context():
-    try:
-        # import done here to avoid circular references
-        import benchmarkstt.benchmark._cli as benchmark_cli
-        name = 'benchmarkstt'
-        desc = 'BenchmarkSTT\'s main command line tool that is used for benchmarking speech-to-text, ' \
-               'for additional tools, see ``benchmarkstt-tools --help``.'
-
-        parser = create_parser(prog=name, description=desc)
-        benchmark_cli.argparser(parser)
-
-        parser.add_argument('--version', action='store_true',
-                            help='Output %s version number' % (name,))
-
-        args_common(parser)
-        args_help(parser)
-        yield parser
-    finally:
-        pass
-
-
 def determine_log_level():
     # Set log-level manually before parse_args(), so that also factory logs, etc. get output
     log_level = 'WARNING'
@@ -176,70 +151,3 @@ def determine_log_level():
 
     logging.basicConfig(level=log_level)
     logging.getLogger().setLevel(log_level)
-
-
-def main():
-    determine_log_level()
-    # import done here to avoid circular dependencies
-    import benchmarkstt.benchmark._cli as benchmark_cli
-    with main_parser_context() as parser:
-        args_complete(parser)
-
-        if '--version' in sys.argv:
-            print("benchmarkstt: %s" % (__meta__.__version__,))
-            logging.getLogger().info('python version: %s', sys.version)
-            parser.exit(0)
-
-        args = parser.parse_args()
-        benchmark_cli.main(parser, args)
-
-    exit(0)
-
-
-def main_parser():
-    with main_parser_context() as parser:
-        return parser
-
-
-def tools_parser():
-    name = 'benchmarkstt-tools'
-    desc = 'Some additional helpful tools'
-    parser = create_parser(prog=name, description=desc)
-
-    subparsers = parser.add_subparsers(dest='subcommand')
-
-    for module, cli in Modules('cli'):
-        kwargs = dict()
-        if hasattr(cli, 'Formatter'):
-            kwargs['formatter_class'] = cli.Formatter
-        else:
-            kwargs['formatter_class'] = HelpFormatter
-
-        docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s._cli' % (module,))
-        kwargs['description'] = textwrap.dedent(docs)
-        subparser = subparsers.add_parser(module, add_help=False, allow_abbrev=False, **kwargs)
-
-        cli.argparser(subparser)
-        args_common(subparser)
-        args_help(subparser)
-
-    args_help(parser)
-    return parser
-
-
-def tools():
-    determine_log_level()
-    parser = tools_parser()
-    args_complete(parser)
-
-    args = parser.parse_args()
-
-    if not args.subcommand:
-        parser.error("expects at least 1 argument")
-
-    Modules('cli')[args.subcommand].main(parser, args)
-    exit(0)
-
-
-if __name__ == '__main__':  # pragma: nocover
-    main()

@@ -53,7 +53,7 @@ def file_to_iterable(file, type_, normalizer=None):
     return core.File(file, type_, normalizer=normalizer)
 
 
-def main(parser, args, normalizer=None):
+def run(parser, args, normalizer=None):
     logging.getLogger()
     prev_title = normalization_logger.title
     normalization_logger.title = 'Reference'

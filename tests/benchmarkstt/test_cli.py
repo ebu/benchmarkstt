@@ -1,5 +1,6 @@
 import pytest
-from benchmarkstt.cli import main, tools
+from benchmarkstt.cli.main import run as main
+from benchmarkstt.cli.tools import run as tools
 from unittest import mock
 from tempfile import TemporaryDirectory
 import os
@@ -195,6 +196,7 @@ def commandline_tester(prog_name, app, argv, result, capsys):
         if type(result) is int:
             with pytest.raises(SystemExit) as err:
                 app()
+
             assert str(err).endswith(': %d' % (result,))
         else:
             with pytest.raises(SystemExit) as err:

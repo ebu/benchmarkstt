@@ -1,7 +1,7 @@
 import pytest
-from benchmarkstt.normalization._api import callback as normalization_api
+from benchmarkstt.api.entrypoints.normalization import callback as normalization_api
 import benchmarkstt.normalization.core as normalizers
-from benchmarkstt.metrics._api import callback as metrics_api
+from benchmarkstt.api.entrypoints.metrics import callback as metrics_api
 import benchmarkstt.metrics.core as metrics
 from collections import OrderedDict
 

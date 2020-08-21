@@ -10,7 +10,7 @@ if sys.version_info >= (3, 6):
 
 class Modules:
     def __init__(self, sub_module=None):
-        self._postfix = '' if sub_module is None else '._' + sub_module
+        self._submodule = '' if sub_module is None else sub_module
 
     def __iter__(self):
         for module in _modules:
@@ -23,7 +23,7 @@ class Modules:
         return self[name]
 
     def __getitem__(self, key):
-        name = 'benchmarkstt.%s%s' % (key, self._postfix)
+        name = 'benchmarkstt.%s.entrypoints.%s' % (self._submodule, key)
         try:
             module = import_module(name)
             if hasattr(module, 'hidden'):

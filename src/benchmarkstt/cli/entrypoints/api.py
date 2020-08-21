@@ -12,7 +12,7 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 import jsonrpcserver
 from flask import Flask, request, Response, render_template
 from benchmarkstt.docblock import format_docs, parse, process_rst
-from .jsonrpc import get_methods
+from benchmarkstt.api.jsonrpc import get_methods
 
 
 def argparser(parser):
@@ -87,7 +87,7 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
     return app
 
 
-def main(parser, args):  # pragma: nocover
+def run(parser, args):  # pragma: nocover
     if args.list_methods:
         methods = get_methods()
         for name, func in methods.items.items():
