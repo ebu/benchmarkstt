@@ -21,6 +21,8 @@ BenchmarkSTT
 
 .. container:: terminal
 
+  .. code-block:: 
+
    | (env) $ benchmarkstt --reference-type argument --hypothesis-type argument --reference 'THE REFERENCE TRANSCRIPT' --hypothesis 'the hypothesis transcript' --lowercase --wer --worddiffs
    | wer
    | ===
