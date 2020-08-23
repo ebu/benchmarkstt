@@ -11,8 +11,11 @@ from sphinxcontrib import autoclassdiag
 
 
 description = 'A library for benchmarking AI/ML applications.'
-project_name = 'BenchmarkSTT'
-slug = project_name.lower()
+project = 'BenchmarkSTT'
+author = 'EBU'
+copyright = '2019-%d, %s' % (datetime.now().year, author)
+
+slug = project.lower()
 
 root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 src_dir = os.path.join(os.path.abspath(root_dir), 'src', slug)
@@ -84,10 +87,6 @@ else:
 
 # -- Project information -----------------------------------------------------
 
-project = project_name
-author = 'EBU'
-copyright = '2019-%d, %s' % (datetime.now().year, author)
-
 with open('../VERSION') as f:
     # The full version, including alpha/beta/rc tags
     release = f.read()
@@ -137,7 +136,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, '%s.tex' % (slug,), '%s Documentation' % (project_name,),
+    (master_doc, '%s.tex' % (slug,), '%s Documentation' % (project,),
      author, 'manual'),
 ]
 
@@ -146,7 +145,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('cli', slug, '%s Documentation' % (project_name,),
+    ('cli', slug, '%s Documentation' % (project,),
      [author], 1)
 ]
 
@@ -157,8 +156,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, project_name, '%s Documentation' % (project_name,),
-     author, project_name, 'Description',
+    (master_doc, project, '%s Documentation' % (project,),
+     author, project, 'Description',
      'Miscellaneous'),
 ]
 
