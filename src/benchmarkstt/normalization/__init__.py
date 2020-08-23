@@ -1,6 +1,5 @@
 """
 Responsible for normalization of text.
-
 """
 
 from benchmarkstt.normalization.logger import log
@@ -31,6 +30,9 @@ class Base:
         return type(self).__name__
 
     def _normalize(self, text: str) -> str:
+        """
+        :meta public:
+        """
         raise NotImplementedError()
 
 
@@ -41,6 +43,9 @@ class BaseWithFileSupport(Base):
     """
 
     def _normalize(self, text: str) -> str:
+        """
+        :meta public:
+        """
         raise NotImplementedError()
 
 
@@ -50,6 +55,9 @@ class NormalizationComposite(Base):
     """
 
     def __init__(self, title=None):
+        """
+        :meta public:
+        """
         self._normalizers = []
         self._title = type(self).__name__ if title is None else title
 
@@ -59,6 +67,9 @@ class NormalizationComposite(Base):
         self._normalizers.append(normalizer)
 
     def _normalize(self, text: str) -> str:
+        """
+        :meta public:
+        """
         # allow for an empty file
         if not self._normalizers:
             return text
@@ -87,6 +98,9 @@ class File(Base):
     """
 
     def __init__(self, normalizer, file, encoding=None, path=None):
+        """
+        :meta public:
+        """
         if encoding is None:
             encoding = settings.default_encoding
 
@@ -115,6 +129,9 @@ class FileFactory(Factory):
         return File(cls, file, encoding, path=path)
 
     def __getitem__(self, item):
+        """
+        :meta public:
+        """
         raise NotImplementedError("Not supported")
 
 

@@ -1,11 +1,6 @@
 """
 Responsible for calculating metrics.
 
-.. Structure
-.. .........
-
-.. .. autoclasstree:: benchmarkstt.metrics.core benchmarkstt.metrics
-
 """
 
 from benchmarkstt.schema import Schema

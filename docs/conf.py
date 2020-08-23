@@ -11,8 +11,8 @@ from sphinxcontrib import autoclassdiag
 
 
 description = 'A library for benchmarking AI/ML applications.'
-name = 'BenchmarkSTT'
-slug = name.lower()
+project_name = 'BenchmarkSTT'
+slug = project_name.lower()
 
 root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 src_dir = os.path.join(os.path.abspath(root_dir), 'src', slug)
@@ -84,7 +84,7 @@ else:
 
 # -- Project information -----------------------------------------------------
 
-project = name
+project = project_name
 author = 'EBU'
 copyright = '2019-%d, %s' % (datetime.now().year, author)
 
@@ -101,7 +101,7 @@ version = '.'.join(release.split('.', 3)[:2])
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'
-language = 'en_US'
+language = 'en'
 exclude_patterns = []
 
 # -- Options for HTML output -------------------------------------------------
@@ -137,7 +137,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, '%s.tex' % (slug,), '%s Documentation' % (name,),
+    (master_doc, '%s.tex' % (slug,), '%s Documentation' % (project_name,),
      author, 'manual'),
 ]
 
@@ -146,7 +146,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('cli', slug, '%s Documentation' % (name,),
+    ('cli', slug, '%s Documentation' % (project_name,),
      [author], 1)
 ]
 
@@ -157,8 +157,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, name, '%s Documentation' % (name,),
-     author, name, 'Description',
+    (master_doc, project_name, '%s Documentation' % (project_name,),
+     author, project_name, 'Description',
      'Miscellaneous'),
 ]
 
@@ -190,3 +190,11 @@ smartquotes = False
 # smartquotes_excludes = {'builders': ['man', 'text']}
 
 highlight_language = 'none'
+autodoc_default_values = {
+    'members': None,
+    'undoc-members': None,
+    'special-members': None,
+    'show-inheritance': None,
+    'member-order': 'bysource',
+    'exclude-members': '__dict__,__weakref__,__module__',
+}

@@ -1,11 +1,18 @@
+{%- macro automodule(modname, options) -%}
+.. automodule:: {{ modname }}
+{%- for option in options %}
+   :{{ option }}:
+{%- endfor %}
+{%- endmacro %}
+
+
 {%- if show_headings %}
 {{- [basename, "module"] | join(' ') | e | heading }}
 
 {% endif -%}
 
-.. autoclasstree::  {{qualname}} {{qualname}}
 
-.. automodule:: {{ qualname }}
-{%- for option in automodule_options %}
-   :{{ option }}:
-{%- endfor %}
+.. autoclasstree:: {{qualname}} {{qualname}}
+
+{{ automodule(qualname, automodule_options) }}
+

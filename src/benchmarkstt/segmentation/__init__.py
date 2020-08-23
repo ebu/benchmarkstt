@@ -1,10 +1,5 @@
 """
 Responsible for segmenting text.
-
-.. Structure
-.. .........
-
-.. .. autoclasstree:: benchmarkstt.segmentation.core benchmarkstt.segmentation
 """
 
 from benchmarkstt.factory import Factory
@@ -16,6 +11,8 @@ class Base:
         Each segmentation class should be accessible as iterator, each iteration should
         return a Item, so the input format is essentially usable and can be easily
         converted to a :py:class:`benchmarkstt.schema.Schema`
+
+        :meta public:
         """
         raise NotImplementedError()
 

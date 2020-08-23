@@ -1,17 +1,15 @@
 """
 Responsible for calculating differences.
-
-.. Structure
-.. .........
-
-.. .. autoclasstree:: benchmarkstt.diff.core benchmarkstt.diff
 """
 
 from benchmarkstt.factory import Factory
 
 
 class Base:
-    def __init__(self, a='', b=''):
+    def __init__(self, a, b):
+        """
+        :meta public:
+        """
         raise NotImplementedError()
 
     def get_opcodes(self):

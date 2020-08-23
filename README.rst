@@ -2,7 +2,7 @@
 .. role:: diffdelete
 .. highlight:: none
 
-========
+============
 BenchmarkSTT
 ============
 
@@ -19,9 +19,6 @@ BenchmarkSTT
         :target: https://benchmarkstt.readthedocs.io/
         :alt: Documentation Status
 
-    .. image:: docs/img/benchmarksttcli.png
-        :alt: Example command line output
-
 .. container:: terminal
 
    | (env) $ benchmarkstt --reference-type argument --hypothesis-type argument --reference 'THE REFERENCE TRANSCRIPT' --hypothesis 'the hypothesis transcript' --lowercase --wer --worddiffs
@@ -33,10 +30,10 @@ BenchmarkSTT
    | worddiffs
    | =========
    |
-   | Color key: Unchanged \ :diffdelete:`Reference` \ :diffinsert`:Hypothesis
+   | Color key: Unchanged \ :diffdelete:`Reference` \ :diffinsert:`:Hypothesis`
    |
-   | ·the\ :diffdelete:·reference\ :diffinsert:`·hypothesis`·transcript
-bash
+   | ·the\ :diffdelete:`·reference`\ :diffinsert:`·hypothesis`·transcript
+   |
    | (env) $
 
 About

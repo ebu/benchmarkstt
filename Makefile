@@ -18,10 +18,11 @@ testcoverage: env
 	PYTHONPATH="./src/" $(PYTHON) -m pytest --cov=./src tests/
 
 docs: setupdocs clean
-	cd docs/ && make mermaid && make html
+	cd docs/ && make html
 
 setupdocs: env
 	$(PYTHON) -m pip install -r docs/requirements.txt
+	cd docs/ && yarn install
 
 dev: env setuptools
 	$(PYTHON) -m pip install -e '.[test]'

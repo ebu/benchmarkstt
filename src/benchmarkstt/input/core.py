@@ -10,7 +10,7 @@ from benchmarkstt import input, settings
 
 class PlainText(input.Base):
     """
-    plain text
+    Plain text.
     """
     def __init__(self, text, segmenter=None, normalizer=None):
         if segmenter is None:

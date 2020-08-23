@@ -155,7 +155,7 @@ class ConfigSectionNotFoundError(ValueError):
 
 
 class Config(normalization.Base):
-    doc_string = r"""
+    _doc_string = r"""
     Use config file notation to define normalization rules. This notation is a
     list of normalizers, one per line.
 
@@ -266,7 +266,7 @@ class Config(normalization.Base):
     def refresh_docstring(cls):
         section = 'defaults to %s' % (repr(cls._default_section),) if cls._default_section else 'no section by default'
         section_tag = '[%s]' % (cls._default_section,) if cls._default_section else ''
-        cls.__doc__ = cls.doc_string.replace('{section}', section).replace('{[section]}', section_tag)
+        cls.__doc__ = cls._doc_string.replace('{section}', section).replace('{[section]}', section_tag)
 
 
 # For future versions
