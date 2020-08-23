@@ -52,6 +52,7 @@ class ClassMembersDiagram(object):
         self.base_module = base_module or self.module.__name__
         self.module_classes = set()
         self.inheritances = []
+        self.associations = []
         self.class_members = {}
         self.namedtuples = []
         self._populate_tree()
@@ -105,14 +106,22 @@ class ClassMembersDiagram(object):
             if prefix is None:
                 prefix = '-' if name[0] == '_' else '+'
 
-            members_list.append(''.join([prefix, name, str(sig)]))
+            def inspect_param(param):
+                if inspect.isclass(param.annotation) and cls.__module__.startswith(param.annotation.__module__.split('.', 2)[0]):
+                    self.associations.append("%s --> %s" % (class_name(param.annotation), class_name(cls)))
+                    self._inspect_class(param.annotation, True)
+                    return ': '.join([param.name, param.annotation.__name__])
+                return str(param)
+
+            params = list(map(inspect_param, params))
+            members_list.append(''.join([prefix, name, '(', ', '.join(params), ')']))
 
         traits = list(map(format_trait, list(traits)))
         self.class_members[class_name(cls)] = traits + \
                                               init_args + \
                                               members_list
 
-    def _inspect_class(self, cls):
+    def _inspect_class(self, cls, force=False):
         if not inspect.isclass(cls):
             return
 
@@ -120,7 +129,7 @@ class ClassMembersDiagram(object):
         if cls_name in self.module_classes:
             return
 
-        if not cls.__module__.startswith(self.base_module):
+        if not cls.__module__.startswith(self.base_module) and not force:
             return
 
         if tuple in cls.__bases__ and hasattr(cls, '_fields'):
@@ -154,6 +163,7 @@ class ClassMembersDiagram(object):
                 "%s <|-- %s" % (a, b)
                 for a, b in self.inheritances
             ] +
+            self.associations +
             self.namedtuples +
             m
         )
