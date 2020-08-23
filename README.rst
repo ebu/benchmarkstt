@@ -1,42 +1,20 @@
-.. role:: diffinsert
-.. role:: diffdelete
-.. highlight:: none
-
 ============
 BenchmarkSTT
 ============
 
-.. only: html
+.. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
+    :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
 
-    .. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
-        :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
+.. image:: https://img.shields.io/github/workflow/status/ebu/benchmarkstt/Python%20package
+    :alt: GitHub Workflow Status (branch)
+    :target: https://github.com/ebu/benchmarkstt/actions
 
-    .. image:: https://img.shields.io/github/workflow/status/ebu/benchmarkstt/Python%20package
-        :alt: GitHub Workflow Status (branch)
-        :target: https://github.com/ebu/benchmarkstt/actions
+.. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
+    :target: https://benchmarkstt.readthedocs.io/
+    :alt: Documentation Status
 
-    .. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
-        :target: https://benchmarkstt.readthedocs.io/
-        :alt: Documentation Status
 
-.. container:: terminal
-
-  .. code-block:: 
-
-   | (env) $ benchmarkstt --reference-type argument --hypothesis-type argument --reference 'THE REFERENCE TRANSCRIPT' --hypothesis 'the hypothesis transcript' --lowercase --wer --worddiffs
-   | wer
-   | ===
-   |
-   | 0.333333
-   |
-   | worddiffs
-   | =========
-   |
-   | Color key: Unchanged \ :diffdelete:`Reference` \ :diffinsert:`:Hypothesis`
-   |
-   | ·the\ :diffdelete:`·reference`\ :diffinsert:`·hypothesis`·transcript
-   |
-   | (env) $
+.. include:: example.rst
 
 About
 ------
