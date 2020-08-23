@@ -14,9 +14,9 @@
    | worddiffs
    | =========
    |
-   | Color key: Unchanged \ :diffdelete:`Reference` \ :diffinsert:`:Hypothesis`
+   | Color key: Unchanged \ :diffdelete:`Reference`\ \ :diffinsert:`:Hypothesis`\
    |
-   | ·the\ :diffdelete:`·reference`\ :diffinsert:`·hypothesis`·transcript
+   | ·the\ :diffdelete:`·reference`\\ :diffinsert:`·hypothesis`\·transcript
    |
    | (env) $
 
