@@ -4,7 +4,6 @@ from datetime import datetime
 from sphinx.ext.apidoc import main as sphinx_apidoc
 from benchmarkstt.api.jsonrpc import get_methods
 from benchmarkstt.docblock import format_docs
-from sphinxcontrib import autoclassdiag
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
@@ -34,13 +33,6 @@ os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
 
 # -- Auto build api docs -----------------------------------------------------
-def cls_name(cls):
-    if cls.__module__.startswith(slug + '.'):
-        return '.'.join([cls.__module__[len(slug)+1:], cls.__name__])
-    return 'object'
-
-
-autoclassdiag.__dict__["class_name"] = cls_name
 
 with open(os.path.join(os.path.abspath(root_dir), 'docs', 'api-methods.rst'), 'w') as f:
     f.write("Available JSON-RPC methods\n==========================\n\n\n")
@@ -197,3 +189,8 @@ autodoc_default_values = {
     'member-order': 'bysource',
     'exclude-members': '__dict__,__weakref__,__module__',
 }
+
+
+def setup(app):
+    from autoclassmembersdiagram import MermaidClassMembersDiagram
+    app.add_directive('autoclassmemberstree', MermaidClassMembersDiagram)

@@ -38,7 +38,7 @@ Subpackages
 Core Structure
 --------------
 
-.. autoclasstree:: {{submodule}} {{pkgname}}
+.. autoclassmemberstree:: {{submodule}} {{pkgname}}
 
 {% endif %}
 {% endfor %}
