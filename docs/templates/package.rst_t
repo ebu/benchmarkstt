@@ -19,8 +19,11 @@
 {{- [pkgname, "package"] | join(" ") | e | heading }}
 {% endif %}
 
+{{ automodule(pkgname, ['noindex']) }}
+
 
 {%- if subpackages %}
+
 Subpackages
 -----------
 
@@ -43,13 +46,11 @@ Core Structure
 
 
 {%- if not is_namespace %}
-Module contents
----------------
-
 {{ automodule(pkgname, automodule_options) }}
 {% endif %}
 
 {%- if submodules %}
+
 Submodules
 ----------
 {% if separatemodules %}

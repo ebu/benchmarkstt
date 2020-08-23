@@ -6,7 +6,7 @@ import typing
 import sys
 from functools import partial
 from benchmarkstt.deferred import DeferredList
-from benchmarkstt import make_printable
+from benchmarkstt.helpers import make_printable
 
 
 class InvalidDialectError(ValueError):

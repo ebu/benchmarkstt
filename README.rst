@@ -1,19 +1,21 @@
 BenchmarkSTT
 ============
 
-.. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
-    :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
+.. only: html
 
-.. image:: https://img.shields.io/github/workflow/status/ebu/benchmarkstt/Python%20package
-    :alt: GitHub Workflow Status (branch)
-    :target: https://github.com/ebu/benchmarkstt/actions
+    .. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
+        :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
 
-.. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
-    :target: https://benchmarkstt.readthedocs.io/
-    :alt: Documentation Status
+    .. image:: https://img.shields.io/github/workflow/status/ebu/benchmarkstt/Python%20package
+        :alt: GitHub Workflow Status (branch)
+        :target: https://github.com/ebu/benchmarkstt/actions
 
-.. image:: docs/img/benchmarksttcli.png
-    :alt: Example command line output
+    .. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
+        :target: https://benchmarkstt.readthedocs.io/
+        :alt: Documentation Status
+
+    .. image:: docs/img/benchmarksttcli.png
+        :alt: Example command line output
 
 About
 ------

@@ -15,7 +15,7 @@ class Modules:
     def __iter__(self):
         for module in _modules:
             try:
-                yield (module, self[module])
+                yield module, self[module]
             except IndexError:
                 pass
 

@@ -1,5 +1,5 @@
 """
-Module responsible for handling the command line tools.
+Responsible for handling the command line tools.
 """
 
 import argparse
