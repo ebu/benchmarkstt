@@ -5,7 +5,7 @@ Responsible for calculating differences.
 from benchmarkstt.factory import Factory
 
 
-class Base:
+class Differ:
     def __init__(self, a, b):
         """
         :meta public:
@@ -30,4 +30,4 @@ class Base:
         raise NotImplementedError()
 
 
-factory = Factory(Base)
+factory = Factory(Differ)

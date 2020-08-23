@@ -127,7 +127,7 @@ class Schema:
     def json(self, **kwargs):
         return self.dumps(**kwargs)
 
-    def append(self, obj: Union[Item, dict]):
+    def append(self, obj: Item):
         if isinstance(obj, dict):
             obj = Item(obj)
         elif type(obj) is not Item:

@@ -15,7 +15,7 @@ _normalizer_namespaces = (
 )
 
 
-class Base:
+class Normalizer:
     """
     Abstract base class for normalization
     """
@@ -36,7 +36,7 @@ class Base:
         raise NotImplementedError()
 
 
-class BaseWithFileSupport(Base):
+class NormalizerWithFileSupport(Normalizer):
     """
     This kind of normalization class supports loading the values from a file, i.e.
     being wrapped in a core.File wrapper.
@@ -49,7 +49,7 @@ class BaseWithFileSupport(Base):
         raise NotImplementedError()
 
 
-class NormalizationComposite(Base):
+class NormalizationComposite(Normalizer):
     """
     Combining normalizers
     """
@@ -82,7 +82,7 @@ class NormalizationComposite(Base):
         return self._title
 
 
-class File(Base):
+class File(Normalizer):
     """
     Read one per line and pass it to the given normalizer
 
@@ -120,7 +120,7 @@ class File(Base):
         return self._normalizer.normalize(text)
 
 
-factory = Factory(Base, _normalizer_namespaces)
+factory = Factory(Normalizer, _normalizer_namespaces)
 
 
 class FileFactory(Factory):
@@ -135,4 +135,4 @@ class FileFactory(Factory):
         raise NotImplementedError("Not supported")
 
 
-file_factory = FileFactory(BaseWithFileSupport, _normalizer_namespaces)
+file_factory = FileFactory(NormalizerWithFileSupport, _normalizer_namespaces)

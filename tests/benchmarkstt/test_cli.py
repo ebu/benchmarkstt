@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 import os
 from io import StringIO
 import shlex
-from benchmarkstt.normalization import Base as NormalizationBase
+from benchmarkstt.normalization import Normalizer as NormalizationBase
 from benchmarkstt.normalization import factory as normalization_factory
 from benchmarkstt.diff.formatter import CLIDiffDialect
 from benchmarkstt.__meta__ import __version__

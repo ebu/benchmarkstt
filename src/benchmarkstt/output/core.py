@@ -3,7 +3,7 @@ from benchmarkstt.schema import Schema
 from collections import OrderedDict
 
 
-class SimpleTextBase(output.Base):
+class SimpleTextBase(output.Output):
     def print(self, result):
         if hasattr(result, '_asdict'):
             result = result._asdict()
@@ -34,7 +34,7 @@ class MarkDown(SimpleTextBase):
         print()
 
 
-class Json(output.Base):
+class Json(output.Output):
     def __init__(self):
         self._line = None
 

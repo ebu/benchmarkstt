@@ -5,7 +5,7 @@ Responsible for segmenting text.
 from benchmarkstt.factory import Factory
 
 
-class Base:
+class Segmenter:
     def __iter__(self):
         """
         Each segmentation class should be accessible as iterator, each iteration should
@@ -17,4 +17,4 @@ class Base:
         raise NotImplementedError()
 
 
-factory = Factory(Base)
+factory = Factory(Segmenter)

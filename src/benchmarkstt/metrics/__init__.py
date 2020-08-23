@@ -7,7 +7,7 @@ from benchmarkstt.schema import Schema
 from benchmarkstt.factory import Factory
 
 
-class Base:
+class Metric:
     """
     Base class for metrics
     """
@@ -15,4 +15,4 @@ class Base:
         raise NotImplementedError()
 
 
-factory = Factory(Base)
+factory = Factory(Metric)

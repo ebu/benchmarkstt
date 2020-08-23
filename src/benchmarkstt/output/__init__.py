@@ -6,7 +6,7 @@ Responsible for dealing with output formats
 from benchmarkstt.factory import Factory
 
 
-class Base:
+class Output:
     def __enter__(self):
         """
         :meta public:
@@ -26,4 +26,4 @@ class Base:
         raise NotImplementedError()
 
 
-factory = Factory(Base)
+factory = Factory(Output)

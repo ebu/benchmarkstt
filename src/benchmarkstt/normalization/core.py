@@ -17,7 +17,7 @@ if hasattr(os, 'PathLike'):
     file_types = (str, os.PathLike)
 
 
-class Replace(normalization.BaseWithFileSupport):
+class Replace(normalization.NormalizerWithFileSupport):
     """
     Simple search replace
 
@@ -38,7 +38,7 @@ class Replace(normalization.BaseWithFileSupport):
         return text.replace(self._search, self._replace)
 
 
-class ReplaceWords(normalization.BaseWithFileSupport):
+class ReplaceWords(normalization.NormalizerWithFileSupport):
     """
     Simple search replace that only replaces "words", the first letter will be
     checked case insensitive as well with preservation of case..
@@ -78,7 +78,7 @@ class ReplaceWords(normalization.BaseWithFileSupport):
         return self._pattern.sub(self._replacement_callback, text)
 
 
-class Regex(normalization.BaseWithFileSupport):
+class Regex(normalization.NormalizerWithFileSupport):
     r"""
     Simple regex replace. By default the pattern is interpreted
     case-sensitive.
@@ -122,7 +122,7 @@ class Regex(normalization.BaseWithFileSupport):
         return self._pattern.sub(self._substitution, text)
 
 
-class Lowercase(normalization.Base):
+class Lowercase(normalization.Normalizer):
     """
     Lowercase the text
 
@@ -135,7 +135,7 @@ class Lowercase(normalization.Base):
         return text.lower()
 
 
-class Unidecode(normalization.Base):
+class Unidecode(normalization.Normalizer):
     """
     Unidecode characters to ASCII form, see `Python's Unidecode package
     <https://pypi.org/project/Unidecode>`_ for more info.
@@ -154,7 +154,7 @@ class ConfigSectionNotFoundError(ValueError):
     """
 
 
-class Config(normalization.Base):
+class Config(normalization.Normalizer):
     _doc_string = r"""
     Use config file notation to define normalization rules. This notation is a
     list of normalizers, one per line.

@@ -6,7 +6,7 @@ Responsible for dealing with input formats and converting them to benchmarkstt n
 from benchmarkstt.factory import Factory
 
 
-class Base:
+class Input:
     def __iter__(self):
         """
         Each input class should be accessible as iterator, each iteration should
@@ -18,4 +18,4 @@ class Base:
         raise NotImplementedError()
 
 
-factory = Factory(Base)
+factory = Factory(Input)

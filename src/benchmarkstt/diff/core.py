@@ -3,10 +3,10 @@ Core Diff algorithms
 """
 
 from difflib import SequenceMatcher
-from benchmarkstt.diff import Base
+from benchmarkstt.diff import Differ
 
 
-class RatcliffObershelp(Base):
+class RatcliffObershelp(Differ):
     """
     Diff according to Ratcliff and Obershelp (Gestalt) matching algorithm.
 

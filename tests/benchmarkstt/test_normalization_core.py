@@ -1,4 +1,4 @@
-from benchmarkstt.normalization import core, NormalizationComposite, File, BaseWithFileSupport, FileFactory
+from benchmarkstt.normalization import core, NormalizationComposite, File, NormalizerWithFileSupport, FileFactory
 import logging
 from io import StringIO
 import pytest
@@ -132,7 +132,7 @@ def test_config_section():
 
 def test_base_with_file_notimplemented():
     with pytest.raises(NotImplementedError):
-        BaseWithFileSupport().normalize('')
+        NormalizerWithFileSupport().normalize('')
 
 
 def test_filefactory():

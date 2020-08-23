@@ -36,13 +36,13 @@ class MagicTraits(object):
         "__reversed__": "Reversible",
         "__getattr__": "Attributes",
         "__getattribute__": "Attributes",
-        "__repr__": None,
-        "__str__": None,
+        "__repr__": False,
+        "__str__": False,
     }
 
     @classmethod
     def unveil(cls, k, _=None):
-        return cls.MAGIC_MEMBERS.get(k, False)
+        return cls.MAGIC_MEMBERS.get(k, None)
 
 
 class ClassMembersDiagram(object):
@@ -72,10 +72,14 @@ class ClassMembersDiagram(object):
             return "<<%s>>\n" % (name,)
 
         def filter_self_and_cls(x):
-            nonlocal prefix
-            if x.name == 'cls':
-                prefix = '$'
             return x.name not in ['self', 'cls']
+
+        def inspect_param(param):
+            if inspect.isclass(param.annotation) and cls.__module__.startswith(param.annotation.__module__.split('.', 2)[0]):
+                self.associations.append("%s <-- %s" % (class_name(param.annotation), class_name(cls)))
+                self._inspect_class(param.annotation, True)
+                return ': '.join([param.name, param.annotation.__name__])
+            return str(param)
 
         members_list = []
         init_args = []
@@ -84,39 +88,48 @@ class ClassMembersDiagram(object):
             traits.add('namedtuple')
 
         for name, member in members:
+            if name.startswith('_') and not (name.startswith('__') and name.endswith('__')):
+                continue
+
             try:
                 sig = inspect.signature(member)
             except ValueError:
                 continue
 
-            prefix = None
-            params = filter(filter_self_and_cls, sig.parameters.values())
-            sig = sig.replace(parameters=params)
-            params = sig.parameters.values()
-
-            if name == '__init__':
-                init_args = list(map(str, list(params)))
-                continue
-
             trait = MagicTraits.unveil(name)
-            if trait:
+            if trait is False:
+                continue
+            if trait is not None:
                 traits.add(trait)
                 continue
 
-            if prefix is None:
+            params = list(sig.parameters.values())
+            prefix = ''
+            postfix = ''
+            if len(params) and params[0].name != 'self':
+                postfix = '$'
+            else:
                 prefix = '-' if name[0] == '_' else '+'
-
-            def inspect_param(param):
-                if inspect.isclass(param.annotation) and cls.__module__.startswith(param.annotation.__module__.split('.', 2)[0]):
-                    self.associations.append("%s --> %s" % (class_name(param.annotation), class_name(cls)))
-                    self._inspect_class(param.annotation, True)
-                    return ': '.join([param.name, param.annotation.__name__])
-                return str(param)
-
+            params = filter(filter_self_and_cls, params)
             params = list(map(inspect_param, params))
-            members_list.append(''.join([prefix, name, '(', ', '.join(params), ')']))
+
+            if name == '__init__':
+                members_list.append(', '.join(params))
+                # init_args = list(map(str, list(params)))
+                continue
+
+            members_list.append(''.join([
+                prefix,
+                name,
+                '(',
+                ', '.join(params),
+                ')',
+                postfix
+                ]))
 
         traits = list(map(format_trait, list(traits)))
+        members_list.sort()
+        traits.sort()
         self.class_members[class_name(cls)] = traits + \
                                               init_args + \
                                               members_list
@@ -134,7 +147,9 @@ class ClassMembersDiagram(object):
 
         if tuple in cls.__bases__ and hasattr(cls, '_fields'):
             self.namedtuples.append('class %s {\n<<namedtuple>>\n%s\n}' %
-                                    (class_name(cls), "\n".join(cls._fields)))
+                                    (class_name(cls),
+                                     ", ".join(cls._fields)
+                                     ))
             return
 
         self._inspect_members(cls)
