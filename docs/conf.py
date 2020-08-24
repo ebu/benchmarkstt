@@ -180,14 +180,6 @@ smartquotes = False
 # smartquotes_excludes = {'builders': ['man', 'text']}
 
 highlight_language = 'none'
-autodoc_default_values = {
-    'members': None,
-    'undoc-members': None,
-    'special-members': None,
-    'show-inheritance': None,
-    'member-order': 'bysource',
-    'exclude-members': '__dict__,__weakref__,__module__',
-}
 
 
 def setup(app):
