@@ -31,7 +31,6 @@ sys.path.insert(0, ext_dir)
 sphinx_apidoc(['-e', '-f', '-t', tpl_dir, '-o', docs_modules_dir, src_dir])
 os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
-
 # -- Auto build api docs -----------------------------------------------------
 
 with open(os.path.join(os.path.abspath(root_dir), 'docs', 'api-methods.rst'), 'w') as f:
@@ -45,12 +44,6 @@ with open(os.path.join(os.path.abspath(root_dir), 'docs', 'api-methods.rst'), 'w
         f.write('\n')
         f.write(format_docs(func.__doc__))
         f.write('\n\n')
-
-# -- Auto build UML diagrams -------------------------------------------------
-import uml
-uml_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '_static', 'autogen')
-uml.generate(src_dir, uml_dir)
-
 
 # -- Set extensions ----------------------------------------------------------
 
