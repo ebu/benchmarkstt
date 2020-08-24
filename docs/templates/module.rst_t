@@ -11,7 +11,7 @@
 
 {% endif -%}
 
-.. autoclassmemberstree:: {{qualname}} {{qualname}}
+.. autoclassmemberstree:: {{basename}}
 
 {{ automodule(qualname, automodule_options) }}
 
