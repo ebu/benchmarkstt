@@ -32,16 +32,11 @@ Subpackages
 
 
 {% if not is_namespace and submodules %}
-{% for submodule in submodules %}
-{% if ('.core' in submodule) %}
-
 Core Structure
 --------------
 
-.. autoclassmemberstree:: {{submodule}} {{pkgname}}
+.. autoclassmemberstree:: {{pkgname}}
 
-{% endif %}
-{% endfor %}
 {% endif %}
 
 

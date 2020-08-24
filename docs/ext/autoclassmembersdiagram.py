@@ -11,6 +11,7 @@ from __future__ import print_function
 import inspect
 from sphinx.util import import_object
 from sphinxcontrib.mermaid import Mermaid
+import textwrap
 
 
 def class_name(cls):
@@ -32,10 +33,15 @@ class MagicTraits(object):
         "__ne__": "Comparable",
         "__gt__": "Comparable",
         "__ge__": "Comparable",
+        "__contains__": "MembershipTestable",
         "__getitem__": "Indexable",
+        "__setitem__": "Indexable",
+        "__delitem__": "Indexable",
         "__reversed__": "Reversible",
         "__getattr__": "Attributes",
         "__getattribute__": "Attributes",
+        "__len__": "Sizeable",
+        "__subclasshook__": False,
         "__repr__": False,
         "__str__": False,
     }
@@ -113,8 +119,9 @@ class ClassMembersDiagram(object):
             params = filter(filter_self_and_cls, params)
             params = list(map(inspect_param, params))
 
+            params_str = '\n'.join(textwrap.wrap(', '.join(params), 25))
             if name == '__init__':
-                members_list.append(', '.join(params))
+                members_list.append(params_str)
                 # init_args = list(map(str, list(params)))
                 continue
 
@@ -122,7 +129,7 @@ class ClassMembersDiagram(object):
                 prefix,
                 name,
                 '(',
-                ', '.join(params),
+                params_str,
                 ')',
                 postfix
                 ]))
@@ -148,7 +155,7 @@ class ClassMembersDiagram(object):
         if tuple in cls.__bases__ and hasattr(cls, '_fields'):
             self.namedtuples.append('class %s {\n<<namedtuple>>\n%s\n}' %
                                     (class_name(cls),
-                                     ", ".join(cls._fields)
+                                     '\n'.join(textwrap.wrap(", ".join(cls._fields), 25))
                                      ))
             return
 
