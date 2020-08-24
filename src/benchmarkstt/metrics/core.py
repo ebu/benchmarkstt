@@ -59,7 +59,7 @@ class WordDiffs(Metric):
     :param differ_class: For future use.
     """
 
-    def __init__(self, dialect=None, differ_class: Differ=None):
+    def __init__(self, dialect=None, differ_class: Differ = None):
         self._differ_class = differ_class
         self._dialect = dialect
 
@@ -111,7 +111,7 @@ class WER(Metric):
     INS_PENALTY = 1
     SUB_PENALTY = 1
 
-    def __init__(self, mode=None, differ_class: Differ=None):
+    def __init__(self, mode=None, differ_class: Differ = None):
         self._mode = mode
         if mode == self.MODE_LEVENSHTEIN:
             return
@@ -149,7 +149,7 @@ class DiffCounts(Metric):
     Get the amount of differences between reference and hypothesis
     """
 
-    def __init__(self, differ_class: Differ=None):
+    def __init__(self, differ_class: Differ = None):
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
