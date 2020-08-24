@@ -61,7 +61,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinxarg.ext',
-    'sphinxcontrib.gravizo',
     'sphinxcontrib.mermaid',
 ]
 
