@@ -3,8 +3,8 @@ FROM python:3.7-alpine
 LABEL maintainer "EBU <ai-stt@list.ebu.ch>"
 
 RUN adduser -D benchmarkstt
-RUN apk --update add python py-pip openssl ca-certificates py-openssl wget
-RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base
+RUN apk --update add python3 py-pip openssl ca-certificates py-openssl wget
+RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python3-dev py-pip build-base
 RUN python -m pip install --upgrade pip setuptools wheel
 
 WORKDIR /home/benchmarkstt
