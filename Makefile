@@ -22,7 +22,6 @@ docs: setupdocs clean
 
 setupdocs: env
 	$(PYTHON) -m pip install -r docs/requirements.txt
-	cd docs/ && yarn install
 
 dev: env setuptools
 	$(PYTHON) -m pip install -e '.[test]'
