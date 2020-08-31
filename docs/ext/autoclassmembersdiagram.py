@@ -153,7 +153,7 @@ class ClassMembersDiagram(object):
             return
 
         if tuple in cls.__bases__ and hasattr(cls, '_fields'):
-            self.namedtuples.append('class %s {\n<<namedtuple>>\n%s\n}' %
+            self.namedtuples.append('\nclass %s {\n<<namedtuple>>\n%s\n}' %
                                     (class_name(cls),
                                      '\n'.join(textwrap.wrap(", ".join(cls._fields), 25))
                                      ))
@@ -174,20 +174,20 @@ class ClassMembersDiagram(object):
 
     def _members_str(self):
         return [
-            "class %s {\n\t%s\n}" % (clsname.replace('.', ''), "\n\t".join(members))
+            "\nclass %s {\n\t%s\n}" % (clsname.replace('.', ''), "\n\t".join(members))
             for clsname, members in self.class_members.items()
         ]
 
     def __str__(self):
-        m = self._members_str()
         return "classDiagram\n" + "\n".join(
-            list(self.module_classes) + [
+            list(self.module_classes) +
+            [
                 "%s <|-- %s" % (a, b)
                 for a, b in self.inheritances
             ] +
             self.associations +
             self.namedtuples +
-            m
+            self._members_str()
         )
 
 
