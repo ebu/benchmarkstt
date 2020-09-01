@@ -17,7 +17,6 @@ help:
 
 clean:
 	rm modules/*.rst || true
-	rm _static/autogen/*.puml || true
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 # Catch-all target: route all unknown targets to Sphinx using the new
