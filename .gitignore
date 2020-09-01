@@ -2,7 +2,6 @@
 docs/build/
 docs/modules/*.rst
 docs/api-methods.rst
-docs/_static/autogen/
 docs/node_modules/
 
 # is auto generated:
