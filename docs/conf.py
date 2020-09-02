@@ -97,12 +97,12 @@ html_css_files = [
 
 # -- Options for LaTeX output ------------------------------------------------
 
-# mermaid -> svg, requires `yarn install` for this to be available (see Makefile)
 if not on_rtd:  # only import and set the theme if we're building docs locally
+    # mermaid -> svg, requires `yarn install` for this to be available (see Makefile)
+    # unfortunately does not seem supported on readthedocs
     mermaid_cmd = "./node_modules/.bin/mmdc"
-mermaid_output_format = "svg"
-mermaid_verbose = True
-mermaid_params = ['--theme', 'forest', '--backgroundColor', 'transparent']
+    mermaid_output_format = "svg"
+    mermaid_params = ['--theme', 'forest', '--backgroundColor', 'transparent']
 
 latex_elements = {
     'papersize': 'a4paper',
