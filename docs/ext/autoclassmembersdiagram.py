@@ -85,7 +85,7 @@ class ClassMembersDiagram(object):
                     cls.__module__.startswith(param.annotation.__module__.split('.', 2)[0]) and
                     class_name(param.annotation) != class_name(cls)
                ):
-                self.associations.append("%s <-- %s" % (class_name(param.annotation), class_name(cls)))
+                self.associations.append("%s <.. %s" % (class_name(param.annotation), class_name(cls)))
                 self._inspect_class(param.annotation, True)
                 return ': '.join([param.name, param.annotation.__name__])
             return str(param)
