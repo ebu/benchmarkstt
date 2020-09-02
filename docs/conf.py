@@ -180,6 +180,7 @@ smartquotes = False
 highlight_language = 'none'
 
 npm_process.wait()
+print("Using node version: %s" % (check_output(['node', '--version']).decode('utf-8'),))
 print("Using mermaid mmdc version: %s" % (check_output(['node', os.path.join(docs_dir, 'node_modules', '.bin', 'mmdc'), '--version']).decode('utf-8'),))
 
 def setup(app):
