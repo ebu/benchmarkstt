@@ -107,6 +107,8 @@ if mermaid_build_locally:
     mermaid_output_format = "svg"
     mermaid_params = ['-p', 'puppeteer-config.json', '--theme', 'forest', '--backgroundColor', 'transparent']
 
+mermaid_version = '8.7.0'
+
 latex_elements = {
     'papersize': 'a4paper',
 
