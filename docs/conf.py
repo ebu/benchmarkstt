@@ -26,10 +26,6 @@ ext_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ext')
 docs_modules_dir = os.path.join(docs_dir, 'modules')
 tpl_dir = os.path.join(docs_dir, 'templates')
 
-if on_rtd:
-    os.system('curl -sL https://deb.nodesource.com/setup_14.x | bash -')
-    os.system('sudo apt-get install -y nodejs')
-
 npm_process = NPMPackage(os.path.join(docs_dir, 'package.json')).install(wait=False)
 
 sys.path.insert(0, root_dir)
