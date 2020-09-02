@@ -1,6 +1,7 @@
 import os
 import sys
 from datetime import datetime
+from subprocess import check_output
 from sphinx.ext.apidoc import main as sphinx_apidoc
 from benchmarkstt.api.jsonrpc import get_methods
 from benchmarkstt.docblock import format_docs
@@ -9,7 +10,6 @@ from pynpm import NPMPackage
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
-NPMPackage('/package.json').install()
 
 description = 'A library for benchmarking AI/ML applications.'
 project = 'BenchmarkSTT'
@@ -18,11 +18,14 @@ copyright = '2019-%d, %s' % (datetime.now().year, author)
 
 slug = project.lower()
 
-root_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+docs_dir = os.path.dirname(os.path.realpath(__file__))
+root_dir = os.path.dirname(docs_dir)
 src_dir = os.path.join(os.path.abspath(root_dir), 'src', slug)
 ext_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ext')
-docs_modules_dir = os.path.join(os.path.abspath(root_dir), 'docs', 'modules')
-tpl_dir = os.path.join(os.path.abspath(root_dir), 'docs', 'templates')
+docs_modules_dir = os.path.join(docs_dir, 'modules')
+tpl_dir = os.path.join(docs_dir, 'templates')
+
+npm_process = NPMPackage(os.path.join(docs_dir, 'package.json')).install(wait=False)
 
 sys.path.insert(0, root_dir)
 sys.path.insert(0, src_dir)
@@ -176,6 +179,8 @@ smartquotes = False
 
 highlight_language = 'none'
 
+npm_process.wait()
+print("Using mermaid mmdc version: %s" % (check_output(['node', os.path.join(docs_dir, 'node_modules', '.bin', 'mmdc'), '--version']).decode('utf-8'),))
 
 def setup(app):
     from autoclassmembersdiagram import MermaidClassMembersDiagram
