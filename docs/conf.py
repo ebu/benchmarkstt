@@ -9,7 +9,7 @@ from pynpm import NPMPackage
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
-npm_process = NPMPackage('./package.json').install(wait=False)
+NPMPackage('/package.json').install()
 
 description = 'A library for benchmarking AI/ML applications.'
 project = 'BenchmarkSTT'
@@ -28,7 +28,6 @@ sys.path.insert(0, root_dir)
 sys.path.insert(0, src_dir)
 sys.path.insert(0, ext_dir)
 
-#  from benchmarkstt.normalization import logger
 # -- Auto build module docs --------------------------------------------------
 sphinx_apidoc(['-e', '-f', '-t', tpl_dir, '-o', docs_modules_dir, src_dir])
 os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
@@ -181,5 +180,3 @@ highlight_language = 'none'
 def setup(app):
     from autoclassmembersdiagram import MermaidClassMembersDiagram
     app.add_directive('autoclassmemberstree', MermaidClassMembersDiagram)
-
-npm_process.wait()
