@@ -20,7 +20,7 @@ def traversible(schema, key=None):
     return [word[key] for word in schema]
 
 
-def get_opcode_counts(opcodes):
+def get_opcode_counts(opcodes) -> OpcodeCounts:
     counts = OpcodeCounts(0, 0, 0, 0)._asdict()
     for tag, alo, ahi, blo, bhi in opcodes:
         if tag == 'equal':
@@ -122,7 +122,7 @@ class WER(Metric):
         if mode == self.MODE_HUNT:
             self.DEL_PENALTY = self.INS_PENALTY = .5
 
-    def compare(self, ref: Schema, hyp: Schema):
+    def compare(self, ref: Schema, hyp: Schema) -> float:
         if self._mode == self.MODE_LEVENSHTEIN:
             ref_list = [i['item'] for i in ref]
             total_ref = len(ref_list)
@@ -154,7 +154,7 @@ class DiffCounts(Metric):
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
 
-    def compare(self, ref: Schema, hyp: Schema):
+    def compare(self, ref: Schema, hyp: Schema) -> OpcodeCounts:
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
 
