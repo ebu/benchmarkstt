@@ -8,7 +8,6 @@ https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/sphinxcontrib/autoc
 https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/LICENSE.rst
 """
 import inspect
-import textwrap
 from sphinx.util import import_object
 from sphinxcontrib.mermaid import mermaid, figure_wrapper, align_spec
 from docutils.parsers.rst import Directive, directives
