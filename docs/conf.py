@@ -17,6 +17,7 @@ author = 'EBU'
 copyright = '2019-%d, %s' % (datetime.now().year, author)
 
 slug = project.lower()
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 docs_dir = os.path.dirname(os.path.realpath(__file__))
 root_dir = os.path.dirname(docs_dir)
@@ -24,6 +25,10 @@ src_dir = os.path.join(os.path.abspath(root_dir), 'src', slug)
 ext_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ext')
 docs_modules_dir = os.path.join(docs_dir, 'modules')
 tpl_dir = os.path.join(docs_dir, 'templates')
+
+if on_rtd:
+    os.system('curl -sL https://deb.nodesource.com/setup_12.x | bash -')
+    os.system('apt-get install -y nodejs')
 
 npm_process = NPMPackage(os.path.join(docs_dir, 'package.json')).install(wait=False)
 
@@ -62,8 +67,6 @@ extensions = [
 ]
 
 # -- Setting readthedocs theme and config -----------------------------------
-
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 if not on_rtd:  # only import and set the theme if we're building docs locally
     import sphinx_rtd_theme
