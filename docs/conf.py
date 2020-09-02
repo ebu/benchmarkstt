@@ -9,6 +9,7 @@ from pynpm import NPMPackage
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
 
+npm_process = NPMPackage('./package.json').install(wait=False)
 
 description = 'A library for benchmarking AI/ML applications.'
 project = 'BenchmarkSTT'
@@ -98,8 +99,6 @@ html_css_files = [
 
 # -- Options for LaTeX output ------------------------------------------------
 
-NPMPackage('./package.json').install()
-
 mermaid_cmd = "./node_modules/.bin/mmdc"
 mermaid_output_format = "svg"
 mermaid_params = ['--theme', 'forest', '--backgroundColor', 'transparent']
@@ -182,3 +181,5 @@ highlight_language = 'none'
 def setup(app):
     from autoclassmembersdiagram import MermaidClassMembersDiagram
     app.add_directive('autoclassmemberstree', MermaidClassMembersDiagram)
+
+npm_process.wait()
