@@ -58,6 +58,6 @@ table.docutils.option-list td:nth-child(2) {
    color: green;
 }
 
-svg {
+object[type="image/svg+xml"], svg {
   max-width: 100%;
 }

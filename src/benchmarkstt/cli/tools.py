@@ -1,5 +1,6 @@
 import textwrap
-from benchmarkstt.cli import create_parser, args_help, args_common, HelpFormatter, determine_log_level, args_complete
+from benchmarkstt.cli import create_parser, args_help, args_common, args_complete
+from benchmarkstt.cli import CustomHelpFormatter, determine_log_level
 from benchmarkstt.modules import Modules
 
 
@@ -15,7 +16,7 @@ def argparser():
         if hasattr(cli, 'Formatter'):
             kwargs['formatter_class'] = cli.Formatter
         else:
-            kwargs['formatter_class'] = HelpFormatter
+            kwargs['formatter_class'] = CustomHelpFormatter
 
         docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s._cli' % (module,))
         kwargs['description'] = textwrap.dedent(docs)

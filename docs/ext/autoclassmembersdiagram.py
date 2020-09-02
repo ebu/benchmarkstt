@@ -3,21 +3,23 @@ generate mermaid code that represent the inheritance of classes
 defined in a given module, including some representation of class
 members
 
-Based on the code in:
+Loosely ased on the code in:
 https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/sphinxcontrib/autoclassdiag.py
 https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/LICENSE.rst
 """
 from __future__ import print_function
 import inspect
-from sphinx.util import import_object
-from sphinxcontrib.mermaid import Mermaid
 import textwrap
+from sphinx.util import import_object
+from sphinxcontrib.mermaid import mermaid, figure_wrapper, align_spec
+from docutils.parsers.rst import Directive, directives
 
 
 def class_name(cls):
     """Return a string representing the class"""
     # NOTE: can be changed to str(class) for more complete class info
-    return cls.__name__.replace('.', '_')
+    return str(cls)
+    return cls.__name__ # .replace('.', '_')
 
 
 class MagicTraits(object):
@@ -44,6 +46,7 @@ class MagicTraits(object):
         "__subclasshook__": False,
         "__repr__": False,
         "__str__": False,
+        "__getnewargs__": False,
     }
 
     @classmethod
@@ -75,13 +78,17 @@ class ClassMembersDiagram(object):
         traits = set()
 
         def format_trait(name):
-            return "<<%s>>\n" % (name,)
+            return "<<%s>>" % (name,)
 
         def filter_self_and_cls(x):
-            return x.name not in ['self', 'cls']
+            return x.name.lstrip('_') not in ['self', 'cls']
 
         def inspect_param(param):
-            if inspect.isclass(param.annotation) and cls.__module__.startswith(param.annotation.__module__.split('.', 2)[0]):
+            if (
+                    inspect.isclass(param.annotation) and
+                    cls.__module__.startswith(param.annotation.__module__.split('.', 2)[0]) and
+                    class_name(param.annotation) != class_name(cls)
+               ):
                 self.associations.append("%s <-- %s" % (class_name(param.annotation), class_name(cls)))
                 self._inspect_class(param.annotation, True)
                 return ': '.join([param.name, param.annotation.__name__])
@@ -112,17 +119,16 @@ class ClassMembersDiagram(object):
             params = list(sig.parameters.values())
             prefix = ''
             postfix = ''
-            if len(params) and params[0].name != 'self':
+            if len(params) != 0 and params[0].name != 'self':
                 postfix = '$'
             else:
                 prefix = '-' if name[0] == '_' else '+'
             params = filter(filter_self_and_cls, params)
             params = list(map(inspect_param, params))
 
-            params_str = '\n'.join(textwrap.wrap(', '.join(params), 25))
+            params_str = '\n\t'.join(textwrap.wrap(', '.join(params), 55))
             if name == '__init__':
-                members_list.append(params_str)
-                # init_args = list(map(str, list(params)))
+                members_list.insert(0, '\n\t'.join(params))
                 continue
 
             members_list.append(''.join([
@@ -146,16 +152,17 @@ class ClassMembersDiagram(object):
             return
 
         cls_name = class_name(cls)
-        if cls_name in self.module_classes:
+        if cls_name.startswith('_') or cls_name in self.module_classes:
             return
 
         if not cls.__module__.startswith(self.base_module) and not force:
             return
 
         if tuple in cls.__bases__ and hasattr(cls, '_fields'):
-            self.namedtuples.append('\nclass %s {\n<<namedtuple>>\n%s\n}' %
+            self.namedtuples.append('\nclass %s {\n%s\n%s\n}' %
                                     (class_name(cls),
-                                     '\n'.join(textwrap.wrap(", ".join(cls._fields), 25))
+                                     "\t<<namedtuple>>",
+                                     '\n\t'.join(textwrap.wrap(", ".join(cls._fields), 25))
                                      ))
             return
 
@@ -179,28 +186,58 @@ class ClassMembersDiagram(object):
         ]
 
     def __str__(self):
-        return "classDiagram\n" + "\n".join(
+        contents = "\n".join(
             list(self.module_classes) +
             [
                 "%s <|-- %s" % (a, b)
-                for a, b in self.inheritances
+                for a, b in self.inheritances if a != b
             ] +
             self.associations +
             self.namedtuples +
             self._members_str()
         )
 
+        if not contents:
+            return ""
 
-class MermaidClassMembersDiagram(Mermaid):
-    option_spec = {
-        'test': bool,
-    }
+        return "classDiagram\n" + contents
 
+
+class MermaidClassMembersDiagram(Directive):
+    """
+    Directive to automagically add create an extended class diagram from python code.
+    """
     has_content = False
     required_arguments = 1
+    option_spec = {
+        'alt': directives.unchanged,
+        'align': align_spec,
+        'caption': directives.unchanged,
+    }
 
-    def get_mm_code(self):
-        return u'{}'.format(ClassMembersDiagram(*self.arguments, **self.options))
+    def run(self):
+        code = str(ClassMembersDiagram(*self.arguments, **self.options))
+        if len(code) == 0:
+            return []
+
+        node = mermaid()
+        node['code'] = "\n\n".join([
+            "%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#e7f2fa', 'lineColor': '#2980B9' }}}%%",
+            code
+        ])
+        node['options'] = {}
+        if 'alt' in self.options:
+            node['alt'] = self.options['alt']
+        if 'align' in self.options:
+            node['align'] = self.options['align']
+        if 'inline' in self.options:
+            node['inline'] = True
+
+        caption = self.options.get('caption')
+        if caption:
+            node = figure_wrapper(self, node, caption)
+
+        return [node]
 
 
 if __name__ == "__main__":

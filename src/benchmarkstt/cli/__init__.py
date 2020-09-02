@@ -84,7 +84,7 @@ def action_with_arguments(action, required_args, optional_args):
 
 
 # TODO: further augment formatter to give cleaner output
-class HelpFormatter(argparse.HelpFormatter):
+class CustomHelpFormatter(argparse.HelpFormatter):
     """
     Custom formatter for argparse that allows us to properly display _ActionWithArguments and docblock documentation,
     as well as allowing newlines inside the description.
@@ -131,7 +131,7 @@ def args_complete(parser):  # pragma: no cover
 def create_parser(*args, **kwargs):
     defaults = {
         'add_help': False,
-        'formatter_class': HelpFormatter,
+        'formatter_class': CustomHelpFormatter,
         'allow_abbrev': False,
     }
     kwargs = {k: kwargs.get(k, v) for k, v in defaults.items()}
