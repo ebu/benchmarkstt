@@ -28,7 +28,7 @@ tpl_dir = os.path.join(docs_dir, 'templates')
 
 if on_rtd:
     os.system('curl -sL https://deb.nodesource.com/setup_12.x | bash -')
-    os.system('apt-get install -y nodejs')
+    os.system('sudo apt-get install -y nodejs')
 
 npm_process = NPMPackage(os.path.join(docs_dir, 'package.json')).install(wait=False)
 
