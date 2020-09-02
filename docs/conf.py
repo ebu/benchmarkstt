@@ -18,6 +18,7 @@ copyright = '2019-%d, %s' % (datetime.now().year, author)
 
 slug = project.lower()
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+mermaid_build_locally = os.environ.get('MERMAID_BUILD_LOCALLY', not on_rtd)
 
 docs_dir = os.path.dirname(os.path.realpath(__file__))
 root_dir = os.path.dirname(docs_dir)
@@ -26,7 +27,8 @@ ext_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ext')
 docs_modules_dir = os.path.join(docs_dir, 'modules')
 tpl_dir = os.path.join(docs_dir, 'templates')
 
-npm_process = NPMPackage(os.path.join(docs_dir, 'package.json')).install(wait=False)
+if mermaid_build_locally:
+    npm_process = NPMPackage(os.path.join(docs_dir, 'package.json')).install(wait=False)
 
 sys.path.insert(0, root_dir)
 sys.path.insert(0, src_dir)
@@ -100,9 +102,10 @@ html_css_files = [
 
 # -- Options for LaTeX output ------------------------------------------------
 
-mermaid_cmd = "./node_modules/.bin/mmdc"
-mermaid_output_format = "svg"
-mermaid_params = ['-p', 'puppeteer-config.json', '--theme', 'forest', '--backgroundColor', 'transparent']
+if mermaid_build_locally:
+    mermaid_cmd = "./node_modules/.bin/mmdc"
+    mermaid_output_format = "svg"
+    mermaid_params = ['-p', 'puppeteer-config.json', '--theme', 'forest', '--backgroundColor', 'transparent']
 
 latex_elements = {
     'papersize': 'a4paper',
@@ -178,9 +181,13 @@ smartquotes = False
 
 highlight_language = 'none'
 
-npm_process.wait()
-print("Using node version: %s" % (check_output(['node', '--version']).decode('utf-8'),))
-print("Using mermaid mmdc version: %s" % (check_output(['node', os.path.join(docs_dir, 'node_modules', '.bin', 'mmdc'), '--version']).decode('utf-8'),))
+if mermaid_build_locally:
+    npm_process.wait()
+    print("Using node version: %s"
+          % (check_output(['node', '--version']).decode('utf-8').rstrip(),))
+
+    print("Using mermaid mmdc version: %s"
+          % (check_output(['node', os.path.join(docs_dir, 'node_modules', '.bin', 'mmdc'), '--version']).decode('utf-8').rstrip(),))
 
 def setup(app):
     from autoclassmembersdiagram import MermaidClassMembersDiagram
