@@ -101,7 +101,7 @@ html_css_files = [
 
 mermaid_cmd = "./node_modules/.bin/mmdc"
 mermaid_output_format = "svg"
-mermaid_params = ['--theme', 'forest', '--backgroundColor', 'transparent']
+mermaid_params = ['-p', 'puppeteer-config.json', '--theme', 'forest', '--backgroundColor', 'transparent']
 
 latex_elements = {
     'papersize': 'a4paper',
