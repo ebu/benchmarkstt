@@ -7,7 +7,6 @@ Loosely ased on the code in:
 https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/sphinxcontrib/autoclassdiag.py
 https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/LICENSE.rst
 """
-from __future__ import print_function
 import inspect
 import textwrap
 from sphinx.util import import_object
@@ -17,9 +16,7 @@ from docutils.parsers.rst import Directive, directives
 
 def class_name(cls):
     """Return a string representing the class"""
-    # NOTE: can be changed to str(class) for more complete class info
-    return str(cls)
-    return cls.__name__ # .replace('.', '_')
+    return cls.__name__.replace('.', '_')
 
 
 class MagicTraits(object):
@@ -126,11 +123,11 @@ class ClassMembersDiagram(object):
             params = filter(filter_self_and_cls, params)
             params = list(map(inspect_param, params))
 
-            params_str = '\n\t'.join(textwrap.wrap(', '.join(params), 55))
             if name == '__init__':
                 members_list.insert(0, '\n\t'.join(params))
                 continue
 
+            params_str = ', '.join(params)
             members_list.append(''.join([
                 prefix,
                 name,
@@ -162,7 +159,7 @@ class ClassMembersDiagram(object):
             self.namedtuples.append('\nclass %s {\n%s\n%s\n}' %
                                     (class_name(cls),
                                      "\t<<namedtuple>>",
-                                     '\n\t'.join(textwrap.wrap(", ".join(cls._fields), 25))
+                                     '\n\t'.join(cls._fields)
                                      ))
             return
 
@@ -238,7 +235,3 @@ class MermaidClassMembersDiagram(Directive):
             node = figure_wrapper(self, node, caption)
 
         return [node]
-
-
-if __name__ == "__main__":
-    print(ClassMembersDiagram('sphinx.util'))
