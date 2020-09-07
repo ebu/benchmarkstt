@@ -9,6 +9,7 @@
    usage
    development
    modules/benchmarkstt
+   changelog
 
 
 Indices and tables

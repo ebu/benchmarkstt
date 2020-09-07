@@ -103,7 +103,7 @@ html_css_files = [
 # -- Options for LaTeX output ------------------------------------------------
 
 if mermaid_build_locally:
-    mermaid_cmd = os.path.join(docs_dir, 'node_modules', '.bin', 'mmdc'),
+    mermaid_cmd = os.path.join(docs_dir, 'node_modules', '.bin', 'mmdc')
     mermaid_output_format = "svg"
     mermaid_params = ['-p', 'puppeteer-config.json', '--theme', 'forest', '--backgroundColor', 'transparent']
 
