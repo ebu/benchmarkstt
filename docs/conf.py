@@ -5,7 +5,6 @@ from subprocess import check_output
 from sphinx.ext.apidoc import main as sphinx_apidoc
 from benchmarkstt.api.jsonrpc import get_methods
 from benchmarkstt.docblock import format_docs
-from pynpm import NPMPackage
 
 # Configuration file for the Sphinx documentation builder.
 # see the documentation: http://www.sphinx-doc.org/en/master/config
@@ -28,6 +27,7 @@ docs_modules_dir = os.path.join(docs_dir, 'modules')
 tpl_dir = os.path.join(docs_dir, 'templates')
 
 if mermaid_build_locally:
+    from pynpm import NPMPackage
     npm_process = NPMPackage(os.path.join(docs_dir, 'package.json')).install(wait=False)
 
 sys.path.insert(0, root_dir)
@@ -40,7 +40,7 @@ os.remove(os.path.join(docs_modules_dir, 'modules.rst'))
 
 # -- Auto build api docs -----------------------------------------------------
 
-with open(os.path.join(os.path.abspath(root_dir), 'docs', 'api-methods.rst'), 'w') as f:
+with open(os.path.join(docs_dir, 'api-methods.rst'), 'w') as f:
     f.write("Available JSON-RPC methods\n==========================\n\n\n")
     f.write(".. attention::\n\n")
     f.write("    Only supported for Python versions 3.6 and above\n\n\n")
@@ -76,7 +76,7 @@ else:
 
 # -- Project information -----------------------------------------------------
 
-with open('../VERSION') as f:
+with open(os.path.join(root_dir, 'VERSION')) as f:
     # The full version, including alpha/beta/rc tags
     release = f.read()
 
@@ -103,7 +103,7 @@ html_css_files = [
 # -- Options for LaTeX output ------------------------------------------------
 
 if mermaid_build_locally:
-    mermaid_cmd = "./node_modules/.bin/mmdc"
+    mermaid_cmd = os.path.join(docs_dir, 'node_modules', '.bin', 'mmdc'),
     mermaid_output_format = "svg"
     mermaid_params = ['-p', 'puppeteer-config.json', '--theme', 'forest', '--backgroundColor', 'transparent']
 
