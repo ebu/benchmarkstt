@@ -1,4 +1,4 @@
-from benchmarkstt.normalization import core, NormalizationComposite, File, NormalizerWithFileSupport, FileFactory
+from benchmarkstt.normalization import core, File, NormalizationComposite, NormalizerWithFileSupport, FileFactory
 import logging
 from io import StringIO
 import pytest

@@ -27,14 +27,14 @@ class Factory(Registry):
     Factory class with auto-loading of namespaces according to a base class.
     """
 
-    def __init__(self, base_class, namespaces=None, methods=None):
+    def __init__(self, base_class, namespaces=None, allow_duck=None):
         super().__init__()
         self.base_class = base_class
-        self.methods = methods
-        if namespaces is None:
-            self.namespaces = [base_class.__module__ + '.core']
+        if allow_duck is False:
+            self.methods = None
         else:
-            self.namespaces = namespaces
+            self.methods = ['gfdgfd']
+        self.namespaces = [base_class.__module__ + '.core'] if namespaces is None else namespaces
 
         for namespace in self.namespaces:
             self.register_namespace(namespace)

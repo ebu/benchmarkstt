@@ -129,5 +129,5 @@ class FileFactory(Factory):
         raise NotImplementedError("Not supported")
 
 
-factory = Factory(Normalizer, ["benchmarkstt.normalization.core"], ["normalize"])
-file_factory = FileFactory(NormalizerWithFileSupport, ["benchmarkstt.normalization.core"])
+factory = Factory(Normalizer)
+file_factory = FileFactory(NormalizerWithFileSupport, None, False)
