@@ -1,9 +1,9 @@
 """
-generate mermaid code that represent the inheritance of classes
+Generate mermaid code that represent the inheritance of classes
 defined in a given module, including some representation of class
 members
 
-Loosely ased on the code in:
+Loosely based on the code in:
 https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/sphinxcontrib/autoclassdiag.py
 https://github.com/mgaitan/sphinxcontrib-mermaid/blob/master/LICENSE.rst
 """
@@ -73,8 +73,8 @@ class ClassMembersDiagram(object):
 
         traits = set()
 
-        def format_trait(name):
-            return "<<%s>>" % (name,)
+        def format_trait(trait_name):
+            return "<<%s>>" % (trait_name,)
 
         def filter_self_and_cls(x):
             return x.name.lstrip('_') not in ['self', 'cls']
@@ -171,9 +171,10 @@ class ClassMembersDiagram(object):
 
         self.module_classes.add(cls_name)
         for base in cls.__bases__:
-            if class_name(base) == 'object' or class_name(base) == 'ABC':
+            base_cls_name = class_name(base)
+            if base_cls_name == 'object' or base_cls_name == 'ABC' or base_cls_name.startswith('_'):
                 continue
-            self.inheritances.append((class_name(base), cls_name))
+            self.inheritances.append((base_cls_name, cls_name))
             self._inspect_class(base)
 
     def _populate_tree(self):
