@@ -85,7 +85,7 @@ def run(parser, args, normalizer=None):
                             if 'diff_formatter_dialect' in sigkeys:
                                 kwargs['diff_formatter_dialect'] = 'dict'
                         else:
-                            kwargs['dialect'] = 'cli'
+                            kwargs['dialect'] = 'ansi'
 
             metric = cls(*item, **kwargs)
             result = metric.compare(ref, hyp)

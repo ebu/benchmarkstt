@@ -54,7 +54,7 @@ class WordDiffs(Metric):
     """
     Present differences on a per-word basis
 
-    :param dialect: Presentation format. Default is 'cli'.
+    :param dialect: Presentation format. Default is 'ansi'.
     :example dialect: 'html'
     :param differ_class: For future use.
     """
