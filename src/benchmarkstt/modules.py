@@ -9,13 +9,13 @@ if sys.version_info >= (3, 6):
 
 
 class Modules:
-    def __init__(self, sub_module):
-        self._postfix = '' if sub_module is None else '.' + sub_module
+    def __init__(self, sub_module=None):
+        self._submodule = '' if sub_module is None else sub_module
 
     def __iter__(self):
         for module in _modules:
             try:
-                yield (module, self[module])
+                yield module, self[module]
             except IndexError:
                 pass
 
@@ -23,7 +23,7 @@ class Modules:
         return self[name]
 
     def __getitem__(self, key):
-        name = 'benchmarkstt.%s%s' % (key, self._postfix)
+        name = 'benchmarkstt.%s.entrypoints.%s' % (self._submodule, key)
         try:
             module = import_module(name)
             if hasattr(module, 'hidden'):
@@ -40,9 +40,10 @@ class Modules:
 def load_object(name, transform=None):
     """
     Load an object based on a string.
+
     :param name: The string representation of an object
     :param transform: Transform (callable) done on the object name for comparison, if None, will lowercase compare.
-    False for no transform.
+                      False for no transform.
     """
     module = list(name.split('.'))
 

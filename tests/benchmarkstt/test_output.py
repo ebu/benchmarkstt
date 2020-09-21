@@ -1,10 +1,10 @@
-from benchmarkstt.output import Base, factory
+from benchmarkstt.output import Output, factory
 import pytest
 
 
 def test_base():
     with pytest.raises(NotImplementedError):
-        Base().result(None, None)
+        Output().result(None, None)
 
 
 @pytest.mark.parametrize('kind,expected', [

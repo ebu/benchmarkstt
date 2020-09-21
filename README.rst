@@ -1,3 +1,4 @@
+============
 BenchmarkSTT
 ============
 
@@ -12,8 +13,8 @@ BenchmarkSTT
     :target: https://benchmarkstt.readthedocs.io/
     :alt: Documentation Status
 
-.. image:: docs/img/benchmarksttcli.png
-    :alt: Example command line output
+
+.. include:: example.rst
 
 About
 ------

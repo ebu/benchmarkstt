@@ -1,11 +1,12 @@
 """
-Module providing our own CSV file parser with support for whitespace trimming, empty lines filtering and comment lines
+Module providing a custom CSV file parser with support for whitespace trimming, empty lines filtering and comment lines
 """
 
 import typing
 import sys
 from functools import partial
-from benchmarkstt import DeferredList, make_printable
+from benchmarkstt.deferred import DeferredList
+from benchmarkstt.helpers import make_printable
 
 
 class InvalidDialectError(ValueError):

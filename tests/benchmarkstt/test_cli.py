@@ -1,11 +1,12 @@
 import pytest
-from benchmarkstt.cli import main, tools
+from benchmarkstt.cli.main import run as main
+from benchmarkstt.cli.tools import run as tools
 from unittest import mock
 from tempfile import TemporaryDirectory
 import os
 from io import StringIO
 import shlex
-from benchmarkstt.normalization import Base as NormalizationBase
+from benchmarkstt.normalization import Normalizer as NormalizationBase
 from benchmarkstt.normalization import factory as normalization_factory
 from benchmarkstt.diff.formatter import CLIDiffDialect
 from benchmarkstt.__meta__ import __version__
@@ -195,6 +196,7 @@ def commandline_tester(prog_name, app, argv, result, capsys):
         if type(result) is int:
             with pytest.raises(SystemExit) as err:
                 app()
+
             assert str(err).endswith(': %d' % (result,))
         else:
             with pytest.raises(SystemExit) as err:

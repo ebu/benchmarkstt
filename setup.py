@@ -11,6 +11,10 @@ def from_file(filename):
         result = f.read()
     return result.strip()
 
+def filter_requirements(line):
+    return not line.startswith('-e')
+
+docs_require = list(filter(filter_requirements, from_file('docs/requirements.txt').split('\n')))
 
 dirname = os.path.dirname(__file__)
 __version__ = from_file('VERSION')
@@ -60,21 +64,22 @@ setup(
         'jsonrpcserver>=4.0.1',
         'gunicorn>=19.9.0',
         'docutils>=0.14',
-        'editdistance>=0.5.3'
+        'editdistance>=0.5.3',
     ],
     extras_require={
         'test': [
             "pytest==4.2.0",
             "pycodestyle==2.5.0",
             "pytest-cov==2.5.1",
-            "attrs==19.1.0"
-        ]
+            "attrs==19.1.0",
+        ],
+        'docs': docs_require,
     },
     platforms='any',
     entry_points={
         'console_scripts': [
-            "%s=%s.cli:main" % (__name__, __name__),
-            "%s-tools=%s.cli:tools" % (__name__, __name__)
+            "%s=%s.cli.main:run" % (__name__, __name__),
+            "%s-tools=%s.cli.tools:run" % (__name__, __name__)
         ],
     }
 )

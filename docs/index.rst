@@ -1,6 +1,5 @@
 .. include:: ../README.rst
 
-
 .. toctree::
    :maxdepth: 3
 
@@ -10,6 +9,7 @@
    usage
    development
    modules/benchmarkstt
+   changelog
 
 
 Indices and tables
@@ -17,5 +17,4 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-
 

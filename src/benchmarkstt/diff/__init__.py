@@ -1,8 +1,15 @@
+"""
+Responsible for calculating differences.
+"""
+
 from benchmarkstt.factory import Factory
 
 
-class Base:
-    def __init__(self, a='', b=''):
+class Differ:
+    def __init__(self, a, b):
+        """
+        :meta public:
+        """
         raise NotImplementedError()
 
     def get_opcodes(self):
@@ -23,4 +30,4 @@ class Base:
         raise NotImplementedError()
 
 
-factory = Factory(Base)
+factory = Factory(Differ)

@@ -1,8 +1,9 @@
 from benchmarkstt.schema import Schema
 import logging
+from benchmarkstt.diff import Differ
 from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
-from benchmarkstt.metrics import Base
+from benchmarkstt.metrics import Metric
 from collections import namedtuple
 # from benchmarkstt.modules import LoadObjectProxy
 import editdistance
@@ -19,7 +20,7 @@ def traversible(schema, key=None):
     return [word[key] for word in schema]
 
 
-def get_opcode_counts(opcodes):
+def get_opcode_counts(opcodes) -> OpcodeCounts:
     counts = OpcodeCounts(0, 0, 0, 0)._asdict()
     for tag, alo, ahi, blo, bhi in opcodes:
         if tag == 'equal':
@@ -42,14 +43,14 @@ def get_opcode_counts(opcodes):
     return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
 
 
-def get_differ(a, b, differ_class):
+def get_differ(a, b, differ_class: Differ):
     if differ_class is None:
         # differ_class = HuntMcIlroy
         differ_class = RatcliffObershelp
     return differ_class(traversible(a), traversible(b))
 
 
-class WordDiffs(Base):
+class WordDiffs(Metric):
     """
     Present differences on a per-word basis
 
@@ -58,7 +59,7 @@ class WordDiffs(Base):
     :param differ_class: For future use.
     """
 
-    def __init__(self, dialect=None, differ_class=None):
+    def __init__(self, dialect=None, differ_class: Differ = None):
         self._differ_class = differ_class
         self._dialect = dialect
 
@@ -71,7 +72,7 @@ class WordDiffs(Base):
                            preprocessor=lambda x: ' %s' % (' '.join(x),))
 
 
-class WER(Base):
+class WER(Metric):
     """
     Word Error Rate, basically defined as::
 
@@ -110,7 +111,7 @@ class WER(Base):
     INS_PENALTY = 1
     SUB_PENALTY = 1
 
-    def __init__(self, mode=None, differ_class=None):
+    def __init__(self, mode=None, differ_class: Differ = None):
         self._mode = mode
         if mode == self.MODE_LEVENSHTEIN:
             return
@@ -121,7 +122,7 @@ class WER(Base):
         if mode == self.MODE_HUNT:
             self.DEL_PENALTY = self.INS_PENALTY = .5
 
-    def compare(self, ref: Schema, hyp: Schema):
+    def compare(self, ref: Schema, hyp: Schema) -> float:
         if self._mode == self.MODE_LEVENSHTEIN:
             ref_list = [i['item'] for i in ref]
             total_ref = len(ref_list)
@@ -143,17 +144,17 @@ class WER(Base):
         return changes / total_ref
 
 
-class DiffCounts(Base):
+class DiffCounts(Metric):
     """
     Get the amount of differences between reference and hypothesis
     """
 
-    def __init__(self, differ_class=None):
+    def __init__(self, differ_class: Differ = None):
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
 
-    def compare(self, ref: Schema, hyp: Schema):
+    def compare(self, ref: Schema, hyp: Schema) -> OpcodeCounts:
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
 

@@ -1,5 +1,5 @@
 import logging
-from benchmarkstt import make_printable
+from benchmarkstt.helpers import make_printable
 import difflib
 from markupsafe import escape
 from benchmarkstt.schema import Schema

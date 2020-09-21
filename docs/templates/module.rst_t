@@ -1,0 +1,17 @@
+{%- macro automodule(modname, options) -%}
+.. automodule:: {{ modname }}
+{%- for option in options %}
+   :{{ option }}:
+{%- endfor %}
+{%- endmacro %}
+
+
+{%- if show_headings %}
+{{- [basename, "module"] | join(' ') | e | heading }}
+
+{% endif -%}
+
+.. autoclassmemberstree:: {{basename}}
+
+{{ automodule(qualname, automodule_options) }}
+

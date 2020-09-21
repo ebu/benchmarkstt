@@ -1,8 +1,8 @@
-from benchmarkstt.normalization import Base as NormalizationBase
-from benchmarkstt.metrics import Base as MetricsBase
-from benchmarkstt.diff import Base as DiffBase
-from benchmarkstt.segmentation import Base as SegmentationBase
-from benchmarkstt.input import Base as InputBase
+from benchmarkstt.normalization import Normalizer as NormalizationBase
+from benchmarkstt.metrics import Metric as MetricsBase
+from benchmarkstt.diff import Differ as DiffBase
+from benchmarkstt.segmentation import Segmenter as SegmentationBase
+from benchmarkstt.input import Input as InputBase
 import pytest
 from inspect import signature
 

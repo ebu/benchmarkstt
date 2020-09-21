@@ -8,9 +8,9 @@ from benchmarkstt import input, settings
 # from benchmarkstt.modules import LoadObjectProxy
 
 
-class PlainText(input.Base):
+class PlainText(input.Input):
     """
-    plain text
+    Plain text.
     """
     def __init__(self, text, segmenter=None, normalizer=None):
         if segmenter is None:
@@ -23,7 +23,7 @@ class PlainText(input.Base):
         return iter(self._segmenter(self._text, normalizer=self._normalizer))
 
 
-class File(input.Base):
+class File(input.Input):
     """
     Load from a given filename.
     """

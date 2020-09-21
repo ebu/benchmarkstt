@@ -2,8 +2,8 @@ Command line tool
 =================
 
     .. argparse::
-       :module: benchmarkstt.cli
-       :func: main_parser
+       :module: benchmarkstt.cli.main
+       :func: argparser
        :prog: benchmarkstt
 
 

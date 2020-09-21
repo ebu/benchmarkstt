@@ -1,9 +1,13 @@
+"""
+Responsible for normalization of text.
+"""
+
 from benchmarkstt.normalization.logger import log
-import logging
 from benchmarkstt.factory import Factory
 from benchmarkstt import settings
 from benchmarkstt import csv
 import os
+
 
 _normalizer_namespaces = (
     "benchmarkstt.normalization.core",
@@ -11,10 +15,10 @@ _normalizer_namespaces = (
 )
 
 
-logger = logging.getLogger(__name__)
-
-
-class Base:
+class Normalizer:
+    """
+    Abstract base class for normalization
+    """
     @log
     def normalize(self, text: str) -> str:
         """
@@ -26,25 +30,34 @@ class Base:
         return type(self).__name__
 
     def _normalize(self, text: str) -> str:
+        """
+        :meta public:
+        """
         raise NotImplementedError()
 
 
-class BaseWithFileSupport(Base):
+class NormalizerWithFileSupport(Normalizer):
     """
     This kind of normalization class supports loading the values from a file, i.e.
     being wrapped in a core.File wrapper.
     """
 
     def _normalize(self, text: str) -> str:
+        """
+        :meta public:
+        """
         raise NotImplementedError()
 
 
-class NormalizationComposite(Base):
+class NormalizationComposite(Normalizer):
     """
     Combining normalizers
     """
 
     def __init__(self, title=None):
+        """
+        :meta public:
+        """
         self._normalizers = []
         self._title = type(self).__name__ if title is None else title
 
@@ -54,6 +67,9 @@ class NormalizationComposite(Base):
         self._normalizers.append(normalizer)
 
     def _normalize(self, text: str) -> str:
+        """
+        :meta public:
+        """
         # allow for an empty file
         if not self._normalizers:
             return text
@@ -66,7 +82,7 @@ class NormalizationComposite(Base):
         return self._title
 
 
-class File(Base):
+class File(Normalizer):
     """
     Read one per line and pass it to the given normalizer
 
@@ -82,6 +98,9 @@ class File(Base):
     """
 
     def __init__(self, normalizer, file, encoding=None, path=None):
+        """
+        :meta public:
+        """
         if encoding is None:
             encoding = settings.default_encoding
 
@@ -101,7 +120,7 @@ class File(Base):
         return self._normalizer.normalize(text)
 
 
-factory = Factory(Base, _normalizer_namespaces)
+factory = Factory(Normalizer, _normalizer_namespaces)
 
 
 class FileFactory(Factory):
@@ -110,7 +129,10 @@ class FileFactory(Factory):
         return File(cls, file, encoding, path=path)
 
     def __getitem__(self, item):
+        """
+        :meta public:
+        """
         raise NotImplementedError("Not supported")
 
 
-file_factory = FileFactory(BaseWithFileSupport, _normalizer_namespaces)
+file_factory = FileFactory(NormalizerWithFileSupport, _normalizer_namespaces)
