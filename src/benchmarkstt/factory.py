@@ -1,6 +1,5 @@
 import inspect
 import logging
-from abc import ABC
 from importlib import import_module
 from benchmarkstt.docblock import format_docs
 from collections import namedtuple
