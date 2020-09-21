@@ -1,6 +1,5 @@
 import inspect
 import logging
-from abc import ABC
 from importlib import import_module
 from benchmarkstt.docblock import format_docs
 from collections import namedtuple
@@ -27,14 +26,11 @@ class Factory(Registry):
     Factory class with auto-loading of namespaces according to a base class.
     """
 
-    def __init__(self, base_class, namespaces=None, allow_duck=None):
+    def __init__(self, base_class, namespaces=None, methods=None):
         super().__init__()
         self.base_class = base_class
-        if allow_duck is False:
-            self.methods = None
-        else:
-            self.methods = ['gfdgfd']
-        self.namespaces = [base_class.__module__ + '.core'] if namespaces is None else namespaces
+        self.methods = methods
+        self.namespaces = [base_class.__module__] if namespaces is None else namespaces
 
         for namespace in self.namespaces:
             self.register_namespace(namespace)
@@ -181,3 +177,16 @@ class Factory(Registry):
                               docs=None,
                               optional_args=optional_args,
                               required_args=required_args)
+
+
+class CoreFactory(Factory):
+    def __init__(self, base_class, allow_duck=None):
+        super().__init__(
+            base_class,
+            [base_class.__module__ + '.core'],
+            self._abstract_methods(base_class) if allow_duck else None
+        )
+
+    @staticmethod
+    def _abstract_methods(base_class):
+        return list(base_class.__abstractmethods__)

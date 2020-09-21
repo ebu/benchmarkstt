@@ -3,7 +3,7 @@ Responsible for calculating differences.
 """
 
 from abc import ABC, abstractmethod
-from benchmarkstt.factory import Factory
+from benchmarkstt.factory import CoreFactory
 
 
 class Differ(ABC):
@@ -33,4 +33,4 @@ class Differ(ABC):
         raise NotImplementedError()
 
 
-factory = Factory(Differ)
+factory = CoreFactory(Differ)

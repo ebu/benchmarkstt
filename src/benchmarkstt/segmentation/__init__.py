@@ -3,7 +3,7 @@ Responsible for segmenting text.
 """
 
 from abc import ABC, abstractmethod
-from benchmarkstt.factory import Factory
+from benchmarkstt.factory import CoreFactory
 
 
 class Segmenter(ABC):
@@ -19,4 +19,4 @@ class Segmenter(ABC):
         raise NotImplementedError()
 
 
-factory = Factory(Segmenter)
+factory = CoreFactory(Segmenter, False)

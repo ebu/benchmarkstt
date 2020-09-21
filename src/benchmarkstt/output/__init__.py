@@ -4,7 +4,7 @@ Responsible for dealing with output formats
 """
 from abc import ABC, abstractmethod
 from collections import OrderedDict
-from benchmarkstt.factory import Factory
+from benchmarkstt.factory import CoreFactory
 
 
 class Output(ABC):
@@ -50,4 +50,4 @@ class SimpleTextBase(Output):
         raise NotImplementedError()
 
 
-factory = Factory(Output)
+factory = CoreFactory(Output)

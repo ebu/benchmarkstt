@@ -4,7 +4,7 @@ Responsible for dealing with input formats and converting them to benchmarkstt n
 """
 
 from abc import ABC, abstractmethod
-from benchmarkstt.factory import Factory
+from benchmarkstt.factory import CoreFactory
 
 
 class Input(ABC):
@@ -20,4 +20,4 @@ class Input(ABC):
         raise NotImplementedError()
 
 
-factory = Factory(Input)
+factory = CoreFactory(Input, False)

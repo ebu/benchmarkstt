@@ -5,7 +5,7 @@ Responsible for calculating metrics.
 
 from abc import ABC, abstractmethod
 from benchmarkstt.schema import Schema
-from benchmarkstt.factory import Factory
+from benchmarkstt.factory import CoreFactory
 
 
 class Metric(ABC):
@@ -17,4 +17,4 @@ class Metric(ABC):
         raise NotImplementedError()
 
 
-factory = Factory(Metric)
+factory = CoreFactory(Metric)

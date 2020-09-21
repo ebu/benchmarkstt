@@ -5,24 +5,39 @@ Responsible for normalization of text.
 import os
 from abc import ABC, abstractmethod
 from benchmarkstt.normalization.logger import log
-from benchmarkstt.factory import Factory
+from benchmarkstt.factory import CoreFactory
 from benchmarkstt import settings
 from benchmarkstt import csv
 
 
-class Normalizer(ABC):
+class _NormalizerNoLogs(ABC):
+    """
+    Abstract base class for normalization, without providing logging.
+    """
+
+    @abstractmethod
+    def normalize(self, text: str) -> str:
+        """
+        Returns normalized text with rules supplied by the called class.
+        """
+
+        raise NotImplementedError()
+
+    def __repr__(self):
+        return type(self).__name__
+
+
+class Normalizer(_NormalizerNoLogs):
     """
     Abstract base class for normalization
     """
+
     @log
     def normalize(self, text: str) -> str:
         """
         Returns normalized text with rules supplied by the called class.
         """
         return self._normalize(text)
-
-    def __repr__(self):
-        return type(self).__name__
 
     @abstractmethod
     def _normalize(self, text: str) -> str:
@@ -117,7 +132,7 @@ class File(Normalizer):
         return self._normalizer.normalize(text)
 
 
-class FileFactory(Factory):
+class FileFactory(CoreFactory):
     def create(self, name, file=None, encoding=None, path=None):
         cls = super().__getitem__(name)
         return File(cls, file, encoding, path=path)
@@ -129,5 +144,5 @@ class FileFactory(Factory):
         raise NotImplementedError("Not supported")
 
 
-factory = Factory(Normalizer)
-file_factory = FileFactory(NormalizerWithFileSupport, None, False)
+factory = CoreFactory(_NormalizerNoLogs)
+file_factory = FileFactory(NormalizerWithFileSupport, False)
