@@ -14,7 +14,9 @@ class Registry:
 
     def __setitem__(self, key, value):
         if key in self._registry:
-            raise ValueError("Conflict: alias '%s' is already registered" % (key,))
+            raise ValueError(
+                "Conflict: alias '%s' is already registered by '%s'" %
+                (key, self._registry[key].__module__))
         self._registry[key] = value
 
     def __delitem__(self, key):

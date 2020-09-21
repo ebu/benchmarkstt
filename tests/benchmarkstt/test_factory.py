@@ -22,7 +22,7 @@ def test_factory_exception():
     with raises(ValueError) as exc:
         factory.register(InvalidClass)
 
-    assert "Invalid class (must inherit from Base class)" in str(exc)
+    assert "ValueError: Invalid class, not recognized as a Base" in str(exc)
 
 
 def test_factory():

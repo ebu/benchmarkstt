@@ -9,12 +9,6 @@ from benchmarkstt import csv
 import os
 
 
-_normalizer_namespaces = (
-    "benchmarkstt.normalization.core",
-    ""
-)
-
-
 class Normalizer:
     """
     Abstract base class for normalization
@@ -120,9 +114,6 @@ class File(Normalizer):
         return self._normalizer.normalize(text)
 
 
-factory = Factory(Normalizer, _normalizer_namespaces)
-
-
 class FileFactory(Factory):
     def create(self, name, file=None, encoding=None, path=None):
         cls = super().__getitem__(name)
@@ -135,4 +126,5 @@ class FileFactory(Factory):
         raise NotImplementedError("Not supported")
 
 
-file_factory = FileFactory(NormalizerWithFileSupport, _normalizer_namespaces)
+factory = Factory(Normalizer, ["benchmarkstt.normalization.core"], ["normalize"])
+file_factory = FileFactory(NormalizerWithFileSupport, ["benchmarkstt.normalization.core"])

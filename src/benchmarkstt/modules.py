@@ -1,11 +1,18 @@
 import sys
+import logging
 from importlib import import_module
 
 _modules = ['normalization', 'metrics', 'benchmark']
 
+logger = logging.getLogger(__name__)
+
 if sys.version_info >= (3, 6):
     # only supported in python >= 3.6
     _modules.append('api')
+
+
+class HiddenModuleError(Exception):
+    pass
 
 
 class Modules:
@@ -15,26 +22,33 @@ class Modules:
     def __iter__(self):
         for module in _modules:
             try:
-                yield module, self[module]
-            except IndexError:
-                pass
+                yield module, self._import(module)
+            except HiddenModuleError as e:
+                logger.debug("Hidden module skipped: %s", e)
+            except ImportError as e:
+                logger.warning("Could not import benchmarkstt.%s.entrypoints.%s: %s", self._submodule, module, e)
 
     def __getattr__(self, name):
         return self[name]
 
     def __getitem__(self, key):
-        name = 'benchmarkstt.%s.entrypoints.%s' % (self._submodule, key)
         try:
-            module = import_module(name)
-            if hasattr(module, 'hidden'):
-                if module.hidden:
-                    raise ImportError()
-            return module
+            return self._import(key)
         except ImportError:
             raise IndexError('Module not found', key)
+        except HiddenModuleError:
+            raise IndexError('Module is hidden', key)
 
     def keys(self):
         return [key for key, value in iter(self)]
+
+    def _import(self, key):
+        name = 'benchmarkstt.%s.entrypoints.%s' % (self._submodule, key)
+        module = import_module(name)
+        if hasattr(module, 'hidden'):
+            if module.hidden:
+                raise HiddenModuleError(name)
+        return module
 
 
 def load_object(name, transform=None):
@@ -97,4 +111,4 @@ class LoadObjectProxy(Proxy):
     """
 
     def __init__(self, name, *args, **kwargs):
-        super().__init__(load_object(name)(*args, **kwargs))
+        super().__init__(load_object(name.replace('-', '.'))(*args, **kwargs))

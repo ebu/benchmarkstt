@@ -270,7 +270,7 @@ class Config(normalization.Normalizer):
 
 
 # For future versions
-# class ExternalNormalizer(LoadObjectProxy, normalization.BaseWithFileSupport):
+# class ExternalNormalizer(LoadObjectProxy, normalization.Normalizer):
 #     """
 #     Automatically loads an external normalizer class.
 #
