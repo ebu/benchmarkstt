@@ -34,6 +34,8 @@ Changed
   * update sphinx to latest
   * use more descriptive names for Base classes (Normalizer, Differ, etc.)
   * rename CLIDiffDialect to ANSIDiffDialect, "cli" -> "ansi"
+  * allow ducktyped custom classes to be recognized as valid
+  * proper abstract base classes
 
 * 
   Documentation:

@@ -2,16 +2,19 @@
 Responsible for calculating differences.
 """
 
+from abc import ABC, abstractmethod
 from benchmarkstt.factory import Factory
 
 
-class Differ:
+class Differ(ABC):
+    @abstractmethod
     def __init__(self, a, b):
         """
         :meta public:
         """
         raise NotImplementedError()
 
+    @abstractmethod
     def get_opcodes(self):
         """
         Return list of 5-tuples describing how to turn `a` into `b`.

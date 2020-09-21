@@ -131,8 +131,9 @@ def test_config_section():
 
 
 def test_base_with_file_notimplemented():
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(TypeError) as e:
         NormalizerWithFileSupport().normalize('')
+    assert "Can't instantiate abstract class" in str(e)
 
 
 def test_filefactory():

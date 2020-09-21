@@ -1,20 +1,7 @@
+from collections import OrderedDict
 from benchmarkstt import output
 from benchmarkstt.schema import Schema
-from collections import OrderedDict
-
-
-class SimpleTextBase(output.Output):
-    def print(self, result):
-        if hasattr(result, '_asdict'):
-            result = result._asdict()
-
-        if type(result) is float:
-            print("%.6f" % (result,))
-        elif type(result) is dict or type(result) is OrderedDict:
-            for k, v in result.items():
-                print("%s: %r" % (k, v))
-        else:
-            print(result)
+from benchmarkstt.output import SimpleTextBase
 
 
 class ReStructuredText(SimpleTextBase):

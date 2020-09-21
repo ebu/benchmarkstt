@@ -3,10 +3,12 @@ Responsible for dealing with input formats and converting them to benchmarkstt n
 
 """
 
+from abc import ABC, abstractmethod
 from benchmarkstt.factory import Factory
 
 
-class Input:
+class Input(ABC):
+    @abstractmethod
     def __iter__(self):
         """
         Each input class should be accessible as iterator, each iteration should

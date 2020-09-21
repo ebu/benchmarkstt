@@ -1,5 +1,6 @@
 import inspect
 import logging
+from abc import ABC
 from importlib import import_module
 from benchmarkstt.docblock import format_docs
 from collections import namedtuple
@@ -89,17 +90,15 @@ class Factory(Registry):
             return False
         if not inspect.isclass(tocheck):
             return False
+        if inspect.isabstract(tocheck):
+            return False
         if issubclass(tocheck, self.base_class):
             return True
 
         # if it contains all required methods, accept as duck
         if self.methods:
-            # return all(map(callable, (getattr(tocheck, method, None) for method in self.methods)))
-
-            for method in self.methods:
-                if not callable(getattr(tocheck, method, None)):
-                    return False
-            return True
+            return all(map(callable, (getattr(tocheck, method, None)
+                                      for method in self.methods)))
 
         return False
 

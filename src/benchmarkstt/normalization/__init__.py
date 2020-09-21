@@ -2,14 +2,15 @@
 Responsible for normalization of text.
 """
 
+import os
+from abc import ABC, abstractmethod
 from benchmarkstt.normalization.logger import log
 from benchmarkstt.factory import Factory
 from benchmarkstt import settings
 from benchmarkstt import csv
-import os
 
 
-class Normalizer:
+class Normalizer(ABC):
     """
     Abstract base class for normalization
     """
@@ -23,6 +24,7 @@ class Normalizer:
     def __repr__(self):
         return type(self).__name__
 
+    @abstractmethod
     def _normalize(self, text: str) -> str:
         """
         :meta public:
@@ -36,6 +38,7 @@ class NormalizerWithFileSupport(Normalizer):
     being wrapped in a core.File wrapper.
     """
 
+    @abstractmethod
     def _normalize(self, text: str) -> str:
         """
         :meta public:

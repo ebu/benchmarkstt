@@ -3,8 +3,9 @@ import pytest
 
 
 def test_base():
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(TypeError) as e:
         Output().result(None, None)
+    assert "Can't instantiate abstract class" in str(e)
 
 
 @pytest.mark.parametrize('kind,expected', [
