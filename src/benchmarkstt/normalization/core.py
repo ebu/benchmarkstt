@@ -238,7 +238,7 @@ class Config(normalization.Normalizer):
             reader = reader[section]
             title += '[%s]' % (section,)
 
-        self._normalizer = normalization.NormalizationComposite(title)
+        self._normalizer = normalization.NormalizationAggregate(title)
 
         for line in reader:
             try:

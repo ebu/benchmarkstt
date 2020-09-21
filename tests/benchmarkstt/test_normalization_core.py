@@ -1,4 +1,4 @@
-from benchmarkstt.normalization import core, File, NormalizationComposite, NormalizerWithFileSupport, FileFactory
+from benchmarkstt.normalization import core, File, NormalizationAggregate, NormalizerWithFileSupport, FileFactory
 import logging
 from io import StringIO
 import pytest
@@ -27,12 +27,12 @@ def test_logs(caplog):
 
 def test_composite():
     text = 'Knights who say: NI!'
-    normalizer = NormalizationComposite()
+    normalizer = NormalizationAggregate()
     normalizer.add(core.Lowercase())
     normalizer.add(core.Unidecode())
     assert normalizer.normalize(text) == 'knights who say: ni!'
 
-    comp = NormalizationComposite()
+    comp = NormalizationAggregate()
     comp.add(normalizer)
     comp.add(core.Replace(' ni', ' Ekke Ekke Ekke Ekke Ptang Zoo Boing'))
     assert comp.normalize(text) == \

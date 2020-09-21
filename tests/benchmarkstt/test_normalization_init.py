@@ -1,5 +1,5 @@
 from benchmarkstt.normalization import core
-from benchmarkstt.normalization import NormalizationComposite
+from benchmarkstt.normalization import NormalizationAggregate
 from benchmarkstt.normalization import factory
 from benchmarkstt.factory import ClassConfig
 from inspect import isgenerator
@@ -40,5 +40,5 @@ def test_is_normalizer():
     for not_normalizer in nope:
         assert factory.is_valid(not_normalizer) is False
 
-    assert factory.is_valid(NormalizationComposite) is True
-    assert NormalizationComposite().normalize('NON-normalized') == 'NON-normalized'
+    assert factory.is_valid(NormalizationAggregate) is True
+    assert NormalizationAggregate().normalize('NON-normalized') == 'NON-normalized'

@@ -61,7 +61,7 @@ class NormalizerWithFileSupport(Normalizer):
         raise NotImplementedError()
 
 
-class NormalizationComposite(Normalizer):
+class NormalizationAggregate(Normalizer):
     """
     Combining normalizers
     """
@@ -121,7 +121,7 @@ class File(Normalizer):
             file = os.path.join(path, file)
 
         with open(file, encoding=encoding) as f:
-            self._normalizer = NormalizationComposite(title=title)
+            self._normalizer = NormalizationAggregate(title=title)
             for line in csv.reader(f):
                 try:
                     self._normalizer.add(normalizer(*line))
