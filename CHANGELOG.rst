@@ -13,6 +13,7 @@ Added
 
 
   * add auto-generated UML diagrams
+  * add tutorial Jupyter Notebooks
 
 * 
   Tests:
@@ -32,6 +33,7 @@ Changed
   * moved all documentation specific code outside main package
   * update sphinx to latest
   * use more descriptive names for Base classes (Normalizer, Differ, etc.)
+  * rename CLIDiffDialect to ANSIDiffDialect, "cli" -> "ansi"
 
 * 
   Documentation:
