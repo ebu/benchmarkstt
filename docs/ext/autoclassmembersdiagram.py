@@ -20,25 +20,25 @@ def class_name(cls):
 
 class MagicTraits(object):
     MAGIC_MEMBERS = {
-        "__iter__": "Iterable",
-        "__next__": "Iterable",
-        "__call__": "Callable",
-        "__enter__": "ContextManager",
-        "__exit__": "ContextManager",
-        "__lt__": "Comparable",
-        "__le__": "Comparable",
-        "__eq__": "Comparable",
-        "__ne__": "Comparable",
-        "__gt__": "Comparable",
-        "__ge__": "Comparable",
-        "__contains__": "MembershipTestable",
-        "__getitem__": "Indexable",
-        "__setitem__": "Indexable",
-        "__delitem__": "Indexable",
-        "__reversed__": "Reversible",
-        "__getattr__": "Attributes",
-        "__getattribute__": "Attributes",
-        "__len__": "Sizeable",
+        "__iter__": "iterable",
+        "__next__": "iterable",
+        "__call__": "callable",
+        "__enter__": "context",
+        "__exit__": "context",
+        "__lt__": "comparable",
+        "__le__": "comparable",
+        "__eq__": "comparable",
+        "__ne__": "comparable",
+        "__gt__": "comparable",
+        "__ge__": "comparable",
+        "__contains__": "contains",
+        "__getitem__": "mapping",
+        "__setitem__": "mapping",
+        "__delitem__": "mapping",
+        "__reversed__": "reversible",
+        "__getattr__": "attributes",
+        "__getattribute__": "attributes",
+        "__len__": "len",
         "__subclasshook__": False,
         "__repr__": False,
         "__str__": False,
@@ -136,9 +136,14 @@ class ClassMembersDiagram(object):
                 postfix
                 ]))
 
+        if inspect.isabstract(cls):
+            traits.add('abstract')
+
         traits = list(map(format_trait, list(traits)))
+
         members_list.sort()
-        traits.sort()
+        traits.sort(key=len)
+
         self.class_members[class_name(cls)] = traits + \
                                               init_args + \
                                               members_list
@@ -166,7 +171,7 @@ class ClassMembersDiagram(object):
 
         self.module_classes.add(cls_name)
         for base in cls.__bases__:
-            if class_name(base) == 'object':
+            if class_name(base) == 'object' or class_name(base) == 'ABC':
                 continue
             self.inheritances.append((class_name(base), cls_name))
             self._inspect_class(base)
