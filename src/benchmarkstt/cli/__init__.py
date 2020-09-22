@@ -15,15 +15,31 @@ from functools import partial
 sys.path.insert(0, '')
 
 
+def format_helptext(txt):
+    return argparse._(txt+'\n\n')
+
+
 def args_help(parser):
     parser.add_argument('--help', action='help', default=argparse.SUPPRESS,
-                        help=argparse._('Show this help message and exit'))
+                        help=format_helptext('Show this help message and exit'))
 
 
 def args_common(parser):
     parser.add_argument('--log-level', type=str.lower, default='warning', dest='log_level',
                         choices=list(map(str.lower, logging._nameToLevel.keys())),
-                        help=argparse._('Set the logging output level'))
+                        help=format_helptext('Set the logging output level'))
+
+    parser.add_argument('--load', nargs='+', required=False, metavar='MODULE_NAME',
+                        help=format_helptext(
+                            'Load external code that may contain additional'
+                            'classes for normalization, etc.\n'
+                            'E.g. if the classes are contained in a python file '
+                            'named myclasses.py in the directory where your are '
+                            'calling `benchmarkstt` from, you would pass '
+                            '`--load myclasses.\n'
+                            'All classes that are recognized will be automatically '
+                            'documented in the `--help` command and available for use.'
+                        ))
 
 
 def args_from_factory(action, factory, parser):
@@ -93,6 +109,7 @@ class CustomHelpFormatter(argparse.HelpFormatter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._whitespace_matcher = re.compile(r'[\t ]+', re.ASCII)
+        self._split_lines_regex = re.compile(r'(?<!\n)\n(?!\n)')
 
     def _format_args(self, action, default_metavar):
         if isinstance(action, _ActionWithArguments):
@@ -106,7 +123,7 @@ class CustomHelpFormatter(argparse.HelpFormatter):
                 return ['']
             return textwrap.wrap(txt, width=width)
 
-        text = text.splitlines()
+        text = re.split(self._split_lines_regex, text)
         text = list(itertools.chain.from_iterable(map(wrap, text)))
         return text
 

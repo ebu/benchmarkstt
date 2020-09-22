@@ -24,7 +24,7 @@ def argparser(parser: argparse.ArgumentParser):
                         argument='Read the argument and treat as plain text (without reading from file)',
                         **core.File.available_types())
     types_help = ['Available types:']
-    types_help.extend(['%r: %s' % (k, v) for k, v in types.items()])
+    types_help.extend(['\t%r: %s' % (k, v) for k, v in types.items()])
     types_help = '\n'.join(types_help)
 
     subparser = parser.add_argument_group('reference and hypothesis types',
