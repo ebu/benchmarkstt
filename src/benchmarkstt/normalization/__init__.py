@@ -2,23 +2,36 @@
 Responsible for normalization of text.
 """
 
+import os
+from abc import ABC, abstractmethod
 from benchmarkstt.normalization.logger import log
-from benchmarkstt.factory import Factory
+from benchmarkstt.factory import CoreFactory
 from benchmarkstt import settings
 from benchmarkstt import csv
-import os
 
 
-_normalizer_namespaces = (
-    "benchmarkstt.normalization.core",
-    ""
-)
+class _NormalizerNoLogs(ABC):
+    """
+    Abstract base class for normalization, without providing logging.
+    """
+
+    @abstractmethod
+    def normalize(self, text: str) -> str:
+        """
+        Returns normalized text with rules supplied by the called class.
+        """
+
+        raise NotImplementedError()
+
+    def __repr__(self):
+        return type(self).__name__
 
 
-class Normalizer:
+class Normalizer(_NormalizerNoLogs):
     """
     Abstract base class for normalization
     """
+
     @log
     def normalize(self, text: str) -> str:
         """
@@ -26,9 +39,7 @@ class Normalizer:
         """
         return self._normalize(text)
 
-    def __repr__(self):
-        return type(self).__name__
-
+    @abstractmethod
     def _normalize(self, text: str) -> str:
         """
         :meta public:
@@ -42,6 +53,7 @@ class NormalizerWithFileSupport(Normalizer):
     being wrapped in a core.File wrapper.
     """
 
+    @abstractmethod
     def _normalize(self, text: str) -> str:
         """
         :meta public:
@@ -49,7 +61,7 @@ class NormalizerWithFileSupport(Normalizer):
         raise NotImplementedError()
 
 
-class NormalizationComposite(Normalizer):
+class NormalizationAggregate(Normalizer):
     """
     Combining normalizers
     """
@@ -109,7 +121,7 @@ class File(Normalizer):
             file = os.path.join(path, file)
 
         with open(file, encoding=encoding) as f:
-            self._normalizer = NormalizationComposite(title=title)
+            self._normalizer = NormalizationAggregate(title=title)
             for line in csv.reader(f):
                 try:
                     self._normalizer.add(normalizer(*line))
@@ -120,10 +132,7 @@ class File(Normalizer):
         return self._normalizer.normalize(text)
 
 
-factory = Factory(Normalizer, _normalizer_namespaces)
-
-
-class FileFactory(Factory):
+class FileFactory(CoreFactory):
     def create(self, name, file=None, encoding=None, path=None):
         cls = super().__getitem__(name)
         return File(cls, file, encoding, path=path)
@@ -135,4 +144,5 @@ class FileFactory(Factory):
         raise NotImplementedError("Not supported")
 
 
-file_factory = FileFactory(NormalizerWithFileSupport, _normalizer_namespaces)
+factory = CoreFactory(_NormalizerNoLogs)
+file_factory = FileFactory(NormalizerWithFileSupport, False)

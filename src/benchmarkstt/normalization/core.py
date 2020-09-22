@@ -5,6 +5,7 @@ Some basic/simple normalization classes
 
 import re
 import os
+import csv
 from unidecode import unidecode
 from benchmarkstt import normalization
 from benchmarkstt import config, settings
@@ -15,6 +16,8 @@ from contextlib import contextmanager
 file_types = (str,)
 if hasattr(os, 'PathLike'):
     file_types = (str, os.PathLike)
+
+File = normalization.File
 
 
 class Replace(normalization.NormalizerWithFileSupport):
@@ -235,7 +238,7 @@ class Config(normalization.Normalizer):
             reader = reader[section]
             title += '[%s]' % (section,)
 
-        self._normalizer = normalization.NormalizationComposite(title)
+        self._normalizer = normalization.NormalizationAggregate(title)
 
         for line in reader:
             try:
@@ -270,7 +273,7 @@ class Config(normalization.Normalizer):
 
 
 # For future versions
-# class ExternalNormalizer(LoadObjectProxy, normalization.BaseWithFileSupport):
+# class ExternalNormalizer(LoadObjectProxy, normalization.Normalizer):
 #     """
 #     Automatically loads an external normalizer class.
 #

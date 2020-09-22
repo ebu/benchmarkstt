@@ -3,7 +3,7 @@ Apply normalization to given input
 """
 
 import sys
-from benchmarkstt.normalization import NormalizationComposite
+from benchmarkstt.normalization import NormalizationAggregate
 import argparse
 from benchmarkstt.normalization import factory
 from benchmarkstt.normalization.logger import DiffLoggingFormatter, normalization_logger
@@ -63,12 +63,12 @@ def argparser(parser: argparse.ArgumentParser):
 def get_normalizer_from_args(args):
     if args.log:
         handler = logging.StreamHandler()
-        formatter = DiffLoggingFormatter('cli', show_color_key=False)
+        formatter = DiffLoggingFormatter('ansi', show_color_key=False)
         handler.setFormatter(formatter)
         handler.setLevel(logging.INFO)
         normalization_logger.logger.addHandler(handler)
 
-    composite = NormalizationComposite()
+    composite = NormalizationAggregate()
 
     if 'normalizers' in args:
         for item in args.normalizers:

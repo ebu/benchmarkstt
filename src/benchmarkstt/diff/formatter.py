@@ -34,7 +34,7 @@ class Dialect:
         return self._stream.getvalue()
 
 
-class CLIDiffDialect(Dialect):
+class ANSIDiffDialect(Dialect):
     def __init__(self, show_color_key=None):
         self.show_color_key = bool(show_color_key) if show_color_key is not None else True
 
@@ -80,10 +80,10 @@ class HTMLDiffDialect(Dialect):
     insert_format = '<span class="insert">%s</span>'
 
 
-class RestructuredTextDialect(CLIDiffDialect):
+class RestructuredTextDialect(ANSIDiffDialect):
     @staticmethod
     def preprocessor(txt):
-        return CLIDiffDialect.preprocessor(txt).replace('·', '\u200B·\u200B').replace('`', r'\`')
+        return ANSIDiffDialect.preprocessor(txt).replace('·', '\u200B·\u200B').replace('`', r'\`')
 
     delete_format = '\\ :diffdelete:`%s`\\ '
     insert_format = '\\ :diffinsert:`%s`\\ '
@@ -159,7 +159,7 @@ class JSONDiffDialect(ListDialect):
 
 class DiffFormatter:
     diff_dialects = {
-        "cli": CLIDiffDialect,
+        "ansi": ANSIDiffDialect,
         "html": HTMLDiffDialect,
         "text": UTF8Dialect,
         "json": JSONDiffDialect,

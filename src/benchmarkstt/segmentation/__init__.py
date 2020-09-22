@@ -2,10 +2,12 @@
 Responsible for segmenting text.
 """
 
-from benchmarkstt.factory import Factory
+from abc import ABC, abstractmethod
+from benchmarkstt.factory import CoreFactory
 
 
-class Segmenter:
+class Segmenter(ABC):
+    @abstractmethod
     def __iter__(self):
         """
         Each segmentation class should be accessible as iterator, each iteration should
@@ -17,4 +19,4 @@ class Segmenter:
         raise NotImplementedError()
 
 
-factory = Factory(Segmenter)
+factory = CoreFactory(Segmenter, False)

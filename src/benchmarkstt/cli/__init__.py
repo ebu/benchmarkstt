@@ -6,10 +6,10 @@ import argparse
 import logging
 import textwrap
 import itertools
-from argparse import ArgumentError
 import sys
-from functools import partial
 import re
+from argparse import ArgumentError
+from functools import partial
 
 # allow loading of modules based on current working directory
 sys.path.insert(0, '')

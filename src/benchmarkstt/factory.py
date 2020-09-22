@@ -26,13 +26,11 @@ class Factory(Registry):
     Factory class with auto-loading of namespaces according to a base class.
     """
 
-    def __init__(self, base_class, namespaces=None):
+    def __init__(self, base_class, namespaces=None, methods=None):
         super().__init__()
         self.base_class = base_class
-        if namespaces is None:
-            self.namespaces = [base_class.__module__ + '.core']
-        else:
-            self.namespaces = namespaces
+        self.methods = methods
+        self.namespaces = [base_class.__module__] if namespaces is None else namespaces
 
         for namespace in self.namespaces:
             self.register_namespace(namespace)
@@ -88,10 +86,17 @@ class Factory(Registry):
             return False
         if not inspect.isclass(tocheck):
             return False
-        if not issubclass(tocheck, self.base_class):
+        if inspect.isabstract(tocheck):
             return False
+        if issubclass(tocheck, self.base_class):
+            return True
 
-        return True
+        # if it contains all required methods, accept as duck
+        if self.methods:
+            return all(map(callable, (getattr(tocheck, method, None)
+                                      for method in self.methods)))
+
+        return False
 
     def register_namespace(self, namespace):
         """
@@ -100,11 +105,25 @@ class Factory(Registry):
         :param str|module namespace:
         """
 
-        module = '.'.join(filter(len, namespace.split('.')))
-        if module == '':
+        if namespace is None:
             module = globals()
         else:
-            module = import_module(module)
+            optional = namespace[0] == '?'
+            if optional:
+                namespace = namespace[1:]
+
+            module = '.'.join(filter(len, namespace.split('.')))
+            try:
+                module = import_module(module)
+            except ImportError as e:
+                if optional:
+                    logger.info(
+                        "Could not load optional namespace %s for %s: %s",
+                        namespace,
+                        self.base_class.__name__,
+                        e)
+                else:
+                    raise e
 
         for clsname in dir(module):
             cls = getattr(module, clsname)
@@ -127,7 +146,7 @@ class Factory(Registry):
         :return: None
         """
         if not self.is_valid(cls):
-            raise ValueError('Invalid class (must inherit from Base class)"')
+            raise ValueError('Invalid class, not recognized as a %s' % (self.base_class.__name__,))
 
         if alias is None:
             alias = cls.__name__
@@ -158,3 +177,16 @@ class Factory(Registry):
                               docs=None,
                               optional_args=optional_args,
                               required_args=required_args)
+
+
+class CoreFactory(Factory):
+    def __init__(self, base_class, allow_duck=None):
+        super().__init__(
+            base_class,
+            [base_class.__module__ + '.core'],
+            self._abstract_methods(base_class) if allow_duck else None
+        )
+
+    @staticmethod
+    def _abstract_methods(base_class):
+        return list(base_class.__abstractmethods__)

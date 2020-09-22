@@ -12,7 +12,7 @@ class PlainText(input.Input):
     """
     Plain text.
     """
-    def __init__(self, text, segmenter=None, normalizer=None):
+    def __init__(self, text, normalizer=None, segmenter=None):
         if segmenter is None:
             segmenter = segmenters.Simple
         self._text = text

@@ -8,11 +8,11 @@ from io import StringIO
 import shlex
 from benchmarkstt.normalization import Normalizer as NormalizationBase
 from benchmarkstt.normalization import factory as normalization_factory
-from benchmarkstt.diff.formatter import CLIDiffDialect
+from benchmarkstt.diff.formatter import ANSIDiffDialect
 from benchmarkstt.__meta__ import __version__
 
 
-cli_color_key = CLIDiffDialect().color_key
+cli_color_key = ANSIDiffDialect().color_key
 
 candide_lowercase = """
 "there is a concatenation of events in this best of all possible worlds:
