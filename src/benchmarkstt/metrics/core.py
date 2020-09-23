@@ -1,5 +1,6 @@
 from benchmarkstt.schema import Schema
 import logging
+import json
 from benchmarkstt.diff import Differ
 from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
@@ -158,6 +159,156 @@ class DiffCounts(Metric):
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
 
+class BEER(Metric):
+    """
+    Bag of Entities Error Rate, BEER, is defined as the error rate per entity with a bag of words approach :
+
+    ne_hyp = number of detection of the entity in the hypothesis file
+    ne_ref = number of detection of the entity in the reference file
+
+                      abs(ne_hyp - ne_ref)
+    BEER (entity) =  ---------------------
+                           ne_ref
+
+    The average BEER for a set of N entities is defined as the average of the BEER for the set of entities :
+
+                                          1
+    Av_BEER ([entity_1, ... entity_N) =  ---- (BEER (entity_1) ... BEER (entity_1))
+                                          N
+
+    The average Weighted BEER for a set of N entities is defined as the weighted average of the BEER for the set of
+    entities :
+
+    Av_WBEER ([entity_1, ... entity_N) =  w_1*BEER (entity_1) ... w_N*BEER (entity_1))
+
+    with w_1 + ... + w_N = 1
+
+    [Mode: 'bag_of_words' or 'weighted_bag_of_words'] defined the way the averaged BEER is computed respectlively
+    without and with weigthing.
+
+    """
+    # average BEER modes
+    MODE_BAG_OF_WORDS = 'bag_of_words'
+    MODE_WEIGHTED_BAG_OF_WORDS = 'weighted_bag_of_words'
+
+    def __init__(self, entities_file, mode=None):
+        """
+        """
+        self._mode = mode
+        if mode == self.MODE_BAG_OF_WORDS:
+
+            if entities_file.endswith('.txt'):
+                with open(entities_file, 'r') as f:
+                    self.entities = f.read().splitlines()
+
+            if entities_file.endswith('.json'):
+                with open(entities_file) as f:
+                    data = json.load(f)
+                self.entities = list(data.keys())
+            self.weight = [1.0 / len(self.entities)] * len(self.entities)
+
+            return
+
+        if mode == self.MODE_WEIGHTED_BAG_OF_WORDS:
+
+            if entities_file.endswith('.json'):
+                with open(entities_file) as f:
+                    data = json.load(f)
+                self.entities = list(data.keys())
+                weight = list(data.values())
+
+            weight = [0 if w < 0 else w for w in weight]
+
+            sw = sum(weight)
+            if sw > 0:
+                self.weight = [w / sw for w in weight]
+            else:
+                self.weight = weight
+
+            return
+
+        return
+
+        # differ is not applicable for bag of words defined
+
+    # find the position of one entity
+    # an entity can contain more than one word
+    @staticmethod
+    def __find_pattern(search_list, complex_entity):
+        entity = ''.join(complex_entity).split(' ')
+        le = len(entity)
+        cursor = 0
+        idx_found = []
+        for idx, elt in enumerate(search_list):
+            if elt == entity[cursor]:
+                cursor += 1
+                if cursor == le:
+                    idx_found.append([idx for idx in range(idx - le + 1, idx - le + 1 + le)])
+                    cursor = 0
+            else:
+                cursor = 0
+        return idx_found
+
+    # generate a list containing the detected entities in list_parsed
+    @staticmethod
+    def __generate_list_entity(self, list_parsed):
+
+        list_entity = []
+        index_entities = []
+        entities = self.entities
+        for entity in entities:
+            index_entity = self.__find_pattern(list_parsed, entity)
+            index_entities.extend(index_entity)
+
+        # sort on the position of the first part of the entity
+        index_entities.sort(key=lambda l: l[0])
+
+        # copy-past the entity found in the list
+        for k_list in index_entities:
+            list_entity.append(' '.join(list_parsed[k_list[0]:k_list[-1] + 1]))
+
+        return list_entity
+
+    # computes the BEER
+    @staticmethod
+    def compute_beer(self, list_hypothesis_entity, list_reference_entity):
+        beer = {}
+        beer_av = 0
+        entities = self.entities
+        for idx, entity in enumerate(entities):
+            count_hypothesis = list_hypothesis_entity.count(entity)
+            count_ref = list_reference_entity.count(entity)
+            beer_entity = 0
+            if count_ref != 0:
+                beer_entity = round(abs(count_ref - count_hypothesis) / count_ref, 3)
+                # accumulate the distance per entity
+                beer_av += abs(count_ref - count_hypothesis) * self.weight[idx] / count_ref
+            #beer[entity] = {'beer': beer_entity, 'occurence_ref': count_ref, 'occurence_hyp': count_hypothesis}
+            beer[entity] = {'beer': beer_entity, 'occurence_ref': count_ref }
+
+        beer_av = round(beer_av, 3)
+        l_ref = len(list_reference_entity)
+        #l_hyp = len(list_hypothesis_entity)
+        #beer['av_beer'] = {'beer': beer_av, 'occurence_ref': l_ref, 'occurence_hyp': l_hyp}
+        beer['av_beer'] = {'beer': beer_av, 'occurence_ref': l_ref }
+        return beer
+
+    def compare(self, ref: Schema, hyp: Schema):
+
+        ref_list = [i['item'] for i in ref]
+        total_ref = len(ref_list)
+        if total_ref == 0:
+            return 1
+        hyp_list = [i['item'] for i in hyp]
+        entities = self.entities
+
+        # extract the entities
+        list_hypothesis_entity = self.__generate_list_entity(self, hyp_list)
+        list_reference_entity = self.__generate_list_entity(self, ref_list)
+        # compute the score
+        wer_entity = self.compute_beer(self, list_hypothesis_entity, list_reference_entity)
+
+        return wer_entity
 
 # For a future version
 # class ExternalMetric(LoadObjectProxy, Base):
