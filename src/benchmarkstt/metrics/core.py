@@ -144,6 +144,51 @@ class WER(Metric):
         return changes / total_ref
 
 
+class CER(Metric):
+    """
+    Character Error Rate, basically defined as::
+
+        insertions + deletions + substitions
+        ------------------------------------
+           number of reference characters
+
+    Character error rate, CER, compare the differences
+    between reference and hypothesis on a character level.
+    A CER measure is usually lower than WER measure, since
+    words might differ on only one or a few characters, and
+    be classified as fully different.
+
+    The CER metric might be useful as a perspective on the
+    WER metric. Word endings might be less relevant if the
+    text will be preprocessed with stemming, or minor
+    spelling mistakes might be acceptable in certain
+    situations. A CER metric might also be used to evaluate
+    a source (an ASR) which output a stream of characters
+    rather than words.
+
+    Important: The current implementation of the CER metric
+    ignores whitespace characters. A string like 'aa bb cc'
+    will first be split into words, ['aa','bb','cc'], and
+    then merged into a final string for evaluation: 'aabbcc'.
+
+    :param mode: 'levenshtein' (default).
+    :param differ_class: For future use.
+    """
+
+    # CER modes
+    MODE_LEVENSHTEIN = 'levenshtein'
+
+    def __init__(self, mode=None, differ_class=None):
+        self._mode = mode
+
+    def compare(self, ref: Schema, hyp: Schema):
+        ref_str = ''.join([i['item'] for i in ref])
+        total_ref = len(ref_str)
+        if total_ref == 0:
+            return 1
+        return editdistance.eval(ref_str, ''.join([i['item'] for i in hyp])) / total_ref
+
+
 class DiffCounts(Metric):
     """
     Get the amount of differences between reference and hypothesis

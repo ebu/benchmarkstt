@@ -1,4 +1,4 @@
-from benchmarkstt.metrics.core import DiffCounts, WER
+from benchmarkstt.metrics.core import DiffCounts, WER, CER
 from benchmarkstt.metrics.core import OpcodeCounts
 from benchmarkstt.input.core import PlainText
 import pytest
@@ -39,3 +39,21 @@ def test_wer(a, b, exp):
     assert WER(mode=WER.MODE_STRICT).compare(PlainText(a), PlainText(b)) == wer_strict
     assert WER(mode=WER.MODE_HUNT).compare(PlainText(a), PlainText(b)) == wer_hunt
     assert WER(mode=WER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == wer_levenshtein
+
+
+@pytest.mark.parametrize('a,b,exp', [
+    # (cer_levenshtein)
+    ['aa bb cc dd', 'aa bb cc dd', (0,)],
+    ['aa bb cc dd', 'aa bb ee dd', (2/8,)],
+    ['aa bb cc dd', 'aabb ec dd', (1/8,)],
+    ['aa bb cc dd', 'aa aa bb cc dd dd', (4/8,)],
+    ['aa bb cc dd', '', (1,)],
+    ['', 'aa bb cc', (1,)],
+    ['aa', 'bb aa cc', (4/2,)],
+    ['a b c d e f', 'a b d e kfmod', (5/6,)],
+    ['a b c d e f g h i j', 'abedcfghij', (.2,)],
+])
+def test_cer(a, b, exp):
+    cer_levenshtein, = exp
+
+    assert CER(mode=CER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == cer_levenshtein
