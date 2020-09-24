@@ -49,7 +49,15 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
     :return:
     """
 
-    template_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'api', 'templates')
+    template_folder = os.path.abspath(os.path.join(
+        __file__,
+        os.pardir,
+        os.pardir,
+        os.pardir,
+        'api',
+        'templates'
+    ))
+
     app = Flask(__name__, template_folder=template_folder)
 
     if entrypoint is None:
