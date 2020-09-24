@@ -10,6 +10,7 @@ Make benchmarkstt available through a rudimentary JSON-RPC_ interface
 """
 
 import jsonrpcserver
+import os
 from flask import Flask, request, Response, render_template
 from benchmarkstt.docblock import format_docs, parse, process_rst
 from benchmarkstt.api.jsonrpc import get_methods
@@ -48,7 +49,8 @@ def create_app(entrypoint: str = None, with_explorer: bool = None):
     :return:
     """
 
-    app = Flask(__name__)
+    template_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'api', 'templates')
+    app = Flask(__name__, template_folder=template_folder)
 
     if entrypoint is None:
         entrypoint = '/api'
