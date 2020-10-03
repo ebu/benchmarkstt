@@ -31,12 +31,12 @@ def args_common(parser):
 
     parser.add_argument('--load', nargs='+', required=False, metavar='MODULE_NAME',
                         help=format_helptext(
-                            'Load external code that may contain additional'
+                            'Load external code that may contain additional '
                             'classes for normalization, etc.\n'
                             'E.g. if the classes are contained in a python file '
                             'named myclasses.py in the directory where your are '
                             'calling `benchmarkstt` from, you would pass '
-                            '`--load myclasses.\n'
+                            '`--load myclasses`.\n'
                             'All classes that are recognized will be automatically '
                             'documented in the `--help` command and available for use.'
                         ))
@@ -109,7 +109,6 @@ class CustomHelpFormatter(argparse.HelpFormatter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._whitespace_matcher = re.compile(r'[\t ]+', re.ASCII)
-        self._split_lines_regex = re.compile(r'(?<!\n)\n(?!\n)')
 
     def _format_args(self, action, default_metavar):
         if isinstance(action, _ActionWithArguments):
@@ -123,7 +122,7 @@ class CustomHelpFormatter(argparse.HelpFormatter):
                 return ['']
             return textwrap.wrap(txt, width=width)
 
-        text = re.split(self._split_lines_regex, text)
+        text = text.splitlines()
         text = list(itertools.chain.from_iterable(map(wrap, text)))
         return text
 
@@ -158,7 +157,6 @@ def create_parser(*args, **kwargs):
 
 
 def determine_log_level():
-    # Set log-level manually before parse_args(), so that also factory logs, etc. get output
     log_level = 'WARNING'
     if '--log-level' in sys.argv:
         idx = sys.argv.index('--log-level') + 1
@@ -168,3 +166,23 @@ def determine_log_level():
 
     logging.basicConfig(level=log_level)
     logging.getLogger().setLevel(log_level)
+
+
+def preload_externals():
+    if '--load' not in sys.argv:
+        return
+
+    from benchmarkstt.factory import CoreFactory
+
+    for i in range(sys.argv.index('--load')+1, len(sys.argv)):
+        if sys.argv[i].startswith('-'):
+            break
+        CoreFactory.add_supported_namespace(sys.argv[i])
+
+
+def before_parseargs():
+    # Set log-level so that also factory logs, etc. get output
+    determine_log_level()
+
+    # Preload requested modules so that it is also included in CLI and API help
+    preload_externals()

@@ -2,7 +2,7 @@ import logging
 import sys
 from contextlib import contextmanager
 from benchmarkstt import __meta__
-from benchmarkstt.cli import create_parser, args_help, args_common, determine_log_level, args_complete
+from benchmarkstt.cli import create_parser, args_help, args_common, before_parseargs, args_complete
 
 
 @contextmanager
@@ -33,7 +33,8 @@ def argparser():
 
 
 def run():
-    determine_log_level()
+    before_parseargs()
+
     # import done here to avoid circular dependencies
     import benchmarkstt.cli.entrypoints.benchmark as entrypoint
     with parser_context() as parser:

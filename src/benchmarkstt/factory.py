@@ -180,12 +180,21 @@ class Factory(Registry):
 
 
 class CoreFactory(Factory):
+    _extra_namespaces = []
+
     def __init__(self, base_class, allow_duck=None):
+        if allow_duck is None:
+            allow_duck = True
+
         super().__init__(
             base_class,
-            [base_class.__module__ + '.core'],
+            [base_class.__module__ + '.core'] + self._extra_namespaces,
             self._abstract_methods(base_class) if allow_duck else None
         )
+
+    @classmethod
+    def add_supported_namespace(cls, namespace):
+        cls._extra_namespaces.append(namespace)
 
     @staticmethod
     def _abstract_methods(base_class):
