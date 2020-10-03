@@ -42,7 +42,7 @@ class Factory(Registry):
         """
         Loads the proper class based on a name
 
-        :param name: Case-insensitive name of the class
+        :param item: Case-insensitive name of the class
         :return: The class
         :rtype: class
         """
@@ -159,7 +159,7 @@ class Factory(Registry):
         Get available classes with a proper ClassConfig
 
         :return: A dictionary of registered classes
-        :rtype: Dict[str, ClassConfig]
+        :rtype: Dict[ClassConfig]
         """
 
         for clsname, cls in self._registry.items():
@@ -173,24 +173,58 @@ class Factory(Registry):
             required_args = args[0:defaults_idx]
             optional_args = args[defaults_idx:]
 
-            yield ClassConfig(name=clsname, cls=cls,
+            yield ClassConfig(name=clsname,
+                              cls=cls,
                               docs=None,
                               optional_args=optional_args,
                               required_args=required_args)
 
 
-class CoreFactory(Factory):
+class CoreFactory:
     _extra_namespaces = []
 
     def __init__(self, base_class, allow_duck=None):
         if allow_duck is None:
             allow_duck = True
 
-        super().__init__(
-            base_class,
-            [base_class.__module__ + '.core'] + self._extra_namespaces,
-            self._abstract_methods(base_class) if allow_duck else None
-        )
+        self._base_class = base_class
+        self._base_class_abstract_methods = self._abstract_methods(base_class) if allow_duck else None
+        self._instance = None
+
+    def _factory(self):
+        # defers registration until first usage
+        if self._instance is None:
+            self._instance = Factory(
+                self._base_class,
+                [self._base_class.__module__ + '.core'] + self._extra_namespaces,
+                self._base_class_abstract_methods
+            )
+
+        return self._instance
+
+    def __iter__(self):
+        return self._factory().__iter__()
+
+    def __getitem__(self, item):
+        return self._factory().__getitem__(item)
+
+    def __delitem__(self, item):
+        return self._factory().__delitem__(item)
+
+    def __contains__(self, item):
+        return self._factory().__contains__(item)
+
+    def keys(self):
+        return self._factory().keys()
+
+    def create(self, *args, **kwargs):
+        return self._factory().create(*args, **kwargs)
+
+    def is_valid(self, *args, **kwargs):
+        return self._factory().is_valid(*args, **kwargs)
+
+    def register(self, *args, **kwargs):
+        return self._factory().register(*args, **kwargs)
 
     @classmethod
     def add_supported_namespace(cls, namespace):
