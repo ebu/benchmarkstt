@@ -3,6 +3,7 @@ docs/build/
 docs/modules/*.rst
 docs/api-methods.rst
 docs/node_modules/
+docs/tutorial/.ipynb_checkpoints/
 
 # is auto generated:
 src/benchmarkstt/__meta__.py
