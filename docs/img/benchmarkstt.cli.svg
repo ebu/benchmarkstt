@@ -14,6 +14,66 @@
      id="defs2">
     <marker
        style="overflow:visible"
+       id="marker5909"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#686868;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5907" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5881"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5879" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5757"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path5755" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5573"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:0.5"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5571" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5557"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5555" />
+    </marker>
+    <marker
+       style="overflow:visible"
        id="marker2503"
        refX="0"
        refY="0"
@@ -26,18 +86,6 @@
     </marker>
     <marker
        style="overflow:visible"
-       id="Arrow1Mend"
-       refX="0"
-       refY="0"
-       orient="auto">
-      <path
-         transform="matrix(-0.4,0,0,-0.4,-4,0)"
-         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:0.5"
-         d="M 0,0 5,-5 -12.5,0 5,5 Z"
-         id="path1014" />
-    </marker>
-    <marker
-       style="overflow:visible"
        id="marker1373"
        refX="0"
        refY="0"
@@ -47,18 +95,6 @@
          d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
          id="path1371" />
-    </marker>
-    <marker
-       style="overflow:visible"
-       id="Arrow2Lend"
-       refX="0"
-       refY="0"
-       orient="auto">
-      <path
-         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
-         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
-         id="path1026" />
     </marker>
     <marker
        style="overflow:visible"
@@ -110,18 +146,6 @@
     </marker>
     <marker
        style="overflow:visible"
-       id="marker2503-8"
-       refX="0"
-       refY="0"
-       orient="auto">
-      <path
-         transform="matrix(-0.4,0,0,-0.4,-4,0)"
-         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#686868;stroke-width:1pt;stroke-opacity:1"
-         d="M 0,0 5,-5 -12.5,0 5,5 Z"
-         id="path2501-2" />
-    </marker>
-    <marker
-       style="overflow:visible"
        id="marker2503-5"
        refX="0"
        refY="0"
@@ -144,6 +168,90 @@
          d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path2501-1" />
     </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5881-8"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#e70000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5879-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5573-1"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:0.5"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5571-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker2503-3"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#686868;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2501-14" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5909-6"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#686868;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5907-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker2503-5-3"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#686868;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2501-25-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker2503-4-6"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#9a9a9a;fill-opacity:0.5;fill-rule:evenodd;stroke:#686868;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2501-1-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1373-0"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1371-0" />
+    </marker>
   </defs>
   <metadata
      id="metadata5">
@@ -162,7 +270,7 @@
      transform="translate(6.5527353,6.2921929)">
     <g
        id="g2277"
-       transform="translate(-0.99757519,-7.7071885)">
+       transform="translate(-0.99757519,-2.9446882)">
       <rect
          style="opacity:1;fill:#363636;fill-opacity:1;stroke:#000000;stroke-width:0.270977;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect2220"
@@ -193,76 +301,9 @@
            style="font-size:3.175px;fill:#ffffff;stroke-width:0.264583"
            id="tspan2218">]</tspan></text>
     </g>
-    <text
-       xml:space="preserve"
-       style="font-size:5.64444px;line-height:1.25;font-family:'Hack Nerd Font';-inkscape-font-specification:'Hack Nerd Font';stroke-width:0.264583"
-       x="3.4472647"
-       y="7.9962587"
-       id="text12"><tspan
-         x="3.4472647"
-         y="7.9962587"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan22">benchmarkstt                  \</tspan><tspan
-         x="3.4472647"
-         y="15.051809"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan78">  --reference reference.txt   \</tspan><tspan
-         x="3.4472647"
-         y="22.107359"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan80">  --reference-type plaintext  \</tspan><tspan
-         x="3.4472647"
-         y="29.162909"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan82">  --hypothesis hypothesis.txt \</tspan><tspan
-         x="3.4472647"
-         y="36.21846"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan84">  --hypothesis-type plaintext \</tspan><tspan
-         x="3.4472647"
-         y="43.27401"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan86">  --lowercase                 \</tspan><tspan
-         x="3.4472647"
-         y="50.329559"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan88">  --replace &quot;, &quot; &quot; &quot;          \</tspan><tspan
-         x="3.4472647"
-         y="57.385109"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan90">  --wer                       \</tspan><tspan
-         x="3.4472647"
-         y="64.440659"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan92">  --diffcounts                \</tspan><tspan
-         x="3.4472647"
-         y="71.496208"
-         style="font-size:5.64444px;stroke-width:0.264583"
-         id="tspan1705">  --output-format json</tspan></text>
-    <rect
-       id="rect94"
-       width="95.041313"
-       height="27.433472"
-       x="8.566081"
-       y="9.8962059"
-       style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       id="rect94-36"
-       width="95.201187"
-       height="13.747806"
-       x="8.4861422"
-       y="38.394115"
-       style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       id="rect94-4"
-       width="95.211601"
-       height="13.019785"
-       x="8.480938"
-       y="53.121216"
-       style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <g
        id="g1001"
-       transform="translate(7.0412762,-20.863041)">
+       transform="translate(7.0412762,-16.100538)">
       <text
          xml:space="preserve"
          style="font-size:4.93889px;line-height:1.25;font-family:'Hack Nerd Font';-inkscape-font-specification:'Hack Nerd Font';stroke-width:0.264583"
@@ -281,32 +322,28 @@
          x="-2.8686688"
          y="98.577866" />
     </g>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
-       d="M 5.2558487,9.7609703 V 77.535055"
-       id="path1311" />
     <text
        xml:space="preserve"
        style="font-size:3.175px;line-height:1.25;font-family:'Hack Nerd Font';-inkscape-font-specification:'Hack Nerd Font';stroke-width:0.264583"
        x="3.7516816"
-       y="98.211075"
+       y="102.97359"
        id="text1333"><tspan
          id="tspan1331"
          x="3.7516816"
-         y="98.211075"
+         y="102.97359"
          style="font-size:3.175px;stroke-width:0.264583"
          dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.18460728">normalizer = normalization.core.NormalizationAggregate</tspan><tspan
          x="3.7516816"
-         y="102.17982"
+         y="106.94234"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1335">  - normalization.core.Lowercase</tspan><tspan
          x="3.7516816"
-         y="106.14857"
+         y="110.91109"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1337">  - normalization.core.Replace(&quot;, &quot;, &quot; &quot;)</tspan></text>
     <g
        id="g1441"
-       transform="translate(-1.1584552)">
+       transform="translate(-1.1584552,4.7625002)">
       <path
          style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker1373)"
          d="m 41.35203,86.765417 v 6.83047"
@@ -324,7 +361,7 @@
     </g>
     <g
        id="g1001-7"
-       transform="translate(7.6108214,13.709846)">
+       transform="translate(7.6108214,18.472349)">
       <g
          id="g1430"
          transform="translate(-0.5695452,3.9522183)">
@@ -349,7 +386,7 @@
     </g>
     <g
        id="g1441-1"
-       transform="translate(-1.1584552,22.236419)">
+       transform="translate(-1.1584552,26.998922)">
       <path
          style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker1373-1)"
          d="m 41.35203,86.765417 v 6.83047"
@@ -367,7 +404,7 @@
     </g>
     <g
        id="g1441-6"
-       transform="translate(-1.1584552,38.28409)">
+       transform="translate(-1.1584552,43.046593)">
       <path
          style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker1373-6)"
          d="m 41.35203,86.765417 v 6.83047"
@@ -387,62 +424,55 @@
        xml:space="preserve"
        style="font-size:3.175px;line-height:1.25;font-family:'Hack Nerd Font';-inkscape-font-specification:'Hack Nerd Font';stroke-width:0.264583"
        x="3.7516816"
-       y="135.54439"
+       y="140.30682"
        id="text1333-8"><tspan
          id="tspan1331-6"
          x="3.7516816"
-         y="135.54439"
+         y="140.30682"
          style="font-size:3.175px;stroke-width:0.264583">reference = input.core.File(&quot;reference.txt&quot;, &quot;plaintext&quot;, normalizer)</tspan><tspan
          x="3.7516816"
-         y="139.51314"
+         y="144.27557"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1335-4">hypothesis = input.core.File(&quot;hypothesis.txt&quot;, &quot;plaintext&quot;, normalizer)</tspan><tspan
          x="3.7516816"
-         y="143.48189"
+         y="148.24432"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1703">  (uses input.core.PlainText to make iterable)</tspan><tspan
          x="3.7516816"
-         y="147.45064"
+         y="152.21307"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1722" /><tspan
          x="3.7516816"
-         y="151.41939"
+         y="156.18182"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1724">metrics = [</tspan><tspan
          x="3.7516816"
-         y="155.38814"
+         y="160.15057"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1728">  metrics.core.WER(),</tspan><tspan
          x="3.7516816"
-         y="159.35689"
+         y="164.11932"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1732">  metrics.core.DiffCounts()</tspan><tspan
          x="3.7516816"
-         y="163.32564"
+         y="168.08807"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1730">]</tspan><tspan
          x="3.7516816"
-         y="167.29439"
+         y="172.05682"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan3061">  (uses diff.core.RatcliffObershelp to compare)</tspan><tspan
          x="3.7516816"
-         y="171.26314"
+         y="176.02557"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1726" /><tspan
          x="3.7516816"
-         y="175.23189"
+         y="179.99432"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1736">output = output.core.Json()</tspan></text>
-    <rect
-       id="rect94-4-6"
-       width="95.341301"
-       height="5.6136646"
-       x="8.4160824"
-       y="67.050255"
-       style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <g
        id="g1441-6-1"
-       transform="translate(-1.1584552,90.43272)">
+       transform="translate(-1.1584552,95.195223)">
       <g
          id="g1851">
         <path
@@ -465,23 +495,23 @@
        xml:space="preserve"
        style="font-size:3.175px;line-height:1.25;font-family:'Hack Nerd Font';-inkscape-font-specification:'Hack Nerd Font';stroke-width:0.264583"
        x="3.4191566"
-       y="183.80249"
+       y="188.56493"
        id="text1333-8-0"><tspan
          x="3.4191566"
-         y="183.80249"
+         y="188.56493"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1726-8" /><tspan
          x="3.4191566"
-         y="187.77124"
+         y="192.53368"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan1964">metric_result = metric.compare(reference, hypothesis)</tspan><tspan
          x="3.4191566"
-         y="191.73999"
+         y="196.50243"
          style="font-size:3.175px;stroke-width:0.264583"
          id="tspan2005">output.result(metric_name, metric_result)</tspan></text>
     <g
        id="g1441-6-1-8"
-       transform="translate(-1.1584552,107.059)">
+       transform="translate(-1.1584552,111.82153)">
       <g
          id="g1851-7">
         <g
@@ -514,94 +544,191 @@
          y="204.66917"
          style="stroke-width:0.264583"></tspan></text>
     <g
-       id="g3035"
-       style="opacity:1"
-       transform="translate(0,13.627164)">
-      <path
-         style="fill:#9a9a9a;fill-opacity:0.5;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.5;marker-end:url(#Arrow1Mend)"
-         d="m 103.60739,9.8962058 h 22.58587"
-         id="path2279" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-         x="126.72243"
-         y="11.483705"
-         id="text2483"><tspan
-           x="126.72243"
-           y="11.483705"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-           id="tspan2485">input</tspan></text>
-      <path
-         style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2503)"
-         d="m 103.60739,9.8962058 h 22.58587"
-         id="path2495" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-         x="126.72243"
-         y="11.483705"
-         id="text2499"><tspan
-           x="126.72243"
-           y="11.483705"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-           id="tspan2497">input</tspan></text>
+       id="g2277-6"
+       transform="translate(-59.825725,-82.740728)">
+      <rect
+         style="opacity:1;fill:#363636;fill-opacity:1;stroke:#000000;stroke-width:0.469604;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2220-8"
+         width="109.19722"
+         height="74.360901"
+         x="62.939995"
+         y="83.977982" />
+      <g
+         id="g6841"
+         transform="translate(3.1750001)">
+        <text
+           xml:space="preserve"
+           style="font-size:5.64444px;line-height:1.25;font-family:'Hack Nerd Font';-inkscape-font-specification:'Hack Nerd Font';fill:#ffffff;stroke-width:0.264583"
+           x="62.189751"
+           y="90.916756"
+           id="text12"><tspan
+             x="62.189751"
+             y="90.916756"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan22">benchmarkstt                  \</tspan><tspan
+             x="62.189751"
+             y="97.972305"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan78">  --reference reference.txt   \</tspan><tspan
+             x="62.189751"
+             y="105.02785"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan80">  --reference-type plaintext  \</tspan><tspan
+             x="62.189751"
+             y="112.0834"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan82">  --hypothesis hypothesis.txt \</tspan><tspan
+             x="62.189751"
+             y="119.13895"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan84">  --hypothesis-type plaintext \</tspan><tspan
+             x="62.189751"
+             y="126.1945"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan86">  --lowercase                 \</tspan><tspan
+             x="62.189751"
+             y="133.25006"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan88">  --replace &quot;, &quot; &quot; &quot;          \</tspan><tspan
+             x="62.189751"
+             y="140.3056"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan90">  --wer                       \</tspan><tspan
+             x="62.189751"
+             y="147.36116"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan92">  --diffcounts                \</tspan><tspan
+             x="62.189751"
+             y="154.4167"
+             style="font-size:5.64444px;fill:#ffffff;stroke-width:0.264583"
+             id="tspan1705">  --output-format json</tspan></text>
+        <rect
+           id="rect94"
+           width="95.041313"
+           height="27.433472"
+           x="67.308571"
+           y="92.816704"
+           style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect
+           id="rect94-36"
+           width="95.201187"
+           height="13.747806"
+           x="67.22863"
+           y="121.31461"
+           style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect
+           id="rect94-4"
+           width="95.211609"
+           height="13.019785"
+           x="67.223427"
+           y="136.04173"
+           style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect
+           id="rect94-4-6"
+           width="95.341309"
+           height="5.6136646"
+           x="67.158569"
+           y="149.97075"
+           style="opacity:1;fill:none;stroke:#686868;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <g
+           id="g3035"
+           style="opacity:1"
+           transform="translate(58.742487,96.547664)">
+          <path
+             style="fill:#9a9a9a;fill-opacity:0.5;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.5;marker-end:url(#marker5573-1)"
+             d="m 103.60739,9.8962058 h 22.58587"
+             id="path2279" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+             x="126.72243"
+             y="11.483705"
+             id="text2483"><tspan
+               x="126.72243"
+               y="11.483705"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+               id="tspan2485">input</tspan></text>
+          <path
+             style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2503-3)"
+             d="m 103.60739,9.8962058 h 22.58587"
+             id="path2495" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+             x="126.72243"
+             y="11.483705"
+             id="text2499"><tspan
+               x="126.72243"
+               y="11.483705"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+               id="tspan2497">input</tspan></text>
+        </g>
+        <g
+           id="g2991"
+           style="opacity:1"
+           transform="translate(58.742487,90.308416)">
+          <path
+             style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker5909-6)"
+             d="M 103.68733,38.394115 H 126.2732"
+             id="path2495-6" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+             x="126.80236"
+             y="39.981609"
+             id="text2499-6"><tspan
+               x="126.80236"
+               y="39.981609"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+               id="tspan2497-4">normalization</tspan></text>
+        </g>
+        <g
+           id="g2968"
+           style="opacity:1"
+           transform="translate(58.742487,89.871362)">
+          <path
+             style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2503-5-3)"
+             d="m 103.69254,53.121216 h 22.58587"
+             id="path2495-3" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+             x="126.80758"
+             y="54.708717"
+             id="text2499-3"><tspan
+               x="126.80758"
+               y="54.708717"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+               id="tspan2497-9">metrics</tspan></text>
+        </g>
+        <g
+           id="g2945"
+           style="opacity:1"
+           transform="translate(58.742487,85.553697)">
+          <path
+             style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2503-4-6)"
+             d="m 103.75739,67.050255 h 22.58587"
+             id="path2495-2" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+             x="126.87242"
+             y="68.637756"
+             id="text2499-0"><tspan
+               x="126.87242"
+               y="68.637756"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
+               id="tspan2497-1">output</tspan></text>
+        </g>
+      </g>
     </g>
     <g
-       id="g2991"
-       style="opacity:1"
-       transform="translate(0,7.3879156)">
+       id="g1441-3"
+       transform="matrix(1,0,0,0.93142023,-34.750945,-6.6934217)">
       <path
-         style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2503-8)"
-         d="M 103.68733,38.394115 H 126.2732"
-         id="path2495-6" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-         x="126.80236"
-         y="39.981609"
-         id="text2499-6"><tspan
-           x="126.80236"
-           y="39.981609"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-           id="tspan2497-4">normalization</tspan></text>
-    </g>
-    <g
-       id="g2968"
-       style="opacity:1"
-       transform="translate(0,6.9508616)">
-      <path
-         style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2503-5)"
-         d="m 103.69254,53.121216 h 22.58587"
-         id="path2495-3" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-         x="126.80758"
-         y="54.708717"
-         id="text2499-3"><tspan
-           x="126.80758"
-           y="54.708717"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-           id="tspan2497-9">metrics</tspan></text>
-    </g>
-    <g
-       id="g2945"
-       style="opacity:1"
-       transform="translate(0,2.6331969)">
-      <path
-         style="fill:#9a9a9a;fill-opacity:0.5;stroke:#686868;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker2503-4)"
-         d="m 103.75739,67.050255 h 22.58587"
-         id="path2495-2" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-         x="126.87242"
-         y="68.637756"
-         id="text2499-0"><tspan
-           x="126.87242"
-           y="68.637756"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.264583"
-           id="tspan2497-1">output</tspan></text>
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker1373-0)"
+         d="m 46.453265,88.258461 v 6.83047"
+         id="path1369-9" />
     </g>
   </g>
 </svg>
