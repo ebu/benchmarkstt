@@ -44,10 +44,8 @@ class Modules:
 
     def _import(self, key):
         name = 'benchmarkstt.%s.entrypoints.%s' % (self._submodule, key)
-        try:
-            module = import_module(name)
-        except ModuleNotFoundError as exc:
-            raise ImportError(exc)
+        module = import_module(name)
+
         if hasattr(module, 'hidden'):
             if module.hidden:
                 raise HiddenModuleError(name)
