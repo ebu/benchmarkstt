@@ -1,4 +1,4 @@
-from benchmarkstt.metrics.core import DiffCounts, WER
+from benchmarkstt.metrics.core import DiffCounts, WER, BEER
 from benchmarkstt.metrics.core import OpcodeCounts
 from benchmarkstt.input.core import PlainText
 import pytest
@@ -30,7 +30,7 @@ def test_diffcounts(a, b, exp):
     ['aa bb cc dd', '', (1, 0.5, 1)],
     ['', 'aa bb cc', (1, 1, 1)],
     ['aa', 'bb aa cc', (2, 1, 2)],
-    ['a b c d e f', 'a b d e kfmod fgdjn idf giudfg diuf dufg idgiudgd', (8/6, 3/4, 8/6)],
+    ['a b c d e f', 'a b d e kfmod fgdjn idf giudfg diuf dufg idgiudgd', (8 / 6, 3 / 4, 8 / 6)],
     ['a b c d e f g h i j', 'a b e d c f g h i j', (.4, .2, .2)],
 ])
 def test_wer(a, b, exp):
@@ -39,3 +39,25 @@ def test_wer(a, b, exp):
     assert WER(mode=WER.MODE_STRICT).compare(PlainText(a), PlainText(b)) == wer_strict
     assert WER(mode=WER.MODE_HUNT).compare(PlainText(a), PlainText(b)) == wer_hunt
     assert WER(mode=WER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == wer_levenshtein
+
+
+@pytest.mark.parametrize('a,b,entities_list,weights, exp', [
+    ['madam is here', 'adam is here', ['madam', 'here'], [100, 10], (0.455, 2)],
+    ['madam is here', 'adam is here', ['madam', 'here'], [10, 100], (0.045, 2)],
+    ['theresa may is here', 'theresa may is there', ['theresa may', 'here'], [10, 100], (0.455, 2)],
+    ['theresa may is here', 'theresa may is there', ['theresa may', 'here'], [100, 10], (0.045, 2)],
+    ['aa bb cc dd', 'aa bb cc dd', ['aa', 'bb'], [100, 10], (0.0, 2)],
+    ['aa bb cc dd', 'aa bb cc dd', ['aa', 'bb'], [10, 100], (0.0, 2)],
+    ['aa bb cc dd', 'aa bb cc dd ee ff gg hh', ['aa', 'ee'], [10, 100], (0.0, 1)],
+    ['aa bb cc dd', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [100, 10], (0.045, 2)],
+    ['aa bb cc dd', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [10, 100], (0.455, 2)],
+])
+def test_beer(a, b, entities_list, weights, exp):
+
+    beer_test = BEER(mode=BEER.MODE_WEIGHTED_BAG_OF_WORDS)
+    beer_test.set_entities(entities_list)
+    beer_test.set_weight(weights)
+    out = beer_test.compare(PlainText(a), PlainText(b))
+
+    assert tuple(out['w_av_beer'].values()) == exp
+    assert list(out.keys())[0:2] == entities_list
