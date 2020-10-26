@@ -48,10 +48,10 @@ def test_load_object():
     )
 
     def custom_transform(name):
-        return name.replace('-', '.').lower()
+        return name.replace('_', '').upper()
 
     assert hasattr(
-        load_object('benchmarkstt-normalization-core-LOWERCASE', custom_transform),
+        load_object('benchmarkstt.normalization.core.LOWER_case', custom_transform),
         'normalize'
     )
 
