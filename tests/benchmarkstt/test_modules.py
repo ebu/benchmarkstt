@@ -47,6 +47,14 @@ def test_load_object():
         'normalize'
     )
 
+    def custom_transform(name):
+        return name.replace('-', '.').lower()
+
+    assert hasattr(
+        load_object('benchmarkstt-normalization-core-LOWERCASE', custom_transform()),
+        'normalize'
+    )
+
     with pytest.raises(ImportError) as exc:
         load_object('somemodule')
 
