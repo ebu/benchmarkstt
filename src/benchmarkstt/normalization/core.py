@@ -5,12 +5,10 @@ Some basic/simple normalization classes
 
 import re
 import os
-import csv
 from unidecode import unidecode
 from benchmarkstt import normalization
 from benchmarkstt import config, settings
 from contextlib import contextmanager
-# from benchmarkstt.modules import LoadObjectProxy
 
 
 file_types = (str,)
@@ -270,15 +268,6 @@ class Config(normalization.Normalizer):
         section = 'defaults to %s' % (repr(cls._default_section),) if cls._default_section else 'no section by default'
         section_tag = '[%s]' % (cls._default_section,) if cls._default_section else ''
         cls.__doc__ = cls._doc_string.replace('{section}', section).replace('{[section]}', section_tag)
-
-
-# For future versions
-# class ExternalNormalizer(LoadObjectProxy, normalization.Normalizer):
-#     """
-#     Automatically loads an external normalizer class.
-#
-#     :param name: The name of the normalizer to load (eg. mymodule.normalization.Normalizer)
-#     """
 
 
 Config.refresh_docstring()

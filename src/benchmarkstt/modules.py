@@ -102,13 +102,3 @@ class Proxy:
             return getattr(cls, item)
 
         return object.__getattribute__(self, item)
-
-
-class LoadObjectProxy(Proxy):
-    """
-    Automatically load a class from any namespace, and pass all function calls to it,
-    or to parent class if it is not implemented.
-    """
-
-    def __init__(self, name, *args, **kwargs):
-        super().__init__(load_object(name.replace('-', '.'))(*args, **kwargs))

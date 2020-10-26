@@ -5,7 +5,6 @@ Default input formats
 
 import benchmarkstt.segmentation.core as segmenters
 from benchmarkstt import input, settings
-# from benchmarkstt.modules import LoadObjectProxy
 
 
 class PlainText(input.Input):
@@ -69,11 +68,3 @@ class File(input.Input):
             text = f.read()
 
         return iter(self._input_class(text, normalizer=self._normalizer))
-
-# For future versions
-# class ExternalInput(LoadObjectProxy, input.Base):
-#     """
-#     Automatically loads an external input class.
-#
-#     :param name: The name of the input to load (eg. mymodule.input.MyFileFormat)
-#     """
