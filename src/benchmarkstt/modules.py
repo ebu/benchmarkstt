@@ -72,11 +72,13 @@ def load_object(name, transform=None):
         transform = identity
 
     class_name = transform(module.pop())
+
+    if not len(module):
+        raise ImportError("Could not find an object for %r" % (name,))
+
     module = '.'.join(module)
-    if len(module) == 0:
-        module = globals()
-    else:
-        module = import_module(module)
+
+    module = import_module(module)
 
     for found_class_name in dir(module):
         if transform(found_class_name) != class_name:
