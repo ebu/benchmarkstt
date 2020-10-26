@@ -187,36 +187,27 @@ class BEER(Metric):
     and
     w_1 + ... + w_N = 1
 
-    [Mode: 'weighted_bag_of_words'] defined the way the averaged BEER is computed with weighting factors w_i defined in
-    the json file
-
     """
-    # average BEER modes
-    MODE_WEIGHTED_BAG_OF_WORDS = 'weighted_bag_of_words'
-
-    def __init__(self, entities_file='', mode=None):
+    def __init__(self, entities_file=''):
         """
         """
-        self._mode = mode
         self._weight = []
         self._entities = []
 
-        if mode == self.MODE_WEIGHTED_BAG_OF_WORDS:
-            self.out_name = 'w_av_beer'
+        if entities_file.endswith('.json'):
+            with open(entities_file) as f:
+                data = json.load(f)
+            self._entities = list(data.keys())
+            weight = list(data.values())
+            weight = [0 if w < 0 else w for w in weight]
 
-            if entities_file.endswith('.json'):
-                with open(entities_file) as f:
-                    data = json.load(f)
-                self._entities = list(data.keys())
-                weight = list(data.values())
-                weight = [0 if w < 0 else w for w in weight]
+            # normalized the sum of the weights to 1
+            # after assignment when the file is not red
+            sw = sum(weight)
+            if sw > 0:
+                self._weight = [w / sw for w in weight]
+            return
 
-                # normalized the sum of the weights to 1
-                # after assignment when the file is not red
-                sw = sum(weight)
-                if sw > 0:
-                    self._weight = [w / sw for w in weight]
-                return
         return
 
     def get_weight(self):
@@ -296,7 +287,7 @@ class BEER(Metric):
             beer_av = round(beer_av / l_ref, 3)
         else:
             beer_av = 0
-        beer[self.out_name] = {'beer': beer_av, 'occurence_ref': l_ref}
+        beer['w_av_beer'] = {'beer': beer_av, 'occurence_ref': l_ref}
         return beer
 
     def compare(self, ref: Schema, hyp: Schema):
