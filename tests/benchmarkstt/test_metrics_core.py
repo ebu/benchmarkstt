@@ -54,7 +54,7 @@ def test_wer(a, b, exp):
 ])
 def test_beer(a, b, entities_list, weights, exp):
 
-    beer_test = BEER(mode=BEER.MODE_WEIGHTED_BAG_OF_WORDS)
+    beer_test = BEER()
     beer_test.set_entities(entities_list)
     beer_test.set_weight(weights)
     out = beer_test.compare(PlainText(a), PlainText(b))
