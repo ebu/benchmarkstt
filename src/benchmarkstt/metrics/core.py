@@ -280,14 +280,14 @@ class BEER(Metric):
                 beer_entity = round(abs(count_ref - count_hypothesis) / count_ref, 3)
                 # accumulate the distance per entity
                 beer_av += abs(count_ref - count_hypothesis) * self._weight[idx]
-            beer[entity] = {'beer': beer_entity, 'occurence_ref': count_ref}
+            beer[entity] = {'beer': beer_entity, 'occurrence_ref': count_ref}
 
         l_ref = len(list_reference_entity)
         if l_ref > 0:
             beer_av = round(beer_av / l_ref, 3)
         else:
             beer_av = 0
-        beer['w_av_beer'] = {'beer': beer_av, 'occurence_ref': l_ref}
+        beer['w_av_beer'] = {'beer': beer_av, 'occurrence_ref': l_ref}
         return beer
 
     def compare(self, ref: Schema, hyp: Schema):
