@@ -135,9 +135,9 @@ class WER(Metric):
 
         counts = get_opcode_counts(diffs.get_opcodes())
 
-        changes = counts.replace * self.SUB_PENALTY + \
-            counts.delete * self.DEL_PENALTY + \
-            counts.insert * self.INS_PENALTY
+        changes = counts.replace * self.SUB_PENALTY \
+            + counts.delete * self.DEL_PENALTY \
+            + counts.insert * self.INS_PENALTY
 
         total_ref = counts.equal + counts.replace + counts.delete
         if total_ref == 0:
@@ -159,6 +159,7 @@ class DiffCounts(Metric):
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
 
+
 class BEER(Metric):
     """
     Bag of Entities Error Rate, BEER, is defined as the error rate per entity with a bag of words approach :
@@ -179,57 +180,60 @@ class BEER(Metric):
     The average Weighted BEER for a set of N entities is defined as the weighted average of the BEER for the set of
     entities :
 
-    Av_WBEER ([entity_1, ... entity_N) =  w_1*BEER (entity_1) ... w_N*BEER (entity_1))
+    Av_WBEER ([entity_1, ... entity_N) =  w_1*BEER (entity_1)*L1/L ... w_N*BEER (entity_1))*LN/L
+    with
+    L1 =  number of occurences of entity 1 in the reference document
+    L = L1 + ... + LN
+    and
+    w_1 + ... + w_N = 1
 
-    with w_1 + ... + w_N = 1
-
-    [Mode: 'bag_of_words' or 'weighted_bag_of_words'] defined the way the averaged BEER is computed respectlively
-    without and with weigthing.
+    [Mode: 'weighted_bag_of_words'] defined the way the averaged BEER is computed with weighting factors w_i defined in
+    the json file
 
     """
     # average BEER modes
-    MODE_BAG_OF_WORDS = 'bag_of_words'
     MODE_WEIGHTED_BAG_OF_WORDS = 'weighted_bag_of_words'
 
-    def __init__(self, entities_file, mode=None):
+    def __init__(self, entities_file='', mode=None):
         """
         """
         self._mode = mode
-        if mode == self.MODE_BAG_OF_WORDS:
-
-            if entities_file.endswith('.txt'):
-                with open(entities_file, 'r') as f:
-                    self.entities = f.read().splitlines()
-
-            if entities_file.endswith('.json'):
-                with open(entities_file) as f:
-                    data = json.load(f)
-                self.entities = list(data.keys())
-            self.weight = [1.0 / len(self.entities)] * len(self.entities)
-
-            return
+        self._weight = []
+        self._entities = []
 
         if mode == self.MODE_WEIGHTED_BAG_OF_WORDS:
+            self.out_name = 'w_av_beer'
 
             if entities_file.endswith('.json'):
                 with open(entities_file) as f:
                     data = json.load(f)
-                self.entities = list(data.keys())
+                self._entities = list(data.keys())
                 weight = list(data.values())
+                weight = [0 if w < 0 else w for w in weight]
 
-            weight = [0 if w < 0 else w for w in weight]
-
-            sw = sum(weight)
-            if sw > 0:
-                self.weight = [w / sw for w in weight]
-            else:
-                self.weight = weight
-
-            return
-
+                # normalized the sum of the weights to 1
+                # after assignment when the file is not red
+                sw = sum(weight)
+                if sw > 0:
+                    self._weight = [w / sw for w in weight]
+                return
         return
 
-        # differ is not applicable for bag of words defined
+    def get_weight(self):
+        return self._weight
+
+    def set_weight(self, weight):
+
+        weight = [0 if w < 0 else w for w in weight]
+        sw = sum(weight)
+        if sw > 0:
+            self._weight = [w / sw for w in weight]
+
+    def get_entities(self):
+        return self._entities
+
+    def set_entities(self, entities):
+        self._entities = entities
 
     # find the position of one entity
     # an entity can contain more than one word
@@ -237,6 +241,8 @@ class BEER(Metric):
     def __find_pattern(search_list, complex_entity):
         entity = ''.join(complex_entity).split(' ')
         le = len(entity)
+        # complex_entity = [entity1 entity2 ...]
+        # the cursor sweep complex_entity to find consecutive entities entity1 ... entity2
         cursor = 0
         idx_found = []
         for idx, elt in enumerate(search_list):
@@ -255,7 +261,7 @@ class BEER(Metric):
 
         list_entity = []
         index_entities = []
-        entities = self.entities
+        entities = self._entities
         for entity in entities:
             index_entity = self.__find_pattern(list_parsed, entity)
             index_entities.extend(index_entity)
@@ -274,7 +280,7 @@ class BEER(Metric):
     def compute_beer(self, list_hypothesis_entity, list_reference_entity):
         beer = {}
         beer_av = 0
-        entities = self.entities
+        entities = self._entities
         for idx, entity in enumerate(entities):
             count_hypothesis = list_hypothesis_entity.count(entity)
             count_ref = list_reference_entity.count(entity)
@@ -282,15 +288,15 @@ class BEER(Metric):
             if count_ref != 0:
                 beer_entity = round(abs(count_ref - count_hypothesis) / count_ref, 3)
                 # accumulate the distance per entity
-                beer_av += abs(count_ref - count_hypothesis) * self.weight[idx] / count_ref
-            #beer[entity] = {'beer': beer_entity, 'occurence_ref': count_ref, 'occurence_hyp': count_hypothesis}
-            beer[entity] = {'beer': beer_entity, 'occurence_ref': count_ref }
+                beer_av += abs(count_ref - count_hypothesis) * self._weight[idx]
+            beer[entity] = {'beer': beer_entity, 'occurence_ref': count_ref}
 
-        beer_av = round(beer_av, 3)
         l_ref = len(list_reference_entity)
-        #l_hyp = len(list_hypothesis_entity)
-        #beer['av_beer'] = {'beer': beer_av, 'occurence_ref': l_ref, 'occurence_hyp': l_hyp}
-        beer['av_beer'] = {'beer': beer_av, 'occurence_ref': l_ref }
+        if l_ref > 0:
+            beer_av = round(beer_av / l_ref, 3)
+        else:
+            beer_av = 0
+        beer[self.out_name] = {'beer': beer_av, 'occurence_ref': l_ref}
         return beer
 
     def compare(self, ref: Schema, hyp: Schema):
@@ -300,14 +306,14 @@ class BEER(Metric):
         if total_ref == 0:
             return 1
         hyp_list = [i['item'] for i in hyp]
-        entities = self.entities
+
+        # entities = self._entities
 
         # extract the entities
         list_hypothesis_entity = self.__generate_list_entity(self, hyp_list)
         list_reference_entity = self.__generate_list_entity(self, ref_list)
         # compute the score
         wer_entity = self.compute_beer(self, list_hypothesis_entity, list_reference_entity)
-
         return wer_entity
 
 # For a future version
