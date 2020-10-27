@@ -214,7 +214,6 @@ class BEER(Metric):
         return self._weight
 
     def set_weight(self, weight):
-
         weight = [0 if w < 0 else w for w in weight]
         sw = sum(weight)
         if sw > 0:
@@ -291,14 +290,9 @@ class BEER(Metric):
         return beer
 
     def compare(self, ref: Schema, hyp: Schema):
-
+        # get the list of reference and hypothesis
         ref_list = [i['item'] for i in ref]
-        total_ref = len(ref_list)
-        if total_ref == 0:
-            return 1
         hyp_list = [i['item'] for i in hyp]
-
-        # entities = self._entities
 
         # extract the entities
         list_hypothesis_entity = self.__generate_list_entity(self, hyp_list)
