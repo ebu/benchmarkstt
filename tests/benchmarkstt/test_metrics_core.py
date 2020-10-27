@@ -43,6 +43,7 @@ def test_wer(a, b, exp):
 
 @pytest.mark.parametrize('a,b,entities_list,weights, exp', [
     ['madam is here', 'adam is here', ['madam', 'here'], [100, 10], (0.455, 2)],
+    ['madam is here', 'adam is here', ['madam', 'here'], [0.9, 0.1], (0.450, 2)],
     ['madam is here', 'adam is here', ['madam', 'here'], [10, 100], (0.045, 2)],
     ['theresa may is here', 'theresa may is there', ['theresa may', 'here'], [10, 100], (0.455, 2)],
     ['theresa may is here', 'theresa may is there', ['theresa may', 'here'], [100, 10], (0.045, 2)],
@@ -51,6 +52,7 @@ def test_wer(a, b, exp):
     ['aa bb cc dd', 'aa bb cc dd ee ff gg hh', ['aa', 'ee'], [10, 100], (0.0, 1)],
     ['aa bb cc dd', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [100, 10], (0.045, 2)],
     ['aa bb cc dd', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [10, 100], (0.455, 2)],
+    ['', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [10, 100], (0.000, 0)],
 ])
 def test_beer(a, b, entities_list, weights, exp):
 
