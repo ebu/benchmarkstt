@@ -187,6 +187,19 @@ class BEER(Metric):
     and
     w_1 + ... + w_N = 1
 
+    The input file defines the list of entities and the weight per entity, w_n. It has be a json file with the
+    following structure:
+
+    { "entity_1":W1, "entity_2" : W2, "entity_3" :W3 .. }
+
+    W_n being the non-normalized weight, the noramlisation of the weights is performed by the tool as :
+
+                W_n
+    w_n =  ---------------
+            W_1 + ... +W_1
+
+    The minimum value for weight being 0.
+
     """
     def __init__(self, entities_file=''):
         """
