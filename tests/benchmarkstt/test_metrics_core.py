@@ -62,5 +62,6 @@ def test_beer(a, b, entities_list, weights, exp):
     out = beer_test.compare(PlainText(a), PlainText(b))
     entities_list.append('w_av_beer')
 
-    assert tuple(out['w_av_beer'].values()) == exp
     assert set(out.keys()) == set(entities_list)
+    assert out['w_av_beer']['beer'] == exp[0]
+    assert out['w_av_beer']['occurrence_ref'] == exp[1]
