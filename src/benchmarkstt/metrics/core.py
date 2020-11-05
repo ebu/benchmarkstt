@@ -125,10 +125,11 @@ class WER(Metric):
     def compare(self, ref: Schema, hyp: Schema) -> float:
         if self._mode == self.MODE_LEVENSHTEIN:
             ref_list = [i['item'] for i in ref]
+            hyp_list = [i['item'] for i in hyp]
             total_ref = len(ref_list)
             if total_ref == 0:
-                return 0 if len(hyp) == 0 else 1
-            return editdistance.eval(ref_list, [i['item'] for i in hyp]) / total_ref
+                return 0 if len(hyp_list) == 0 else 1
+            return editdistance.eval(ref_list, hyp_list) / total_ref
 
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
 
@@ -138,10 +139,10 @@ class WER(Metric):
             counts.delete * self.DEL_PENALTY + \
             counts.insert * self.INS_PENALTY
 
-        total_ref = counts.equal + counts.replace + counts.delete
-        if total_ref == 0:
-            return 0 if len(hyp) == 0 else 1
-        return changes / total_ref
+        total = counts.equal + counts.replace + counts.delete
+        if total == 0:
+            return 0
+        return changes / total
 
 
 class CER(Metric):
