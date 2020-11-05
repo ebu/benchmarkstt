@@ -148,9 +148,9 @@ class CER(Metric):
     """
     Character Error Rate, basically defined as::
 
-        insertions + deletions + substitions
-        ------------------------------------
-           number of reference characters
+        insertions + deletions + substitutions
+        --------------------------------------
+            number of reference characters
 
     Character error rate, CER, compare the differences
     between reference and hypothesis on a character level.
@@ -183,10 +183,17 @@ class CER(Metric):
 
     def compare(self, ref: Schema, hyp: Schema):
         ref_str = ''.join([i['item'] for i in ref])
+        hyp_str = ''.join([i['item'] for i in hyp])
         total_ref = len(ref_str)
+        total_hyp = len(hyp_str)
+
         if total_ref == 0:
-            return 1
-        return editdistance.eval(ref_str, ''.join([i['item'] for i in hyp])) / total_ref
+            if total_hyp == 0:
+                return 0
+            else:
+                return 1
+
+        return editdistance.eval(ref_str, hyp_str) / total_ref
 
 
 class DiffCounts(Metric):
