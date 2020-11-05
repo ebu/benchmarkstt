@@ -71,16 +71,28 @@ delete: 0
      ']}\n]\n'
      ],
     ['normalization -i ./resources/test/_data/candide.txt ./resources/test/_data/candide.txt -o /dev/null', 2],
-    ['metrics -r "HELLO WORLD OF MINE" --hypothesis "GOODBYE CRUEL WORLD OF MINE" -rt argument -ht argument '
-     '--worddiffs --output-format json',
-     '[\n\t{"title": "worddiffs", "result": ['
-     '{"type": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
-     '{"type": "insert", "reference": null, "hypothesis": "CRUEL"}, '
-     '{"type": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
-     '{"type": "equal", "reference": "OF", "hypothesis": "OF"}, '
-     '{"type": "equal", "reference": "MINE", "hypothesis": "MINE"}'
-     ']}\n]\n'
-     ],
+    [
+        'metrics -r "HELLO WORLD OF MINE" --hypothesis "GOODBYE CRUEL WORLD OF MINE" -rt argument -ht argument '
+        '--worddiffs levenshtein --output-format json',
+        '[\n\t{"title": "worddiffs", "result": ['
+        '{"type": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+        '{"type": "insert", "reference": null, "hypothesis": "CRUEL"}, '
+        '{"type": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
+        '{"type": "equal", "reference": "OF", "hypothesis": "OF"}, '
+        '{"type": "equal", "reference": "MINE", "hypothesis": "MINE"}'
+        ']}\n]\n'
+    ],
+    [
+        'metrics -r "HELLO WORLD OF MINE" --hypothesis "GOODBYE CRUEL WORLD OF MINE" -rt argument -ht argument '
+        '--worddiffs --output-format json',
+        '[\n\t{"title": "worddiffs", "result": ['
+        '{"type": "replace", "reference": "HELLO", "hypothesis": "GOODBYE"}, '
+        '{"type": "insert", "reference": null, "hypothesis": "CRUEL"}, '
+        '{"type": "equal", "reference": "WORLD", "hypothesis": "WORLD"}, '
+        '{"type": "equal", "reference": "OF", "hypothesis": "OF"}, '
+        '{"type": "equal", "reference": "MINE", "hypothesis": "MINE"}'
+        ']}\n]\n'
+    ],
     ['metrics -r "HELLO CRUEL WORLD OF MINE" -h "GOODBYE WORLD OF MINE" -rt argument -ht argument '
      '--worddiffs --output-format json',
      '[\n\t{"title": "worddiffs", "result": ['

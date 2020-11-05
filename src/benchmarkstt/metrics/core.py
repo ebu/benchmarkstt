@@ -1,6 +1,5 @@
 from benchmarkstt.schema import Schema
 import logging
-import json
 from benchmarkstt.diff import Differ
 from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
@@ -44,9 +43,10 @@ def get_opcode_counts(opcodes) -> OpcodeCounts:
 
 
 def get_differ(a, b, differ_class: Differ):
-    if differ_class is None:
-        # differ_class = HuntMcIlroy
+    if differ_class is None or differ_class == '':
         differ_class = RatcliffObershelp
+    elif type(differ_class) is str:
+        differ_class = differ_factory[differ_class]
     return differ_class(traversible(a), traversible(b))
 
 
@@ -54,12 +54,13 @@ class WordDiffs(Metric):
     """
     Present differences on a per-word basis
 
+    :param differ_class: see :py:mod:`benchmarkstt.Differ.core`
     :param dialect: Presentation format. Default is 'ansi'.
+    :example differ_class: 'levenshtein'
     :example dialect: 'html'
-    :param differ_class: For future use.
     """
 
-    def __init__(self, dialect=None, differ_class: Differ = None):
+    def __init__(self, differ_class: Differ = None, dialect: str = None):
         self._differ_class = differ_class
         self._dialect = dialect
 
@@ -92,21 +93,13 @@ class WER(Metric):
 
     See https://docs.python.org/3/library/difflib.html
 
-    [Mode: 'levenshtein'] In the context of WER, Levenshtein
-    distance is the minimum edit distance computed at the
-    word level. This implementation uses the Editdistance
-    c++ implementation by Hiroyuki Tanaka:
-    https://github.com/aflc/editdistance. See:
-    https://en.wikipedia.org/wiki/Levenshtein_distance
-
     :param mode: 'strict' (default), 'hunt' or 'levenshtein'.
-    :param differ_class: For future use.
+    :param differ_class: see :py:mod:`benchmarkstt.Differ.core`
     """
 
     # WER modes
     MODE_STRICT = 'strict'
     MODE_HUNT = 'hunt'
-    MODE_LEVENSHTEIN = 'levenshtein'
 
     DEL_PENALTY = 1
     INS_PENALTY = 1
@@ -114,8 +107,6 @@ class WER(Metric):
 
     def __init__(self, mode=None, differ_class: Differ = None):
         self._mode = mode
-        if mode == self.MODE_LEVENSHTEIN:
-            return
 
         if differ_class is None:
             differ_class = RatcliffObershelp
@@ -129,7 +120,7 @@ class WER(Metric):
             hyp_list = [i['item'] for i in hyp]
             total_ref = len(ref_list)
             if total_ref == 0:
-                return 0 if len(hyp_list) == 0 else 1
+                return 1
             return editdistance.eval(ref_list, hyp_list) / total_ref
 
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
@@ -197,6 +188,8 @@ class CER(Metric):
 class DiffCounts(Metric):
     """
     Get the amount of differences between reference and hypothesis
+
+    :param differ_class: see :py:mod:`benchmarkstt.Differ.core`
     """
 
     def __init__(self, differ_class: Differ = None):
