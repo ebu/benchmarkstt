@@ -127,7 +127,7 @@ class WER(Metric):
             ref_list = [i['item'] for i in ref]
             total_ref = len(ref_list)
             if total_ref == 0:
-                return 1
+                return 0 if len(hyp) == 0 else 1
             return editdistance.eval(ref_list, [i['item'] for i in hyp]) / total_ref
 
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
@@ -140,7 +140,7 @@ class WER(Metric):
 
         total_ref = counts.equal + counts.replace + counts.delete
         if total_ref == 0:
-            return 1
+            return 0 if len(hyp) == 0 else 1
         return changes / total_ref
 
 
@@ -185,13 +185,9 @@ class CER(Metric):
         ref_str = ''.join([i['item'] for i in ref])
         hyp_str = ''.join([i['item'] for i in hyp])
         total_ref = len(ref_str)
-        total_hyp = len(hyp_str)
 
         if total_ref == 0:
-            if total_hyp == 0:
-                return 0
-            else:
-                return 1
+            return 0 if len(hyp_str) == 0 else 1
 
         return editdistance.eval(ref_str, hyp_str) / total_ref
 
