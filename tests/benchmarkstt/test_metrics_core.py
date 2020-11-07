@@ -41,7 +41,6 @@ def test_wer(a, b, exp):
     assert WER(differ_class='levenshtein').compare(PlainText(a), PlainText(b)) == wer_levenshtein
 
 
-
 @pytest.mark.parametrize('a,b,entities_list,weights,exp_beer,exp_occ', [
     ['madam is here', 'adam is here', ['madam', 'here'], [100, 10], (1.0, 0.0), (1, 1)],
     ['theresa may is here', 'theresa may is there', ['theresa may', 'here'], [10, 100], (0.0, 1.0), (1, 1)],
@@ -113,5 +112,4 @@ def test_wa_beer(a, b, entities_list, weights, exp):
 def test_cer(a, b, exp):
     cer_levenshtein, = exp
 
-    assert CER(mode=CER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == cer_levenshtein
-
+    assert CER(differ_class='levenshtein').compare(PlainText(a), PlainText(b)) == cer_levenshtein

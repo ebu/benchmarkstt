@@ -64,4 +64,22 @@ class DifferInterface(ABC):
     def get_opcode_counts(self):
         raise NotImplementedError()
 
+    @abstractmethod
+    def get_error_rate(self):
+        raise NotImplementedError()
+
+
+class Differ(DifferInterface, metaclass=ABCMeta):
+    def get_opcode_counts(self):
+        return get_opcode_counts(self.get_opcodes())
+
+    def get_error_rate(self):
+        counts = self.get_opcode_counts()
+
+        changes = counts.replace + counts.delete + counts.insert
+        total = counts.equal + counts.replace + counts.delete
+
+        return changes / total
+
+
 factory = CoreFactory(DifferInterface, False)

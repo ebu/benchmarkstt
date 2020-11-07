@@ -5,6 +5,7 @@ Core Diff algorithms
 from difflib import SequenceMatcher
 from benchmarkstt.diff import Differ
 import edit_distance
+import editdistance
 
 
 class RatcliffObershelp(Differ):
@@ -54,6 +55,11 @@ class Levenshtein(Differ):
 
     def get_opcodes(self):
         return self.simplify_opcodes(self._matcher.get_opcodes())
+
+    def get_error_rate(self):
+        a = self._kwargs['a']
+        b = self._kwargs['b']
+        return editdistance.eval(a, b) / len(a)
 
     @staticmethod
     def simplify_opcodes(opcodes):
