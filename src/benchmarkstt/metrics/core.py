@@ -1,7 +1,9 @@
-from benchmarkstt.schema import Schema, Item
+from benchmarkstt.schema import Schema
 import logging
-from benchmarkstt.diff import Differ, factory as differ_factory
-from benchmarkstt.diff.core import RatcliffObershelp
+from collections import namedtuple
+from typing import Union
+from benchmarkstt.diff import DifferInterface, factory as differ_factory
+from benchmarkstt.diff.core import RatcliffObershelp, Levenshtein
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Metric
 from collections import namedtuple
@@ -13,6 +15,7 @@ OpcodeCounts = namedtuple('OpcodeCounts',
                           ('equal', 'replace', 'insert', 'delete'))
 
 type_schema = Union[Schema, list]
+type_differ = DifferInterface
 
 
 def traversible(schema, key=None):
@@ -21,7 +24,7 @@ def traversible(schema, key=None):
     return [item if type(item) is str else item[key] for item in schema]
 
 
-def get_differ(a, b, differ_class: Differ):
+def get_differ(a, b, differ_class: type_differ):
     if differ_class is None or differ_class == '':
         differ_class = RatcliffObershelp
     elif type(differ_class) is str:
@@ -33,13 +36,13 @@ class WordDiffs(Metric):
     """
     Present differences on a per-word basis
 
-    :param differ_class: see :py:mod:`benchmarkstt.Differ.core`
+    :param differ_class: see :py:mod:`benchmarkstt.diff.core`
     :param dialect: Presentation format. Default is 'ansi'.
     :example differ_class: 'levenshtein'
     :example dialect: 'html'
     """
 
-    def __init__(self, differ_class: Differ = None, dialect: str = None):
+    def __init__(self, differ_class: type_differ = None, dialect: str = None):
         self._differ_class = differ_class
         self._dialect = dialect
 
@@ -73,7 +76,7 @@ class WER(Metric):
     See https://docs.python.org/3/library/difflib.html
 
     :param mode: 'strict' (default), 'hunt' or 'levenshtein'.
-    :param differ_class: see :py:mod:`benchmarkstt.Differ.core`
+    :param differ_class: see :py:mod:`benchmarkstt.diff.core`
     """
 
     # WER modes
@@ -84,7 +87,7 @@ class WER(Metric):
     INS_PENALTY = 1
     SUB_PENALTY = 1
 
-    def __init__(self, mode=None, differ_class: Union[str, Differ, None] = None):
+    def __init__(self, mode=None, differ_class: Union[str, type_differ, None] = None):
         self._mode = mode
 
         if differ_class is None:
@@ -136,10 +139,10 @@ class CER(Metric):
     will first be split into words, ['aa','bb','cc'], and
     then merged into a final string for evaluation: 'aabbcc'.
 
-    :param differ_class: see :py:mod:`benchmarkstt.Differ.core`
+    :param differ_class: see :py:mod:`benchmarkstt.diff.core`
     """
 
-    def __init__(self, differ_class: Union[str, Differ, None] = None):
+    def __init__(self, differ_class: Union[str, type_differ, None] = None):
         self._differ_class = Levenshtein if differ_class is None else differ_class
 
     def compare(self, ref: type_schema, hyp: type_schema):
@@ -157,10 +160,10 @@ class DiffCounts(Metric):
     """
     Get the amount of differences between reference and hypothesis
 
-    :param differ_class: see :py:mod:`benchmarkstt.Differ.core`
+    :param differ_class: see :py:mod:`benchmarkstt.diff.core`
     """
 
-    def __init__(self, differ_class: Union[str, Differ, None] = None):
+    def __init__(self, differ_class: Union[str, type_differ, None] = None):
         self._differ_class = differ_class
 
     def compare(self, ref: type_schema, hyp: type_schema) -> OpcodeCounts:

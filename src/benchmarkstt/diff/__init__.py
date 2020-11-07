@@ -70,6 +70,11 @@ class DifferInterface(ABC):
 
 
 class Differ(DifferInterface, metaclass=ABCMeta):
+    """
+    Provides pre-made (probably sub-optimal) implementations of
+    get_opcode_counts() and get_error_rate()
+    """
+
     def get_opcode_counts(self):
         return get_opcode_counts(self.get_opcodes())
 
