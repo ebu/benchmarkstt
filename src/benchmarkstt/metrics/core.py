@@ -19,29 +19,6 @@ def traversible(schema, key=None):
     return [word[key] for word in schema]
 
 
-def get_opcode_counts(opcodes) -> OpcodeCounts:
-    counts = OpcodeCounts(0, 0, 0, 0)._asdict()
-    for tag, alo, ahi, blo, bhi in opcodes:
-        if tag == 'equal':
-            counts[tag] += ahi - alo
-        elif tag == 'insert':
-            counts[tag] += bhi - blo
-        elif tag == 'delete':
-            counts[tag] += ahi - alo
-        elif tag == 'replace':
-            ca = ahi - alo
-            cb = bhi - blo
-            if ca < cb:
-                counts['insert'] += cb - ca
-                counts['replace'] += ca
-            elif ca > cb:
-                counts['delete'] += ca - cb
-                counts['replace'] += cb
-            else:
-                counts[tag] += ahi - alo
-    return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
-
-
 def get_differ(a, b, differ_class: Differ):
     if differ_class is None or differ_class == '':
         differ_class = RatcliffObershelp
@@ -125,7 +102,7 @@ class WER(Metric):
 
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
 
-        counts = get_opcode_counts(diffs.get_opcodes())
+        counts = diffs.get_opcode_counts()
 
         changes = counts.replace * self.SUB_PENALTY + \
             counts.delete * self.DEL_PENALTY + \
@@ -199,7 +176,7 @@ class DiffCounts(Metric):
 
     def compare(self, ref: Schema, hyp: Schema) -> OpcodeCounts:
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
-        return get_opcode_counts(diffs.get_opcodes())
+        return diffs.get_opcode_counts()
 
 
 class BEER(Metric):
