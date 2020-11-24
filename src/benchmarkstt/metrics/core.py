@@ -162,41 +162,43 @@ class DiffCounts(Metric):
 
 class BEER(Metric):
     """
-    Bag of Entities Error Rate, BEER, is defined as the error rate per entity with a bag of words approach :
+    Bag of Entities Error Rate, BEER, is defined as the error rate per entity with a bag of words approach::
 
-    ne_hyp = number of detection of the entity in the hypothesis file
-    ne_ref = number of detection of the entity in the reference file
+                            abs(ne_hyp - ne_ref)
+        BEER (entity)   =   ----------------------
+                                ne_ref
 
-                      abs(ne_hyp - ne_ref)
-    BEER (entity) =  ---------------------
-                           ne_ref
+    - ne_hyp = number of detections of the entity in the hypothesis file
+    - ne_ref = number of detections of the entity in the reference file
 
-    The average BEER for a set of N entities is defined as the average of the BEER for the set of entities :
+    The WA_BEER for a set of N entities is defined as the weighted average of the BEER for the set of
+    entities::
 
-                                          1
-    Av_BEER ([entity_1, ... entity_N) =  ---- (BEER (entity_1) ... BEER (entity_1))
-                                          N
+        WA_BEER ([entity_1, ... entity_N) =  w_1*BEER (entity_1)*L_1/L + ... + w_N*BEER (entity_N))*L_N/L
 
-    The average Weighted BEER for a set of N entities is defined as the weighted average of the BEER for the set of
-    entities :
+    which is equivalent to::
 
-    Av_WBEER ([entity_1, ... entity_N) =  w_1*BEER (entity_1)*L1/L ... w_N*BEER (entity_1))*LN/L
-    with
-    L1 =  number of occurences of entity 1 in the reference document
-    L = L1 + ... + LN
-    and
-    w_1 + ... + w_N = 1
+                                            w_1*abs(ne_hyp_1 - ne_ref_1) + ... + w_N*abs(ne_hyp_N - ne_ref_N)
+        WA_BEER ([entity_1, ... entity_N) = ------------------------------------------------------------------
+                                                                            L
 
-    The input file defines the list of entities and the weight per entity, w_n. It has be a json file with the
-    following structure:
+    - L_1 =  number of occurrences of entity 1 in the reference document
+    - L = L_1 + ... + L_N
 
-    { "entity_1":W1, "entity_2" : W2, "entity_3" :W3 .. }
+    the weights being normalised by the tool:
 
-    W_n being the non-normalized weight, the noramlisation of the weights is performed by the tool as :
+    - w_1 + ... + w_N = 1
 
-                W_n
-    w_n =  ---------------
-            W_1 + ... +W_1
+    The input file defines the list of entities and the weight per entity, w_n. It is processed as a json file with the
+    following structure::
+
+        { "entity_1":W_1, "entity_2" : W_2, "entity_3" :W_3 .. }
+
+    W_n being the non-normalized weight, the normalization of the weights is performed by the tool as::
+
+                    W_n
+        w_n =   ---------------
+                W_1 + ... +W_N
 
     The minimum value for weight being 0.
 
@@ -207,19 +209,14 @@ class BEER(Metric):
         self._weight = []
         self._entities = []
 
-        if entities_file.endswith('.json'):
+        try:
             with open(entities_file) as f:
                 data = json.load(f)
             self._entities = list(data.keys())
             weight = list(data.values())
-            weight = [0 if w < 0 else w for w in weight]
-
-            # normalized the sum of the weights to 1
-            # after assignment when the file is not red
-            sw = sum(weight)
-            if sw > 0:
-                self._weight = [w / sw for w in weight]
-            return
+            self.set_weight(weight)
+        except IOError:
+            print('Input file Error')
 
         return
 
