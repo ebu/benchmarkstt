@@ -53,6 +53,9 @@ def test_wer(a, b, exp):
     ['aa bb cc dd', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [100, 10], (0.045, 2)],
     ['aa bb cc dd', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [10, 100], (0.455, 2)],
     ['', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc dd'], [10, 100], (0.000, 0)],
+    ['', '', ['aa bb', 'cc dd'], [10, 100], (0.000, 0)],
+    ['aa bb c', '', ['aa bb', 'cc dd'], [0.9, 0.1], (0.9, 1)],
+
 ])
 def test_beer(a, b, entities_list, weights, exp):
 
