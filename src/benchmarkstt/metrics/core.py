@@ -136,8 +136,8 @@ class WER(Metric):
         counts = get_opcode_counts(diffs.get_opcodes())
 
         changes = counts.replace * self.SUB_PENALTY \
-            + counts.delete * self.DEL_PENALTY \
-            + counts.insert * self.INS_PENALTY
+                  + counts.delete * self.DEL_PENALTY \
+                  + counts.insert * self.INS_PENALTY
 
         total_ref = counts.equal + counts.replace + counts.delete
         if total_ref == 0:
@@ -203,21 +203,24 @@ class BEER(Metric):
     The minimum value for weight being 0.
 
     """
+
     def __init__(self, entities_file=''):
         """
         """
-        self._weight = []
-        self._entities = []
-
+        # remove
+        # self._entities_file = entities_file
         try:
             with open(entities_file) as f:
                 data = json.load(f)
-            self._entities = list(data.keys())
-            weight = list(data.values())
-            self.set_weight(weight)
-        except IOError:
-            print('Input file Error')
-
+                self._entities = list(data.keys())
+                weight = list(data.values())
+                self.set_weight(weight)
+        except:
+            # generate an empty dict as output
+            # self._weight = []
+            # self._entities = []
+            # or an error
+            print('Error: invalid file ...')
         return
 
     def get_weight(self):
@@ -245,18 +248,19 @@ class BEER(Metric):
         # the cursor sweep complex_entity to find consecutive entities entity1 ... entity2
         cursor = 0
         idx_found = []
-        for idx, elt in enumerate(search_list):
+        for idx_sl, elt in enumerate(search_list):
             if elt == entity[cursor]:
                 cursor += 1
                 if cursor == le:
-                    idx_found.append([idx for idx in range(idx - le + 1, idx - le + 1 + le)])
+                    idx_found.append([idx for idx in range(idx_sl - le + 1, idx_sl - le + 1 + le)])
+                    # idx_found.append(list(range(idx - le + 1, idx - le + 1 + le)))
                     cursor = 0
             else:
                 cursor = 0
         return idx_found
 
     # generate a list containing the detected entities in list_parsed
-    @staticmethod
+    # @staticmethod
     def __generate_list_entity(self, list_parsed):
 
         list_entity = []
@@ -276,7 +280,7 @@ class BEER(Metric):
         return list_entity
 
     # computes the BEER
-    @staticmethod
+    # @staticmethod
     def compute_beer(self, list_hypothesis_entity, list_reference_entity):
         beer = {}
         beer_av = 0
@@ -300,15 +304,25 @@ class BEER(Metric):
         return beer
 
     def compare(self, ref: Schema, hyp: Schema):
+
+        # try:
+        #    with open(self._entities_file) as f:
+        #        data = json.load(f)
+        #    self._entities = list(data.keys())
+        #    weight = list(data.values())
+        #    self.set_weight(weight)
+        # except (IOError, json.decoder.JSONDecodeError):
+        #    print('BEER input file Error')
+
         # get the list of reference and hypothesis
         ref_list = [i['item'] for i in ref]
         hyp_list = [i['item'] for i in hyp]
 
         # extract the entities
-        list_hypothesis_entity = self.__generate_list_entity(self, hyp_list)
-        list_reference_entity = self.__generate_list_entity(self, ref_list)
+        list_hypothesis_entity = self.__generate_list_entity(hyp_list)
+        list_reference_entity = self.__generate_list_entity(ref_list)
         # compute the score
-        wer_entity = self.compute_beer(self, list_hypothesis_entity, list_reference_entity)
+        wer_entity = self.compute_beer(list_hypothesis_entity, list_reference_entity)
         return wer_entity
 
 # For a future version
