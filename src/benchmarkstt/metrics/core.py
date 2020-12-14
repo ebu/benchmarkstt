@@ -253,7 +253,7 @@ class BEER(Metric):
             if elt == entity[cursor]:
                 cursor += 1
                 if cursor == le:
-                    idx_found.append([idx for idx in range(idx_sl - le + 1, idx_sl - le + 1 + le)])
+                    idx_found.append(list(range(idx_sl - le + 1, idx_sl - le + 1 + le)))
                     cursor = 0
             else:
                 cursor = 0
