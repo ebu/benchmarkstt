@@ -41,6 +41,31 @@ def test_wer(a, b, exp):
     assert WER(mode=WER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == wer_levenshtein
 
 
+@pytest.mark.parametrize('a,b,entities_list,weights,exp_beer,exp_occ', [
+    ['madam is here', 'adam is here', ['madam', 'here'], [100, 10], (1.0, 0.0), (1, 1)],
+    ['theresa may is here', 'theresa may is there', ['theresa may', 'here'], [10, 100], (0.0, 1.0), (1, 1)],
+    ['theresa may is here', 'theresa may is there', ['theresa may', 'here'], [10, 100], (0.0, 1.0), (1, 1)],
+    ['aa bb cc dd', 'aa bb cc d ee ff gg hh', ['aa bb', 'cc', 'dd'], [1.0, 1.0, 1.0], (0.0, 0.0, 1.0), (1, 1, 1)],
+    ['aa bb cc dd bb aa dd', 'aa bb cc d ee ff gg hh dd', ['aa bb', 'cc', 'dd'], [1.0, 1.0, 1.0], (0.0, 0.0, 0.5),
+     (1, 1, 2)],
+
+])
+def test_beer(a, b, entities_list, weights, exp_beer, exp_occ):
+
+    wa_beer_test = BEER()
+    wa_beer_test.set_entities(entities_list)
+    wa_beer_test.set_weight(weights)
+    out = wa_beer_test.compare(PlainText(a), PlainText(b))
+
+    # check the computation of the beer and occurrence_ref
+    for idx, entity in enumerate(entities_list):
+        assert out[entity]['beer'] == exp_beer[idx]
+        assert out[entity]['occurrence_ref'] == exp_occ[idx]
+    # check that the list of entities is correct
+    entities_list.append('w_av_beer')
+    assert set(out.keys()) == set(entities_list)
+
+
 @pytest.mark.parametrize('a,b,entities_list,weights, exp', [
     ['madam is here', 'adam is here', ['madam', 'here'], [100, 10], (0.455, 2)],
     ['madam is here', 'adam is here', ['madam', 'here'], [0.9, 0.1], (0.450, 2)],
@@ -57,14 +82,16 @@ def test_wer(a, b, exp):
     ['aa bb c', '', ['aa bb', 'cc dd'], [0.9, 0.1], (0.9, 1)],
 
 ])
-def test_beer(a, b, entities_list, weights, exp):
+def test_wa_beer(a, b, entities_list, weights, exp):
 
-    beer_test = BEER()
-    beer_test.set_entities(entities_list)
-    beer_test.set_weight(weights)
-    out = beer_test.compare(PlainText(a), PlainText(b))
+    wa_beer_test = BEER()
+    wa_beer_test.set_entities(entities_list)
+    wa_beer_test.set_weight(weights)
+    out = wa_beer_test.compare(PlainText(a), PlainText(b))
     entities_list.append('w_av_beer')
 
+    # check that the list of entities is correct
     assert set(out.keys()) == set(entities_list)
+    # check the computation of the w_av_beer which is a sum-up of all the beer
     assert out['w_av_beer']['beer'] == exp[0]
     assert out['w_av_beer']['occurrence_ref'] == exp[1]
