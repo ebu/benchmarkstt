@@ -135,9 +135,9 @@ class WER(Metric):
 
         counts = get_opcode_counts(diffs.get_opcodes())
 
-        changes = counts.replace * self.SUB_PENALTY \
-                  + counts.delete * self.DEL_PENALTY \
-                  + counts.insert * self.INS_PENALTY
+        changes = counts.replace * self.SUB_PENALTY + \
+            counts.delete * self.DEL_PENALTY + \
+            counts.insert * self.INS_PENALTY
 
         total_ref = counts.equal + counts.replace + counts.delete
         if total_ref == 0:
@@ -204,23 +204,21 @@ class BEER(Metric):
 
     """
 
-    def __init__(self, entities_file=''):
+    def __init__(self, entities_file=None):
         """
         """
-        # remove
-        # self._entities_file = entities_file
-        try:
-            with open(entities_file) as f:
-                data = json.load(f)
-                self._entities = list(data.keys())
-                weight = list(data.values())
-                self.set_weight(weight)
-        except:
-            # generate an empty dict as output
-            # self._weight = []
-            # self._entities = []
-            # or an error
-            print('Error: invalid file ...')
+        self._error_message = None
+        self._entities = None
+
+        if entities_file is not None:
+            try:
+                with open(entities_file) as f:
+                    data = json.load(f)
+                    self._entities = list(data.keys())
+                    weight = list(data.values())
+                    self.set_weight(weight)
+            except (IOError, json.decoder.JSONDecodeError) as e:
+                self._error_message = str(e)
         return
 
     def get_weight(self):
@@ -231,6 +229,9 @@ class BEER(Metric):
         sw = sum(weight)
         if sw > 0:
             self._weight = [w / sw for w in weight]
+        # if the sum of the weights is null, the wa_beer is null
+        else:
+            self._weight = weight
 
     def get_entities(self):
         return self._entities
@@ -253,14 +254,12 @@ class BEER(Metric):
                 cursor += 1
                 if cursor == le:
                     idx_found.append([idx for idx in range(idx_sl - le + 1, idx_sl - le + 1 + le)])
-                    # idx_found.append(list(range(idx - le + 1, idx - le + 1 + le)))
                     cursor = 0
             else:
                 cursor = 0
         return idx_found
 
     # generate a list containing the detected entities in list_parsed
-    # @staticmethod
     def __generate_list_entity(self, list_parsed):
 
         list_entity = []
@@ -280,7 +279,6 @@ class BEER(Metric):
         return list_entity
 
     # computes the BEER
-    # @staticmethod
     def compute_beer(self, list_hypothesis_entity, list_reference_entity):
         beer = {}
         beer_av = 0
@@ -305,14 +303,11 @@ class BEER(Metric):
 
     def compare(self, ref: Schema, hyp: Schema):
 
-        # try:
-        #    with open(self._entities_file) as f:
-        #        data = json.load(f)
-        #    self._entities = list(data.keys())
-        #    weight = list(data.values())
-        #    self.set_weight(weight)
-        # except (IOError, json.decoder.JSONDecodeError):
-        #    print('BEER input file Error')
+        if self._entities is None:
+            if self._error_message:
+                return {'Error': self._error_message}
+            else:
+                return {'Error': 'Missing .json input file'}
 
         # get the list of reference and hypothesis
         ref_list = [i['item'] for i in ref]
@@ -323,6 +318,7 @@ class BEER(Metric):
         list_reference_entity = self.__generate_list_entity(ref_list)
         # compute the score
         wer_entity = self.compute_beer(list_hypothesis_entity, list_reference_entity)
+
         return wer_entity
 
 # For a future version
