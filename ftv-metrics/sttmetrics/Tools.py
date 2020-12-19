@@ -19,6 +19,7 @@ class Tools:
 
         return transcript_ref, transcript_res
 
+
     #Methode that return the custom vocabulary from a json files
     @staticmethod
     def get_custom_vocabulary(custom_vocabulary_path):
