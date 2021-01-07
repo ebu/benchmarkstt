@@ -6,6 +6,14 @@ Command line tool
        :func: argparser
        :prog: benchmarkstt
 
+Implementation
+--------------
+
+The `benchmarkstt` command line tool links the different modules (`input`, `normalization`, `metrics`, etc.) in the following way:
+
+    .. image:: img/benchmarkstt.cli.svg
+        :alt: CLI flow
+
 
 Additional tools
 ----------------

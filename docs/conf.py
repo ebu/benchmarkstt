@@ -16,8 +16,15 @@ author = 'EBU'
 copyright = '2019-%d, %s' % (datetime.now().year, author)
 
 slug = project.lower()
+pynpm_installed = True
+try:
+    from pynpm import NPMPackage
+except ModuleNotFoundError:
+    pynpm_installed = False
+
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-mermaid_build_locally = os.environ.get('MERMAID_BUILD_LOCALLY', not on_rtd)
+
+mermaid_build_locally = os.environ.get('MERMAID_BUILD_LOCALLY', not on_rtd and pynpm_installed)
 
 docs_dir = os.path.dirname(os.path.realpath(__file__))
 root_dir = os.path.dirname(docs_dir)

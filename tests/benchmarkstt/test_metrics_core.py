@@ -1,4 +1,4 @@
-from benchmarkstt.metrics.core import DiffCounts, WER, BEER
+from benchmarkstt.metrics.core import BEER, CER, DiffCounts, WER
 from benchmarkstt.metrics.core import OpcodeCounts
 from benchmarkstt.input.core import PlainText
 import pytest
@@ -95,3 +95,21 @@ def test_wa_beer(a, b, entities_list, weights, exp):
     # check the computation of the w_av_beer which is a sum-up of all the beer
     assert out['w_av_beer']['beer'] == exp[0]
     assert out['w_av_beer']['occurrence_ref'] == exp[1]
+
+
+@pytest.mark.parametrize('a,b,exp', [
+    # (cer_levenshtein)
+    ['aa bb cc dd', 'aa bb cc dd', (0,)],
+    ['aa bb cc dd', 'aa bb ee dd', (2/8,)],
+    ['aa bb cc dd', 'aabb ec dd', (1/8,)],
+    ['aa bb cc dd', 'aa aa bb cc dd dd', (4/8,)],
+    ['aa bb cc dd', '', (1,)],
+    ['', 'aa bb cc', (1,)],
+    ['aa', 'bb aa cc', (4/2,)],
+    ['a b c d e f', 'a b d e kfmod', (5/6,)],
+    ['a b c d e f g h i j', 'abedcfghij', (.2,)],
+])
+def test_cer(a, b, exp):
+    cer_levenshtein, = exp
+
+    assert CER(mode=CER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == cer_levenshtein

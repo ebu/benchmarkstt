@@ -126,10 +126,11 @@ class WER(Metric):
     def compare(self, ref: Schema, hyp: Schema) -> float:
         if self._mode == self.MODE_LEVENSHTEIN:
             ref_list = [i['item'] for i in ref]
+            hyp_list = [i['item'] for i in hyp]
             total_ref = len(ref_list)
             if total_ref == 0:
-                return 1
-            return editdistance.eval(ref_list, [i['item'] for i in hyp]) / total_ref
+                return 0 if len(hyp_list) == 0 else 1
+            return editdistance.eval(ref_list, hyp_list) / total_ref
 
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
 
@@ -139,10 +140,58 @@ class WER(Metric):
             counts.delete * self.DEL_PENALTY + \
             counts.insert * self.INS_PENALTY
 
-        total_ref = counts.equal + counts.replace + counts.delete
+        total = counts.equal + counts.replace + counts.delete
+        if total == 0:
+            return 1 if changes else 0
+        return changes / total
+
+
+class CER(Metric):
+    """
+    Character Error Rate, basically defined as::
+
+        insertions + deletions + substitutions
+        --------------------------------------
+            number of reference characters
+
+    Character error rate, CER, compare the differences
+    between reference and hypothesis on a character level.
+    A CER measure is usually lower than WER measure, since
+    words might differ on only one or a few characters, and
+    be classified as fully different.
+
+    The CER metric might be useful as a perspective on the
+    WER metric. Word endings might be less relevant if the
+    text will be preprocessed with stemming, or minor
+    spelling mistakes might be acceptable in certain
+    situations. A CER metric might also be used to evaluate
+    a source (an ASR) which output a stream of characters
+    rather than words.
+
+    Important: The current implementation of the CER metric
+    ignores whitespace characters. A string like 'aa bb cc'
+    will first be split into words, ['aa','bb','cc'], and
+    then merged into a final string for evaluation: 'aabbcc'.
+
+    :param mode: 'levenshtein' (default).
+    :param differ_class: For future use.
+    """
+
+    # CER modes
+    MODE_LEVENSHTEIN = 'levenshtein'
+
+    def __init__(self, mode=None, differ_class=None):
+        self._mode = mode
+
+    def compare(self, ref: Schema, hyp: Schema):
+        ref_str = ''.join([i['item'] for i in ref])
+        hyp_str = ''.join([i['item'] for i in hyp])
+        total_ref = len(ref_str)
+
         if total_ref == 0:
-            return 1
-        return changes / total_ref
+            return 0 if len(hyp_str) == 0 else 1
+
+        return editdistance.eval(ref_str, hyp_str) / total_ref
 
 
 class DiffCounts(Metric):
