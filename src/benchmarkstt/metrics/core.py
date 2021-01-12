@@ -100,16 +100,19 @@ class WER(Metric):
     def compare(self, ref: type_schema, hyp: type_schema) -> float:
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
 
-        counts = diffs.get_opcode_counts()
+        try:
+            counts = diffs.get_opcode_counts()
 
-        changes = counts.replace * self.SUB_PENALTY + \
-            counts.delete * self.DEL_PENALTY + \
-            counts.insert * self.INS_PENALTY
+            changes = counts.replace * self.SUB_PENALTY + \
+                counts.delete * self.DEL_PENALTY + \
+                counts.insert * self.INS_PENALTY
 
-        total = counts.equal + counts.replace + counts.delete
-        if total == 0:
-            return 1 if changes else 0
-        return changes / total
+            total = counts.equal + counts.replace + counts.delete
+            if total == 0:
+                return 1 if changes else 0
+            return changes / total
+        except NotImplementedError:
+            return diffs.get_error_rate()
 
 
 class CER(Metric):

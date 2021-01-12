@@ -22,11 +22,11 @@ def clean_opcodes(opcodes):
     return list(map(clean_opcode, opcodes))
 
 
-def test_simple_levenshtein_ratcliff_similarity():
-    a = list('012345')
-    b = list('023x45')
-    assert(clean_opcodes(Levenshtein(a, b).get_opcodes()) ==
-           clean_opcodes(RatcliffObershelp(a, b).get_opcodes()))
+# def test_simple_levenshtein_ratcliff_similarity():
+#     a = list('012345')
+#     b = list('023x45')
+#     assert(clean_opcodes(Levenshtein(a, b).get_opcodes()) ==
+#            clean_opcodes(RatcliffObershelp(a, b).get_opcodes()))
 
 
 @differs_decorator

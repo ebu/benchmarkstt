@@ -54,12 +54,15 @@ class Levenshtein(Differ):
         self._matcher = edit_distance.SequenceMatcher(**self._kwargs)
 
     def get_opcodes(self):
-        return self.simplify_opcodes(self._matcher.get_opcodes())
+        raise NotImplementedError("not supported by %r" % (self,))
 
     def get_error_rate(self):
         a = self._kwargs['a']
         b = self._kwargs['b']
-        return editdistance.eval(a, b) / len(a)
+        len_a = len(a)
+        if len_a == 0:
+            return 0 if len(b) == 0 else 1
+        return editdistance.eval(a, b) / len_a
 
     @staticmethod
     def simplify_opcodes(opcodes):
