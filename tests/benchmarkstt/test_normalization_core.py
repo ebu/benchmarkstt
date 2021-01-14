@@ -29,8 +29,7 @@ def test_composite():
     text = 'Knights who say: NI!'
     normalizer = NormalizationAggregate()
     normalizer.add(core.Lowercase())
-    if core.Unidecode:
-        normalizer.add(core.Unidecode())
+    normalizer.add(core.Unidecode())
     assert normalizer.normalize(text) == 'knights who say: ni!'
 
     comp = NormalizationAggregate()
@@ -54,11 +53,13 @@ def test_lowercase():
 
 
 def test_unidecode():
-    if core.Unidecode:
-        return pytest.skip("Unidecode not available")
+    try:
+        import unidecode
 
-    assert core.Unidecode().normalize('Eine große europäische Schwalbe') == \
-        'Eine grosse europaische Schwalbe'
+        assert core.Unidecode().normalize('Eine große europäische Schwalbe') == \
+            'Eine grosse europaische Schwalbe'
+    except ImportError:
+        pytest.skip("Unidecode not installed")
 
 
 def test_regex():
