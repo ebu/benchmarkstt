@@ -29,7 +29,8 @@ def test_composite():
     text = 'Knights who say: NI!'
     normalizer = NormalizationAggregate()
     normalizer.add(core.Lowercase())
-    normalizer.add(core.Unidecode())
+    if core.Unidecode:
+        normalizer.add(core.Unidecode())
     assert normalizer.normalize(text) == 'knights who say: ni!'
 
     comp = NormalizationAggregate()
@@ -53,6 +54,9 @@ def test_lowercase():
 
 
 def test_unidecode():
+    if core.Unidecode:
+        return pytest.skip("Unidecode not available")
+
     assert core.Unidecode().normalize('Eine große europäische Schwalbe') == \
         'Eine grosse europaische Schwalbe'
 

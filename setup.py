@@ -58,8 +58,6 @@ setup(
     include_package_data=True,
     install_requires=[
         'MarkupSafe>=1.0',
-        'Unidecode>=1.1.0',
-        'langcodes>=1.4.1',
         'Flask>=1.0.2',
         'jsonrpcserver>=4.0.1',
         'gunicorn>=19.9.0',
@@ -74,6 +72,10 @@ setup(
             "attrs==19.1.0",
         ],
         'docs': docs_require,
+        'unidecode': [
+            'langcodes>=1.4.1',
+            'Unidecode>=1.1.0',
+        ],
     },
     platforms='any',
     entry_points={

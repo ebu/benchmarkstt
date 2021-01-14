@@ -6,12 +6,33 @@ Some basic/simple normalization classes
 import re
 import os
 import csv
-from unidecode import unidecode
 from benchmarkstt import normalization
 from benchmarkstt import config, settings
 from contextlib import contextmanager
 # from benchmarkstt.modules import LoadObjectProxy
 
+# optional dependency
+try:
+    from unidecode import unidecode
+
+    class Unidecode(normalization.Normalizer):
+        """
+        Unidecode characters to ASCII form, see `Python's Unidecode package
+        <https://pypi.org/project/Unidecode>`_ for more info.
+
+        This requires the Unidecode package to be installed manually
+        ``pip install Unidecode``, or be specified on install of benchmarkstt
+        ``pip install 'benchmarkstt[unidecode]'`` .
+
+        :example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
+        :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
+        """
+
+        def _normalize(self, text: str) -> str:
+            return unidecode(text)
+
+except ImportError:
+    pass
 
 file_types = (str,)
 if hasattr(os, 'PathLike'):
@@ -136,19 +157,6 @@ class Lowercase(normalization.Normalizer):
 
     def _normalize(self, text: str) -> str:
         return text.lower()
-
-
-class Unidecode(normalization.Normalizer):
-    """
-    Unidecode characters to ASCII form, see `Python's Unidecode package
-    <https://pypi.org/project/Unidecode>`_ for more info.
-
-    :example text: "𝖂𝖊𝖓𝖓 𝖎𝖘𝖙 𝖉𝖆𝖘 𝕹𝖚𝖓𝖘𝖙ü𝖈𝖐 𝖌𝖎𝖙 𝖚𝖓𝖉 𝕾𝖑𝖔𝖙𝖊𝖗𝖒𝖊𝖞𝖊𝖗?"
-    :example return: "Wenn ist das Nunstuck git und Slotermeyer?"
-    """
-
-    def _normalize(self, text: str) -> str:
-        return unidecode(text)
 
 
 class ConfigSectionNotFoundError(ValueError):

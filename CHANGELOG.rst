@@ -44,6 +44,8 @@ Changed
 
   * custom autodoc templates
 
+* Normalizer Unidecode and dependency 'Unidecode>=1.1.0' moved to be optional `pip install 'benchmarkstt[unidecode]'`.
+
 Fixed
 ^^^^^
 
