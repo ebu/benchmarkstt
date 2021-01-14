@@ -73,7 +73,6 @@ setup(
         ],
         'docs': docs_require,
         'unidecode': [
-            'langcodes>=1.4.1',
             'Unidecode>=1.1.0',
         ],
     },

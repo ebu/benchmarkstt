@@ -21,6 +21,11 @@ if hasattr(os, 'PathLike'):
 
 File = normalization.File
 
+try:
+    from unidecode import unidecode
+except ImportError:
+    unidecode = None
+
 
 class Unidecode(normalization.Normalizer):
     """
@@ -36,12 +41,11 @@ class Unidecode(normalization.Normalizer):
     """
 
     def _normalize(self, text: str) -> str:
-        try:
-            from unidecode import unidecode
-            return unidecode(text)
-        except ImportError:
-            logger.warn("Package Unidecode not installed, returning as-is.")
-            return text
+        return unidecode(text) if unidecode else text
+
+    @staticmethod
+    def is_supported():
+        return unidecode is not None
 
 
 class Replace(normalization.NormalizerWithFileSupport):
