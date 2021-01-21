@@ -44,6 +44,8 @@ Changed
 
   * custom autodoc templates
 
+* Normalizer Unidecode and dependency 'Unidecode>=1.1.0' replaced by version working for python3.9
+
 Fixed
 ^^^^^
 
