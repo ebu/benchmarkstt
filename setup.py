@@ -63,6 +63,7 @@ setup(
         'gunicorn>=19.9.0',
         'docutils>=0.14',
         'editdistance>=0.5.3',
+        'Unidecode>=1.1.2',
     ],
     extras_require={
         'test': [
@@ -72,9 +73,6 @@ setup(
             "attrs==19.1.0",
         ],
         'docs': docs_require,
-        'unidecode': [
-            'Unidecode>=1.1.0',
-        ],
     },
     platforms='any',
     entry_points={
