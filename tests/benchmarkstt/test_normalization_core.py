@@ -44,10 +44,8 @@ def test_composite():
 
     normalizer.add(core.Replace(' ni', ' nope'))
     assert comp.normalize(text) == 'knights who say: nope!'
-
-    if core.Unidecode.is_supported():
-        assert comp.normalize('Ich fälle Bäume und hüpf und spring.') == \
-            'ich falle baume und hupf und spring.'
+    assert comp.normalize('Ich fälle Bäume und hüpf und spring.') == \
+        'ich falle baume und hupf und spring.'
 
 
 def test_lowercase():
@@ -55,14 +53,8 @@ def test_lowercase():
 
 
 def test_unidecode():
-    try:
-        import unidecode
-
-        assert core.Unidecode().is_supported()
-        assert core.Unidecode().normalize('Eine große europäische Schwalbe') == \
-            'Eine grosse europaische Schwalbe'
-    except ImportError:
-        assert core.Unidecode.is_supported() is False
+    assert core.Unidecode().normalize('Eine große europäische Schwalbe') == \
+        'Eine grosse europaische Schwalbe'
 
 
 def test_regex():
