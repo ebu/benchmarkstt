@@ -6,7 +6,6 @@ from benchmarkstt.diff.core import RatcliffObershelp
 from benchmarkstt.diff.formatter import format_diff
 from benchmarkstt.metrics import Metric
 from collections import namedtuple
-# from benchmarkstt.modules import LoadObjectProxy
 import editdistance
 
 logger = logging.getLogger(__name__)
@@ -90,6 +89,7 @@ class WER(Metric):
     diff algorithm. The 'hunt' mode applies 0.5 weight to
     insertions and deletions. This algorithm is the one
     used internally by Python.
+
     See https://docs.python.org/3/library/difflib.html
 
     [Mode: 'levenshtein'] In the context of WER, Levenshtein

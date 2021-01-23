@@ -3,12 +3,8 @@ Apply normalization to given input
 """
 
 import sys
-from benchmarkstt.normalization import NormalizationAggregate
 import argparse
-from benchmarkstt.normalization import factory
-from benchmarkstt.normalization.logger import DiffLoggingFormatter, normalization_logger
 import logging
-from benchmarkstt.cli import args_from_factory
 from benchmarkstt import settings
 
 
@@ -25,6 +21,9 @@ def args_logs(parser: argparse.ArgumentParser):
 
 
 def args_normalizers(parser: argparse.ArgumentParser):
+    from benchmarkstt.normalization import factory
+    from benchmarkstt.cli import args_from_factory
+
     normalizers_desc = """
       A list of normalizers to execute on the input, can be one or more normalizers
       which are applied sequentially.
@@ -61,6 +60,9 @@ def argparser(parser: argparse.ArgumentParser):
 
 
 def get_normalizer_from_args(args):
+    from benchmarkstt.normalization import factory, NormalizationAggregate
+    from benchmarkstt.normalization.logger import DiffLoggingFormatter, normalization_logger
+
     if args.log:
         handler = logging.StreamHandler()
         formatter = DiffLoggingFormatter('ansi', show_color_key=False)

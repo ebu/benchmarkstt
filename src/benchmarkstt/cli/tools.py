@@ -1,7 +1,11 @@
 import textwrap
+import logging
 from benchmarkstt.cli import create_parser, args_help, args_common, args_complete
-from benchmarkstt.cli import CustomHelpFormatter, determine_log_level
+from benchmarkstt.cli import CustomHelpFormatter, before_parseargs
 from benchmarkstt.modules import Modules
+
+
+logger = logging.getLogger(__name__)
 
 
 def argparser():
@@ -18,7 +22,12 @@ def argparser():
         else:
             kwargs['formatter_class'] = CustomHelpFormatter
 
-        docs = cli.__doc__ if cli.__doc__ is not None else ('TODO: add description to benchmarkstt.%s._cli' % (module,))
+        if cli.__doc__ is not None:
+            docs = cli.__doc__
+        else:
+            docs = '?'
+            logger.warning('Missing __doc__ for benchmarkstt.%s._cli', module)
+
         kwargs['description'] = textwrap.dedent(docs)
         subparser = subparsers.add_parser(module, add_help=False, allow_abbrev=False, **kwargs)
 
@@ -31,7 +40,8 @@ def argparser():
 
 
 def run():
-    determine_log_level()
+    before_parseargs()
+
     parser = argparser()
     args_complete(parser)
 

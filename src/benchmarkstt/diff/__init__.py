@@ -33,4 +33,4 @@ class Differ(ABC):
         raise NotImplementedError()
 
 
-factory = CoreFactory(Differ)
+factory = CoreFactory(Differ, False)

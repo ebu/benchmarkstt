@@ -14,6 +14,7 @@ Added
 
   * add auto-generated UML diagrams
   * add tutorial Jupyter Notebooks
+  * add support for loading external/local code (`--load`) #142
 
 * 
   Tests:

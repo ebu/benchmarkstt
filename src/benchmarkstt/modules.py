@@ -45,6 +45,7 @@ class Modules:
     def _import(self, key):
         name = 'benchmarkstt.%s.entrypoints.%s' % (self._submodule, key)
         module = import_module(name)
+
         if hasattr(module, 'hidden'):
             if module.hidden:
                 raise HiddenModuleError(name)
@@ -69,11 +70,13 @@ def load_object(name, transform=None):
         transform = identity
 
     class_name = transform(module.pop())
+
+    if not len(module):
+        raise ImportError("Could not find an object for %r" % (name,))
+
     module = '.'.join(module)
-    if len(module) == 0:
-        module = globals()
-    else:
-        module = import_module(module)
+
+    module = import_module(module)
 
     for found_class_name in dir(module):
         if transform(found_class_name) != class_name:
@@ -81,34 +84,3 @@ def load_object(name, transform=None):
         return getattr(module, found_class_name)
 
     raise ImportError("Could not find an object for %r" % (name,))
-
-
-class Proxy:
-    """
-    Pass all function calls to instance, or to parent class if instance does not
-    implement it.
-    """
-
-    def __init__(self, instance):
-        self._instance = instance
-
-    def __getattribute__(self, item):
-        cls = object.__getattribute__(self, '_instance')
-
-        if item == '_instance':
-            return cls
-
-        if hasattr(cls, item):
-            return getattr(cls, item)
-
-        return object.__getattribute__(self, item)
-
-
-class LoadObjectProxy(Proxy):
-    """
-    Automatically load a class from any namespace, and pass all function calls to it,
-    or to parent class if it is not implemented.
-    """
-
-    def __init__(self, name, *args, **kwargs):
-        super().__init__(load_object(name.replace('-', '.'))(*args, **kwargs))
