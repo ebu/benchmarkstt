@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from benchmarkstt.normalization.logger import log
 from benchmarkstt.factory import CoreFactory
 from benchmarkstt import settings
-from benchmarkstt import csv
+from csvlike import csv
 
 
 class _NormalizerNoLogs(ABC):

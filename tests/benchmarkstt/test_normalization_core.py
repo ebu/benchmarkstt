@@ -2,7 +2,7 @@ from benchmarkstt.normalization import core, File, NormalizationAggregate, Norma
 import logging
 from io import StringIO
 import pytest
-from benchmarkstt.csv import UnclosedQuoteError
+from csvlike.csv import UnclosedQuoteError
 
 
 def test_logs(caplog):
