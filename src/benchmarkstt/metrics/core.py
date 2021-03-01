@@ -180,6 +180,8 @@ class CER(Metric):
     MODE_LEVENSHTEIN = 'levenshtein'
 
     def __init__(self, mode=None, differ_class=None):
+        if mode is None:
+            mode = self.MODE_LEVENSHTEIN
         self._mode = mode
 
     def compare(self, ref: Schema, hyp: Schema):
