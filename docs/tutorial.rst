@@ -250,3 +250,109 @@ Word Error Rate variants
 In this tutorial we used the WER parameter with the mode argument omitted, defaulting to ``strict`` WER variant. This variant uses Python's built-in diff algorithm in the calculation of the WER, which is stricter and results in a slightly higher WER than the commonly used Levenshtein Distance algorithm (see more detail `here <https://github.com/ebu/benchmarkstt/issues/113>`_). 
 
 If you use BenchmarkSTT to compare different engines then this is not a problem since the relative ranking will not be affected. However, for better compatibility with other benchmarking tools, a WER variant that uses the Levenshtein edit distance algorithm is provided. To use it, specify ``--wer levenshtein``.
+
+
+Bag of Entities Error Rate (BEER)
+=================================
+
+In this tutorial you compute the Bag of Entities Error Rate (BEER) on a machine-generated transcript. It assumes knowledge of the first part of this tutorial. 
+
+The Word Error Rate is the standard metric for benchmarking ASR models, but it can be a blunt tool. It treats all words as equally important but in reality some words, like proper nouns and phrases, are more significant than common words. When these are recognized correctly by a model, they should be given more weight in the assessment of the model. 
+
+Consider for example this sentence in the reference transcript: 'The European Union headquarters'. If engine A returns 'The European onion headquarters' and engine B returns 'The European Union headache', the Word Error Rate would be similar for both engines since in both cases one word was transcribed inaccurately. But engine B should be 'rewarded' for preserving the phrase 'European Union'. The BEER is the metric that takes such considerations into account. 
+
+Another use for this metric is compensating for distortions of WER that are caused by normalization rules. For example, you may convert both reference and hypothesis transcripts to lower case or remove punctuation marks so that they don't affect the WER. In this case, the distinction between 'Theresa May' and 'Therese may' is lost. But you can instruct BenchmarkSTT to score higher the engine that produced 'Theresa May'. 
+
+The BEER is useful to evaluate:
+
+*  the suitability of transcript files as input to a tagging system
+*  the performances of STT services on key entities depending on the contexts, for instance highlights and players names for sport events, 
+*  the performances of a list of entities automatically selected in the reference text by TF/IDF approach which intend to reflect how important a word is.
+
+An entity is a word or an ordered list of words including capital letters and punctuation. To calculate BEER, BenchmarkSTT needs a list of entities. It does not make this list for you. It is expected that the user will create the list outside of BSTT, manually or by using an NLP library to extract proper nouns from the reference. 
+
+BEER definition
+---------------
+
+The BEER is defined as the error rate per entity with a bag of words approach. In this approach the order of the entities in the documents does not affect the measure.
+
+.. math::
+
+   {WA}\_{BEER} \left (  entity \right ) = \frac{ \left | n_{hyp} - n_{ref}  \right |  }{n_{ref} }
+
+..
+   _multiple ..math:: directives to work around right alignment of formulas  
+
+.. math::
+
+   n_{ref}=\textrm{number of occurrences of entity in the reference document} 
+   
+   n_{hyp}=\textrm{number of occurrences of entity in the hypothesis document}
+
+The weighted averaged BEER of a set of entities e\ :sub:`1`, e\ :sub:`2` ... e\ :sub:`n` measure the global performances of the n entities, a weight w\ :sub:`n` is attributed to each entity. 
+
+.. math::
+   
+   WA\_BEER (e_1 ... e_N) =  w_1*BEER (e_1)\frac{L_1}{L} +... + w_N*BEER (e_N)\frac{L_N}{L}
+
+.. math::
+
+   {WA}\_{BEER} \left (  e_1, ... e_N \right ) = \frac{w_1* \left | n_{hyp_1} - n_{ref_1}  \right | + ... + w_n * \left | n_{hyp_n} - n_{ref_n}  \right | }{L}
+
+.. math::
+
+   L_1=\textrm{number of occurrences of entity 1 in the reference document}
+
+.. math::
+   L=L_1 + ... + L_N
+
+The weights being normalised by the tool
+
+.. math::
+   w_1 + ... + w_N=1
+
+
+Calculating BEER
+----------------
+
+BenchmarkSTT does not have a built-in list of entities. You must provide your own in a JSON input file defining the list of entities and the weight per entity. 
+
+The file has this structure: 
+
+   ``{ "entity1" : weight1, "entity2" : weight2, "entity3" : weight2 .. }``
+
+Let's create an example list. Save the below list as file ``entities.json``::
+
+   {"Theresa May" : 0.5, "Abigail" : 0.5, "EU": 0.75, "Griffin" : 0.5, "I" : 0.25}
+
+We'll also tell BenchmarkSTT to normalize the reference and hypothesis file by lowercasing both. We do this in the ``config.conf`` file: ::
+
+   [normalization]
+   # Load regex rules file and tell the processor it's a regex type
+   Regex rules.regex
+
+Now compute the BEER in one line, using the same files from the previous section of this tutorial. The tool provides the BEER and the number of occurrence in the reference file for each entity, with the weighted averaged BEER: ::
+
+   benchmarkstt --reference qt_subs.xml --reference-type plaintext --hypothesis qt_aws_hypothesis.txt --config config.conf --beer  entities.json
+
+
+.. container:: terminal
+
+   | beer
+   | ====
+
+   | Theresa May: {'beer': 0.5, 'occurrence_ref': 2}
+   | Abigail: {'beer': 0.333, 'occurrence_ref': 3}
+   | EU: {'beer': 0.783, 'occurrence_ref': 23}
+   | Griffin: {'beer': 0.0, 'occurrence_ref': 2}
+   | I: {'beer': 0.073, 'occurrence_ref': 301}
+   | w_av_beer: {'beer': 0.024, 'occurrence_ref': 331}
+
+
+To automate the task, you can generate a JSON result file by adding the ``-o`` option: ::
+
+   benchmarkstt --reference qt_subs.xml --reference-type plaintext --hypothesis qt_aws_hypothesis.txt --config config.conf --beer  entities.json -o json >> beer_aws.json
+
+
+
+
