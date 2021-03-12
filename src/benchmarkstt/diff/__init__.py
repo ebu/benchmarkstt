@@ -2,11 +2,39 @@
 Responsible for calculating differences.
 """
 
-from abc import ABC, abstractmethod
+from abc import ABC, ABCMeta, abstractmethod
 from benchmarkstt.factory import CoreFactory
+from collections import namedtuple
 
 
-class Differ(ABC):
+OpcodeCounts = namedtuple('OpcodeCounts',
+                          ('equal', 'replace', 'insert', 'delete'))
+
+
+def get_opcode_counts(opcodes) -> OpcodeCounts:
+    counts = OpcodeCounts(0, 0, 0, 0)._asdict()
+    for tag, alo, ahi, blo, bhi in opcodes:
+        if tag == 'equal':
+            counts[tag] += ahi - alo
+        elif tag == 'insert':
+            counts[tag] += bhi - blo
+        elif tag == 'delete':
+            counts[tag] += ahi - alo
+        elif tag == 'replace':
+            ca = ahi - alo
+            cb = bhi - blo
+            if ca < cb:
+                counts['insert'] += cb - ca
+                counts['replace'] += ca
+            elif ca > cb:
+                counts['delete'] += ca - cb
+                counts['replace'] += cb
+            else:
+                counts[tag] += ahi - alo
+    return OpcodeCounts(counts['equal'], counts['replace'], counts['insert'], counts['delete'])
+
+
+class DifferInterface(ABC):
     @abstractmethod
     def __init__(self, a, b):
         """
@@ -32,5 +60,31 @@ class Differ(ABC):
         """
         raise NotImplementedError()
 
+    @abstractmethod
+    def get_opcode_counts(self):
+        raise NotImplementedError()
 
-factory = CoreFactory(Differ, False)
+    @abstractmethod
+    def get_error_rate(self):
+        raise NotImplementedError()
+
+
+class Differ(DifferInterface, metaclass=ABCMeta):
+    """
+    Provides pre-made (probably sub-optimal) implementations of
+    get_opcode_counts() and get_error_rate()
+    """
+
+    def get_opcode_counts(self):
+        return get_opcode_counts(self.get_opcodes())
+
+    def get_error_rate(self):
+        counts = self.get_opcode_counts()
+
+        changes = counts.replace + counts.delete + counts.insert
+        total = counts.equal + counts.replace + counts.delete
+
+        return changes / total
+
+
+factory = CoreFactory(DifferInterface, False)

@@ -39,6 +39,7 @@ class MagicTraits(object):
         "__getattr__": "attributes",
         "__getattribute__": "attributes",
         "__len__": "len",
+        "__hash__": "hashable",
         "__subclasshook__": False,
         "__repr__": False,
         "__str__": False,

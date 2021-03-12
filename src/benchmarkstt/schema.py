@@ -3,7 +3,6 @@ Defines the main schema for comparison and implements json serialization
 """
 import json
 from collections.abc import Mapping
-from typing import Union
 from collections import defaultdict
 
 
@@ -50,6 +49,9 @@ class Item(Mapping):
 
     def __repr__(self):
         return 'Item(%s)' % (self.json(),)
+
+    def __hash__(self):
+        return hash(self._val['item'])
 
     def json(self, **kwargs):
         return Schema.dumps(self, **kwargs)

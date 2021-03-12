@@ -4,6 +4,8 @@ Core Diff algorithms
 
 from difflib import SequenceMatcher
 from benchmarkstt.diff import Differ
+import edit_distance
+import editdistance
 
 
 class RatcliffObershelp(Differ):
@@ -12,9 +14,7 @@ class RatcliffObershelp(Differ):
 
     From difflib.SequenceMatcher_ (Copyright_ 2001-2020, Python Software Foundation.)
 
-        SequenceMatcher is a flexible class for comparing pairs of sequences of
-        any type, so long as the sequence elements are hashable.  The basic
-        algorithm predates, and is a little fancier than, an algorithm
+        The basic algorithm predates, and is a little fancier than, an algorithm
         published in the late 1980's by Ratcliff and Obershelp under the
         hyperbolic name "gestalt pattern matching".  The basic idea is to find
         the longest contiguous matching subsequence that contains no "junk"
@@ -29,11 +29,56 @@ class RatcliffObershelp(Differ):
     """
 
     def __init__(self, a, b, **kwargs):
-        if 'autojunk' not in kwargs:
-            kwargs['autojunk'] = False
         kwargs['a'] = a
         kwargs['b'] = b
-        self.matcher = SequenceMatcher(**kwargs)
+        self._kwargs = kwargs
+        self._matcher = SequenceMatcher(**self._kwargs)
 
     def get_opcodes(self):
-        return self.matcher.get_opcodes()
+        return self._matcher.get_opcodes()
+
+
+class Levenshtein(Differ):
+    """
+    Levenshtein_ distance is the minimum edit distance.
+
+    .. _Levenshtein: https://en.wikipedia.org/wiki/Levenshtein_distance
+    """
+
+    def __init__(self, a, b, **kwargs):
+        kwargs['a'] = a
+        kwargs['b'] = b
+        if 'action_function' not in kwargs:
+            kwargs['action_function'] = edit_distance.highest_match_action
+        self._kwargs = kwargs
+        self._matcher = edit_distance.SequenceMatcher(**self._kwargs)
+
+    def get_opcodes(self):
+        raise NotImplementedError("not supported by %r" % (self,))
+
+    def get_error_rate(self):
+        a = self._kwargs['a']
+        b = self._kwargs['b']
+        len_a = len(a)
+        if len_a == 0:
+            return 0 if len(b) == 0 else 1
+        return editdistance.eval(a, b) / len_a
+
+    @staticmethod
+    def simplify_opcodes(opcodes):
+        new_codes = []
+        prev = None
+        for cur in opcodes:
+            if prev is None:
+                prev = cur
+            elif cur[0] == prev[0]:
+                prev[2] = cur[2]
+                prev[4] = cur[4]
+            else:
+                new_codes.append(tuple(prev))
+                prev = cur
+
+        if prev is not None:
+            new_codes.append(tuple(prev))
+
+        return new_codes

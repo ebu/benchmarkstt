@@ -38,7 +38,7 @@ def test_wer(a, b, exp):
 
     assert WER(mode=WER.MODE_STRICT).compare(PlainText(a), PlainText(b)) == wer_strict
     assert WER(mode=WER.MODE_HUNT).compare(PlainText(a), PlainText(b)) == wer_hunt
-    assert WER(mode=WER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == wer_levenshtein
+    assert WER(differ_class='levenshtein').compare(PlainText(a), PlainText(b)) == wer_levenshtein
 
 
 @pytest.mark.parametrize('a,b,entities_list,weights,exp_beer,exp_occ', [
@@ -112,4 +112,4 @@ def test_wa_beer(a, b, entities_list, weights, exp):
 def test_cer(a, b, exp):
     cer_levenshtein, = exp
 
-    assert CER(mode=CER.MODE_LEVENSHTEIN).compare(PlainText(a), PlainText(b)) == cer_levenshtein
+    assert CER(differ_class='levenshtein').compare(PlainText(a), PlainText(b)) == cer_levenshtein

@@ -11,16 +11,6 @@ def cb(txt):
     return _
 
 
-class ToDefer:
-    def __init__(self, value):
-        self.value = value
-        self.cb_count = 0
-
-    def __repr__(self):
-        self.cb_count += 1
-        return '<ToDefer:%s>' % (repr(self.value),)
-
-
 def test_deferred_str():
     callback = cb('test')
     deferred = DeferredCallback(callback)

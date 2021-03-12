@@ -62,6 +62,7 @@ setup(
         'jsonrpcserver>=4.0.1',
         'gunicorn>=19.9.0',
         'docutils>=0.14',
+        'edit_distance>=1.0.4',
         'editdistance>=0.5.3',
         'Unidecode>=1.1.2',
     ],
