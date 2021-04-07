@@ -13,9 +13,6 @@ BenchmarkSTT
     :target: https://benchmarkstt.readthedocs.io/
     :alt: Documentation Status
 
-
-.. include:: example.rst
-
 About
 ------
 
@@ -53,5 +50,3 @@ Currently the group is focussing on Speech-to-Text, but it will consider creatin
 For general information about this project, including the `motivations <https://github.com/ebu/benchmarkstt/wiki>`_ and `guiding principles <https://github.com/ebu/benchmarkstt/wiki/Principles>`_, please see the project `wiki <https://github.com/ebu/benchmarkstt/wiki>`_
 
 To install and start using the tool, go to the `documentation <https://benchmarkstt.readthedocs.io>`_.
-
-
