@@ -279,7 +279,6 @@ The BEER is defined as the error rate per entity with a bag of words approach. I
 .. math::
 
    {BEER} \left (  entity \right ) = \frac{ \left | n_{hyp} - n_{ref}  \right |  }{n_{ref} }
-
 ..
    _multiple ..math:: directives to work around right alignment of formulas
 

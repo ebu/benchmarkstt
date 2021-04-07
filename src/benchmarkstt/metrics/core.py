@@ -116,7 +116,6 @@ class WER(Metric):
         self._mode = mode
         if mode == self.MODE_LEVENSHTEIN:
             return
-
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
@@ -181,12 +180,17 @@ class CER(Metric):
     MODE_LEVENSHTEIN = 'levenshtein'
 
     def __init__(self, mode=None, differ_class=None):
+        if mode is None:
+            mode = self.MODE_LEVENSHTEIN
         self._mode = mode
 
     def compare(self, ref: Schema, hyp: Schema):
         ref_str = ''.join([i['item'] for i in ref])
         hyp_str = ''.join([i['item'] for i in hyp])
         total_ref = len(ref_str)
+
+        if self._mode != self.MODE_LEVENSHTEIN:
+            raise NotImplementedError('CER is only implemented for Levenshtein distance')
 
         if total_ref == 0:
             return 0 if len(hyp_str) == 0 else 1
@@ -199,12 +203,17 @@ class DiffCounts(Metric):
     Get the amount of differences between reference and hypothesis
     """
 
-    def __init__(self, differ_class: Differ = None):
+    MODE_LEVENSHTEIN = 'levenshtein'
+
+    def __init__(self, mode=None, differ_class: Differ = None):
         if differ_class is None:
             differ_class = RatcliffObershelp
         self._differ_class = differ_class
+        self._mode = mode
 
     def compare(self, ref: Schema, hyp: Schema) -> OpcodeCounts:
+        if self._mode == self.MODE_LEVENSHTEIN:
+            raise NotImplementedError('diffcounts is not implemented for Levenshtein distance')
         diffs = get_differ(ref, hyp, differ_class=self._differ_class)
         return get_opcode_counts(diffs.get_opcodes())
 
