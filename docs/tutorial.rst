@@ -289,7 +289,7 @@ The BEER is defined as the error rate per entity with a bag of words approach. I
 
    n_{hyp}=\textrm{number of occurrences of entity in the hypothesis document}
 
-The weighted averaged BEER of a set of entities e\ :sub:`1`, e\ :sub:`2` ... e\ :sub:`n` measure the global performances of the n entities, a weight w\ :sub:`n` is attributed to each entity.
+The weighted averaged BEER of a set of entities e\ :sub:`1`, e\ :sub:`2` ... e\ :sub:`n` measures the global performances of the n entities, a weight w\ :sub:`n` is attributed to each entity.
 
 .. math::
   \begin{aligned}
