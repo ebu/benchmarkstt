@@ -265,9 +265,9 @@ Another use for this metric is compensating for distortions of WER that are caus
 
 The BEER is useful to evaluate:
 
-*  the suitability of transcript files as input to a tagging system, _
-*  the performances of STT services on key entities depending on the contexts, for instance highlights and players names for sport events, _
-*  the performances of a list of entities automatically selected in the reference text by TF/IDF approach which intend to reflect how important a word is. _
+*  the suitability of transcript files as input to a tagging system,
+*  the performances of STT services on key entities depending on the contexts, for instance highlights and players names for sport events,
+*  the performances of a list of entities automatically selected in the reference text by TF/IDF approach which intend to reflect how important a word is.
 
 An entity is a word or an ordered list of words including capital letters and punctuation. To calculate BEER, BenchmarkSTT needs a list of entities. It does not make this list for you. It is expected that the user will create the list outside of BSTT, manually or by using an NLP library to extract proper nouns from the reference.
 
