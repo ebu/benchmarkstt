@@ -265,9 +265,9 @@ Another use for this metric is compensating for distortions of WER that are caus
 
 The BEER is useful to evaluate:
 
-*  the suitability of transcript files as input to a tagging system
-*  the performances of STT services on key entities depending on the contexts, for instance highlights and players names for sport events,
-*  the performances of a list of entities automatically selected in the reference text by TF/IDF approach which intend to reflect how important a word is.
+*  the suitability of transcript files as input to a tagging system, _
+*  the performances of STT services on key entities depending on the contexts, for instance highlights and players names for sport events, _
+*  the performances of a list of entities automatically selected in the reference text by TF/IDF approach which intend to reflect how important a word is. _
 
 An entity is a word or an ordered list of words including capital letters and punctuation. To calculate BEER, BenchmarkSTT needs a list of entities. It does not make this list for you. It is expected that the user will create the list outside of BSTT, manually or by using an NLP library to extract proper nouns from the reference.
 
@@ -278,7 +278,7 @@ The BEER is defined as the error rate per entity with a bag of words approach. I
 
 .. math::
 
-   {WA}\_{BEER} \left (  entity \right ) = \frac{ \left | n_{hyp} - n_{ref}  \right |  }{n_{ref} }
+   {BEER} \left (  entity \right ) = \frac{ \left | n_{hyp} - n_{ref}  \right |  }{n_{ref} }
 
 ..
    _multiple ..math:: directives to work around right alignment of formulas
@@ -294,10 +294,6 @@ The weighted averaged BEER of a set of entities e\ :sub:`1`, e\ :sub:`2` ... e\ 
 .. math::
   \begin{aligned}
    WA\_BEER (e_1, ... e_N) =  w_1*BEER (e_1)\frac{L_1}{L} +... + w_N*BEER (e_N)\frac{L_N}{L}
-   \\
-    = \frac{w_1* \left | n_{hyp_1} - n_{ref_1}  \right | + ... + w_n * \left | n_{hyp_n} - n_{ref_n}  \right | }{L}
-    \\
-    \\
   \end{aligned}
 
 .. math::
