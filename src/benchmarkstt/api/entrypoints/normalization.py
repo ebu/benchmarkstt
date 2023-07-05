@@ -1,7 +1,7 @@
 from benchmarkstt.normalization.logger import LogCapturer
 import json
-import benchmarkstt.csv as csv
 import benchmarkstt.normalization as normalization
+from csvlike import csv
 
 factory = normalization.factory
 

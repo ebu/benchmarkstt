@@ -1,5 +1,5 @@
-from . import csv
 import re
+from csvlike import csv
 
 
 class SectionConfigReader:

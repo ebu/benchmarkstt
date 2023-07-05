@@ -65,6 +65,7 @@ setup(
         'docutils>=0.14',
         'editdistance>=0.5.3',
         'Unidecode>=1.1.2',
+        'csvlike>=1.0.0',
     ],
     extras_require={
         'test': [

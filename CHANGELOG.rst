@@ -38,6 +38,7 @@ Changed
   * rename NormalizationComposite -> NormalizationAggregate
   * allow ducktyped custom classes to be recognized as valid
   * proper abstract base classes
+  * move csv functionality to it's own repository "csvlike", add to requirements
 
 * 
   Documentation:
