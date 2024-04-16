@@ -328,7 +328,7 @@ class BEER(Metric):
             index_entities.extend(index_entity)
 
         # sort on the position of the first part of the entity
-        index_entities.sort(key=lambda l: l[0])
+        index_entities.sort(key=lambda elem: elem[0])
 
         # copy-past the entity found in the list
         for k_list in index_entities:

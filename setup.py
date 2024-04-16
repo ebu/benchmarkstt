@@ -60,7 +60,7 @@ setup(
     install_requires=[
         'MarkupSafe>=1.0',
         'Flask>=1.0.2',
-        'jsonrpcserver>=4.0.1',
+        'jsonrpcserver>=4.0.1,<5',
         'gunicorn>=19.9.0',
         'docutils>=0.14',
         'editdistance>=0.5.3',
