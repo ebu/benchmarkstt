@@ -5,9 +5,9 @@ BenchmarkSTT
 .. image:: https://img.shields.io/github/license/ebu/benchmarkstt.svg
     :target: https://github.com/ebu/benchmarkstt/blob/master/LICENCE.md
 
-.. image:: https://img.shields.io/github/workflow/status/ebu/benchmarkstt/Python%20package
+.. image:: https://github.com/ebu/benchmarkstt/actions/workflows/pythonpackage.yml/badge.svg
     :alt: GitHub Workflow Status (branch)
-    :target: https://github.com/ebu/benchmarkstt/actions
+    :target: https://github.com/ebu/benchmarkstt/actions/workflows/pythonpackage.yml
 
 .. image:: https://readthedocs.org/projects/benchmarkstt/badge/?version=latest
     :target: https://benchmarkstt.readthedocs.io/
@@ -43,7 +43,7 @@ Returns a visual diff after applying all the normalization rules specified in th
 Further information
 -------------------
 
-This is a collaborative project to create a library for benchmarking AI/ML applications. It was created in response to the needs of broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `Media Information Management & AI group <https://tech.ebu.ch/groups/mim>`_.
+This is a collaborative project to create a library for benchmarking AI/ML applications. It was created in response to the needs of broadcasters and providers of Access Services to media organisations, but anyone is welcome to contribute. The group behind this project is the EBU's `AI and Metadata group <https://tech.ebu.ch/groups/aim>`_.
 
 Currently the group is focussing on Speech-to-Text, but it will consider creating benchmarking tools for other AI/ML services.
 
